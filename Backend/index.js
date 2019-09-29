@@ -70,6 +70,86 @@ app.route('/rol')
         res.send('Update the rol');
     });
 
+// Manejador de ruta Usuarios
+app.route('/usuarios')
+    .get(function(req, res) {
+        console.log('Página de Usuarios ');
+        var query = db.query('select * from usuarios', function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result)
+            }
+        });
+    })
+    .post(function(req, res) {
+        res.send('Add a rol');
+    })
+    .put(function(req, res) {
+        res.send('Update the rol');
+    });
+
+// Manejador de ruta Registro de Información
+app.route('/registro_info')
+    .get(function(req, res) {
+        console.log('Página de Registro de Información ');
+        var query = db.query('select * from registro_info', function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result)
+            }
+        });
+    })
+    .post(function(req, res) {
+        res.send('Add a rol');
+    })
+    .put(function(req, res) {
+        res.send('Update the rol');
+    });
+
+// Manejador de ruta Administrador
+app.route('/administrador')
+    .get(function(req, res) {
+        console.log('Página de Administradores ');
+        var query = db.query('select * from administrador', function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result)
+            }
+        });
+    })
+    .post(function(req, res) {
+        res.send('Add a rol');
+    })
+    .put(function(req, res) {
+        res.send('Update the rol');
+    });
+
+// Manejador de ruta Validar Información
+app.route('/validar_info')
+    .get(function(req, res) {
+        console.log('Página de Validar Información ');
+        var query = db.query('select * from validar_info', function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result)
+            }
+        });
+    })
+    .post(function(req, res) {
+        res.send('Add a rol');
+    })
+    .put(function(req, res) {
+        res.send('Update the rol');
+    });
+
 
 //Llamado de puerto
 app.listen(3000, function() {
