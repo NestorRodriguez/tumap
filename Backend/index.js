@@ -260,10 +260,61 @@ app.route('/dbo_vlistadotodo')
  * Servicios para el inventario de redes secas
  *************************************************************************************/
 
+app.get('/irs-tipos-redes', (req, res) => {
+    const sql =  'SELECT id, nombre, icono FROM irs_tipos_redes';
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: "Ocurrió un error al consultar los tipos de redes"
+            });
+        } else {
+            res.json(result);
+        }
+    });
+});
 
+app.get('/irs-estados-redes', (req, res) => {
+    const sql =  'SELECT id, nombre FROM irs_estados_redes';
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: "Ocurrió un error al consultar los estados de las redes"
+            });
+        } else {
+            res.json(result);
+        }
+    });
+});
 
+app.get('/irs-tipos-materiales', (req, res) => {
+    const sql =  'SELECT id, nombre FROM irs_materiales_postes';
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: "Ocurrió un error al consultar los tipos de materiales"
+            });
+        } else {
+            res.json(result);
+        }
+    });
+});
 
-
+app.get('/irs-operadores-celulares', (req, res) => {
+    const sql =  'SELECT id, nombre, logotipo FROM irs_operadores_celulares';
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: "Ocurrió un error al consultar los operadores celulares"
+            });
+        } else {
+            res.json(result);
+        }
+    });
+});
 
 /*************************************************************************************
  * Fin de servicios para el inventario de redes secas
