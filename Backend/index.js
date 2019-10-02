@@ -6,6 +6,18 @@ var mysql = require('mysql');
 //require("./routes/api")(app);
 //require("./routes/views")(app);
 
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
+// Se agrega la librería para habilitar cors
+app.use(cors());
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
+
 //Parámetros de la conexión a la base de datos
 var db = mysql.createConnection({
     host: "localhost",
@@ -16,9 +28,9 @@ var db = mysql.createConnection({
 });
 
 //Realizar la conexión a la base de datos
-db.connect(function(err) {
-    if (err)
-        throw err;
+db.connect(function(error) {
+    if (error)
+        console.log(error);
     else
         console.log(`Base de datos conectada!`);
 });
@@ -242,6 +254,20 @@ app.route('/dbo_vlistadotodo')
 //*********************************************************************************** */
 // dbo Fin 
 //************************************************************************************ */
+
+
+/*************************************************************************************
+ * Servicios para el inventario de redes secas
+ *************************************************************************************/
+
+
+
+
+
+
+/*************************************************************************************
+ * Fin de servicios para el inventario de redes secas
+ *************************************************************************************/
 
 //Llamado de puerto
 app.listen(3000, function() {
