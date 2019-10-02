@@ -288,13 +288,19 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 --*********************************************************************************************************
 -- fin DBO --
 --*********************************************************************************************************
-CREATE TABLE `irs_estados_redes` (
+
+
+--*********************************************************************************************************
+-- Tablas Inventarios Redes Secas --
+--*********************************************************************************************************
+
+CREATE TABLE IF NOT EXISTS `irs_estados_redes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `irs_inventarios_otros` (
+CREATE TABLE IF NOT EXISTS `irs_inventarios_otros` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `tipo` varchar(20) NOT NULL,
   `id_irs_estado_red` int(10) unsigned NOT NULL,
@@ -310,7 +316,7 @@ CREATE TABLE `irs_inventarios_otros` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `irs_inventarios_postes` (
+CREATE TABLE IF NOT EXISTS `irs_inventarios_postes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_irs_material` int(10) unsigned NOT NULL,
   `numero` varchar(20) DEFAULT NULL,
@@ -328,22 +334,27 @@ CREATE TABLE `irs_inventarios_postes` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `irs_materiales_postes` (
+CREATE TABLE IF NOT EXISTS `irs_materiales_postes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `irs_operadores_celulares` (
+CREATE TABLE IF NOT EXISTS `irs_operadores_celulares` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
   `logotipo` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `irs_tipos_redes` (
+CREATE TABLE IF NOT EXISTS `irs_tipos_redes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
   `icono` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+--*********************************************************************************************************
+-- Fin Tablas Inventarios Redes Secas --
+--*********************************************************************************************************

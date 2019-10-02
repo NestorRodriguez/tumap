@@ -6,6 +6,18 @@ var mysql = require('mysql');
 //require("./routes/api")(app);
 //require("./routes/views")(app);
 
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
+// Se agrega la librería para habilitar cors
+app.use(cors());
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
+
 //Parámetros de la conexión a la base de datos
 var db = mysql.createConnection({
     host: "localhost",
@@ -16,9 +28,9 @@ var db = mysql.createConnection({
 });
 
 //Realizar la conexión a la base de datos
-db.connect(function(err) {
-    if (err)
-        throw err;
+db.connect(function(error) {
+    if (error)
+        console.log(error);
     else
         console.log(`Base de datos conectada!`);
 });
@@ -242,6 +254,71 @@ app.route('/dbo_vlistadotodo')
 //*********************************************************************************** */
 // dbo Fin 
 //************************************************************************************ */
+
+
+/*************************************************************************************
+ * Servicios para el inventario de redes secas
+ *************************************************************************************/
+
+app.get('/irs-tipos-redes', (req, res) => {
+    const sql =  'SELECT id, nombre, icono FROM irs_tipos_redes';
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: "Ocurrió un error al consultar los tipos de redes"
+            });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get('/irs-estados-redes', (req, res) => {
+    const sql =  'SELECT id, nombre FROM irs_estados_redes';
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: "Ocurrió un error al consultar los estados de las redes"
+            });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get('/irs-tipos-materiales', (req, res) => {
+    const sql =  'SELECT id, nombre FROM irs_materiales_postes';
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: "Ocurrió un error al consultar los tipos de materiales"
+            });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get('/irs-operadores-celulares', (req, res) => {
+    const sql =  'SELECT id, nombre, logotipo FROM irs_operadores_celulares';
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: "Ocurrió un error al consultar los operadores celulares"
+            });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+/*************************************************************************************
+ * Fin de servicios para el inventario de redes secas
+ *************************************************************************************/
 
 //Llamado de puerto
 app.listen(3000, function() {
