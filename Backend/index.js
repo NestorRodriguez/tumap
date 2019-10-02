@@ -23,7 +23,6 @@ db.connect(function(err) {
         console.log(`Base de datos conectada!`);
 });
 
-
 app.get('/', function(req, res) {
     console.log('Página de rol ');
 
@@ -166,6 +165,7 @@ app.route('/dbo_pregunta/:orden')
             }
         });
     });
+
 // dbo Lista las imagen por imagensuelos 30/09/2019
 app.route('/dbo_imagen/:id_Pregunta')
     .get(function(req, res) {
