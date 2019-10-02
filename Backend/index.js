@@ -150,6 +150,98 @@ app.route('/validar_info')
         res.send('Update the rol');
     });
 
+//**************************************************************************
+// dbo inicio 
+//*Ej: http://localhost:3000/dbo_pregunta/1**********************************
+app.route('/dbo_pregunta/:orden')
+    .get(function(req, res) {
+        console.log('Página de pregunta ');
+        var orden = req.params.orden;
+        var query = db.query('select * from dbo_pregunta where orden = ?', orden, function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result);
+            }
+        });
+    });
+// dbo Lista las imagen por imagensuelos 30/09/2019
+app.route('/dbo_imagen/:id_Pregunta')
+    .get(function(req, res) {
+        console.log('Página de imagen ');
+        var id_Pregunta = req.params.id_Pregunta;
+        var query = db.query('select * from dbo_imagen where id_Pregunta= ?', id_Pregunta, function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result);
+            }
+        });
+    });
+
+// dbo Lista inscripciones por documento 30/09/2019
+app.route('/dbo_inscripcion/:documento')
+    .get(function(req, res) {
+        console.log('Página de inscripcion');
+        var documento = req.params.documento;
+        var query = db.query('select * from dbo_inscripcion Where documento = ?', documento, function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result);
+            }
+        });
+    });
+
+// dbo Lista respuestas 30/09/2019
+app.route('/dbo_respuesta/:id_inscripcion')
+    .get(function(req, res) {
+        console.log('Página de respuesta');
+        var id_inscripcion = req.params.id_inscripcion;
+        var query = db.query('select * from dbo_respuesta where id_inscripcion = ?', id_inscripcion, function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result);
+            }
+        });
+    });
+
+// dbo Lista las respuestas con texto vlistado 30/09/2019
+app.route('/dbo_vlistado')
+    .get(function(req, res) {
+        console.log('Página de vlistado ');
+        var query = db.query('select * from dbo_vlistado', function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result);
+            }
+        });
+    });
+
+// dbo Listar todos las respuestas con ids vlistadotodo 30/09/2019
+app.route('/dbo_vlistadotodo')
+    .get(function(req, res) {
+        console.log('Página de vlistadotodo ');
+        var query = db.query('select * from dbo_vlistadotodo', function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result);
+            }
+        });
+    });
+
+//*********************************************************************************** */
+// dbo Fin 
+//************************************************************************************ */
 
 //Llamado de puerto
 app.listen(3000, function() {

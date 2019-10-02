@@ -105,3 +105,186 @@ select * from fys_registro_info;
 select * from fys_administrador;
 
 select * from fys_validar_info;
+
+--***********************************************************************
+-- inicio DBO 
+-- Generated: 2019-09-29 10:59
+-- Project: suelos
+-- Author: Divier Castaneda -- Diego Duarte
+--***********************************************************************
+-- **********Se puede copiar completa y ejecutar en sql*******************
+--************************************************************************
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+CREATE SCHEMA IF NOT EXISTS `tumap` DEFAULT CHARACTER SET utf8 ;
+use tumap;
+/******/
+DROP TABLE IF EXISTS `tumap`.`dbo_incripcionPregunta`;
+DROP TABLE IF EXISTS `tumap`.`dbo_respuesta`;
+DROP TABLE IF EXISTS `tumap`.`dbo_pregunta` ;
+DROP TABLE IF EXISTS `tumap`.`dbo_inscripcion`; 
+DROP TABLE IF EXISTS `tumap`.`dbo_imagen`;
+
+--****** dbo Creacion de las tablas
+CREATE TABLE IF NOT EXISTS `tumap`.`dbo_pregunta` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `orden` TINYINT(2) NOT NULL,
+  `pregunta` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `orden_UNIQUE` (`orden` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+CREATE TABLE IF NOT EXISTS `tumap`.`dbo_imagen` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+    `id_pregunta` INT(11) NOT NULL,
+	`orden` TINYINT(2) NOT NULL,  
+	`nombre` VARCHAR(45) NULL DEFAULT NULL,    
+	`ruta` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `orden_UNIQUE` (`id_pregunta`,`orden` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `tumap`.`dbo_inscripcion` (
+  `id` INT(11) AUTO_INCREMENT,
+  `documento` INT NOT NULL,
+  `nombre` VARCHAR(45) NOT NULL,
+  `posicionamiento` VARCHAR(45) NULL DEFAULT NULL,
+  `departamento` VARCHAR(45) NULL DEFAULT NULL,
+  `munipio` VARCHAR(45) NULL DEFAULT NULL,
+  `usuario` VARCHAR(45) NULL DEFAULT NULL,
+  `fecha` date not NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `tumap`.`dbo_respuesta` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_inscripcion` INT(11) NOT NULL,
+  `id_pregunta` INT(11) NOT NULL,
+  `id_imagen` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  
+  CONSTRAINT `fk_respuesta_inscripcion1`
+    FOREIGN KEY (`id_inscripcion`)
+    REFERENCES `tumap`.`dbo_inscripcion` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_respuesta_pregunta1`
+    FOREIGN KEY (`id_pregunta`)
+    REFERENCES `tumap`.`dbo_pregunta` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_respuesta_imagen1`
+    FOREIGN KEY (`id_imagen`)
+    REFERENCES `tumap`.`dbo_imagen` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+    
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+-- -----------------------------------------------------
+-- Placeholder table for view `tumap`.`dbo_vListado`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tumap`.`dbo_vListado` (`id` INT);
+USE `tumap`;
+
+-- -----------------------------------------------------
+-- View `tumap`.`dbo_vListado`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `tumap`.`dbo_vListado`;
+USE `tumap`;
+CREATE  OR REPLACE VIEW `dbo_vListado` AS
+	select distinct  
+	dbo_inscripcion.documento, 
+	dbo_pregunta.orden,
+	dbo_inscripcion.nombre, 
+	dbo_inscripcion.posicionamiento,
+	dbo_inscripcion.departamento,  
+	dbo_inscripcion.munipio, 
+	dbo_inscripcion.fecha,
+	dbo_pregunta.pregunta,
+	dbo_imagen.nombre as imagen
+	from dbo_inscripcion
+	inner join dbo_respuesta on dbo_respuesta.id = dbo_inscripcion.id
+	inner join dbo_pregunta on dbo_pregunta.id = dbo_respuesta.id_pregunta
+	inner join dbo_imagen on dbo_imagen.id= dbo_respuesta.id_imagen
+	order by dbo_inscripcion.documento, dbo_pregunta.orden;
+
+
+DROP TABLE IF EXISTS `tumap`.`dbo_vListadoTodo`;
+USE `tumap`;
+CREATE  OR REPLACE VIEW `dbo_vListadoTodo` AS
+	select distinct dbo_inscripcion.* 	
+	from dbo_inscripcion
+	inner join dbo_respuesta on dbo_respuesta.id = dbo_inscripcion.id
+	inner join dbo_pregunta on dbo_pregunta.id = dbo_respuesta.id_pregunta
+	inner join dbo_imagen on dbo_imagen.id= dbo_respuesta.id_imagen
+	order by dbo_inscripcion.documento, dbo_pregunta.orden;
+
+/*dbo_pregunta*/
+
+INSERT INTO `tumap`.`dbo_pregunta` (`orden`, `pregunta`) VALUES ('1', 'pregunta1');
+INSERT INTO `tumap`.`dbo_pregunta` (`orden`, `pregunta`) VALUES ('2', 'pregunta2');
+INSERT INTO `tumap`.`dbo_pregunta` (`orden`, `pregunta`) VALUES ('3', 'pregunta3');
+INSERT INTO `tumap`.`dbo_pregunta` (`orden`, `pregunta`) VALUES ('4', 'pregunta4');
+INSERT INTO `tumap`.`dbo_pregunta` (`orden`, `pregunta`) VALUES ('5', 'pregunta5');
+
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES (1, 1, 'imagen1', '\\imagen1.png');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('1', '2', 'imagen2', '\\imagen1.png');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('1', '3', 'imagen3', '\\imagen1.png');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('2', '1', 'imagen1', '\\imagen1.png');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('2', '2', 'imagen2', '\\imagen1.png');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('2', '3', 'imagen3', '\\imagen1.png');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('3', '1', 'imagen1', '\\imagen1.png');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('3', '2', 'imagen2', '\\imagen1.png');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('4', '1', 'imagen1', '\\imagen1.png');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('4', '2', 'imagen2', '\\imagen1.png');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('4', '3', 'imagen3', '\\imagen1.png');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('5', '1', 'imagen1', '\\imagen1.png');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('5', '2', 'imagen2', '\\imagen1.png');
+
+
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `departamento`, `munipio`, `fecha`) VALUES ('11', 'nombre1 apellido1', 'coordenadaXY', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `departamento`, `munipio`, `fecha`) VALUES ('22', 'nombre2 apellido2', 'coordenadaXY', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `departamento`, `munipio`, `fecha`) VALUES ('33', 'nombre3 apellido3', 'coordenadaXY', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `departamento`, `munipio`, `fecha`) VALUES ('44', 'nombre4 apellido4', 'coordenadaXY', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `departamento`, `munipio`, `fecha`) VALUES ('55', 'nombre5 apellido5', 'coordenadaXY', 'Cundinamarca', 'Soacha', CURDATE());
+
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('1', '1', '1');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('1', '2', '4');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('1', '3', '7');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('1', '4', '11');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('1', '5', '12');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('2', '1', '1');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('2', '2', '6');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('2', '3', '7');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('2', '4', '9');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('2', '5', '13');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('3', '1', '3');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('3', '2', '5');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('3', '3', '8');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('3', '4', '10');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('3', '5', '12');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('4', '1', '1');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('4', '2', '4');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('4', '3', '8');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('4', '4', '11');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('4', '5', '13');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('5', '1', '2');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('5', '2', '6');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('5', '3', '8');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('5', '4', '10');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('5', '5', '12');
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+--*********************************************************************************************************
+-- fin DBO --
+--*********************************************************************************************************
