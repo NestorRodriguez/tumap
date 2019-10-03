@@ -354,6 +354,10 @@ CREATE TABLE IF NOT EXISTS `irs_tipos_redes` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+INSERT INTO `irs_estados_redes` (`nombre`) VALUES ('Bueno'), ('Regular'), ('Malo');
+INSERT INTO `irs_materiales_postes` (`nombre`) VALUES ('Concreto'), ('Madera'), ('Metal');
+INSERT INTO `irs_operadores_celulares` (`nombre`, `logotipo`) VALUES ('Claro', 'claro.svg'), ('Movistar', 'movistar.svg'), ('Tigo', 'tigo.svg'), ('Avantel', 'avantel.svg');
+INSERT INTO `irs_tipos_redes` (`nombre`, `icono`) VALUES ('Postes', 'postes.svg'), ('Torres', 'torres.svg'), ('Antenas', 'antenas.svg'), ('Armarios', 'armarios.svg');
 
 --*********************************************************************************************************
 -- Fin Tablas Inventarios Redes Secas --
