@@ -100,5 +100,208 @@ password varchar(20) not null , email varchar(60) not null, id_rol int not null,
 insert into users (nameuser, password, email, id_rol) values ('nrodriguez', '1234', 'nrodriguez@sena.edu.co', 1);
 insert into users (nameuser, password, email, id_rol) values ('nrodriguez', '1234', 'nrodriguez@sena.edu.co', 2);
 
+/* Creamos tabla Predial (Residencial - Rural - Comercial) */
+CREATE TABLE uso_Predio (
+  id_predio INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+  descripcion VARCHAR(55) NOT NULL
+);
+
+/* Creamos tabla Servicios (Agua - Luz - Teléono - Gas Natural
+Gas propano - Alcantarillado) */
+CREATE TABLE servicios_Publicos (
+    id_servpub INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    descripcion VARCHAR(55) NOT NULL    
+);
+
+/* Creamos tabla nivel de vivienda */
+CREATE TABLE nivel_Vivienda (
+    id_nivel INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    descripcion VARCHAR(55) NOT NULL    
+);
+
+/* Creamos tabla Estratos */
+CREATE TABLE estrato (
+    id_estrato INT NOT NULL PRIMARY KEY  AUTO_INCREMENT,
+    descripcion VARCHAR(55) NOT NULL    
+);
+
+/* Creamos tabla predios */
+CREATE TABLE predios (
+    id_predio INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    matricula varchar(55) NOT NULL,	
+    direccion varchar(55) NOT NULL,
+    ide_estrato INT NOT NULL,
+    id_usosuelo INT NOT NULL,
+    ide_nivel INT NOT NULL,
+    estado_Vivienda char not null, 
+	servicio_agua boolean NOT NULL,
+    servicio_energia boolean NOT NULL,
+    servicio_internet boolean NOT NULL,
+    servicio_telefoniaFija boolean NOT NULL,
+    servicio_telefoniaMovil boolean NOT NULL,
+    servicio_gasNatural boolean NOT NULL,
+    servicio_gasPropano boolean NOT NULL,
+    punto_locaclizacion point,    
+    foreign key (ide_estrato) references estrato (id_estrato),
+    foreign key (ide_nivel) references nivel_Vivienda (id_nivel),
+    foreign key (id_usosuelo) references uso_Predio (id_predio)
+);
+
+insert into uso_predio (descripcion)
+values ('Comercial');
+
+insert into uso_predio (descripcion)
+values ('Residencial');
+
+insert into uso_predio (descripcion)
+values ('Rural');
+
+insert into servicios_Publicos (descripcion)
+values ('Agua');
+
+insert into servicios_Publicos (descripcion)
+values ('Luz');
+
+insert into servicios_Publicos (descripcion)
+values ('Telefono');
+
+insert into servicios_Publicos (descripcion)
+values ('Alcantarillado');
+
+insert into servicios_Publicos (descripcion)
+values ('Gas natural');
+
+insert into servicios_Publicos (descripcion)
+values ('Gas Propano');
+
+insert into nivel_Vivienda (descripcion)
+values ('Un Piso');
+
+insert into nivel_Vivienda (descripcion)
+values ('Dos Pisos');
+
+insert into nivel_Vivienda (descripcion)
+values ('Tres Pisos');
+
+insert into nivel_Vivienda (descripcion)
+values ('Mayor a tres pisos');
+
+insert into estrato (descripcion)
+values ('Estrato 1');
+
+insert into estrato (descripcion)
+values ('Estrato 2');
+
+insert into estrato (descripcion)
+values ('Estrato 3');
+
+insert into estrato (descripcion)
+values ('Estrato 4');
+
+SET @g = 'polygon((-74.08434887571491 4.611668551399252, -74.08434887571492 4.711668551399262, -74.08434887571491 4.711668551399268,-74.08434887571491 4.611668551399252))';
+insert into predios (matricula,direccion,ide_estrato,id_usosuelo,ide_nivel,estado_Vivienda,servicio_agua,servicio_energia,servicio_internet,servicio_telefoniaFija,servicio_telefoniaMovil,servicio_gasNatural,servicio_gasPropano,punto_localizacion) 
+values (14578235,'calle 24 # 34-35 sur',1,2,3,0,true,true,true,true,true,true,true,ST_PolygonFromText(@g));
+
+/* Creamos tabla Predial (Residencial - Rural - Comercial) */
+CREATE TABLE uso_Predio (
+    id_predio INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    descripcion VARCHAR(55) NOT NULL    
+);
+
+
+/* Creamos tabla Servicios (Agua - Luz - Teléono - Gas Natural
+Gas propano - Alcantarillado) */
+CREATE TABLE servicios_Publicos (
+    id_servpub INT NOT NULL  PRIMARY KEY AUTO_INCREMENT,
+    descripcion VARCHAR(55) NOT NULL    
+);
+
+/* Creamos tabla nivel de vivienda */
+CREATE TABLE nivel_Vivienda (
+    id_nivel INT NOT NULL  PRIMARY KEY AUTO_INCREMENT,
+    descripcion VARCHAR(55) NOT NULL    
+);
+
+/* Creamos tabla Estratos */
+CREATE TABLE estrato (
+    id_estrato INT NOT NULL  PRIMARY KEY AUTO_INCREMENT,
+    descripcion VARCHAR(55) NOT NULL    
+);
+
+/* Creamos tabla predios */
+CREATE TABLE predios (
+    id_predio INT NOT NULL  PRIMARY KEY AUTO_INCREMENT,
+    matricula varchar(55) NOT NULL,	
+    direccion varchar(55) NOT NULL,
+    ide_estrato INT NOT NULL,
+    id_usosuelo INT NOT NULL,
+    ide_nivel INT NOT NULL,
+    estado_Vivienda char not null, 
+	servicio_agua boolean NOT NULL,
+    servicio_energia boolean NOT NULL,
+    servicio_internet boolean NOT NULL,
+    servicio_telefoniaFija boolean NOT NULL,
+    servicio_telefoniaMovil boolean NOT NULL,
+    servicio_gasNatural boolean NOT NULL,
+    servicio_gasPropano boolean NOT NULL,
+    punto_locaclizacion point,    
+    foreign key (ide_estrato) references estrato (id_estrato),
+    foreign key (ide_nivel) references nivel_Vivienda (id_nivel),
+    foreign key (id_usosuelo) references uso_Predio (id_predio)
+);
+
+insert into servicios_Publicos (descripcion)
+values ('Agua');
+
+insert into servicios_Publicos (descripcion)
+values ('Luz');
+
+insert into servicios_Publicos (descripcion)
+values ('Telefono');
+
+insert into servicios_Publicos (descripcion)
+values ('Alcantarillado');
+
+insert into servicios_Publicos (descripcion)
+values ('Gas natural');
+
+insert into servicios_Publicos (descripcion)
+values ('Gas Propano');
+
+
+
+insert into nivel_Vivienda (descripcion)
+values ('Un Piso');
+
+insert into nivel_Vivienda (descripcion)
+values ('Dos Pisos');
+
+insert into nivel_Vivienda (descripcion)
+values ('Tres Pisos');
+
+insert into nivel_Vivienda (descripcion)
+values ('Mayor a tres pisos');
+ 
+
+
+insert into estrato (descripcion)
+values ('Estrato 1');
+
+insert into estrato (descripcion)
+values ('Estrato 2');
+
+insert into estrato (descripcion)
+values ('Estrato 3');
+
+insert into estrato (descripcion)
+values ('Estrato 4');
+
+
+
+SET @g = 'polygon((-74.08434887571491 4.611668551399252, -74.08434887571492 4.711668551399262, -74.08434887571491 4.711668551399268,-74.08434887571491 4.611668551399252))';
+insert into predios (matricula,direccion,ide_estrato,id_usosuelo,ide_nivel,estado_Vivienda,servicio_agua,servicio_energia,servicio_internet,servicio_telefoniaFija,servicio_telefoniaMovil,servicio_gasNatural,servicio_gasPropano,punto_localizacion) 
+values (14578235,'calle 24 # 34-35 sur',1,2,3,0,true,true,true,true,true,true,true,ST_PolygonFromText(@g));
+
+
 /*Código que deben correr en workbeanch 8*/
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '12345'
