@@ -70,6 +70,87 @@ app.route('/rol')
         res.send('Update the rol');
     });
 
+//Llamado de encuesta social 
+app.route('/encuesta_social')
+    .get(function(req, res) {
+        console.log('Método de encuesta social');
+        var query = db.query('select SEC_Encuesta_Social.id_Encuesta, SEC_Encuesta_Social.Vinculo_Territorial, SEC_Necesidades_Basicas.Nombre_Necesidad, SEC_Encuesta_Necesidades.Importancia  from SEC_Encuesta_Necesidades inner join SEC_Encuesta_Social on SEC_Encuesta_Necesidades.id_Encuesta = SEC_Encuesta_Social.id_Encuesta inner join SEC_Necesidades_Basicas on SEC_Encuesta_Necesidades.id_Necesidades = SEC_Necesidades_Basicas.id_Necesidades;', function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result)
+            }
+        });
+    })
+
+.post(function(req, res) {
+    res.send('Add a encuesta_social');
+})
+
+/*.post(function(req, res) {
+    res.send('Add a encuesta social');*/
+
+
+// NUESTRO POST
+
+//post(function(req, res) {
+// console.log('Vinculo_Territorial');
+// })
+
+// para manejar la ruta /encuesta_social, e imprimir el vinculo territorial
+//app.post('/encuesta_social', function(req, res, next) {
+//res.end(req.params.id_Encuesta)
+//var sSQLCreate = "INSERT INTO SEC_Encuesta_Social (id_Encuesta, Vinculo_Territorial) VALUES (NULL, ";
+//sSQLCreate += "'" + oDataSEC_Encuesta_Social.Vinculo_Territorial + "', ";
+
+
+//})
+
+app.put(function(req, res) {
+    res.send('Update the encuesta social');
+});
+
+//Llamado de SEC_Establecimiento_Comercial
+app.route('/Establecimiento_Comercial')
+    .get(function(req, res) {
+        console.log('Método de Establecimiento_Comercial ');
+        var query = db.query('select * from SEC_Establecimiento_Comercial', function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result)
+            }
+        });
+    })
+    .post(function(req, res) {
+        res.send('Add a Establecimiento_Comercial');
+    })
+    .put(function(req, res) {
+        res.send('Update the Establecimiento_Comercial');
+    });
+
+//Llamado de SEC_Comercio_Informal
+app.route('/Comercio_Informal')
+    .get(function(req, res) {
+        console.log('Método de Comercio_Informal');
+        var query = db.query('select * from SEC_Comercio_Informal', function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result)
+            }
+        });
+    })
+    .post(function(req, res) {
+        res.send('Add a Comercio_Informal');
+    })
+    .put(function(req, res) {
+        res.send('Update the Comercio_Informal');
+    });
+
 
 //Llamado de puerto
 app.listen(3000, function() {
