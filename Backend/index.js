@@ -9,7 +9,6 @@ const bodyParser = require('body-parser');
 //require("./routes/api")(app);
 //require("./routes/views")(app);
 
-const bodyParser = require('body-parser');
 const cors = require('cors');
 
 // Se agrega la librería para habilitar cors
