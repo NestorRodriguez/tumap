@@ -23,8 +23,8 @@ app.use(bodyParser.json());
 //Parámetros de la conexión a la base de datos
 const db = mysql.createConnection({
     host: "localhost",
-    user: "jcastrillon",
-    password: "jcastrillon",
+    user: "root",
+    password: "12345",
     database: "tumap",
     port: 3306,
 });
