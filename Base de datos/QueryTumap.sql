@@ -510,7 +510,7 @@ CREATE TABLE IF NOT EXISTS `irs_inventarios_otros` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `tipo` varchar(20) NOT NULL,
   `id_irs_estado_red` int(10) unsigned NOT NULL,
-  `numero_empresa` varchar(30) DEFAULT NULL,
+  `identificador` varchar(30) DEFAULT NULL,
   `id_irs_operador` int(10) unsigned DEFAULT NULL,
   `ubicacion` json NOT NULL,
   `imagen` varchar(150) DEFAULT NULL,

@@ -23,8 +23,8 @@ app.use(bodyParser.json());
 //Parámetros de la conexión a la base de datos
 const db = mysql.createConnection({
     host: "localhost",
-    user: "root",
-    password: "12345",
+    user: "jcastrillon",
+    password: "jcastrillon",
     database: "tumap",
     port: 3306,
 });
@@ -808,6 +808,94 @@ app.get('/irs-operadores-celulares', (req, res) => {
             res.json({
                 error: true,
                 message: "Ocurrió un error al consultar los operadores celulares"
+            });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.post('/irs-inventario-postes', (req, res) => {
+    const data = req.body;
+    const date = new Date().toISOString();
+    const sql = `
+    INSERT INTO irs_inventarios_postes (
+        id_irs_material,
+        numero,
+        id_irs_estado_red,
+        tiene_lampara,
+        tiene_transformador,
+        tipo_red,
+        ubicacion,
+        imagen,
+        id_usuario,
+        id_irs_operador_celular,
+        id_irs_estado_red_celular,
+        fecha,
+        ip
+    ) VALUES (
+        '${data.id_irs_material}',
+        '${data.numero}',
+        '${data.id_irs_estado_red}',
+        '${data.tiene_lampara}',
+        '${data.tiene_transformador}',
+        '${data.tipo_red}',
+        '${JSON.stringify(data.ubicacion)}',
+        '${data.imagen}',
+        '${data.id_usuario}',
+        '${data.id_irs_operador_celular}',
+        '${data.id_irs_estado_red_celular}',
+        '${date.substring(0, 10)}T${date.substring(11, 19)}',
+        '${data.ip}'
+    )`;
+
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: "Ocurrió un error al guardar la encuesta."
+            });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.post('/irs-inventario-otros', (req, res) => {
+    const data = req.body;
+    const date = new Date().toISOString();
+    const sql = `
+    INSERT INTO irs_inventarios_otros (
+        tipo,
+        id_irs_estado_red,
+        identificador,
+        id_irs_operador,
+        ubicacion,
+        imagen,
+        id_usuario,
+        id_irs_operador_celular,
+        id_irs_estado_red_celular,
+        fecha,
+        ip
+    ) VALUES (
+        '${data.tipo}',
+        '${data.id_irs_estado_red}',
+        '${data.identificador}',
+        '${data.id_irs_operador}',
+        '${JSON.stringify(data.ubicacion)}',
+        '${data.imagen}',
+        '${data.id_usuario}',
+        '${data.id_irs_operador_celular}',
+        '${data.id_irs_estado_red_celular}',
+        '${date.substring(0, 10)}T${date.substring(11, 19)}',
+        '${data.ip}'
+    )`;
+
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: "Ocurrió un error al guardar la encuesta."
             });
         } else {
             res.json(result);
