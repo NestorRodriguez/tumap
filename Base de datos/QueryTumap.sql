@@ -11,11 +11,30 @@ insert into rol (namerol) values ('admin');
 create table users (id int not null primary key auto_increment , nameuser varchar(20) not null,
 password varchar(20) not null , email varchar(60) not null, id_rol int not null, foreign key (id_rol) references rol (id)
  );
-insert into users (nameuser, password, email, id_rol) values ('nrodriguez', '1234', 'nrodriguez@sena.edu.co', 1);
-insert into users (nameuser, password, email, id_rol) values ('nrodriguez', '1234', 'nrodriguez@sena.edu.co', 2);
+insert into users (nameuser, password, email, id_rol) values ('scamacho', '1234', 'secamacho5@misena.edu.co', 4);
+insert into users (nameuser, password, email, id_rol) values ('fsanchez', '1234', 'fsanchez@misena.edu.co', 4);
 
 /*Código que deben correr en workbeanch 8*/
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '12345';  
+
+-- -----------------------------------------------------
+-- Table `tumap`.`fys_datos_usuarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tumap`.`fys_datos_usuarios` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombres` VARCHAR(100) NOT NULL,
+  `apellidos` VARCHAR(100) NOT NULL,
+  `edad` INT NOT NULL,
+  `sexo` VARCHAR(1) NOT NULL,
+  `nivel_educativo` VARCHAR(100) NOT NULL,
+  `id_user` INT NOT NULL,
+  PRIMARY KEY (`id`, `id_user`),
+  CONSTRAINT `fk_users1`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `tumap`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
   
 -- -----------------------------------------------------
 -- Table `tumap`.`registro_info`
@@ -98,7 +117,21 @@ values (1,'2019-09-29',1,1);
 INSERT INTO fys_validar_info (validado,fecha_validacion,id_registro_info,id_administrador)
 values (2,'2019-09-29',2,2);
 
+INSERT INTO fys_datos_usuarios (nombres,apellidos,edad,sexo,nivel_educativo,id_user)
+values ('Sara','Camacho Albarracin',20,'F','Tecnologo',3);
+
+INSERT INTO fys_datos_usuarios (nombres,apellidos,edad,sexo,nivel_educativo,id_user)
+values ('Fredy','Sanchez',24,'M','Tecnologo',4);
+
+INSERT INTO rol (namerol)
+values ('Administrador');
+
+INSERT INTO rol (namerol)
+values ('Habitante');
+
 select * from users;
+
+select * from rol;
 
 select * from fys_registro_info;
 
