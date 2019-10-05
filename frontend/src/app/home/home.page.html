@@ -1,44 +1,32 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>
-      Home
-    </ion-title>
-  </ion-toolbar>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-img class="img" src="./assets/perfil mujer.svg" slot="start"></ion-img>
+        <ion-title>
+            Cecilia Martinez
+        </ion-title>
+        <ion-img class="img" src="./assets/configuracion.svg" slot="end"></ion-img>
+    </ion-toolbar>
+    <!-- <ion-toolbar color="secondary" class="menu"> -->
+    <span class="menu" color="secondary"></span>
+    <!-- </ion-toolbar> -->
+    <ion-toolbar class="title">
+        <ion-title color="primary">
+            Noticias
+        </ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-card class="welcome-card">
-      <img src="/assets/shapes.svg" alt="" />
-      <ion-card-header>
-        <ion-card-subtitle>Get Started</ion-card-subtitle>
-        <ion-card-title>Welcome to Ionic</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p>Now that your app has been created, you'll want to start building out features and components. Check out some of the resources below for next steps.</p>
-      </ion-card-content>
-    </ion-card>
-    <ion-list lines="none">
-      <ion-list-header>
-        <ion-label>Resources</ion-label>
-      </ion-list-header>
-      <ion-item href="https://ionicframework.com/docs/">
-        <ion-icon slot="start" color="medium" name="book"></ion-icon>
-        <ion-label>Ionic Documentation</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/building/scaffolding">
-        <ion-icon slot="start" color="medium" name="build"></ion-icon>
-        <ion-label>Scaffold Out Your App</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/layout/structure">
-        <ion-icon slot="start" color="medium" name="grid"></ion-icon>
-        <ion-label>Change Your App Layout</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/theming/basics">
-        <ion-icon slot="start" color="medium" name="color-fill"></ion-icon>
-        <ion-label>Theme Your App</ion-label>
-      </ion-item>
-    </ion-list>
+
 </ion-content>
+
+<ion-footer>
+    <ion-toolbar color="primary" class="title">
+        <ion-img class="imgfooter" src="./assets/news.svg" slot="start"></ion-img>
+        <ion-img class="imgfooter" src="./assets/nueva incidencia.svg"></ion-img>
+        <ion-img class="imgfooter" src="./assets/campana de notificacion.svg" slot="end"></ion-img>
+    </ion-toolbar>
+</ion-footer>

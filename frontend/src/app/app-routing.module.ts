@@ -22,6 +22,7 @@ const routes: Routes = [
 
   /*{ path: 'register', loadChildren: './Education/register/register.module#RegisterPageModule' }*/
 
+  { path: 'login', loadChildren: './login/login.module#LoginPageModule' }
 ];
 
 @NgModule({
