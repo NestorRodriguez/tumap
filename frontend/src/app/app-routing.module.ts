@@ -22,7 +22,11 @@ const routes: Routes = [
 
   /*{ path: 'register', loadChildren: './Education/register/register.module#RegisterPageModule' }*/
 
-  { path: 'login', loadChildren: './login/login.module#LoginPageModule' }
+  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },  { path: 'ubicacion', loadChildren: './dbo/ubicacion/ubicacion.module#UbicacionPageModule' },
+  { path: 'inscripcion', loadChildren: './dbo/inscripcion/inscripcion.module#InscripcionPageModule' },
+  { path: 'formulario', loadChildren: './dbo/formulario/formulario.module#FormularioPageModule' },
+  { path: 'exportar', loadChildren: './dbo/exportar/exportar.module#ExportarPageModule' }
+
 ];
 
 @NgModule({
