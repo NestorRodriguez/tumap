@@ -25,9 +25,13 @@ var db = mysql.createConnection({
     password: "12345",
     database: "tumap",
     port: 3306,
+    multipleStatements: true
 });
 
-//Realizar la conexión a la base de datos
+app.listen(3000, function() {
+        console.log(`Server running at port ${PORT}`);
+    })
+    //Realizar la conexión a la base de datos
 db.connect(function(error) {
     if (error)
         console.log(error);
@@ -261,7 +265,7 @@ app.route('/dbo_vlistadotodo')
  *************************************************************************************/
 
 app.get('/irs-tipos-redes', (req, res) => {
-    const sql =  'SELECT id, nombre, icono FROM irs_tipos_redes';
+    const sql = 'SELECT id, nombre, icono FROM irs_tipos_redes';
     db.query(sql, (error, result) => {
         if (error) {
             res.json({
@@ -275,7 +279,7 @@ app.get('/irs-tipos-redes', (req, res) => {
 });
 
 app.get('/irs-estados-redes', (req, res) => {
-    const sql =  'SELECT id, nombre FROM irs_estados_redes';
+    const sql = 'SELECT id, nombre FROM irs_estados_redes';
     db.query(sql, (error, result) => {
         if (error) {
             res.json({
@@ -289,7 +293,7 @@ app.get('/irs-estados-redes', (req, res) => {
 });
 
 app.get('/irs-tipos-materiales', (req, res) => {
-    const sql =  'SELECT id, nombre FROM irs_materiales_postes';
+    const sql = 'SELECT id, nombre FROM irs_materiales_postes';
     db.query(sql, (error, result) => {
         if (error) {
             res.json({
@@ -303,7 +307,7 @@ app.get('/irs-tipos-materiales', (req, res) => {
 });
 
 app.get('/irs-operadores-celulares', (req, res) => {
-    const sql =  'SELECT id, nombre, logotipo FROM irs_operadores_celulares';
+    const sql = 'SELECT id, nombre, logotipo FROM irs_operadores_celulares';
     db.query(sql, (error, result) => {
         if (error) {
             res.json({
@@ -320,7 +324,63 @@ app.get('/irs-operadores-celulares', (req, res) => {
  * Fin de servicios para el inventario de redes secas
  *************************************************************************************/
 
-//Llamado de puerto
-app.listen(3000, function() {
-    console.log(`Server running at port ${PORT}`);
-});
+/*************************************************************************************
+ * Servicio para la consulta de inventario de uso de Suelos
+ *************************************************************************************/
+
+app.route('/suelos')
+    .get((req, res) => {
+        const sql = `SELECT r.ID, NOMBRE_PROPIETARIO, NOMBRE_PREDIO, AREA, DIRECCION, 
+     asText(p.PREDIO) as PREDIO, asText(u.POLIGONO) as POLIGONOS, DESCRIPCION FROM IM_registros r, IM_predio p, 
+     IM_tipo_usos t, IM_usos_predio u WHERE r.ID = p.ID_REGISTROS AND u.ID_PREDIO = p.ID AND u.ID_TIPO_USOS = t.ID`;
+        console.log('Ingresé a Suelos Get');
+        db.query(sql, (error, result) => {
+            if (error) {
+                res.json({
+                    error: true,
+                    message: error.message
+                });
+            } else {
+                res.json(result);
+            }
+        });
+    })
+    .post((req, res) => {
+        let data = req.body;
+        console.log(data);
+        const sql = `INSERT INTO IM_REGISTROS (NOMBRE_PROPIETARIO, NOMBRE_PREDIO, AREA, DIRECCION)
+        VALUES('${data.nombrePropietario}', '${data.nombrePredio}','${data.area}','${data.direccion}')`;
+        db.query(sql, (error, result) => {
+            if (error) {
+                res.json({
+                    error: true,
+                    message: error.message
+                })
+            } else {
+                res.json(result);
+            }
+        })
+    });
+// POST Para agregar Polígono principal 
+
+app.post('/suelos/:id', (req, res) => {
+    console.log('Body', JSON.stringify(req.body.polygon));
+    let polygon = (req.body.polygon);
+    let sql = `SET @g = 'POLYGON(${polygon})';`;
+    console.log(-sql);
+    sql += `INSERT INTO IM_PREDIO (PREDIO,ID_REGISTROS) VALUES( ST_PolygonFromText(@g),${req.params.id});`;
+    console.log('SQL', sql);
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: error.message
+            });
+        } else {
+            res.json(result);
+        }
+    });
+
+    //Llamado de puerto
+
+})
