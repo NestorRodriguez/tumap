@@ -15,7 +15,19 @@ const routes: Routes = [
     path: 'list',
     loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
   },
-  { path: 'login', loadChildren: './login/login.module#LoginPageModule' }
+  {
+    path: 'register',
+    loadChildren: () => import('./Education/register/register.module').then(m => m.RegisterPageModule)
+  },
+
+  /*{ path: 'register', loadChildren: './Education/register/register.module#RegisterPageModule' }*/
+
+  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
+  { path: 'ubicacion', loadChildren: './dbo/ubicacion/ubicacion.module#UbicacionPageModule' },
+  { path: 'inscripcion', loadChildren: './dbo/inscripcion/inscripcion.module#InscripcionPageModule' },
+  { path: 'formulario', loadChildren: './dbo/formulario/formulario.module#FormularioPageModule' },
+  { path: 'exportar', loadChildren: './dbo/exportar/exportar.module#ExportarPageModule' }
+
 ];
 
 @NgModule({
@@ -25,3 +37,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
+
