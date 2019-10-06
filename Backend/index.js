@@ -27,7 +27,7 @@ var db = mysql.createConnection({
     port: 3306,
     multipleStatements: true
 });
-
+//Llamado del puerto
 app.listen(3000, function() {
         console.log(`Server running at port ${PORT}`);
     })
@@ -331,9 +331,8 @@ app.get('/irs-operadores-celulares', (req, res) => {
 app.route('/suelos')
     .get((req, res) => {
         const sql = `SELECT r.ID, NOMBRE_PROPIETARIO, NOMBRE_PREDIO, AREA, DIRECCION, 
-     asText(p.PREDIO) as PREDIO, asText(u.POLIGONO) as POLIGONOS, DESCRIPCION FROM IM_registros r, IM_predio p, 
-     IM_tipo_usos t, IM_usos_predio u WHERE r.ID = p.ID_REGISTROS AND u.ID_PREDIO = p.ID AND u.ID_TIPO_USOS = t.ID`;
-        console.log('Ingresé a Suelos Get');
+        asText(p.PREDIO) as PREDIO, asText(u.POLIGONO) as POLIGONOS, DESCRIPCION FROM IM_registros r, IM_predio p, 
+        IM_tipo_usos t, IM_usos_predio u WHERE r.ID = p.ID_REGISTROS AND u.ID_PREDIO = p.ID AND u.ID_TIPO_USOS = t.ID`;
         db.query(sql, (error, result) => {
             if (error) {
                 res.json({
@@ -347,7 +346,6 @@ app.route('/suelos')
     })
     .post((req, res) => {
         let data = req.body;
-        console.log(data);
         const sql = `INSERT INTO IM_REGISTROS (NOMBRE_PROPIETARIO, NOMBRE_PREDIO, AREA, DIRECCION)
         VALUES('${data.nombrePropietario}', '${data.nombrePredio}','${data.area}','${data.direccion}')`;
         db.query(sql, (error, result) => {
@@ -363,13 +361,10 @@ app.route('/suelos')
     });
 // POST Para agregar Polígono principal 
 
-app.post('/suelos/:id', (req, res) => {
-    console.log('Body', JSON.stringify(req.body.polygon));
+app.post('/predio/:id', (req, res) => {
     let polygon = (req.body.polygon);
     let sql = `SET @g = 'POLYGON(${polygon})';`;
-    console.log(-sql);
     sql += `INSERT INTO IM_PREDIO (PREDIO,ID_REGISTROS) VALUES( ST_PolygonFromText(@g),${req.params.id});`;
-    console.log('SQL', sql);
     db.query(sql, (error, result) => {
         if (error) {
             res.json({
@@ -379,8 +374,38 @@ app.post('/suelos/:id', (req, res) => {
         } else {
             res.json(result);
         }
-    });
+    })
+});
+// POST Para agregar subpolígonos 
+app.post('/usosuelos/:id', (req, res) => {
+    let data = (req.body);
+    let sql = `SET @g = 'POLYGON(${data.polygon})';`;
+    sql += `INSERT INTO IM_USOS_PREDIO (POLIGONO, ID_PREDIO, ID_TIPO_USOS) VALUES( ST_PolygonFromText(@g),${req.params.id}, ${data.idTipoUso});`;
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: error.message
+            });
+        } else {
+            res.json(result);
+        }
+    })
+});
 
-    //Llamado de puerto
+// POST Para consultar el tipo de uso de suelos
 
-})
+app.get('/tipousosuelos', (req, res) => {
+    let data = (req.body);
+    let sql = `SELECT * FROM IM_TIPO_USOS`;
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: error.message
+            });
+        } else {
+            res.json(result);
+        }
+    })
+});
