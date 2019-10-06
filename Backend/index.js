@@ -324,9 +324,9 @@ app.get('/irs-operadores-celulares', (req, res) => {
  * Fin de servicios para el inventario de redes secas
  *************************************************************************************/
 
-/*************************************************************************************
- * Servicio para la consulta de inventario de uso de Suelos
- *************************************************************************************/
+/***********************************************************
+ * Servicio para la consulta de inventario de uso de Suelos*
+ **********************************************************/
 
 app.route('/suelos')
     .get((req, res) => {
@@ -409,3 +409,6 @@ app.get('/tipousosuelos', (req, res) => {
         }
     })
 });
+/***************************************************
+ * Fin de servicios para el inventario de suelos   *
+ **************************************************/
