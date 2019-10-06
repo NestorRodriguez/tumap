@@ -26,7 +26,9 @@ const routes: Routes = [
   { path: 'ubicacion', loadChildren: './dbo/ubicacion/ubicacion.module#UbicacionPageModule' },
   { path: 'inscripcion', loadChildren: './dbo/inscripcion/inscripcion.module#InscripcionPageModule' },
   { path: 'formulario', loadChildren: './dbo/formulario/formulario.module#FormularioPageModule' },
-  { path: 'exportar', loadChildren: './dbo/exportar/exportar.module#ExportarPageModule' }
+  { path: 'exportar', loadChildren: './dbo/exportar/exportar.module#ExportarPageModule' },
+  { path: 'formulariosuelos', loadChildren: './usosuelos/formulario/formulario.module#FormularioPageModule' }
+
 
 ];
 
