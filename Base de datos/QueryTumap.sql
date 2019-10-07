@@ -703,6 +703,10 @@ create table SEC_Comercio_Informal(
 	INSERT INTO SEC_Comercio_Informal (Productos_Servicios, Descripcion , Estatico_Movil, Periodicidad, Jornada, Foto)
 		VALUES ('ambos','dulceria y minutos','estatico','fin de semana','diurno y nocturno','url');
 
+--*********************************************************************************************************
+-- Fin Tablas Inventarios Redes Secas --
+--********************************************************************************************************* 
+
 CREATE TABLE IM_REGISTROS (
 ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 NOMBRE_PROPIETARIO VARCHAR(45),
@@ -729,7 +733,6 @@ ALTER TABLE IM_PREDIO ADD FOREIGN KEY (ID_REGISTROS) REFERENCES IM_REGISTROS(ID)
 ALTER TABLE IM_USOS_PREDIO ADD FOREIGN KEY (ID_PREDIO) REFERENCES IM_PREDIO(ID);
 ALTER TABLE IM_USOS_PREDIO ADD FOREIGN KEY (ID_TIPO_USOS) REFERENCES IM_TIPO_USOS(ID);
 
-<<<<<<< HEAD
 --*********************************************************************************************************
 -- TABLAS SENALIZACION | MOBILIARIO URBANO --
 --*********************************************************************************************************
@@ -855,9 +858,8 @@ insert into jyd_registro_has_item (fk_id_registro, fk_id_item, latitud, longitud
             value (3, 22, 4.6579711999999995, -74.1122048, 'assest/img_jyd/captura_4231', 'caneca nueva', 1);
 
 --*********************************************************************************************************
--- Fin Tablas Inventarios Redes Secas --
+-- FIN TABLAS SENALIZACION | MOBILIARIO URBANO --
 --*********************************************************************************************************        
-=======
 /*BASE DE DATOS DE VIAS JF*/
 
 CREATE table jf_detalle_via ( 
@@ -890,4 +892,3 @@ insert into jf_estado(estado)
 /*CRUD tabla jf_descripcion_via*/
 insert into jf_descripcion_via(ubicacion, nombre_via, detalle, imagen, estado)
 	values (ST_GeomFromText('point(1 1)'), 'av 68', 2, '/imagen/av68', 1), (ST_GeomFromText('point(0 1)'), 'boyaca', 1, '/imagen/boyaca', 2), (ST_GeomFromText('point(1 0)'), 'cali', 3, '/imagen/cali', 3);
->>>>>>> origin/master
