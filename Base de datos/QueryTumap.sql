@@ -729,6 +729,7 @@ ALTER TABLE IM_PREDIO ADD FOREIGN KEY (ID_REGISTROS) REFERENCES IM_REGISTROS(ID)
 ALTER TABLE IM_USOS_PREDIO ADD FOREIGN KEY (ID_PREDIO) REFERENCES IM_PREDIO(ID);
 ALTER TABLE IM_USOS_PREDIO ADD FOREIGN KEY (ID_TIPO_USOS) REFERENCES IM_TIPO_USOS(ID);
 
+<<<<<<< HEAD
 --*********************************************************************************************************
 -- TABLAS SENALIZACION | MOBILIARIO URBANO --
 --*********************************************************************************************************
@@ -856,3 +857,37 @@ insert into jyd_registro_has_item (fk_id_registro, fk_id_item, latitud, longitud
 --*********************************************************************************************************
 -- Fin Tablas Inventarios Redes Secas --
 --*********************************************************************************************************        
+=======
+/*BASE DE DATOS DE VIAS JF*/
+
+CREATE table jf_detalle_via ( 
+	id int not null auto_increment primary key,
+    detalle varchar(200) not null
+);
+/*Creacion de tabla del estado*/
+CREATE table jf_estado (
+	id int not null auto_increment primary key,
+    estado varchar(100) not null
+);
+/*Creacion de tabla de descripcion vial*/
+CREATE table jf_descripcion_via(
+	id int not null auto_increment primary key,
+    ubicacion geometry not null,
+    nombre_via varchar(200),
+    detalle int not null,
+		foreign key (id) references jf_detalle_via(id),
+	imagen varchar(200),
+    estado int not null,
+		foreign key (id) references jf_estado(id)
+);
+/*DML*/
+/*CRUD tabla jf_detalle_via*/
+insert into jf_detalle_via (detalle)
+	values ('hueco'),('mantenimiento'),('via cerrada');
+/*CRUD tabla jf_estado*/
+insert into jf_estado(estado)
+	values ('en espera'),('aprobado'),('no aprobado');
+/*CRUD tabla jf_descripcion_via*/
+insert into jf_descripcion_via(ubicacion, nombre_via, detalle, imagen, estado)
+	values (ST_GeomFromText('point(1 1)'), 'av 68', 2, '/imagen/av68', 1), (ST_GeomFromText('point(0 1)'), 'boyaca', 1, '/imagen/boyaca', 2), (ST_GeomFromText('point(1 0)'), 'cali', 3, '/imagen/cali', 3);
+>>>>>>> origin/master
