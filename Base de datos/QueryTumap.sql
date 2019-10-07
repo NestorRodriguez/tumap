@@ -2,7 +2,6 @@
 create database tumap;
 use tumap;
 
-
 /*Crear tabla rol*/
 create table rol (id int not null primary key auto_increment , namerol varchar(20) not null );
 insert into rol (namerol) values ('usuario');
@@ -12,11 +11,15 @@ insert into rol (namerol) values ('admin');
 create table users (id int not null primary key auto_increment , nameuser varchar(20) not null,
 password varchar(20) not null , email varchar(60) not null, id_rol int not null, foreign key (id_rol) references rol (id)
  );
-insert into users (nameuser, password, email, id_rol) values ('scamacho', '1234', 'secamacho5@misena.edu.co', 4);
-insert into users (nameuser, password, email, id_rol) values ('fsanchez', '1234', 'fsanchez@misena.edu.co', 4);
+insert into users (nameuser, password, email, id_rol) values ('nrodriguez', '1234', 'nrodriguez@sena.edu.co', 2);
+insert into users (nameuser, password, email, id_rol) values ('nrodriguez', '1234', 'nrodriguez@sena.edu.co', 1);
+insert into users (nameuser, password, email, id_rol) values ('juanherrera', '1234', 'jcherreraa@sena.edu.co', 1);
+insert into users (nameuser, password, email, id_rol) values ('davidr', '1234', 'davidreyes@sena.edu.co', 1);
+insert into users (nameuser, password, email, id_rol) values ('scamacho', '1234', 'secamacho5@misena.edu.co', 1);
+insert into users (nameuser, password, email, id_rol) values ('fsanchez', '1234', 'fsanchez@misena.edu.co', 1);
 
 /*Código que deben correr en workbeanch 8*/
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '12345';  
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '12345';
 
 -- -----------------------------------------------------
 -- Table `tumap`.`fys_datos_usuarios`
@@ -725,3 +728,131 @@ ID_TIPO_USOS INT NOT NULL
 ALTER TABLE IM_PREDIO ADD FOREIGN KEY (ID_REGISTROS) REFERENCES IM_REGISTROS(ID);
 ALTER TABLE IM_USOS_PREDIO ADD FOREIGN KEY (ID_PREDIO) REFERENCES IM_PREDIO(ID);
 ALTER TABLE IM_USOS_PREDIO ADD FOREIGN KEY (ID_TIPO_USOS) REFERENCES IM_TIPO_USOS(ID);
+
+--*********************************************************************************************************
+-- TABLAS SENALIZACION | MOBILIARIO URBANO --
+--*********************************************************************************************************
+
+-- -----------------------------------------------------
+-- table categoria
+-- -----------------------------------------------------
+create table jyd_categoria (
+  pk_id_categoria int not null auto_increment,
+  descripcion varchar(45) not null,
+  ruta varchar(45) not null,
+  primary key (pk_id_categoria)
+);
+
+-- -----------------------------------------------------
+-- table item
+-- -----------------------------------------------------
+create table jyd_item (
+  pk_id_item int not null auto_increment,
+  nombre varchar(45) not null,
+  descripcion varchar(45) null,
+  imagen varchar(45) null,
+  fk_categoria int not null,
+  primary key (pk_id_item, fk_categoria),
+  index fk_item_categoria1_idx (fk_categoria asc),
+  constraint fk_item_categoria1
+    foreign key (fk_categoria)
+    references jyd_categoria (pk_id_categoria)
+);
+
+-- -----------------------------------------------------
+-- table estado
+-- -----------------------------------------------------
+create table jyd_estado (
+  pk_id_estado int not null auto_increment,
+  descripcion varchar(45) null,
+  primary key (pk_id_estado)
+);
+
+-- -----------------------------------------------------
+-- table registro
+-- -----------------------------------------------------
+create table jyd_registro (
+  pk_id_registro int not null auto_increment,
+  fk_users int not null,
+  fecha_registro date null,
+  primary key (pk_id_registro, fk_users),
+  index fk_registro_users1_idx (fk_users asc),
+  constraint fk_registro_users1
+    foreign key (fk_users)
+    references users (id)
+);
+
+-- -----------------------------------------------------
+-- table registro_has_item
+-- -----------------------------------------------------
+create table jyd_registro_has_item (
+  fk_id_registro int not null,
+  fk_id_item int not null,
+  latitud double null,
+  longitud double null,
+  imagen varchar(45) null,
+  descripcion varchar(45) null,
+  fk_estado int not null,
+  primary key (fk_id_registro, fk_id_item),
+  index fk_registro_has_item_item1_idx (fk_id_item asc),
+  index fk_registro_has_item_registro1_idx (fk_id_registro asc),
+  constraint fk_registro_has_item_registro1
+    foreign key (fk_id_registro)
+    references jyd_registro (pk_id_registro),
+  constraint fk_registro_has_item_item1
+    foreign key (fk_id_item)
+    references jyd_item (pk_id_item)
+);
+
+/* jyd_categoria */
+insert into jyd_categoria (descripcion, ruta) value ('señalizacion', '/senalizacion');
+insert into jyd_categoria (descripcion, ruta) value ('mobiliario urbano', '/mobiliario');
+
+/* jyd_item */
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('señal de transito', 'pare', 'assest/img_jyd/señal de transito', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('semáforo', 'señales de control del tráfico', 'assest/img_jyd/semaforo', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('postes de soportes para señales', 'elementos de fijación al suelo o sujeción ', 'assest/img_jyd/postes_senal.png', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('porticos de soporte de señales', 'protección de seguridad', 'assest/img_jyd/porticos_de_senal.png', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('hitos kilometricos', 'distancia de inicio de carretera', 'assest/img_jyd/hitos_kilometricos.png', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('guardavia convencionales', 'barrera de seguridad metalica', 'assest/img_jyd/guardavia_convencional.png', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('marcas sobre pavimento', 'señalizacion horizontal', 'assest/img_jyd/marcas_pavimento.png', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('tachas retroreflectivas', 'marcación de carriles', 'assest/img_jyd/tachas_retroreflectivas.png', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('tachones reflectivas', 'marcación ojo de gato en carriles', 'assest/img_jyd/tachones_reflectivos.png', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('paradero', 'elemento urbano', 'assest/img_jyd/paradero.png', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('panel publicitario', 'estructura de publicidad', 'assest/img_jyd/panel_publicitario.png', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('banca de concreto', 'estructura de descanso urbano', 'assest/img_jyd/banca_concreto.png', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('banca de madera', 'estructura de descanso urbano', 'assest/img_jyd/banca_madera.png', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('baranda', 'accesibilidad de sujeción', 'assest/img_jyd/baranda.png', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('protector de arbol', 'protección contra roedores', 'assest/img_jyd/protector_de_arbol.png', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('ciclo parqueadero', 'estacionamiento de bicicletas', 'assest/img_jyd/ciclo_parqueadero.png', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('bebedero', 'suministro de agua', 'assest/img_jyd/bebedero.png', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('postes de alumbrado público ', 'suministro de iluminacion', 'assest/img_jyd/postes_alumbrado_publico.png', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('módulo de ciclo estación', 'unidad de guardado', 'assest/img_jyd/modulo_ciclo_estacion.png', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('módulo de servicio de sanitario', 'unidad humeda', 'assest/img_jyd/modulo_servisio_sanitario.png', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('módulo de información', 'proporcion de ayuda', 'assest/img_jyd/modulo_informacion.png', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('caneca basura', 'lugar de desechos', 'assest/img_jyd/caneca.png', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('silla jardin', 'estructura para parque', 'assest/img_jyd/silla.png', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('captafaros', 'dispositivos de guia optica', 'assest/img_jyd/captfaros.png', 2);
+
+/* jyd_estado */
+insert into jyd_estado (descripcion) value ('nuevo');
+insert into jyd_estado (descripcion) value ('en mal estado');
+
+/* jyd_registro */
+insert into jyd_registro (fk_users, fecha_registro) value (3, '2019-9-29');
+insert into jyd_registro (fk_users, fecha_registro) value (3, '2019-9-29');
+insert into jyd_registro (fk_users, fecha_registro) value (2, '2019-9-28');
+
+/* jyd_registro_has_jyd_item */
+insert into jyd_registro_has_item (fk_id_registro, fk_id_item, latitud, longitud, imagen, descripcion, fk_estado) 
+            value (1, 1, 4.6579711999999995, -74.1122048, 'assest/img_jyd/captura_1234', 'señal en mal estado', 2);
+insert into jyd_registro_has_item (fk_id_registro, fk_id_item, latitud, longitud, imagen, descripcion, fk_estado) 
+            value (1, 2, 4.6579711999999995, -74.1122048, 'assest/img_jyd/captura_4321', 'semaforo nuevo', 1);
+insert into jyd_registro_has_item (fk_id_registro, fk_id_item, latitud, longitud, imagen, descripcion, fk_estado) 
+            value (1, 22, 4.6579711999999995, -74.1122048, 'assest/img_jyd/captura_2341', 'caneca nueva', 1);
+insert into jyd_registro_has_item (fk_id_registro, fk_id_item, latitud, longitud, imagen, descripcion, fk_estado) 
+            value (3, 22, 4.6579711999999995, -74.1122048, 'assest/img_jyd/captura_4231', 'caneca nueva', 1);
+
+--*********************************************************************************************************
+-- Fin Tablas Inventarios Redes Secas --
+--*********************************************************************************************************        

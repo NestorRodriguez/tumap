@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class ListPage implements OnInit {
   private selectedItem: any;
   private icons = [
+    'md-map',
+    'trending-up',
     'flask',
     'wifi',
     'beer',
@@ -19,15 +21,20 @@ export class ListPage implements OnInit {
     'bluetooth',
     'build'
   ];
-  public items: Array<{ title: string; note: string; icon: string }> = [];
+  public items: Array<{ title: string; note: string; route: string; icon: string }> = [];
   constructor() {
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
+    this.items.push({
+      title: 'Señalización y mobiliario urbano',
+      note: '',
+      route: '/categorias',
+      icon: this.icons[0]
+    },
+    {
+      title: 'Aqui va otro servicio!',
+      note: '',
+      route: '/',
+      icon: this.icons[1]
+    });
   }
 
   ngOnInit() {

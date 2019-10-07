@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/categorias" routerDirection="forward">
+        <ion-icon slot="icon-only" name="arrow-round-back"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      Señalización
+    </ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button disabled>
+        <ion-icon slot="icon-only" name=""> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <span *ngFor="let item of items">  
+    <ion-grid style="background-color:#FEFEFE;">
+      <ion-row>
+        <ion-col size="12">
+          <ion-card style="border: 1px solid #0A9D97; border-radius: 10%; color: black;">
+            <ion-card-content style="background-color:white;">
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-grid style="border: 0px solid green;">
+                      <ion-row style="border: 0px solid;">
+                        <ion-col style="border: 0px solid red; width: 180px; height: 120px;">
+                          <img src="assets/LOGO AZUL.svg" style="border: 1px solid; border-radius: 100%; width: 100%; height: 100%;">
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>            
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-grid style="border: 0px solid green;">
+                      <ion-row>
+                        <ion-col><ion-title style="padding: 0%; font-size: 100%;"><b>{{ item.nombre }}</b></ion-title></ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col><p style="text-align: justify; font-size: 100%;">{{ item.descripcion }}</p></ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </span>
+</ion-content>

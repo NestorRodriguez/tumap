@@ -44,7 +44,7 @@ db.connect(function(error) {
 app.get('/', function(req, res) {
     console.log('Página de rol ');
 
-    res.send("Bienvenidos al servidor de <strong> TuMap </strong>")
+    res.send("Bienvenidos al servidor <strong> TuMap </strong>")
 });
 
 //Manejador de ruta users
@@ -1057,5 +1057,111 @@ app.route('/comercio-informal')
     })
     .put(function(req, res) {
         res.send('Update the Comercio_Informal');
-        l
     });
+
+//**************************************************************************
+// * SERVICIOS PARA SENALIZACION | MOBILIARIO URBANO 
+//**************************************************************************
+
+/* MANEJADOR DE RUTA CATEGORIA DEL ITEM */
+app.route('/categoria')
+    .get(function(req, res) {
+        console.log('Página de Validar Información ');
+        var query = db.query('select * from jyd_categoria', function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result)
+            }
+        });
+    })
+    .post(function(req, res) {
+        res.send('Add a rol');
+    })
+    .put(function(req, res) {
+        res.send('Update the rol');
+    });
+
+/* MANEJADOR DE RUTA ITEMS SENALIZACION */
+app.route('/item_senalizacion')
+    .get(function(req, res) {
+        console.log('Página de Validar Información ');
+        var query = db.query('select * from jyd_item where fk_categoria=1', function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result)
+            }
+        });
+    })
+    .post(function(req, res) {
+        res.send('Add a rol');
+    })
+    .put(function(req, res) {
+        res.send('Update the rol');
+    });
+
+/* MANEJADOR DE RUTA ITEMS MOBILIARIO URBANO */
+app.route('/item_mobiliario')
+    .get(function(req, res) {
+        console.log('Página de Validar Información ');
+        var query = db.query('select * from jyd_item where fk_categoria=2', function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result)
+            }
+        });
+    })
+    .post(function(req, res) {
+        res.send('Add a rol');
+    })
+    .put(function(req, res) {
+        res.send('Update the rol');
+    });
+
+/* MANEJADOR DE RUTA ESTADO DE REGISTRO DEL ITEM */
+app.route('/estado')
+    .get(function(req, res) {
+        console.log('Página de Validar Información ');
+        var query = db.query('select * from jyd_estado', function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result)
+            }
+        });
+    })
+    .post(function(req, res) {
+        res.send('Add a rol');
+    })
+    .put(function(req, res) {
+        res.send('Update the rol');
+    });
+
+/* MANEJADOR DE RUTA REGISTRO DEL ITEM */
+app.route('/registro')
+    .get(function(req, res) {
+        console.log('Página de Validar Información ');
+        var query = db.query('select i.nombre, a.latitud, a.longitud, e.descripcion estado, a.descripcion descripcion from jyd_registro r, jyd_registro_has_item a, jyd_item i, jyd_estado e where pk_id_registro=fk_id_registro and pk_id_estado=fk_estado and pk_id_item=fk_id_item', function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result)
+            }
+        });
+    })
+    .post(function(req, res) {
+        res.send('Add a rol');
+    })
+    .put(function(req, res) {
+        res.send('Update the rol');
+    });
+/***************************************************
+ * Fin de servicios para el inventario de suelos   *
+ **************************************************/
