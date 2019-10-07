@@ -14,12 +14,22 @@ export class AppComponent {
     {
       title: 'Home',
       url: '/home',
-      icon: 'home'
+      icon: 'ios-home'
     },
     {
-      title: 'List',
+      title: 'Servicios',
       url: '/list',
-      icon: 'list'
+      icon: 'ios-list-box'
+    },
+    {
+      title: 'Registro',
+      url: '/register',
+      icon: 'ios-person-add'
+    },
+    {
+      title: 'Cerrar Sesión',
+      url: '/',
+      icon: 'ios-exit'
     }
   ];
 

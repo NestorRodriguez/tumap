@@ -1,0 +1,30 @@
+<ion-content color="primary">
+    <ion-toolbar color="primary">
+        <ion-img class="img" src="./assets/LOGO BLANCO.svg" slot=""></ion-img>
+        <form (ngSubmit)="login(forma)" #forma="ngForm">
+            <ion-item class="loginInput01" color="primary">
+                <ion-label color="light">
+                    Usuario
+                </ion-label>
+                <ion-input type="email" required ngModel #email="ngModel" name="email" placeholder="" maxLength="200" minLength="3" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"></ion-input>
+                <!-- pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"></ion-input> -->
+            </ion-item>
+            <ion-item class="loginInput01" color="primary">
+                <ion-label color="light">
+                    Contraseña
+                </ion-label>
+                <ion-input type="password" required ngModel #clave="ngModel" name="clave" placeholder="" maxLength="200" minLength="3"></ion-input>
+            </ion-item>
+            <ion-toolbar class="loginInput02" color="primary">
+                <ion-checkbox></ion-checkbox>
+                <ion-label color="light" class="">
+                    Recordarme
+                </ion-label>
+            </ion-toolbar>
+            <ion-toolbar class="buttons" color="primary">
+                <ion-button type="submit" color="light" expand="" [disabled]="!forma.valid">Entrar</ion-button>
+                <ion-button type="submit" color="light" expand="">Registrarse</ion-button>
+            </ion-toolbar>
+        </form>
+    </ion-toolbar>
+</ion-content>
