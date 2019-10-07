@@ -892,3 +892,37 @@ insert into jf_estado(estado)
 /*CRUD tabla jf_descripcion_via*/
 insert into jf_descripcion_via(ubicacion, nombre_via, detalle, imagen, estado)
 	values (ST_GeomFromText('point(1 1)'), 'av 68', 2, '/imagen/av68', 1), (ST_GeomFromText('point(0 1)'), 'boyaca', 1, '/imagen/boyaca', 2), (ST_GeomFromText('point(1 0)'), 'cali', 3, '/imagen/cali', 3);
+
+
+--*********************************************************************************************************
+-- Creación tablas minas --
+--*********************************************************************************************************
+create table MP_EstadoActual_mina 
+(id_estadomina int not null primary key auto_increment , 
+nombre_estadomina varchar(20) not null);
+
+create table MP_tipo_material 
+(id_tipomaterial int not null primary key auto_increment , 
+nombre_tipomaterial varchar(20) not null);
+
+create table MP_Sistema_Explotacion 
+(id_sistemaexplotacion int not null primary key auto_increment , 
+nombre_sistemaexplotacion varchar(20) not null);
+
+Create table MP_Registro_Mina
+(id_registromina int not null primary key auto_increment , 
+ubicacion POINT not null,
+mineral varchar(40) not null,
+trabajadores varchar(40) not null,
+observacion varchar(40) not null,
+id_sistemaexplotacion int not null,
+id_tipomaterial int not null,
+id_estadomina int not null,
+FOREIGN KEY (id_sistemaexplotacion) REFERENCES MP_Sistema_Explotacion(id_sistemaexplotacion),
+FOREIGN KEY (id_tipomaterial) REFERENCES MP_tipo_material(id_tipomaterial),
+FOREIGN KEY (id_estadomina) REFERENCES MP_EstadoActual_mina(id_estadomina)
+)
+
+--*********************************************************************************************************
+-- Fin Tablas Minas --
+--*********************************************************************************************************
