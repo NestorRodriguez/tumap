@@ -1059,3 +1059,107 @@ app.route('/comercio-informal')
         res.send('Update the Comercio_Informal');
         l
     });
+
+    /***************************************************
+ * Comienzo de servicios para vias   *
+ **************************************************/
+
+// Manejador de ruta vias
+
+router
+    .get('/vias', (req, res) => {
+        console.log('Consultar datos jf_descripcion_via');
+        var query = db.query('select * from jf_descripcion_via', (error, result) => {
+            try {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(result);
+                    res.json(result)
+                }
+            } catch (error) {
+                res.json({ error: error.message })
+            }
+        });
+    })
+    .get('/vias/:id', (req, res) => {
+        const id = req.params.id;
+        const sql = `SELECT * FROM jf_descripcion_via WHERE id='${id}';`;
+        const query = db.query(sql, (error, result) => {
+            try {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(result);
+                    const [data] = result;
+                    res.json(data)
+                }
+            } catch (error) {
+                res.json({ error: error.message })
+            }
+        });
+    })
+    .post('/vias', (req, res) => {
+        const dato = req.body
+
+        const sql = `INSERT INTO jf_descripcion_via (ubicacion, nombre_via, detalle, imagen, estado)
+            values (${dato.ubicacion}, ${dato.nombre_via}, ${dato.detalle}, ${dato.imagen}, ${dato.estado})`;
+
+        db.query(sql, (error, result) => {
+            if (error) {
+                res.json({ error: error })
+            } else {
+                res.json(result)
+            }
+        });
+    })
+    .put('/vias/:id', (req, res) => {
+
+        const id = req.params.id;
+        const dato = {
+            ubicacion: req.body.ubicacion,
+            nombre_via: req.body.nombre_via,
+            detalle: req.body.detalle,
+            imagen: req.body.imagen,
+            estado: req.body.estado,
+        };
+
+        let sets = [];
+        for (i in dato) {
+            if (dato[i] || dato[i] == 0) {
+                sets.push(`${i}='${dato[i]}'`);
+            }
+        }
+
+        const sql = `UPDATE jf_descripcion_via SET ${sets.join(', ')} WHERE id='${id}';`;
+
+        console.log(sql);
+
+        db.query(sql, (error, result) => {
+            if (error) {
+                res.json({ error: error })
+            } else {
+                res.json(result)
+            }
+        });
+    })
+    .delete('/vias/:id', (req, res) => {
+        const id = req.params.id;
+        const sql = `DELETE FROM jf_descripcion_via WHERE id='${id}';`;
+        const query = db.query(sql, (error, result) => {
+            try {
+                if (error) {
+                    throw error;
+                } else {
+                    res.json(result)
+                }
+            } catch (error) {
+                res.json({ error: error.message })
+            }
+        });
+    });
+app.use(router);
+
+/***************************************************
+ * Fin de servicios para vias   *
+ **************************************************/
