@@ -19,8 +19,8 @@ app.use(bodyParser.json());
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "",
-    database: "hidrico",
+    password: "12345",
+    database: "tumap",
     port: 3306,
     multipleStatements: true
 });
@@ -33,7 +33,7 @@ db.connect(function(error) {
         console.log(`Base de datos conectada!`);
 });
 
-app.get('/', function (req, res) {
+app.get('/', function(req, res) {
     console.log('Página de Inicio ');
     res.send("Bienvenidos al servidor <strong> TuMap </strong>")
 });
@@ -1191,70 +1191,70 @@ router
         });
     });
 
-    app.use(router);
+app.use(router);
 /********************************************************************** 
  * FIN Servicios para levantamiento infromación predial
  ***********************************************************************/
 
- // Manejador de ruta Registro de Información
+// Manejador de ruta Registro de Información
 app.route('/registro_info')
-.get(function(req, res) {
-    console.log('Página de Registro de Información ');
-    var query = db.query('select * from registro_info', function(error, result) {
-        if (error) {
-            throw error;
-        } else {
-            console.log(result);
-            res.json(result)
-        }
+    .get(function(req, res) {
+        console.log('Página de Registro de Información ');
+        var query = db.query('select * from registro_info', function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result)
+            }
+        });
+    })
+    .post(function(req, res) {
+        res.send('Add a rol');
+    })
+    .put(function(req, res) {
+        res.send('Update the rol');
     });
-})
-.post(function(req, res) {
-    res.send('Add a rol');
-})
-.put(function(req, res) {
-    res.send('Update the rol');
-});
 
 // Manejador de ruta Administrador
 app.route('/administrador')
-.get(function(req, res) {
-    console.log('Página de Administradores ');
-    var query = db.query('select * from administrador', function(error, result) {
-        if (error) {
-            throw error;
-        } else {
-            console.log(result);
-            res.json(result)
-        }
+    .get(function(req, res) {
+        console.log('Página de Administradores ');
+        var query = db.query('select * from administrador', function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result)
+            }
+        });
+    })
+    .post(function(req, res) {
+        res.send('Add a rol');
+    })
+    .put(function(req, res) {
+        res.send('Update the rol');
     });
-})
-.post(function(req, res) {
-    res.send('Add a rol');
-})
-.put(function(req, res) {
-    res.send('Update the rol');
-});
 
 // Manejador de ruta Validar Información
 app.route('/validar_info')
-.get(function(req, res) {
-    console.log('Página de Validar Información ');
-    var query = db.query('select * from validar_info', function(error, result) {
-        if (error) {
-            throw error;
-        } else {
-            console.log(result);
-            res.json(result)
-        }
+    .get(function(req, res) {
+        console.log('Página de Validar Información ');
+        var query = db.query('select * from validar_info', function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result)
+            }
+        });
+    })
+    .post(function(req, res) {
+        res.send('Add a rol');
+    })
+    .put(function(req, res) {
+        res.send('Update the rol');
     });
-})
-.post(function(req, res) {
-    res.send('Add a rol');
-})
-.put(function(req, res) {
-    res.send('Update the rol');
-});
 
 //**************************************************************************
 // dbo inicio 
@@ -1758,7 +1758,7 @@ app.route('/registro')
  * FIN DE SERVICIOS PARA SENALIZACION | MOBILIARIO URBANO    *
  ************************************************************/
 
-    /***************************************************
+/***************************************************
  * Comienzo de servicios para vias   *
  **************************************************/
 
@@ -1862,281 +1862,281 @@ app.use(router);
  * Fin de servicios para vias   *
  **************************************************/
 
- /***************************************************
+/***************************************************
  * Comienzo de servicios para Minas   *
  **************************************************/
 // MP_EstadoActual_mina
 
 router
-.get('/Minas/EstadoActual', (req, res) => {
-    console.log('Consultar datos MP_EstadoActual_mina');
-    var query = db.query('select * from MP_EstadoActual_mina', (error, result) => {
-        try {
-            if (error) {
-                throw error;
-            } else {
-                console.log(result);
-                res.json(result)
+    .get('/Minas/EstadoActual', (req, res) => {
+        console.log('Consultar datos MP_EstadoActual_mina');
+        var query = db.query('select * from MP_EstadoActual_mina', (error, result) => {
+            try {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(result);
+                    res.json(result)
+                }
+            } catch (error) {
+                res.json({ error: error.message })
             }
-        } catch (error) {
-            res.json({ error: error.message })
-        }
-    });
-})
-.get('/Minas/EstadoActual/:id_estadomina', (req, res) => {
-    const id_estadomina = req.params.id_estadomina;
-    const sql = `SELECT * FROM MP_EstadoActual_mina WHERE id_estadomina='${id_estadomina}';`;
-    const query = db.query(sql, (error, result) => {
-        try {
-            if (error) {
-                throw error;
-            } else {
-                console.log(result);
-                const [data] = result;
-                res.json(data)
+        });
+    })
+    .get('/Minas/EstadoActual/:id_estadomina', (req, res) => {
+        const id_estadomina = req.params.id_estadomina;
+        const sql = `SELECT * FROM MP_EstadoActual_mina WHERE id_estadomina='${id_estadomina}';`;
+        const query = db.query(sql, (error, result) => {
+            try {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(result);
+                    const [data] = result;
+                    res.json(data)
+                }
+            } catch (error) {
+                res.json({ error: error.message })
             }
-        } catch (error) {
-            res.json({ error: error.message })
-        }
-    });
-})
-.post('/Minas/EstadoActual', (req, res) => {
-    const dato = req.body
+        });
+    })
+    .post('/Minas/EstadoActual', (req, res) => {
+        const dato = req.body
 
-    const sql = `INSERT INTO MP_EstadoActual_mina (nombre_estadomina)
+        const sql = `INSERT INTO MP_EstadoActual_mina (nombre_estadomina)
         values (${dato.nombre_estadomina})`;
 
-    db.query(sql, (error, result) => {
-        if (error) {
-            res.json({ error: error })
-        } else {
-            res.json(result)
-        }
-    });
-})
-.put('Minas/EstadoActual/:id_estadomina', (req, res) => {
-
-    const id_estadomina = req.params.id_estadomina;
-    const dato = {
-        nombre: req.body.nombre_estadomina,
-    };
-
-    let sets = [];
-    for (i in dato) {
-        if (dato[i] || dato[i] == 0) {
-            sets.push(`${i}='${dato[i]}'`);
-        }
-    }
-
-    const sql = `UPDATE MP_EstadoActual_mina SET ${sets.join(', ')} WHERE id_estadomina='${id_estadomina}';`;
-
-    console.log(sql);
-
-    db.query(sql, (error, result) => {
-        if (error) {
-            res.json({ error: error })
-        } else {
-            res.json(result)
-        }
-    });
-})
-.delete('Minas/EstadoActual/:id_estadomina', (req, res) => {
-    const id_estadomina = req.params.id_estadomina;
-    const sql = `DELETE FROM MP_EstadoActual_mina WHERE id_estadomina='${id_estadomina}';`;
-    const query = db.query(sql, (error, result) => {
-        try {
+        db.query(sql, (error, result) => {
             if (error) {
-                throw error;
+                res.json({ error: error })
             } else {
                 res.json(result)
             }
-        } catch (error) {
-            res.json({ error: error.message })
+        });
+    })
+    .put('Minas/EstadoActual/:id_estadomina', (req, res) => {
+
+        const id_estadomina = req.params.id_estadomina;
+        const dato = {
+            nombre: req.body.nombre_estadomina,
+        };
+
+        let sets = [];
+        for (i in dato) {
+            if (dato[i] || dato[i] == 0) {
+                sets.push(`${i}='${dato[i]}'`);
+            }
         }
+
+        const sql = `UPDATE MP_EstadoActual_mina SET ${sets.join(', ')} WHERE id_estadomina='${id_estadomina}';`;
+
+        console.log(sql);
+
+        db.query(sql, (error, result) => {
+            if (error) {
+                res.json({ error: error })
+            } else {
+                res.json(result)
+            }
+        });
+    })
+    .delete('Minas/EstadoActual/:id_estadomina', (req, res) => {
+        const id_estadomina = req.params.id_estadomina;
+        const sql = `DELETE FROM MP_EstadoActual_mina WHERE id_estadomina='${id_estadomina}';`;
+        const query = db.query(sql, (error, result) => {
+            try {
+                if (error) {
+                    throw error;
+                } else {
+                    res.json(result)
+                }
+            } catch (error) {
+                res.json({ error: error.message })
+            }
+        });
     });
-});
 
 // MP_tipo_material 
 
 router
-.get('/Minas/TipoMaterial', (req, res) => {
-    console.log('Consultar datos MP_tipo_material');
-    var query = db.query('select * from MP_tipo_material', (error, result) => {
-        try {
-            if (error) {
-                throw error;
-            } else {
-                console.log(result);
-                res.json(result)
+    .get('/Minas/TipoMaterial', (req, res) => {
+        console.log('Consultar datos MP_tipo_material');
+        var query = db.query('select * from MP_tipo_material', (error, result) => {
+            try {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(result);
+                    res.json(result)
+                }
+            } catch (error) {
+                res.json({ error: error.message })
             }
-        } catch (error) {
-            res.json({ error: error.message })
-        }
-    });
-})
-.get('/Minas/TipoMaterial/:id_tipomaterial', (req, res) => {
-    const id_tipomaterial = req.params.id_tipomaterial;
-    const sql = `SELECT * FROM MP_tipo_material WHERE id_tipomaterial='${id_tipomaterial}';`;
-    const query = db.query(sql, (error, result) => {
-        try {
-            if (error) {
-                throw error;
-            } else {
-                console.log(result);
-                const [data] = result;
-                res.json(data)
+        });
+    })
+    .get('/Minas/TipoMaterial/:id_tipomaterial', (req, res) => {
+        const id_tipomaterial = req.params.id_tipomaterial;
+        const sql = `SELECT * FROM MP_tipo_material WHERE id_tipomaterial='${id_tipomaterial}';`;
+        const query = db.query(sql, (error, result) => {
+            try {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(result);
+                    const [data] = result;
+                    res.json(data)
+                }
+            } catch (error) {
+                res.json({ error: error.message })
             }
-        } catch (error) {
-            res.json({ error: error.message })
-        }
-    });
-})
-.post('/Minas/TipoMaterial', (req, res) => {
-    const dato = req.body
+        });
+    })
+    .post('/Minas/TipoMaterial', (req, res) => {
+        const dato = req.body
 
-    const sql = `INSERT INTO MP_tipo_material (nombre_tipomaterial)
+        const sql = `INSERT INTO MP_tipo_material (nombre_tipomaterial)
         values (${dato.nombre_tipomaterial})`;
 
-    db.query(sql, (error, result) => {
-        if (error) {
-            res.json({ error: error })
-        } else {
-            res.json(result)
-        }
-    });
-})
-.put('/Minas/TipoMaterial/:id_tipomaterial', (req, res) => {
-
-    const id_tipomaterial = req.params.id_tipomaterial;
-    const dato = {
-        nombre_tipomaterial: req.body.nombre_tipomaterial,
-    };
-
-    let sets = [];
-    for (i in dato) {
-        if (dato[i] || dato[i] == 0) {
-            sets.push(`${i}='${dato[i]}'`);
-        }
-    }
-
-    const sql = `UPDATE MP_tipo_material SET ${sets.join(', ')} WHERE id_tipomaterial='${id_tipomaterial}';`;
-
-    console.log(sql);
-
-    db.query(sql, (error, result) => {
-        if (error) {
-            res.json({ error: error })
-        } else {
-            res.json(result)
-        }
-    });
-})
-.delete('/Minas/TipoMaterial/:id_tipomaterial', (req, res) => {
-    const id_tipomaterial = req.params.id_tipomaterial;
-    const sql = `DELETE FROM MP_tipo_material WHERE id_tipomaterial='${id_tipomaterial}';`;
-    const query = db.query(sql, (error, result) => {
-        try {
+        db.query(sql, (error, result) => {
             if (error) {
-                throw error;
+                res.json({ error: error })
             } else {
                 res.json(result)
             }
-        } catch (error) {
-            res.json({ error: error.message })
+        });
+    })
+    .put('/Minas/TipoMaterial/:id_tipomaterial', (req, res) => {
+
+        const id_tipomaterial = req.params.id_tipomaterial;
+        const dato = {
+            nombre_tipomaterial: req.body.nombre_tipomaterial,
+        };
+
+        let sets = [];
+        for (i in dato) {
+            if (dato[i] || dato[i] == 0) {
+                sets.push(`${i}='${dato[i]}'`);
+            }
         }
+
+        const sql = `UPDATE MP_tipo_material SET ${sets.join(', ')} WHERE id_tipomaterial='${id_tipomaterial}';`;
+
+        console.log(sql);
+
+        db.query(sql, (error, result) => {
+            if (error) {
+                res.json({ error: error })
+            } else {
+                res.json(result)
+            }
+        });
+    })
+    .delete('/Minas/TipoMaterial/:id_tipomaterial', (req, res) => {
+        const id_tipomaterial = req.params.id_tipomaterial;
+        const sql = `DELETE FROM MP_tipo_material WHERE id_tipomaterial='${id_tipomaterial}';`;
+        const query = db.query(sql, (error, result) => {
+            try {
+                if (error) {
+                    throw error;
+                } else {
+                    res.json(result)
+                }
+            } catch (error) {
+                res.json({ error: error.message })
+            }
+        });
     });
-});
 
 //MP_Sistema_Explotacion
 
 router
-.get('/Minas/SistemaExplotacion', (req, res) => {
-    console.log('Consultar datos MP_Sistema_Explotacion');
-    var query = db.query('select * from MP_Sistema_Explotacion', (error, result) => {
-        try {
-            if (error) {
-                throw error;
-            } else {
-                console.log(result);
-                res.json(result)
+    .get('/Minas/SistemaExplotacion', (req, res) => {
+        console.log('Consultar datos MP_Sistema_Explotacion');
+        var query = db.query('select * from MP_Sistema_Explotacion', (error, result) => {
+            try {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(result);
+                    res.json(result)
+                }
+            } catch (error) {
+                res.json({ error: error.message })
             }
-        } catch (error) {
-            res.json({ error: error.message })
-        }
-    });
-})
-.get('/Minas/SistemaExplotacion:id_sistemaexplotacion', (req, res) => {
-    const id_sistemaexplotacion = req.params.id_sistemaexplotacion;
-    const sql = `SELECT * FROM MP_Sistema_Explotacion WHERE id_sistemaexplotacion='${id_sistemaexplotacion}';`;
-    const query = db.query(sql, (error, result) => {
-        try {
-            if (error) {
-                throw error;
-            } else {
-                console.log(result);
-                const [data] = result;
-                res.json(data)
+        });
+    })
+    .get('/Minas/SistemaExplotacion:id_sistemaexplotacion', (req, res) => {
+        const id_sistemaexplotacion = req.params.id_sistemaexplotacion;
+        const sql = `SELECT * FROM MP_Sistema_Explotacion WHERE id_sistemaexplotacion='${id_sistemaexplotacion}';`;
+        const query = db.query(sql, (error, result) => {
+            try {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(result);
+                    const [data] = result;
+                    res.json(data)
+                }
+            } catch (error) {
+                res.json({ error: error.message })
             }
-        } catch (error) {
-            res.json({ error: error.message })
-        }
-    });
-})
-.post('/Minas/SistemaExplotacion', (req, res) => {
-    const dato = req.body
+        });
+    })
+    .post('/Minas/SistemaExplotacion', (req, res) => {
+        const dato = req.body
 
-    const sql = `INSERT INTO MP_Sistema_Explotacion (nombre_sistemaexplotacion)
+        const sql = `INSERT INTO MP_Sistema_Explotacion (nombre_sistemaexplotacion)
         values (${dato.nombre_sistemaexplotacion})`;
 
-    db.query(sql, (error, result) => {
-        if (error) {
-            res.json({ error: error })
-        } else {
-            res.json(result)
-        }
-    });
-})
-.put('/Minas/SistemaExplotacion:id_sistemaexplotacion', (req, res) => {
-
-    const id_sistemaexplotacion = req.params.id_sistemaexplotacion;
-    const dato = {
-        nombre_sistemaexplotacion: req.body.nombre_sistemaexplotacion,
-    };
-
-    let sets = [];
-    for (i in dato) {
-        if (dato[i] || dato[i] == 0) {
-            sets.push(`${i}='${dato[i]}'`);
-        }
-    }
-
-    const sql = `UPDATE MP_Sistema_Explotacion SET ${sets.join(', ')} WHERE id_sistemaexplotacion='${id_sistemaexplotacion}';`;
-
-    console.log(sql);
-
-    db.query(sql, (error, result) => {
-        if (error) {
-            res.json({ error: error })
-        } else {
-            res.json(result)
-        }
-    });
-})
-.delete('/Minas/SistemaExplotacion:id_sistemaexplotacion', (req, res) => {
-    const id_sistemaexplotacion = req.params.id_sistemaexplotacion;
-    const sql = `DELETE FROM MP_Sistema_Explotacion WHERE id_sistemaexplotacion='${id_sistemaexplotacion}';`;
-    const query = db.query(sql, (error, result) => {
-        try {
+        db.query(sql, (error, result) => {
             if (error) {
-                throw error;
+                res.json({ error: error })
             } else {
                 res.json(result)
             }
-        } catch (error) {
-            res.json({ error: error.message })
+        });
+    })
+    .put('/Minas/SistemaExplotacion:id_sistemaexplotacion', (req, res) => {
+
+        const id_sistemaexplotacion = req.params.id_sistemaexplotacion;
+        const dato = {
+            nombre_sistemaexplotacion: req.body.nombre_sistemaexplotacion,
+        };
+
+        let sets = [];
+        for (i in dato) {
+            if (dato[i] || dato[i] == 0) {
+                sets.push(`${i}='${dato[i]}'`);
+            }
         }
+
+        const sql = `UPDATE MP_Sistema_Explotacion SET ${sets.join(', ')} WHERE id_sistemaexplotacion='${id_sistemaexplotacion}';`;
+
+        console.log(sql);
+
+        db.query(sql, (error, result) => {
+            if (error) {
+                res.json({ error: error })
+            } else {
+                res.json(result)
+            }
+        });
+    })
+    .delete('/Minas/SistemaExplotacion:id_sistemaexplotacion', (req, res) => {
+        const id_sistemaexplotacion = req.params.id_sistemaexplotacion;
+        const sql = `DELETE FROM MP_Sistema_Explotacion WHERE id_sistemaexplotacion='${id_sistemaexplotacion}';`;
+        const query = db.query(sql, (error, result) => {
+            try {
+                if (error) {
+                    throw error;
+                } else {
+                    res.json(result)
+                }
+            } catch (error) {
+                res.json({ error: error.message })
+            }
+        });
     });
-});
 
 //MP_Registro_Mina
 
@@ -2240,7 +2240,7 @@ app.use(router);
  * Fin servicio Minas   *
  **************************************************/
 
- //Inicio de servidor NodeJS
-app.listen(3000, function () {
+//Inicio de servidor NodeJS
+app.listen(3000, function() {
     console.log(`Server running at port ${PORT}`);
 });
