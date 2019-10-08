@@ -1260,18 +1260,18 @@ app.route('/validar_info')
 // dbo inicio 
 //*Ej: http://localhost:3000/dbo_pregunta/1**********************************
 app.route('/dbo_pregunta/:orden')
-    .get(function(req, res) {
-        console.log('Página de pregunta ');
-        var orden = req.params.orden;
-        var query = db.query('select * from dbo_pregunta where orden = ?', orden, function(error, result) {
-            if (error) {
-                throw error;
-            } else {
-                console.log(result);
-                res.json(result);
-            }
-        });
+app.get(function(req, res) {
+    console.log('Página de pregunta ');
+    var orden = req.params.orden;
+    var query = db.query('select * from dbo_pregunta where orden = ?', orden, function(error, result) {
+        if (error) {
+            throw error;
+        } else {
+            console.log(result);
+            res.json(result);
+        }
     });
+});
 
 // dbo Lista las imagen por imagensuelos 30/09/2019
 app.route('/dbo_imagen/:id_Pregunta')
@@ -1289,20 +1289,74 @@ app.route('/dbo_imagen/:id_Pregunta')
     });
 
 // dbo Lista inscripciones por documento 30/09/2019
-app.route('/dbo_inscripcion/:documento')
-    .get(function(req, res) {
-        console.log('Página de inscripcion');
-        var documento = req.params.documento;
-        var query = db.query('select * from dbo_inscripcion Where documento = ?', documento, function(error, result) {
-            if (error) {
-                throw error;
-            } else {
-                console.log(result);
-                res.json(result);
-            }
-        });
+
+app.get('/dbo_inscripcion/:documento', function(req, res) {
+    const { documento } = req.params;
+    console.log('Página de inscripcion');
+    var query = db.query('select  * from dbo_inscripcion Where documento = ?', [documento], function(error, result) {
+        if (error) {
+            throw error;
+        } else {
+            console.log(result);
+            res.json(result);
+        }
+    });
+    if (query.lenght > 0) {
+        return res.json(query[0]);
+    }
+    res.json({ message: 'documento no existe' });
+})
+app.post("/dbo_inscripcion", function(req, res) {
+    var sql = `
+        INSERT INTO dbo_inscripcion 
+        (
+            documento, 
+            nombre, 
+            posicionamiento, 
+            departamento, 
+            munipio
+        ) VALUES (
+            '${req.body.documento}',
+            '${req.body.nombre}',
+            '${req.body.posicionamiento}',
+            '${req.body.departamento}',
+            '${req.body.munipio}'
+        )`;
+
+    console.log('Add inscripcion');
+    var query = db.query(sql, function(error, result) {
+        if (error) {
+            throw error;
+        } else {
+            console.log(result);
+            res.json(result);
+        }
+    });
+    res.json({ text: 'Datos Ingresados ' + sql });
+})
+
+app.put("/dbo_inscripcion/:id", function(req, res) {
+    const { id } = req.params;
+
+    const sql = `UPDATE dbo_inscripcion SET 
+    documento='${req.body.documento}', 
+    nombre='${req.body.nombre}', 
+    posicionamiento='${req.body.posicionamiento}', 
+    departamento='${req.body.departamento}', 
+    munipio='${req.body.munipio}'
+    WHERE id='${id}';`;
+
+    var query = db.query(sql, function(error, result) {
+        if (error) {
+            throw error;
+        } else {
+            console.log(result);
+            res.json(result);
+        }
     });
 
+    res.json({ text: 'Datos Actualizados ' + sql });
+});
 // dbo Lista respuestas 30/09/2019
 app.route('/dbo_respuesta/:id_inscripcion')
     .get(function(req, res) {
