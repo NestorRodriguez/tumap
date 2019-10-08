@@ -30,7 +30,11 @@ const routes: Routes = [
   { path: 'formulariosuelos', loadChildren: './usosuelos/formulario/formulario.module#FormularioPageModule' },
   { path: 'categorias', loadChildren: './jyd-categorias/jyd-categorias.module#JydCategoriasPageModule' },
   { path: 'senalizacion', loadChildren: './senalizacion/senalizacion.module#SenalizacionPageModule' },
-  { path: 'mobiliario', loadChildren: './mobiliario/mobiliario.module#MobiliarioPageModule' }
+  { path: 'mobiliario', loadChildren: './mobiliario/mobiliario.module#MobiliarioPageModule' },
+  { path: 'inventario-redes-secas/inicio', loadChildren: './irs/inicio/inicio.module#InicioPageModule' },
+  { path: 'inventario-postes', loadChildren: './irs/inventario-postes/inventario-postes.module#InventarioPostesPageModule' },  { path: 'inventario-otros', loadChildren: './irs/inventario-otros/inventario-otros.module#InventarioOtrosPageModule' },
+
+
 ];
 
 @NgModule({

@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> Redes Secas </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="button-container" *ngFor="let t of tiposRedes">
+    <ion-button color="primary" expand="block" fill="outline" size="large" shape="round" [routerLink]="getRouterLink(t.tipo)">
+      {{ t.nombre }}
+    </ion-button>
+  </div>
+</ion-content>

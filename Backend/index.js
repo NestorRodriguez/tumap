@@ -1356,7 +1356,7 @@ app.route('/dbo_vlistadotodo')
  *************************************************************************************/
 
 app.get('/irs-tipos-redes', (req, res) => {
-    const sql = 'SELECT id, nombre, icono FROM irs_tipos_redes';
+    const sql = 'SELECT id, nombre, tipo, icono FROM irs_tipos_redes';
     db.query(sql, (error, result) => {
         if (error) {
             res.json({

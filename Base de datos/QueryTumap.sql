@@ -540,7 +540,7 @@ CREATE TABLE IF NOT EXISTS `irs_estados_redes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `irs_inventarios_otros` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -556,7 +556,7 @@ CREATE TABLE IF NOT EXISTS `irs_inventarios_otros` (
   `fecha` datetime NOT NULL,
   `ip` varchar(60) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `irs_inventarios_postes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -574,32 +574,33 @@ CREATE TABLE IF NOT EXISTS `irs_inventarios_postes` (
   `fecha` datetime NOT NULL,
   `ip` varchar(60) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `irs_materiales_postes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `irs_operadores_celulares` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
   `logotipo` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `irs_tipos_redes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
+  `tipo` tinyint(1) unsigned NOT NULL,
   `icono` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `irs_estados_redes` (`nombre`) VALUES ('Bueno'), ('Regular'), ('Malo');
 INSERT INTO `irs_materiales_postes` (`nombre`) VALUES ('Concreto'), ('Madera'), ('Metal');
 INSERT INTO `irs_operadores_celulares` (`nombre`, `logotipo`) VALUES ('Claro', 'claro.svg'), ('Movistar', 'movistar.svg'), ('Tigo', 'tigo.svg'), ('Avantel', 'avantel.svg');
-INSERT INTO `irs_tipos_redes` (`nombre`, `icono`) VALUES ('Postes', 'postes.svg'), ('Torres', 'torres.svg'), ('Antenas', 'antenas.svg'), ('Armarios', 'armarios.svg');
+INSERT INTO `irs_tipos_redes` (`nombre`, `tipo`, `icono`) VALUES ('Postes', 1, 'postes.svg'), ('Torres', 0, 'torres.svg'), ('Antenas', 0, 'antenas.svg'), ('Armarios', 0, 'armarios.svg');
 
 --*********************************************************************************************************
 -- Fin Tablas Inventarios Redes Secas --
