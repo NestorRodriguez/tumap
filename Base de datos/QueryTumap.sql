@@ -540,7 +540,7 @@ CREATE TABLE IF NOT EXISTS `irs_estados_redes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `irs_inventarios_otros` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -556,7 +556,7 @@ CREATE TABLE IF NOT EXISTS `irs_inventarios_otros` (
   `fecha` datetime NOT NULL,
   `ip` varchar(60) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `irs_inventarios_postes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -574,32 +574,33 @@ CREATE TABLE IF NOT EXISTS `irs_inventarios_postes` (
   `fecha` datetime NOT NULL,
   `ip` varchar(60) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `irs_materiales_postes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `irs_operadores_celulares` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
   `logotipo` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `irs_tipos_redes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
+  `tipo` tinyint(1) unsigned NOT NULL,
   `icono` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `irs_estados_redes` (`nombre`) VALUES ('Bueno'), ('Regular'), ('Malo');
 INSERT INTO `irs_materiales_postes` (`nombre`) VALUES ('Concreto'), ('Madera'), ('Metal');
 INSERT INTO `irs_operadores_celulares` (`nombre`, `logotipo`) VALUES ('Claro', 'claro.svg'), ('Movistar', 'movistar.svg'), ('Tigo', 'tigo.svg'), ('Avantel', 'avantel.svg');
-INSERT INTO `irs_tipos_redes` (`nombre`, `icono`) VALUES ('Postes', 'postes.svg'), ('Torres', 'torres.svg'), ('Antenas', 'antenas.svg'), ('Armarios', 'armarios.svg');
+INSERT INTO `irs_tipos_redes` (`nombre`, `tipo`, `icono`) VALUES ('Postes', 1, 'irs-postes.svg'), ('Torres', 0, 'irs-torres.svg'), ('Antenas', 0, 'irs-antenas.svg'), ('Armarios', 0, 'irs-armarios.svg');
 
 --*********************************************************************************************************
 -- Fin Tablas Inventarios Redes Secas --
@@ -892,3 +893,126 @@ insert into jf_estado(estado)
 /*CRUD tabla jf_descripcion_via*/
 insert into jf_descripcion_via(ubicacion, nombre_via, detalle, imagen, estado)
 	values (ST_GeomFromText('point(1 1)'), 'av 68', 2, '/imagen/av68', 1), (ST_GeomFromText('point(0 1)'), 'boyaca', 1, '/imagen/boyaca', 2), (ST_GeomFromText('point(1 0)'), 'cali', 3, '/imagen/cali', 3);
+
+
+--*********************************************************************************************************
+-- Creación tablas minas --
+--*********************************************************************************************************
+create table MP_EstadoActual_mina 
+(id_estadomina int not null primary key auto_increment , 
+nombre_estadomina varchar(20) not null);
+
+create table MP_tipo_material 
+(id_tipomaterial int not null primary key auto_increment , 
+nombre_tipomaterial varchar(20) not null);
+
+create table MP_Sistema_Explotacion 
+(id_sistemaexplotacion int not null primary key auto_increment , 
+nombre_sistemaexplotacion varchar(20) not null);
+
+Create table MP_Registro_Mina
+(id_registromina int not null primary key auto_increment , 
+ubicacion POINT not null,
+mineral varchar(40) not null,
+trabajadores varchar(40) not null,
+observacion varchar(40) not null,
+id_sistemaexplotacion int not null,
+id_tipomaterial int not null,
+id_estadomina int not null,
+FOREIGN KEY (id_sistemaexplotacion) REFERENCES MP_Sistema_Explotacion(id_sistemaexplotacion),
+FOREIGN KEY (id_tipomaterial) REFERENCES MP_tipo_material(id_tipomaterial),
+FOREIGN KEY (id_estadomina) REFERENCES MP_EstadoActual_mina(id_estadomina)
+)
+
+--*********************************************************************************************************
+-- Fin Tablas Minas --
+--*********************************************************************************************************
+
+--*********************************************************************************************************
+-- Creación tablas Hydrico --
+--*********************************************************************************************************
+CREATE TABLE IF NOT EXISTS `connections` (
+  `id_Connections` int(11) NOT NULL AUTO_INCREMENT,
+  `description` varchar(500) DEFAULT NULL,
+  `image` varchar(500) DEFAULT NULL,
+  `Users_id_User` int(11) NOT NULL,
+  PRIMARY KEY (`id_Connections`),
+  KEY `fk_Conexiones_Users1_idx` (`Users_id_User`),
+  CONSTRAINT `fk_Conexiones_Users1` FOREIGN KEY (`Users_id_User`) REFERENCES `users` (`id_User`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `coverages` (
+  `id_Coverage` int(11) NOT NULL AUTO_INCREMENT,
+  `color` enum('Café','Amarillo','blanca','Incoloro') DEFAULT NULL,
+  `other_color` varchar(30) DEFAULT NULL,
+  `pressure` enum('Alta','Media','Baja') DEFAULT NULL,
+  `type` enum('Intermitente','Permanente') DEFAULT NULL,
+  `Users_id_User` int(11) NOT NULL,
+  PRIMARY KEY (`id_Coverage`),
+  KEY `fk_Cobertura_Users1_idx` (`Users_id_User`),
+  CONSTRAINT `fk_Cobertura_Users1` FOREIGN KEY (`Users_id_User`) REFERENCES `users` (`id_User`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1ethnobotany;
+
+CREATE TABLE IF NOT EXISTS `ethnobotany` (
+  `id_Ethnobotany` int(11) NOT NULL AUTO_INCREMENT,
+  `common_name` varchar(50) NOT NULL,
+  `image` varchar(500) DEFAULT NULL,
+  `use` enum('Medicinal','Alimenticia','Decorativa') DEFAULT NULL,
+  `users_id_User` int(11) NOT NULL,
+  PRIMARY KEY (`id_Ethnobotany`),
+  KEY `fk_Ethnobotany_users1_idx` (`users_id_User`),
+  CONSTRAINT `fk_Ethnobotany_users1` FOREIGN KEY (`users_id_User`) REFERENCES `users` (`id_User`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `grown` (
+  `id_Grown` int(11) NOT NULL AUTO_INCREMENT,
+  `level` enum('Nivel Media','Nivel alto') DEFAULT NULL,
+  `Users_id_User` int(11) NOT NULL,
+  PRIMARY KEY (`id_Grown`),
+  KEY `fk_Crecidas_Users1_idx` (`Users_id_User`),
+  CONSTRAINT `fk_Crecidas_Users1` FOREIGN KEY (`Users_id_User`) REFERENCES `users` (`id_User`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `rol` (
+  `id_Rol` int(11) NOT NULL AUTO_INCREMENT,
+  `name_description` varchar(45) NOT NULL,
+  PRIMARY KEY (`id_Rol`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `sheddings` (
+  `id_Sheddings` int(11) NOT NULL AUTO_INCREMENT,
+  `liq_description` varchar(500) DEFAULT NULL,
+  `img_liq` varchar(500) DEFAULT NULL,
+  `solid_descripcion` varchar(500) DEFAULT NULL,
+  `img_solid` varchar(500) DEFAULT NULL,
+  `Users_id_User` int(11) NOT NULL,
+  PRIMARY KEY (`id_Sheddings`),
+  KEY `fk_Vertimientos_Users1_idx` (`Users_id_User`),
+  CONSTRAINT `fk_Vertimientos_Users1` FOREIGN KEY (`Users_id_User`) REFERENCES `users` (`id_User`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `id_User` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(40) NOT NULL,
+  `lastname` varchar(40) NOT NULL,
+  `identification_card` int(11) NOT NULL,
+  `email` varchar(40) NOT NULL,
+  `Rol_idRol` int(11) NOT NULL,
+  PRIMARY KEY (`id_User`),
+  KEY `fk_Users_Rol_idx` (`Rol_idRol`),
+  CONSTRAINT `fk_Users_Rol` FOREIGN KEY (`Rol_idRol`) REFERENCES `rol` (`id_Rol`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `without_coverage` (
+  `id_Without_coverage` int(11) NOT NULL AUTO_INCREMENT,
+  `state` enum('Suspensión','Corte','Nunca he tenido el servicio') DEFAULT NULL,
+  `Users_id_User` int(11) NOT NULL,
+  PRIMARY KEY (`id_Without_coverage`),
+  KEY `fk_Sin_cobertura_Users1_idx` (`Users_id_User`),
+  CONSTRAINT `fk_Sin_cobertura_Users1` FOREIGN KEY (`Users_id_User`) REFERENCES `users` (`id_User`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+
+
+--*********************************************************************************************************
+-- Fin Tablas Hydrico --
+--*********************************************************************************************************
