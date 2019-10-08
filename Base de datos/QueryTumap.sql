@@ -600,7 +600,7 @@ CREATE TABLE IF NOT EXISTS `irs_tipos_redes` (
 INSERT INTO `irs_estados_redes` (`nombre`) VALUES ('Bueno'), ('Regular'), ('Malo');
 INSERT INTO `irs_materiales_postes` (`nombre`) VALUES ('Concreto'), ('Madera'), ('Metal');
 INSERT INTO `irs_operadores_celulares` (`nombre`, `logotipo`) VALUES ('Claro', 'claro.svg'), ('Movistar', 'movistar.svg'), ('Tigo', 'tigo.svg'), ('Avantel', 'avantel.svg');
-INSERT INTO `irs_tipos_redes` (`nombre`, `tipo`, `icono`) VALUES ('Postes', 1, 'postes.svg'), ('Torres', 0, 'torres.svg'), ('Antenas', 0, 'antenas.svg'), ('Armarios', 0, 'armarios.svg');
+INSERT INTO `irs_tipos_redes` (`nombre`, `tipo`, `icono`) VALUES ('Postes', 1, 'irs-postes.svg'), ('Torres', 0, 'irs-torres.svg'), ('Antenas', 0, 'irs-antenas.svg'), ('Armarios', 0, 'irs-armarios.svg');
 
 --*********************************************************************************************************
 -- Fin Tablas Inventarios Redes Secas --

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {InventarioRedesSecasService} from '../../Services/irs/inventario-redes-secas.service';
 
 @Component({
   selector: 'app-inventario-postes',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InventarioPostesPage implements OnInit {
 
-  constructor() { }
+  materiales: any = [];
+  estados: any = [];
+  model: any = {};
+  constructor(private service: InventarioRedesSecasService) { }
 
   ngOnInit() {
+    this.service.getTiposMateriales().subscribe(data => {
+      this.materiales = data;
+    });
+
+    this.service.getEstadosRedes().subscribe(data => {
+      this.estados = data;
+    });
   }
 
 }
