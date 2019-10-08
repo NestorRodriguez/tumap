@@ -1,19 +1,8 @@
 const express = require('express');
 const app = express();
 const PORT = 3000;
-<<<<<<< HEAD
-var mysql = require('mysql');
-var bodyParser = require('body-parser')
-
-=======
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
-
-
-//require("./config");
-//require("./routes/api")(app);
-//require("./routes/views")(app);
->>>>>>> 1442edd797b8cb5e1c559e9805bafeaada68ce64
 
 const cors = require('cors');
 
@@ -35,43 +24,19 @@ const db = mysql.createConnection({
     port: 3306,
     multipleStatements: true
 });
-<<<<<<< HEAD
-
-//Parse /Json
-app.use(bodyParser.urlencoded({ extended: false }))
-
-app.use(bodyParser.json())
 
 //Realizar la conexión a la base de datos
-db.connect(function (err) {
-    if (err)
-        throw err;
-=======
-//Llamado del puerto
-app.listen(3000, function() {
-        console.log(`Server running at port ${PORT}`);
-    })
-    //Realizar la conexión a la base de datos
 db.connect(function(error) {
     if (error)
         console.log(error);
->>>>>>> 1442edd797b8cb5e1c559e9805bafeaada68ce64
     else
         console.log(`Base de datos conectada!`);
 });
 
-<<<<<<< HEAD
-
 app.get('/', function (req, res) {
     console.log('Página de Inicio ');
-=======
-app.get('/', function(req, res) {
-    console.log('Página de rol ');
->>>>>>> 1442edd797b8cb5e1c559e9805bafeaada68ce64
-
     res.send("Bienvenidos al servidor <strong> TuMap </strong>")
 });
-
 
 //Manejo de Rutas Select users
 app.route('/users')
@@ -735,16 +700,10 @@ app.route('/ethnobotany/:id')
 
 
 /********************************************************************** 
- *Servicios para levantamiento infromación predial
+ * Servicios para levantamiento infromación predial
  ***********************************************************************/
 const router = express.Router();
 
-<<<<<<< HEAD
-//Llamado de puerto
-app.listen(3000, function () {
-    console.log(`Server running at port ${PORT}`);
-});
-=======
 // Manejador de ruta uso predio
 
 router
@@ -1232,91 +1191,71 @@ router
         });
     });
 
+    app.use(router);
 /********************************************************************** 
  * FIN Servicios para levantamiento infromación predial
  ***********************************************************************/
 
-// Manejador de ruta Usuarios
-app.route('/usuarios')
-    .get(function(req, res) {
-        console.log('Página de Usuarios ');
-        var query = db.query('select * from usuarios', function(error, result) {
-            if (error) {
-                throw error;
-            } else {
-                console.log(result);
-                res.json(result)
-            }
-        });
-    })
-    .post(function(req, res) {
-        res.send('Add a rol');
-    })
-    .put(function(req, res) {
-        res.send('Update the rol');
-    });
-
-// Manejador de ruta Registro de Información
+ // Manejador de ruta Registro de Información
 app.route('/registro_info')
-    .get(function(req, res) {
-        console.log('Página de Registro de Información ');
-        var query = db.query('select * from registro_info', function(error, result) {
-            if (error) {
-                throw error;
-            } else {
-                console.log(result);
-                res.json(result)
-            }
-        });
-    })
-    .post(function(req, res) {
-        res.send('Add a rol');
-    })
-    .put(function(req, res) {
-        res.send('Update the rol');
+.get(function(req, res) {
+    console.log('Página de Registro de Información ');
+    var query = db.query('select * from registro_info', function(error, result) {
+        if (error) {
+            throw error;
+        } else {
+            console.log(result);
+            res.json(result)
+        }
     });
+})
+.post(function(req, res) {
+    res.send('Add a rol');
+})
+.put(function(req, res) {
+    res.send('Update the rol');
+});
 
 // Manejador de ruta Administrador
 app.route('/administrador')
-    .get(function(req, res) {
-        console.log('Página de Administradores ');
-        var query = db.query('select * from administrador', function(error, result) {
-            if (error) {
-                throw error;
-            } else {
-                console.log(result);
-                res.json(result)
-            }
-        });
-    })
-    .post(function(req, res) {
-        res.send('Add a rol');
-    })
-    .put(function(req, res) {
-        res.send('Update the rol');
+.get(function(req, res) {
+    console.log('Página de Administradores ');
+    var query = db.query('select * from administrador', function(error, result) {
+        if (error) {
+            throw error;
+        } else {
+            console.log(result);
+            res.json(result)
+        }
     });
+})
+.post(function(req, res) {
+    res.send('Add a rol');
+})
+.put(function(req, res) {
+    res.send('Update the rol');
+});
 
 // Manejador de ruta Validar Información
 app.route('/validar_info')
-    .get(function(req, res) {
-        console.log('Página de Validar Información ');
-        var query = db.query('select * from validar_info', function(error, result) {
-            if (error) {
-                throw error;
-            } else {
-                console.log(result);
-                res.json(result)
-            }
-        });
-    })
-    .post(function(req, res) {
-        res.send('Add a rol');
-    })
-    .put(function(req, res) {
-        res.send('Update the rol');
+.get(function(req, res) {
+    console.log('Página de Validar Información ');
+    var query = db.query('select * from validar_info', function(error, result) {
+        if (error) {
+            throw error;
+        } else {
+            console.log(result);
+            res.json(result)
+        }
     });
+})
+.post(function(req, res) {
+    res.send('Add a rol');
+})
+.put(function(req, res) {
+    res.send('Update the rol');
+});
 
-app.use(router);
 //**************************************************************************
 // dbo inicio 
 //*Ej: http://localhost:3000/dbo_pregunta/1**********************************
@@ -2300,4 +2239,8 @@ app.use(router);
 /***************************************************
  * Fin servicio Minas   *
  **************************************************/
->>>>>>> 1442edd797b8cb5e1c559e9805bafeaada68ce64
+
+ //Inicio de servidor NodeJS
+app.listen(3000, function () {
+    console.log(`Server running at port ${PORT}`);
+});
