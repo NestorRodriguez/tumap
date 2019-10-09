@@ -1,19 +1,9 @@
 const express = require('express');
 const app = express();
 const PORT = 3000;
-<<<<<<< HEAD
 var mysql = require('mysql');
 var bodyParser = require('body-parser')
 
-=======
-const mysql = require('mysql');
-const bodyParser = require('body-parser');
-
-
-//require("./config");
-//require("./routes/api")(app);
-//require("./routes/views")(app);
->>>>>>> 1442edd797b8cb5e1c559e9805bafeaada68ce64
 
 const cors = require('cors');
 
@@ -30,12 +20,11 @@ app.use(bodyParser.json());
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "",
-    database: "hidrico",
+    password: "12345",
+    database: "tumap",
     port: 3306,
     multipleStatements: true
 });
-<<<<<<< HEAD
 
 //Parse /Json
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -46,28 +35,13 @@ app.use(bodyParser.json())
 db.connect(function (err) {
     if (err)
         throw err;
-=======
-//Llamado del puerto
-app.listen(3000, function() {
-        console.log(`Server running at port ${PORT}`);
-    })
-    //Realizar la conexión a la base de datos
-db.connect(function(error) {
-    if (error)
-        console.log(error);
->>>>>>> 1442edd797b8cb5e1c559e9805bafeaada68ce64
     else
         console.log(`Base de datos conectada!`);
 });
 
-<<<<<<< HEAD
 
 app.get('/', function (req, res) {
     console.log('Página de Inicio ');
-=======
-app.get('/', function(req, res) {
-    console.log('Página de rol ');
->>>>>>> 1442edd797b8cb5e1c559e9805bafeaada68ce64
 
     res.send("Bienvenidos al servidor <strong> TuMap </strong>")
 });
@@ -739,12 +713,10 @@ app.route('/ethnobotany/:id')
  ***********************************************************************/
 const router = express.Router();
 
-<<<<<<< HEAD
 //Llamado de puerto
 app.listen(3000, function () {
     console.log(`Server running at port ${PORT}`);
 });
-=======
 // Manejador de ruta uso predio
 
 router
@@ -2300,4 +2272,3 @@ app.use(router);
 /***************************************************
  * Fin servicio Minas   *
  **************************************************/
->>>>>>> 1442edd797b8cb5e1c559e9805bafeaada68ce64

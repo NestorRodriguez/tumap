@@ -1,12 +1,12 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar style="--ion-background-color: #2C689F; color: white;">
     <ion-buttons slot="start">
       <ion-button routerLink="/list" routerDirection="forward">
         <ion-icon slot="icon-only" name="arrow-round-back"> </ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>
-        Categorias
+      Categorias
     </ion-title>
     <ion-buttons slot="secondary">
       <ion-button disabled>
@@ -17,9 +17,25 @@
 </ion-header>
 
 <ion-content>
-  <span *ngFor="let categoria of categorias">
-    <ion-button expand="block" [routerLink]="categoria.ruta" routerDirection="forward">
-      {{ categoria.descripcion }}
-    </ion-button>
-  </span>
+  <div style="border: 0px solid; margin-top: 40%;">
+    <!-- <span *ngFor="let categoria of categorias"> -->
+      <ion-card routerLink="/senalizacion" style="background-color: #0A9D97; padding-top: 3%; height: 100px;">
+        <div style="padding-left: 12%;">
+          <img src="assets/img_jyd/logo senalizacion.svg" height="80px" alt="">
+        </div>        
+      
+        <ion-card-content>
+          
+        </ion-card-content>
+      </ion-card>
+      <br>
+      <ion-card routerLink="/mobiliario" style="background-color: #0A9D97; padding-top: 4.3%; height: 100px;">
+        <img src="assets/img_jyd/logo mobiliario urbano.svg" height="65px" alt="">
+      
+        <ion-card-content>
+          
+        </ion-card-content>
+      </ion-card>
+    <!-- </span> -->
+  </div>
 </ion-content>
