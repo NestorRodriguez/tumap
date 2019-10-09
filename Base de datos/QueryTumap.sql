@@ -399,7 +399,7 @@ CREATE TABLE IF NOT EXISTS `tumap`.`dbo_inscripcion` (
   `departamento` VARCHAR(45) NULL DEFAULT NULL,
   `munipio` VARCHAR(45) NULL DEFAULT NULL,
   `usuario` VARCHAR(45) NULL DEFAULT NULL,
-  `fecha` date not NULL,
+  `fecha` timestamp default current_timestamp,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
