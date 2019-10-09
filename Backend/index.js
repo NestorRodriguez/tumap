@@ -38,7 +38,7 @@ db.connect(function(error) {
         console.log(`Base de datos conectada!`);
 });
 
-app.get('/', function (req, res) {
+app.get('/', function(req, res) {
     console.log('Página de Inicio ');
 
     res.send("Bienvenidos al servidor <strong> TuMap </strong>")
@@ -1267,50 +1267,18 @@ app.route('/validar_info')
 //*Ej: http://localhost:3000/dbo_pregunta/1**********************************
 app.route('/dbo_pregunta/:orden')
     .get(function(req, res) {
-<<<<<<< HEAD
         console.log('Página de pregunta ');
         var { orden } = req.params;
         var query = db.query('SELECT * FROM dbo_pregunta WHERE orden = ?', orden, function(error, result) {
-=======
-        console.log('Página de Validar Información ');
-        var query = db.query('select * from validar_info', function(error, result) {
->>>>>>> 336b393587ecb0498f37f97babc4c8f042af942f
             if (error) {
                 throw error;
             } else {
                 console.log(result);
-<<<<<<< HEAD
                 res.json(result);
             }
         });
-=======
-                res.json(result)
-            }
-        });
-    })
-    .post(function(req, res) {
-        res.send('Add a rol');
-    })
-    .put(function(req, res) {
-        res.send('Update the rol');
     });
 
-//**************************************************************************
-// dbo inicio 
-//*Ej: http://localhost:3000/dbo_pregunta/1**********************************
-app.route('/dbo_pregunta/:orden')
-app.get(function(req, res) {
-    console.log('Página de pregunta ');
-    var orden = req.params.orden;
-    var query = db.query('select * from dbo_pregunta where orden = ?', orden, function(error, result) {
-        if (error) {
-            throw error;
-        } else {
-            console.log(result);
-            res.json(result);
-        }
->>>>>>> 336b393587ecb0498f37f97babc4c8f042af942f
-    });
 
 // dbo Lista las imagen por imagensuelos 30/09/2019
 app.route('/dbo_imagen/:id_Pregunta')
