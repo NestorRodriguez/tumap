@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {InventarioRedesSecasService} from '../../Services/irs/inventario-redes-secas.service';
+import {ModalController} from '@ionic/angular';
+import {ModalMapaPage} from '../modal-mapa/modal-mapa.page';
 
 @Component({
   selector: 'app-inventario-postes',
@@ -11,7 +13,10 @@ export class InventarioPostesPage implements OnInit {
   materiales: any = [];
   estados: any = [];
   model: any = {};
-  constructor(private service: InventarioRedesSecasService) { }
+  idIrsMateriales: any = '';
+
+  constructor(private service: InventarioRedesSecasService,
+              private modalCtrl: ModalController) { }
 
   ngOnInit() {
     this.service.getTiposMateriales().subscribe(data => {
@@ -21,6 +26,16 @@ export class InventarioPostesPage implements OnInit {
     this.service.getEstadosRedes().subscribe(data => {
       this.estados = data;
     });
+  }
+
+  async loadModalMap(type) {
+   const modal = await this.modalCtrl.create({
+     component: ModalMapaPage,
+     componentProps: {
+       type,
+     }
+   });
+   await modal.present();
   }
 
 }
