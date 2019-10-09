@@ -25,6 +25,11 @@ const db = mysql.createConnection({
     multipleStatements: true
 });
 
+//Parse /Json
+app.use(bodyParser.urlencoded({ extended: false }))
+
+app.use(bodyParser.json())
+
 //Realizar la conexión a la base de datos
 db.connect(function(error) {
     if (error)
@@ -33,8 +38,9 @@ db.connect(function(error) {
         console.log(`Base de datos conectada!`);
 });
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
     console.log('Página de Inicio ');
+
     res.send("Bienvenidos al servidor <strong> TuMap </strong>")
 });
 
@@ -1261,16 +1267,49 @@ app.route('/validar_info')
 //*Ej: http://localhost:3000/dbo_pregunta/1**********************************
 app.route('/dbo_pregunta/:orden')
     .get(function(req, res) {
+<<<<<<< HEAD
         console.log('Página de pregunta ');
         var { orden } = req.params;
         var query = db.query('SELECT * FROM dbo_pregunta WHERE orden = ?', orden, function(error, result) {
+=======
+        console.log('Página de Validar Información ');
+        var query = db.query('select * from validar_info', function(error, result) {
+>>>>>>> 336b393587ecb0498f37f97babc4c8f042af942f
             if (error) {
                 throw error;
             } else {
                 console.log(result);
+<<<<<<< HEAD
                 res.json(result);
             }
         });
+=======
+                res.json(result)
+            }
+        });
+    })
+    .post(function(req, res) {
+        res.send('Add a rol');
+    })
+    .put(function(req, res) {
+        res.send('Update the rol');
+    });
+
+//**************************************************************************
+// dbo inicio 
+//*Ej: http://localhost:3000/dbo_pregunta/1**********************************
+app.route('/dbo_pregunta/:orden')
+app.get(function(req, res) {
+    console.log('Página de pregunta ');
+    var orden = req.params.orden;
+    var query = db.query('select * from dbo_pregunta where orden = ?', orden, function(error, result) {
+        if (error) {
+            throw error;
+        } else {
+            console.log(result);
+            res.json(result);
+        }
+>>>>>>> 336b393587ecb0498f37f97babc4c8f042af942f
     });
 
 // dbo Lista las imagen por imagensuelos 30/09/2019
@@ -2302,8 +2341,8 @@ router
     .post('/Minas/RegistroMina', (req, res) => {
         const dato = req.body
 
-        const sql = `INSERT INTO MP_Registro_Mina (ubicacion, mineral, trabajadores, observacion, id_sistemaexplotacion, id_tipomaterial, id_estadomina)
-            values (${dato.ubicacion}, ${dato.mineral}, ${dato.trabajadores}, ${dato.observacion}, ${dato.id_sistemaexplotacion}, ${dato.id_tipomaterial}, ${dato.id_estadomina})`;
+        const sql = `INSERT INTO MP_Registro_Mina (nombre_sesion,ubicacion, mineral, trabajadores, observacion, id_sistemaexplotacion, id_tipomaterial, id_estadomina,pregunta)
+            values (${dato.nombre_sesion},${dato.ubicacion}, ${dato.mineral}, ${dato.trabajadores}, ${dato.observacion}, ${dato.id_sistemaexplotacion}, ${dato.id_tipomaterial}, ${dato.id_estadomina}, ${dato.pregunta})`;
 
         db.query(sql, (error, result) => {
             if (error) {
@@ -2317,6 +2356,7 @@ router
 
         const id_registromina = req.params.id_registromina;
         const dato = {
+            nombre: req.body.nombre_sesion,
             ubicacion: req.body.ubicacion,
             mineral: req.body.mineral,
             trabajadores: req.body.trabajadores,
@@ -2324,6 +2364,7 @@ router
             id_sistemaexplotacion: req.body.id_sistemaexplotacion,
             id_tipomaterial: req.body.id_tipomaterial,
             id_estadomina: req.body.id_estadomina,
+            pregunta: req.body.pregunta,
         };
 
         let sets = [];

@@ -1,3 +1,7 @@
+ion-content {
+    --ion-background-color: #008abb!important;
+}
+
 .welcome-card img {
     max-height: 35vh;
     overflow: hidden;
@@ -5,6 +9,7 @@
 
 ion-label {
     margin: 20px;
+    color: #ffffff!important;
 }
 
 ion-input {
@@ -13,6 +18,13 @@ ion-input {
     border: 3px;
 }
 
-.bregister {
-    margin: 100px;
+ion-img {
+    width: 100%;
+    height: 100px;
+}
+
+.register {
+    margin-left: 110px;
+    --background: #ffffff!important;
+    color: #7ecbc8!important;
 }

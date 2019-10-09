@@ -23,18 +23,10 @@ export class ListPage implements OnInit {
   ];
   public items: Array<{ title: string; note: string; route: string; icon: string }> = [];
   constructor() {
-    this.items.push({
-      title: 'Señalización y mobiliario urbano',
-      note: '',
-      route: '/categorias',
-      icon: this.icons[0]
-    },
-    {
-      title: 'Aqui va otro servicio!',
-      note: '',
-      route: '/',
-      icon: this.icons[1]
-    });
+    this.items.push(
+      {title: 'Señalización y mobiliario urbano', note: '',  route: '/categorias', icon: this.icons[0]},
+      {title: 'Aqui va otro servicio!', note: '', route: '/', icon: this.icons[1]}
+    );
   }
 
   ngOnInit() {

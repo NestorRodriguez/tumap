@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { InventarioPostesPage } from './inventario-postes.page';
+import {ModalMapaPage} from '../modal-mapa/modal-mapa.page';
+import {ModalMapaPageModule} from '../modal-mapa/modal-mapa.module';
 
 const routes: Routes = [
   {
@@ -15,11 +17,15 @@ const routes: Routes = [
 ];
 
 @NgModule({
+  entryComponents: [
+    ModalMapaPage,
+  ],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    ModalMapaPageModule,
   ],
   declarations: [InventarioPostesPage]
 })

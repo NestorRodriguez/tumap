@@ -17,7 +17,7 @@ export class InicioPage implements OnInit {
   }
 
   getRouterLink(type) {
-    return (type === 1) ? '/inventario-postes' : '/inventario-otros';
+    return (type === 1) ? '/irs-inventario-postes' : '/irs-inventario-otros';
   }
 
 }
