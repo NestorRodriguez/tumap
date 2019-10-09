@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Inventario de Postes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Material</ion-label>
+      <ion-select [(ngModel)]="model.idIrsMateriales" interface="popover">
+        <ion-select-option value="{{m.id}}" *ngFor="let m of materiales">{{m.nombre}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Número</ion-label>
+      <ion-input [(ngModel)]="model.numero" type="text" class="ion-text-end" maxlength="20"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Estado</ion-label>
+      <ion-select [(ngModel)]="model.idIrsEstadoRed" interface="popover">
+        <ion-select-option value="{{e.id}}" *ngFor="let e of estados">{{e.nombre}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item lines="full">
+      <ion-label>¿Tiene lámara?</ion-label>
+      <ion-toggle [(ngModel)]="model.tieneLampara"></ion-toggle>
+    </ion-item>
+    <ion-item lines="full">
+      <ion-label>¿Tiene transformador?</ion-label>
+      <ion-toggle [(ngModel)]="model.tieneTransformador"></ion-toggle>
+    </ion-item>
+    <ion-item lines="full">
+      <ion-label>Ubicación</ion-label>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" class="ion-text-end">
+            <ion-button color="light" size="small" shape="round" expand="block" (click)="loadModalMap('FIXED')">
+              <ion-icon slot="icon-only" color="primary" name="pin"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col size="6" class="ion-text-end">
+            <ion-button color="light" size="small" shape="round" expand="block" (click)="loadModalMap('CUSTOM')">
+              <ion-icon slot="icon-only"color="primary" name="globe"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <ion-item lines="full">
+      <ion-label>Fotografía</ion-label>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" class="ion-text-end">
+            <ion-button color="light" size="small" shape="round" expand="block">
+              <ion-icon slot="icon-only" color="primary" name="camera"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <ion-item lines="none" class="ion-padding-top">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" class="ion-text-end">
+            <ion-button class="ion-text-capitalize" color="primary" size="default" shape="round" expand="block">
+              <ion-label>Guardar</ion-label>
+            </ion-button>
+          </ion-col>
+          <ion-col size="6" class="ion-text-end">
+            <ion-button class="ion-text-capitalize" color="danger" size="default" shape="round" expand="block">
+              <ion-label>Cancelar</ion-label>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    {{ model | json }}
+  </ion-list>
+</ion-content>
