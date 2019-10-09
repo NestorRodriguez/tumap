@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { JydService } from '../Services/api_jyd/jyd.service';
+import { JydService } from '../../Services/api_jyd/jyd.service';
 
 @Component({
-  selector: 'app-jyd-categorias',
-  templateUrl: './jyd-categorias.page.html',
-  styleUrls: ['./jyd-categorias.page.scss'],
+  selector: 'app-categorias',
+  templateUrl: './categorias.page.html',
+  styleUrls: ['./categorias.page.scss'],
 })
-export class JydCategoriasPage implements OnInit {
+export class CategoriasPage implements OnInit {
 
   constructor(private getPeople: JydService, private getCategoria: JydService) {}
 

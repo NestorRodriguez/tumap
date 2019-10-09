@@ -9,6 +9,7 @@ export class ListPage implements OnInit {
   private selectedItem: any;
   private icons = [
     'md-map',
+    'ios-albums',
     'trending-up',
     'flask',
     'wifi',
@@ -25,7 +26,8 @@ export class ListPage implements OnInit {
   constructor() {
     this.items.push(
       {title: 'Señalización y mobiliario urbano', note: '',  route: '/categorias', icon: this.icons[0]},
-      {title: 'Aqui va otro servicio!', note: '', route: '/', icon: this.icons[1]}
+      {title: 'Inventario uso de suelos', note: '',  route: '/formulariosuelos', icon: this.icons[1]},
+      {title: 'Aqui va otro servicio!', note: '', route: '/', icon: this.icons[2]}
     );
   }
 
