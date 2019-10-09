@@ -30,6 +30,7 @@ const routes: Routes = [
   { path: 'formulariosuelos', loadChildren: './usosuelos/formulario/formulario.module#FormularioPageModule' },
   { path: 'categorias', loadChildren: './jyd-categorias/jyd-categorias.module#JydCategoriasPageModule' },
   { path: 'senalizacion', loadChildren: './senalizacion/senalizacion.module#SenalizacionPageModule' },
+<<<<<<< HEAD
   { path: 'mobiliario', loadChildren: './mobiliario/mobiliario.module#MobiliarioPageModule' },  { path: 'minasestadoactual', loadChildren: './minas/minasestadoactual/minasestadoactual.module#MinasestadoactualPageModule' },
 
 
@@ -40,6 +41,19 @@ const routes: Routes = [
 
 
 
+=======
+  { path: 'mobiliario', loadChildren: './mobiliario/mobiliario.module#MobiliarioPageModule' },
+  { path: 'usosueloshome', loadChildren: './usosuelos/usosueloshome/usosueloshome.module#UsosueloshomePageModule' },
+  { path: 'categorias', loadChildren: './jyd-categorias/jyd-categorias.module#JydCategoriasPageModule' },
+  { path: 'senalizacion', loadChildren: './senalizacion/senalizacion.module#SenalizacionPageModule' },
+  { path: 'mobiliario', loadChildren: './mobiliario/mobiliario.module#MobiliarioPageModule' },
+  { path: 'inventario-redes-secas/inicio', loadChildren: './irs/inicio/inicio.module#InicioPageModule' },
+  { path: 'inventario-postes', loadChildren: './irs/inventario-postes/inventario-postes.module#InventarioPostesPageModule' },
+  { path: 'inventario-otros', loadChildren: './irs/inventario-otros/inventario-otros.module#InventarioOtrosPageModule' },  { path: 'homeeducation', loadChildren: './Education/homeeducation/homeeducation.module#HomeeducationPageModule' },
+
+
+
+>>>>>>> origin
 ];
 
 @NgModule({

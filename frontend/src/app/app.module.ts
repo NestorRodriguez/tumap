@@ -23,6 +23,7 @@ import { IonicStorageModule } from '@ionic/storage';
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
+    // tslint:disable-next-line: deprecation
     HttpModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyB2g5cFRZ6Cr6ozLb9hv6kow_Id066HQmo'
@@ -36,8 +37,6 @@ import { IonicStorageModule } from '@ionic/storage';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    
-    
   ],
   bootstrap: [AppComponent]
 })

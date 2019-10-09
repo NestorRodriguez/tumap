@@ -1238,6 +1238,7 @@ app.route('/administrador')
 
 // Manejador de ruta Validar Información
 app.route('/validar_info')
+<<<<<<< HEAD
     .get(function(req, res) {
         console.log('Página de Validar Información ');
         var query = db.query('select * from validar_info', function(error, result) {
@@ -1260,18 +1261,42 @@ app.route('/validar_info')
 // dbo inicio 
 //*Ej: http://localhost:3000/dbo_pregunta/1**********************************
 app.route('/dbo_pregunta/:orden')
+=======
+>>>>>>> origin
     .get(function(req, res) {
-        console.log('Página de pregunta ');
-        var orden = req.params.orden;
-        var query = db.query('select * from dbo_pregunta where orden = ?', orden, function(error, result) {
+        console.log('Página de Validar Información ');
+        var query = db.query('select * from validar_info', function(error, result) {
             if (error) {
                 throw error;
             } else {
                 console.log(result);
-                res.json(result);
+                res.json(result)
             }
         });
+    })
+    .post(function(req, res) {
+        res.send('Add a rol');
+    })
+    .put(function(req, res) {
+        res.send('Update the rol');
     });
+
+//**************************************************************************
+// dbo inicio 
+//*Ej: http://localhost:3000/dbo_pregunta/1**********************************
+app.route('/dbo_pregunta/:orden')
+app.get(function(req, res) {
+    console.log('Página de pregunta ');
+    var orden = req.params.orden;
+    var query = db.query('select * from dbo_pregunta where orden = ?', orden, function(error, result) {
+        if (error) {
+            throw error;
+        } else {
+            console.log(result);
+            res.json(result);
+        }
+    });
+});
 
 // dbo Lista las imagen por imagensuelos 30/09/2019
 app.route('/dbo_imagen/:id_Pregunta')
@@ -1289,20 +1314,74 @@ app.route('/dbo_imagen/:id_Pregunta')
     });
 
 // dbo Lista inscripciones por documento 30/09/2019
-app.route('/dbo_inscripcion/:documento')
-    .get(function(req, res) {
-        console.log('Página de inscripcion');
-        var documento = req.params.documento;
-        var query = db.query('select * from dbo_inscripcion Where documento = ?', documento, function(error, result) {
-            if (error) {
-                throw error;
-            } else {
-                console.log(result);
-                res.json(result);
-            }
-        });
+
+app.get('/dbo_inscripcion/:documento', function(req, res) {
+    const { documento } = req.params;
+    console.log('Página de inscripcion');
+    var query = db.query('select  * from dbo_inscripcion Where documento = ?', [documento], function(error, result) {
+        if (error) {
+            throw error;
+        } else {
+            console.log(result);
+            res.json(result);
+        }
+    });
+    if (query.lenght > 0) {
+        return res.json(query[0]);
+    }
+    res.json({ message: 'documento no existe' });
+})
+app.post("/dbo_inscripcion", function(req, res) {
+    var sql = `
+        INSERT INTO dbo_inscripcion 
+        (
+            documento, 
+            nombre, 
+            posicionamiento, 
+            departamento, 
+            munipio
+        ) VALUES (
+            '${req.body.documento}',
+            '${req.body.nombre}',
+            '${req.body.posicionamiento}',
+            '${req.body.departamento}',
+            '${req.body.munipio}'
+        )`;
+
+    console.log('Add inscripcion');
+    var query = db.query(sql, function(error, result) {
+        if (error) {
+            throw error;
+        } else {
+            console.log(result);
+            res.json(result);
+        }
+    });
+    res.json({ text: 'Datos Ingresados ' + sql });
+})
+
+app.put("/dbo_inscripcion/:id", function(req, res) {
+    const { id } = req.params;
+
+    const sql = `UPDATE dbo_inscripcion SET 
+    documento='${req.body.documento}', 
+    nombre='${req.body.nombre}', 
+    posicionamiento='${req.body.posicionamiento}', 
+    departamento='${req.body.departamento}', 
+    munipio='${req.body.munipio}'
+    WHERE id='${id}';`;
+
+    var query = db.query(sql, function(error, result) {
+        if (error) {
+            throw error;
+        } else {
+            console.log(result);
+            res.json(result);
+        }
     });
 
+    res.json({ text: 'Datos Actualizados ' + sql });
+});
 // dbo Lista respuestas 30/09/2019
 app.route('/dbo_respuesta/:id_inscripcion')
     .get(function(req, res) {
@@ -1356,7 +1435,7 @@ app.route('/dbo_vlistadotodo')
  *************************************************************************************/
 
 app.get('/irs-tipos-redes', (req, res) => {
-    const sql = 'SELECT id, nombre, icono FROM irs_tipos_redes';
+    const sql = 'SELECT id, nombre, tipo, icono FROM irs_tipos_redes';
     db.query(sql, (error, result) => {
         if (error) {
             res.json({
@@ -1897,6 +1976,7 @@ router
                 }
             } catch (error) {
                 res.json({ error: error.message })
+<<<<<<< HEAD
             }
         });
     })
@@ -1921,6 +2001,32 @@ router
             nombre: req.body.nombre_estadomina,
         };
 
+=======
+            }
+        });
+    })
+    .post('/Minas/EstadoActual', (req, res) => {
+        const dato = req.body
+
+        const sql = `INSERT INTO MP_EstadoActual_mina (nombre_estadomina)
+        values (${dato.nombre_estadomina})`;
+
+        db.query(sql, (error, result) => {
+            if (error) {
+                res.json({ error: error })
+            } else {
+                res.json(result)
+            }
+        });
+    })
+    .put('Minas/EstadoActual/:id_estadomina', (req, res) => {
+
+        const id_estadomina = req.params.id_estadomina;
+        const dato = {
+            nombre: req.body.nombre_estadomina,
+        };
+
+>>>>>>> origin
         let sets = [];
         for (i in dato) {
             if (dato[i] || dato[i] == 0) {
@@ -1988,6 +2094,7 @@ router
                 }
             } catch (error) {
                 res.json({ error: error.message })
+<<<<<<< HEAD
             }
         });
     })
@@ -2012,6 +2119,32 @@ router
             nombre_tipomaterial: req.body.nombre_tipomaterial,
         };
 
+=======
+            }
+        });
+    })
+    .post('/Minas/TipoMaterial', (req, res) => {
+        const dato = req.body
+
+        const sql = `INSERT INTO MP_tipo_material (nombre_tipomaterial)
+        values (${dato.nombre_tipomaterial})`;
+
+        db.query(sql, (error, result) => {
+            if (error) {
+                res.json({ error: error })
+            } else {
+                res.json(result)
+            }
+        });
+    })
+    .put('/Minas/TipoMaterial/:id_tipomaterial', (req, res) => {
+
+        const id_tipomaterial = req.params.id_tipomaterial;
+        const dato = {
+            nombre_tipomaterial: req.body.nombre_tipomaterial,
+        };
+
+>>>>>>> origin
         let sets = [];
         for (i in dato) {
             if (dato[i] || dato[i] == 0) {
@@ -2079,6 +2212,7 @@ router
                 }
             } catch (error) {
                 res.json({ error: error.message })
+<<<<<<< HEAD
             }
         });
     })
@@ -2103,6 +2237,32 @@ router
             nombre_sistemaexplotacion: req.body.nombre_sistemaexplotacion,
         };
 
+=======
+            }
+        });
+    })
+    .post('/Minas/SistemaExplotacion', (req, res) => {
+        const dato = req.body
+
+        const sql = `INSERT INTO MP_Sistema_Explotacion (nombre_sistemaexplotacion)
+        values (${dato.nombre_sistemaexplotacion})`;
+
+        db.query(sql, (error, result) => {
+            if (error) {
+                res.json({ error: error })
+            } else {
+                res.json(result)
+            }
+        });
+    })
+    .put('/Minas/SistemaExplotacion:id_sistemaexplotacion', (req, res) => {
+
+        const id_sistemaexplotacion = req.params.id_sistemaexplotacion;
+        const dato = {
+            nombre_sistemaexplotacion: req.body.nombre_sistemaexplotacion,
+        };
+
+>>>>>>> origin
         let sets = [];
         for (i in dato) {
             if (dato[i] || dato[i] == 0) {
