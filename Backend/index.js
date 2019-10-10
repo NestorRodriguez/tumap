@@ -2375,6 +2375,405 @@ app.use(router);
  * Fin servicio Minas   *
  **************************************************/
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***************************************************
+ * app_salud   *
+ **************************************************/
+
+app.post('/Datos-Establecimiento', (req, res) => {
+    const data = req.body;
+    const sql = `
+    INSERT INTO cav_Datos_Establecimiento (
+        Foto,
+        Nit,
+        Nom_Establecimiento,
+        Direccion,
+        Id_dpto_ciudad,
+        Id_Tipo_Entidad,
+        Observaciones,
+        Id_Estado
+    ) VALUES (
+        '${data.Foto}',
+        '${data.Nit}',
+        '${data.Nombre_Establecimiento}',
+        '${data.Direccion}',
+        '${data.Id_dpto_ciudad}',
+        '${data.Id_Tipo_Entidad}',
+        '${data.Observaciones}',
+        '${data.Id_Estado}'
+    )`;
+
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: "Ocurrió un error al guardar el formulario"
+            });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get('/Tipo-Entidad', (req, res) => {
+    const sql = 'SELECT * FROM cav_Tipo_Entidad';
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: error.message
+            });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get('/Listar-Departamentos', (req, res) => {
+    const sql = "SELECT * FROM cav_dpto_ciudad WHERE tipo='D' ORDER BY nombre;";
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: "Ocurrió un error al consultar los departamentos"
+            });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get('/Listar-Ciudades/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM cav_dpto_ciudad WHERE tipo='C' AND id_ciudad='${id}' ORDER BY nombre;";
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: "Ocurrió un error al consultar las ciudades"
+            });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get('/Estado-Solic', (req, res) => {
+    const sql = 'SELECT * FROM cav_Estado';
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: "Ocurrió un error al consultar el estado"
+            });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+
+
+
+
 //Inicio de servidor NodeJS
 app.listen(3000, function() {
     console.log(`Server running at port ${PORT}`);
