@@ -34,8 +34,13 @@
       <ion-label>Ubicación</ion-label>
       <ion-grid>
         <ion-row>
-          <ion-col size="12" class="ion-text-end">
-            <ion-button color="light" size="small" shape="round" expand="block" (click)="loadModalMap('FIXED')">
+          <ion-col size="4" class="ion-text-center" *ngIf="model.ubicacion">
+            <ion-button color="light" size="small" shape="round">
+              <ion-icon slot="icon-only" color="primary" name="checkmark"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col size="{{(model.ubicacion) ? 8 : 12}}" class="ion-text-end">
+            <ion-button color="light" size="small" shape="round" expand="block" (click)="loadModalMap()">
               <ion-icon slot="icon-only" color="primary" name="pin"></ion-icon>
             </ion-button>
           </ion-col>
@@ -63,7 +68,7 @@
             </ion-button>
           </ion-col>
           <ion-col size="6" class="ion-text-end">
-            <ion-button class="ion-text-capitalize" color="danger" size="default" shape="round" expand="block">
+            <ion-button class="ion-text-capitalize" color="danger" size="default" shape="round" expand="block" (click)="cancel()">
               <ion-label>Cancelar</ion-label>
             </ion-button>
           </ion-col>
