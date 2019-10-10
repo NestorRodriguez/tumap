@@ -8,7 +8,9 @@
 </ion-header>
 
 <ion-content>
-    <br><br>
+    <br>
+    <ion-img src="assets/logo_registro.svg"></ion-img>
+    <br>
     <ion-label>Nombre(s):</ion-label>
     <ion-input placeholder="Ingresa tu(s) nombre"></ion-input>
     <ion-label>Apellido(s):</ion-label>
@@ -16,17 +18,28 @@
     <ion-label>Edad:</ion-label>
     <ion-input placeholder="Ingresa tu edad"></ion-input>
     <ion-label>Sexo:</ion-label>
-    <ion-input placeholder="Ingresa tu sexo"></ion-input>
+    <ion-label>Masculino</ion-label>
+    <ion-checkbox color="light"></ion-checkbox>
+    <ion-label>Femenino</ion-label>
+    <ion-checkbox color="light"></ion-checkbox>
+    <br><br><br>
     <ion-label>Nivel Educativo</ion-label>
-    <ion-select name="nivel_educativo" placeholder="Selecciona una opción">
-        <ion-select-option value="Primaria">Primaria</ion-select-option>
-        <ion-select-option value="Bachiller Basico">Bachiler Basico</ion-select-option>
+    <ion-select name="nivel_educativo " placeholder="Selecciona una opción ">
+        <ion-select-option value="Primaria ">Ninguno</ion-select-option>
+        <ion-select-option value="Primaria ">Primaria</ion-select-option>
+        <ion-select-option value="Bachiller Basico ">Bachiller Basico</ion-select-option>
+        <ion-select-option value="Bachiller Basico ">Bachiller Completo</ion-select-option>
+        <ion-select-option value="Bachiller Basico ">Técnico</ion-select-option>
+        <ion-select-option value="Bachiller Basico ">Tecnologo</ion-select-option>
+        <ion-select-option value="Bachiller Basico ">Carrera Profesional</ion-select-option>
     </ion-select>
     <ion-label>Correo:</ion-label>
-    <ion-input type="email" placeholder="Ingresa tu correo"></ion-input>
+    <ion-input type="email " placeholder="Ingresa tu correo "></ion-input>
     <ion-label>Usuario:</ion-label>
-    <ion-input placeholder="Ingresa un usuario"></ion-input>
+    <ion-input placeholder="Ingresa un usuario "></ion-input>
     <ion-label>Clave:</ion-label>
-    <ion-input type="password" placeholder="Ingresa una clave"></ion-input>
-    <ion-button class="bregister" type="submit">Registrarme</ion-button>
+    <ion-input type="password " placeholder="Ingresa una clave "></ion-input>
+    <ion-button class="register " type="submit "><b>Registrarme</b></ion-button>
+    <br><br>
+    <ion-label class="back "><b>◄ Volver</b></ion-label>
 </ion-content>

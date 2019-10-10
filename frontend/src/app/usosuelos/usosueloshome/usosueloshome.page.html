@@ -1,10 +1,20 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-title>
-            Tab One
-        </ion-title>
+    <ion-toolbar style="--ion-background-color: #2C689F; color: white;">
+      <ion-buttons slot="start">
+        <ion-button routerLink="/instruccion" routerDirection="forward">
+          <ion-icon slot="icon-only" name="arrow-round-back"> </ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>
+        Registrar Predio
+      </ion-title>
+      <ion-buttons slot="secondary">
+        <ion-button disabled>
+          <ion-icon slot="icon-only" name=""> </ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
-</ion-header>
+  </ion-header>
 
 <ion-content>
     <!-- this creates a google map on the page with the given lat/lng from -->
