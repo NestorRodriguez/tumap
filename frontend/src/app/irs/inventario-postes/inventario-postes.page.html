@@ -23,7 +23,7 @@
       </ion-select>
     </ion-item>
     <ion-item lines="full">
-      <ion-label>¿Tiene lámara?</ion-label>
+      <ion-label>¿Tiene lámpara?</ion-label>
       <ion-toggle [(ngModel)]="model.tieneLampara"></ion-toggle>
     </ion-item>
     <ion-item lines="full">
@@ -34,14 +34,9 @@
       <ion-label>Ubicación</ion-label>
       <ion-grid>
         <ion-row>
-          <ion-col size="6" class="ion-text-end">
+          <ion-col size="12" class="ion-text-end">
             <ion-button color="light" size="small" shape="round" expand="block" (click)="loadModalMap('FIXED')">
               <ion-icon slot="icon-only" color="primary" name="pin"></ion-icon>
-            </ion-button>
-          </ion-col>
-          <ion-col size="6" class="ion-text-end">
-            <ion-button color="light" size="small" shape="round" expand="block" (click)="loadModalMap('CUSTOM')">
-              <ion-icon slot="icon-only"color="primary" name="globe"></ion-icon>
             </ion-button>
           </ion-col>
         </ion-row>

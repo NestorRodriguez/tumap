@@ -5,12 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { JydMapaPage } from './jyd-mapa.page';
+import { CategoriasPage } from './categorias.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: JydMapaPage
+    component: CategoriasPage
   }
 ];
 
@@ -21,6 +21,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [JydMapaPage]
+  declarations: [CategoriasPage]
 })
-export class JydMapaPageModule {}
+export class CategoriasPageModule {}
+ 

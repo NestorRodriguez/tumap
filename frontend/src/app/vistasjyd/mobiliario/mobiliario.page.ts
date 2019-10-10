@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { JydService } from '../Services/api_jyd/jyd.service';
+import { JydService } from '../../Services/api_jyd/jyd.service';
 
 @Component({
   selector: 'app-mobiliario',

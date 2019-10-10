@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JydCategoriasPage } from './jyd-categorias.page';
+import { CategoriasPage } from './categorias.page';
 
 describe('JydCategoriasPage', () => {
-  let component: JydCategoriasPage;
-  let fixture: ComponentFixture<JydCategoriasPage>;
+  let component: CategoriasPage;
+  let fixture: ComponentFixture<CategoriasPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ JydCategoriasPage ],
+      declarations: [ CategoriasPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(JydCategoriasPage);
+    fixture = TestBed.createComponent(CategoriasPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
