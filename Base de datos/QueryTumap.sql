@@ -609,66 +609,21 @@ INSERT INTO `irs_tipos_redes` (`nombre`, `tipo`, `icono`) VALUES ('Postes', 1, '
 /*Crear tabla encuesta social*/
 create table SEC_Encuesta_Social(
 	id_Encuesta int not null auto_increment primary key, 
-    Vinculo_Territorial varchar (10) not null
-   );
-   /*insertar datos en encuesta social*/
-INSERT INTO SEC_Encuesta_Social (Vinculo_Territorial)
-	VALUES ('vivo');
-	INSERT INTO SEC_Encuesta_Social (Vinculo_Territorial)
-	VALUES ('trabajo');
-    INSERT INTO SEC_Encuesta_Social (Vinculo_Territorial)
-	VALUES ('ambos');
-
-/*Crear tabla necesidades basicas*/
-create table SEC_Necesidades_Basicas(
-	id_Necesidades int not null auto_increment primary key, 
-    Nombre_Necesidad varchar (20) not null
+  Vinculo_Territorial varchar (10) not null,
+	alimentacion int not null, 
+	seguridad int not null, 
+	servicios_publicos int not null, 
+	transporte int not null
     );
-/*insertar datos en necesidades basicas*/
-INSERT INTO SEC_Necesidades_Basicas (Nombre_Necesidad)
-	VALUES ('alimentacion');
-    INSERT INTO SEC_Necesidades_Basicas (Nombre_Necesidad)
-	VALUES ('seguridad');
-    INSERT INTO SEC_Necesidades_Basicas (Nombre_Necesidad)
-	VALUES ('servicios publicos');
-    INSERT INTO SEC_Necesidades_Basicas (Nombre_Necesidad)
-	VALUES ('transporte');
+    /*insertar datos en encuesta social*/
+    INSERT INTO SEC_Encuesta_Social(vinculo_territorial, alimentacion, seguridad, servicios_publicos, transporte)
+	    VALUES ('vivo',4,3,2,1);
+	INSERT INTO SEC_Encuesta_Social(vinculo_territorial, alimentacion, seguridad, servicios_publicos, transporte)
+	    VALUES ('trabajo',1,2,3,4);
+	INSERT INTO SEC_Encuesta_Social(vinculo_territorial, alimentacion, seguridad, servicios_publicos, transporte)
+	    VALUES ('ambos',4,2,3,1);
     
-    /*Crear tabla encuesta necesidades*/
-create table SEC_Encuesta_Necesidades(
-	id_EN int not null auto_increment primary key,
-    Importancia int not null,
-    id_Encuesta int not null, foreign key (id_Encuesta) references SEC_Encuesta_Social(id_Encuesta),
-    id_Necesidades int not null, foreign key (id_Necesidades) references SEC_Necesidades_Basicas(id_Necesidades)
-    );
-    /*insertar datos en encuesta necesidades*/
-		/*Encuesta 1*/
-        INSERT INTO SEC_Encuesta_Necesidades (id_Encuesta, id_Necesidades, Importancia)
-		VALUES (1, 1, 4);
-		INSERT INTO SEC_Encuesta_Necesidades (id_Encuesta, id_Necesidades, Importancia)
-		VALUES (1, 2, 3);
-		INSERT INTO SEC_Encuesta_Necesidades (id_Encuesta, id_Necesidades, Importancia)
-		VALUES (1, 3, 2);
-        INSERT INTO SEC_Encuesta_Necesidades (id_Encuesta, id_Necesidades, Importancia)
-		VALUES (1, 4, 1);
-        /*Encuesta 2*/
-        INSERT INTO SEC_Encuesta_Necesidades (id_Encuesta, id_Necesidades, Importancia)
-		VALUES (2, 1, 1);
-		INSERT INTO SEC_Encuesta_Necesidades (id_Encuesta, id_Necesidades, Importancia)
-		VALUES (2, 2, 2);
-		INSERT INTO SEC_Encuesta_Necesidades (id_Encuesta, id_Necesidades, Importancia)
-		VALUES (2, 3, 3);
-        INSERT INTO SEC_Encuesta_Necesidades (id_Encuesta, id_Necesidades, Importancia)
-		VALUES (2, 4, 4);
-        /*Encuesta 3*/
-        INSERT INTO SEC_Encuesta_Necesidades (id_Encuesta, id_Necesidades, Importancia)
-		VALUES (3, 1, 2);
-		INSERT INTO SEC_Encuesta_Necesidades (id_Encuesta, id_Necesidades, Importancia)
-		VALUES (3, 2, 4);
-		INSERT INTO SEC_Encuesta_Necesidades (id_Encuesta, id_Necesidades, Importancia)
-		VALUES (3, 3, 1);
-        INSERT INTO SEC_Encuesta_Necesidades (id_Encuesta, id_Necesidades, Importancia)
-		VALUES (3, 4, 3);
+    
 /*Crear tabla establecimiento comercial*/
 create table SEC_Establecimiento_Comercial(
 	id_CF int not null auto_increment primary key, 

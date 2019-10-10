@@ -1724,11 +1724,12 @@ app.get('/tipousosuelos', (req, res) => {
 /***************************************************
  * Fin de servicios para el inventario de suelos   *
  **************************************************/
+
 //Llamado de encuesta social 
 app.route('/encuesta-social')
     .get(function(req, res) {
-        console.log('Método de encuesta social');
-        var query = db.query('select SEC_Encuesta_Social.id_Encuesta, SEC_Encuesta_Social.Vinculo_Territorial, SEC_Necesidades_Basicas.Nombre_Necesidad, SEC_Encuesta_Necesidades.Importancia  from SEC_Encuesta_Necesidades inner join SEC_Encuesta_Social on SEC_Encuesta_Necesidades.id_Encuesta = SEC_Encuesta_Social.id_Encuesta inner join SEC_Necesidades_Basicas on SEC_Encuesta_Necesidades.id_Necesidades = SEC_Necesidades_Basicas.id_Necesidades;', function(error, result) {
+        console.log('Método de Encuesta_Social');
+        var query = db.query('select * from SEC_Encuesta_Social', function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1738,12 +1739,24 @@ app.route('/encuesta-social')
         });
     })
     .post(function(req, res) {
-        res.send('Add a encuesta_social');
+        const data = req.body;
+        console.log(data);
+        const sql = `
+            INSERT INTO SEC_Encuesta_Social(vinculo_territorial, alimentacion, seguridad, servicios_publicos, transporte)
+        VALUES('${data.vinculo_territorial}','${data.alimentacion}','${data.seguridad}','${data.servicios_publicos}','${data.transporte}');
+        `
+        var query = db.query(sql, function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result)
+            }
+        });
     })
     .put(function(req, res) {
         res.send('Update the encuesta social');
     });
-
 //Llamado de SEC_Establecimiento_Comercial
 app.route('/establecimiento-comercial')
     .get(function(req, res) {
@@ -1758,7 +1771,20 @@ app.route('/establecimiento-comercial')
         });
     })
     .post(function(req, res) {
-        res.send('Add a Establecimiento_Comercial');
+        const data = req.body;
+        console.log(data);
+        const sql = `
+        INSERT INTO SEC_Establecimiento_Comercial (Nombre_Establecimiento, Productos_Servicios, Descripcion , N_Empleados, Foto)
+        VALUES ('${data.Nombre_Establecimiento}','${data.Productos_Servicios}','${data.Descripcion}','${data.N_Empleados}','${data.Foto}');
+         `
+        var query = db.query(sql, function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result)
+            }
+        });
     })
     .put(function(req, res) {
         res.send('Update the Establecimiento_Comercial');
@@ -1778,7 +1804,20 @@ app.route('/comercio-informal')
         });
     })
     .post(function(req, res) {
-        res.send('Add a Comercio_Informal');
+        const data = req.body;
+        console.log(data);
+        const sql = `
+        INSERT INTO SEC_Comercio_Informal (Productos_Servicios, Descripcion , Estatico_Movil, Periodicidad, Jornada, Foto)
+        VALUES ('${data.Productos_Servicios}','${data.Descripcion}','${data.Estatico_Movil}','${data.Periodicidad}','${data.Jornada}','${data.Foto}');
+        `
+        var query = db.query(sql, function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result)
+            }
+        });
     })
     .put(function(req, res) {
         res.send('Update the Comercio_Informal');
