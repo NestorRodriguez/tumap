@@ -395,11 +395,12 @@ CREATE TABLE IF NOT EXISTS `tumap`.`dbo_inscripcion` (
   `id` INT(11) AUTO_INCREMENT,
   `documento` INT NOT NULL,
   `nombre` VARCHAR(45) NOT NULL,
-  `posicionamiento` VARCHAR(45) NULL DEFAULT NULL,
   `departamento` VARCHAR(45) NULL DEFAULT NULL,
   `munipio` VARCHAR(45) NULL DEFAULT NULL,
+  `posicionamiento` VARCHAR(45) NULL DEFAULT NULL,
+  `direccion` VARCHAR(80) NULL DEFAULT NULL,
   `usuario` VARCHAR(45) NULL DEFAULT NULL,
-  `fecha` timestamp default current_timestamp,
+  `fecha` timestamp default current_timestamp ,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -492,11 +493,11 @@ INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALU
 INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('5', '2', 'imagen2', '\\imagen1.png');
 
 
-INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `departamento`, `munipio`, `fecha`) VALUES ('11', 'nombre1 apellido1', 'coordenadaXY', 'Cundinamarca', 'Soacha', CURDATE());
-INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `departamento`, `munipio`, `fecha`) VALUES ('22', 'nombre2 apellido2', 'coordenadaXY', 'Cundinamarca', 'Soacha', CURDATE());
-INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `departamento`, `munipio`, `fecha`) VALUES ('33', 'nombre3 apellido3', 'coordenadaXY', 'Cundinamarca', 'Soacha', CURDATE());
-INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `departamento`, `munipio`, `fecha`) VALUES ('44', 'nombre4 apellido4', 'coordenadaXY', 'Cundinamarca', 'Soacha', CURDATE());
-INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `departamento`, `munipio`, `fecha`) VALUES ('55', 'nombre5 apellido5', 'coordenadaXY', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `direccion`, `departamento`, `munipio`, `fecha`) VALUES ('11', 'nombre1 apellido1', 'coordenadaXY','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `direccion`, `departamento`, `munipio`, `fecha`) VALUES ('22', 'nombre2 apellido2', 'coordenadaXY','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `direccion`, `departamento`, `munipio`, `fecha`) VALUES ('33', 'nombre3 apellido3', 'coordenadaXY','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `direccion`, `departamento`, `munipio`, `fecha`) VALUES ('44', 'nombre4 apellido4', 'coordenadaXY','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `direccion`, `departamento`, `munipio`, `fecha`) VALUES ('55', 'nombre5 apellido5', 'coordenadaXY','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
 
 INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('1', '1', '1');
 INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('1', '2', '4');

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { Inscripcion } from '../../models/dbo/Inscripcion';
-import { Observable } from 'rxjs';
+import { Observable, throwError  } from 'rxjs';
+import { catchError, tap, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,15 +16,32 @@ export class DboService {
 
   constructor(private http: HttpClient) {}
 
-  getInscripcion(documento: string) {
-    return this.http.get(`${this.API_URL}/dbo_inscripcion/${documento}`);
+  public getInscripcion(documento: string): Observable<any[]> {
+    if ( documento > '0') {
+      return this.http.get<any[]>(`${this.API_URL}/dbo_inscripcion/${documento}`);
+      tap(data => console.log('All: ' + JSON.stringify(data)));
+    }
   }
 
-  saveInscripcion(inscripcion: Inscripcion) {
+  public saveInscripcion(inscripcion: Inscripcion): Observable<any> {
     return this.http.post(`${this.API_URL}/dbo_inscripcion`, inscripcion);
+    tap(data => console.log('All: ' + JSON.stringify(data)));
   }
 
-  updateInscripcion(id: string, inscripcion: Inscripcion) {
+  public updateInscripcion(id: string, inscripcion: Inscripcion): Observable<any> {
     return this.http.put(`${this.API_URL}/dbo_inscripcion/${id}`, inscripcion);
+    tap(data => console.log('All: ' + JSON.stringify(data)));
+  }
+
+  public handleError(err: HttpErrorResponse) {
+    let errorMessage = '';
+    if (err.error instanceof ErrorEvent) {
+      errorMessage = `An error occurred: ${err.error.message}`;
+    } else {
+        errorMessage = `Server retorned code: ${err.status}, error message is: ${err.message}`;
+    }
+    console.error(errorMessage);
+    return throwError(errorMessage);
   }
 }
+

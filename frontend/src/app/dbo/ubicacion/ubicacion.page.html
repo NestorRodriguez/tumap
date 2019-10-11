@@ -1,25 +1,33 @@
-<ion-header >
-  <ion-toolbar  color="primary">
-      <ion-icon  padding color="secondary" name="arrow-round-back"></ion-icon>
-    <ion-title padding color="secondary">Ubicación</ion-title>
-  </ion-toolbar>
+<ion-header>
+
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button [defaultHref]="['/inscripcion']"></ion-back-button>
+        </ion-buttons>
+        <ion-title class="ion-title">Ubicación</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
- 
-   
 
-      <ion-item>
-          <ion-label color="secondary" position="floating">Departamento</ion-label>
-          <ion-input></ion-input>
-        </ion-item>
-  
+
+
+    <ion-item>
+        <ion-label color="secondary" position="floating">Departamento</ion-label>
+        <ion-input id="txtDepartamento"></ion-input>
+    </ion-item>
+
+    <ion-item>
+        <ion-label id="lblMunicipio" color="secondary" position="floating">Municipio</ion-label>
+        <ion-input id="txtMunicipio"></ion-input>
+    </ion-item>
+
 </ion-content>
 
 
 
 <ion-footer>
-  <ion-toolbar color="primary" class="title">
-      
-  </ion-toolbar>
+    <ion-toolbar color="primary" class="title">
+
+    </ion-toolbar>
 </ion-footer>

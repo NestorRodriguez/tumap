@@ -1,46 +1,35 @@
 <ion-header>
     <ion-toolbar color="primary">
-        <ion-icon class="icon" color="secondary" name="arrow-round-back"></ion-icon>
-        <ion-title padding color="secondary">Datos basicos</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button [defaultHref]="['/']"></ion-back-button>
+        </ion-buttons>
+        <ion-title class="ion-title">Datos basicos</ion-title>
     </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-    <ion-card class="padding">
-
+<ion-content class="padding">
+    <ion-card>
         <ion-item>
-            <ion-label color="secondary" position="floating">Documento</ion-label>
-            <ion-input id="idDocumento" type="number" [(ngModel)]="documento" (ionBlur)="getInscripcion();"></ion-input>
+            <ion-label color="secondary">Documento</ion-label>
+            <ion-input #txtDocumento type="number" [(ngModel)]="documento" (ionBlur)="getInscripcion(txtDocumento.value);"></ion-input>
         </ion-item>
-
-        <ion-item>
-            <ion-label id="nombre" color="secondary" position="floating">Nombre</ion-label>
-            <ion-input></ion-input>
-        </ion-item>
-
-        <ion-item>
-            <ion-label id="Municipio" color="secondary" position="floating">Municipio</ion-label>
-            <ion-input *ngIf="isValid">{{inscripcion.municipio}}</ion-input>
-        </ion-item>
-
-        <ion-item>
-            <ion-label id="Direccion" color="secondary" position="floating">Dirección</ion-label>
-            <ion-input></ion-input>
-        </ion-item>
-
-
-
-
     </ion-card>
+    <ion-card>
+        <ion-item>
+            <ion-label color="secondary">Nombre</ion-label>
+            <ion-input *ngIf="isValid; then templateNombre"></ion-input>
+            <ng-template #templateNombre>{{inscripcion.nombre}}</ng-template>
 
+        </ion-item>
 
-    <ion-button (onclick)="getInscripcion(11)">Siguiente</ion-button>
-
-
+        <ion-item>
+            <ion-label color="secondary">Direccion</ion-label>
+            <ion-input *ngIf="isValid; then templateDireccion"></ion-input>
+            <ng-template #templateDireccion>{{inscripcion.direccion}}</ng-template>
+        </ion-item>
+    </ion-card>
+    <ion-button routerLink="/ubicacion/11" routerDirection="forward">Siguiente</ion-button>
 </ion-content>
-
-
-
 <ion-footer>
     <ion-toolbar color="primary" class="title">
 

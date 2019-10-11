@@ -5,6 +5,7 @@ export interface Inscripcion {
   documento: number;
   nombre: string;
   posicionamiento?: string;
+  direccion?: string;
   departamento?: string;
   munipio?: string;
   usuario?: string;

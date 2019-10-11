@@ -23,9 +23,9 @@ const routes: Routes = [
   /*{ path: 'register', loadChildren: './Education/register/register.module#RegisterPageModule' }*/
 
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'ubicacion', loadChildren: './dbo/ubicacion/ubicacion.module#UbicacionPageModule' },
+  { path: 'ubicacion/:id', loadChildren: './dbo/ubicacion/ubicacion.module#UbicacionPageModule' },
   { path: 'inscripcion', loadChildren: './dbo/inscripcion/inscripcion.module#InscripcionPageModule' },
-  { path: 'formulario', loadChildren: './dbo/formulario/formulario.module#FormularioPageModule' },
+  { path: 'formulario/:id', loadChildren: './dbo/formulario/formulario.module#FormularioPageModule' },
   { path: 'exportar', loadChildren: './dbo/exportar/exportar.module#ExportarPageModule' },
   { path: 'formulariosuelos', loadChildren: './usosuelos/formulario/formulario.module#FormularioPageModule' },
   { path: 'usosueloshome', loadChildren: './usosuelos/usosueloshome/usosueloshome.module#UsosueloshomePageModule' },

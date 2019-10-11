@@ -11,21 +11,26 @@ import { Inscripcion } from 'src/app/models/dbo/Inscripcion';
 })
 export class InscripcionPage implements OnInit {
 
+  inscripciones: any[] = [];
   inscripcion: any;
   documento = 0;
   isValid = false;
 
   constructor(private dboService: DboService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   getInscripcion() {
     this.isValid = false;
     this.dboService.getInscripcion(this.documento.toString()).subscribe(
       res => {
-        this.inscripcion = res;
-        this.isValid = true;
+        this.inscripciones = res;
+        if ( this.inscripciones.length > 0) {
+          this.inscripcion = this.inscripciones[0];
+          this.isValid = true;
+        }
+        console.log('All: ' + JSON.stringify(this.inscripciones));
+        console.log('All: ' + JSON.stringify(this.inscripcion));
       },
       err => console.error(err)
     );
