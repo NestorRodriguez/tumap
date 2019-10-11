@@ -14,12 +14,14 @@
 
     <ion-item>
         <ion-label color="secondary" position="floating">Departamento</ion-label>
-        <ion-input id="txtDepartamento"></ion-input>
+        <ion-input *ngIf="isValid; then templateDepartamento"> </ion-input>
+        <ng-template #templateDepartamento>{{inscripcion.departamento}}</ng-template>
     </ion-item>
 
     <ion-item>
-        <ion-label id="lblMunicipio" color="secondary" position="floating">Municipio</ion-label>
-        <ion-input id="txtMunicipio"></ion-input>
+        <ion-label color="secondary" position="floating">Municipio</ion-label>
+        <ion-input *ngIf="isValid; then templateMunicipio"> </ion-input>
+        <ng-template #templateMunicipio>{{inscripcion.municipio}}</ng-template>
     </ion-item>
 
 </ion-content>

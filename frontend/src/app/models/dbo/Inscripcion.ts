@@ -7,7 +7,7 @@ export interface Inscripcion {
   posicionamiento?: string;
   direccion?: string;
   departamento?: string;
-  munipio?: string;
+  municipio?: string;
   usuario?: string;
   fecha?: Date;
 }

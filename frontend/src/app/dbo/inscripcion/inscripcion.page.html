@@ -11,7 +11,7 @@
     <ion-card>
         <ion-item>
             <ion-label color="secondary">Documento</ion-label>
-            <ion-input #txtDocumento type="number" [(ngModel)]="documento" (ionBlur)="getInscripcion(txtDocumento.value);"></ion-input>
+            <ion-input type="number" [(ngModel)]="documento" (ionBlur)="getInscripcion();"></ion-input>
         </ion-item>
     </ion-card>
     <ion-card>
@@ -28,7 +28,7 @@
             <ng-template #templateDireccion>{{inscripcion.direccion}}</ng-template>
         </ion-item>
     </ion-card>
-    <ion-button routerLink="/ubicacion/11" routerDirection="forward">Siguiente</ion-button>
+    <ion-button [routerLink]="['/ubicacion/',documento]" routerDirection="forward">Siguiente</ion-button>
 </ion-content>
 <ion-footer>
     <ion-toolbar color="primary" class="title">

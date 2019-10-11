@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { DboService } from '../../Services/dbo/dbo.service';
-import { InscripcionPageModule } from './inscripcion.module';
 import { Inscripcion } from 'src/app/models/dbo/Inscripcion';
 
 @Component({
@@ -11,8 +10,8 @@ import { Inscripcion } from 'src/app/models/dbo/Inscripcion';
 })
 export class InscripcionPage implements OnInit {
 
-  inscripciones: any[] = [];
-  inscripcion: any;
+  inscripciones: Inscripcion[] = [];
+  inscripcion: Inscripcion;
   documento = 0;
   isValid = false;
 
@@ -28,6 +27,7 @@ export class InscripcionPage implements OnInit {
         if ( this.inscripciones.length > 0) {
           this.inscripcion = this.inscripciones[0];
           this.isValid = true;
+
         }
         console.log('All: ' + JSON.stringify(this.inscripciones));
         console.log('All: ' + JSON.stringify(this.inscripcion));
