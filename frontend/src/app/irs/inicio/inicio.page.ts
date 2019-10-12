@@ -12,6 +12,7 @@ export class InicioPage implements OnInit {
 
   ngOnInit() {
     this.service.getTiposRedes().subscribe(data => {
+      console.log(JSON.stringify(data));
       this.tiposRedes = data;
     });
   }

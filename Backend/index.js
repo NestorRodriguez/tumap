@@ -1560,17 +1560,17 @@ app.post('/irs-inventario-postes', (req, res) => {
         fecha,
         ip
     ) VALUES (
-        '${data.id_irs_material}',
+        '${data.idIrsMaterial}',
         '${data.numero}',
-        '${data.id_irs_estado_red}',
-        '${data.tiene_lampara}',
-        '${data.tiene_transformador}',
-        '${data.tipo_red}',
+        '${data.idIrsEstadoRed}',
+        '${data.tieneLampara}',
+        '${data.tieneTransformador}',
+        '${data.tipoRed}',
         '${JSON.stringify(data.ubicacion)}',
         '${data.imagen}',
-        '${data.id_usuario}',
-        '${data.id_irs_operador_celular}',
-        '${data.id_irs_estado_red_celular}',
+        '${data.idUsuario}',
+        '${data.idIrsOperadorCelular}',
+        '${data.idIrsEstadoRedCelular}',
         '${date.substring(0, 10)}T${date.substring(11, 19)}',
         '${data.ip}'
     )`;
