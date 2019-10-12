@@ -25,10 +25,6 @@ const db = mysql.createConnection({
     multipleStatements: true
 });
 
-//Parse /Json
-app.use(bodyParser.urlencoded({ extended: false }))
-
-app.use(bodyParser.json())
 
 //Realizar la conexión a la base de datos
 db.connect(function(error) {
@@ -40,15 +36,14 @@ db.connect(function(error) {
 
 app.get('/', function(req, res) {
     console.log('Página de Inicio ');
-
-    res.send("Bienvenidos al servidor <strong> TuMap </strong>")
+    res.send("Bienvenidos al servidor <strong> TuMap </strong>");
 });
 
 //Manejo de Rutas Select users
 app.route('/users')
     .get((req, res) => {
         console.log('Consultar datos ');
-        var query = db.query('select * from users', (error, result) => {
+        const query = db.query('select * from users', (error, result) => {
             try {
                 if (error) {
                     throw error;
@@ -116,7 +111,8 @@ app.route('/users/:id')
             Rol_idRol: req.body.Rol_idRol,
         };
 
-        let sets = [];
+        let sets = [],
+            i;
         for (i in dato) {
             if (dato[i] || dato[i] == 0) {
                 sets.push(`${i}='${dato[i]}'`);
@@ -2814,4 +2810,6 @@ app.get('/Estado-Solic', (req, res) => {
 //Inicio de servidor NodeJS
 app.listen(3000, function() {
     console.log(`Server running at port ${PORT}`);
+});
+console.log(`Server running at port ${PORT}`);
 });
