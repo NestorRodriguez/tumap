@@ -19,10 +19,8 @@ app.use(bodyParser.json());
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    // password: "12345",
-    password: "",
-    // database: "tumap",
-    database: "hidrico",
+    password: "12345",
+    database: "tumap",
     port: 3306,
     multipleStatements: true
 });
