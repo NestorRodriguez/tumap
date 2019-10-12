@@ -1321,12 +1321,14 @@ app.post("/dbo_inscripcion", function(req, res) {
             documento, 
             nombre, 
             posicionamiento, 
+            direccion,
             departamento, 
             munipio
         ) VALUES (
             '${req.body.documento}',
             '${req.body.nombre}',
             '${req.body.posicionamiento}',
+            '${req.body.direccion}',
             '${req.body.departamento}',
             '${req.body.munipio}'
         )`;
@@ -1350,6 +1352,7 @@ app.put("/dbo_inscripcion/:id", function(req, res) {
     documento='${req.body.documento}', 
     nombre='${req.body.nombre}', 
     posicionamiento='${req.body.posicionamiento}', 
+    direccion='${req.body.direccion}', 
     departamento='${req.body.departamento}', 
     munipio='${req.body.munipio}'
     WHERE id='${id}';`;

@@ -23,9 +23,9 @@ const routes: Routes = [
   /*{ path: 'register', loadChildren: './Education/register/register.module#RegisterPageModule' }*/
 
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'ubicacion', loadChildren: './dbo/ubicacion/ubicacion.module#UbicacionPageModule' },
+  { path: 'ubicacion/:id', loadChildren: './dbo/ubicacion/ubicacion.module#UbicacionPageModule' },
   { path: 'inscripcion', loadChildren: './dbo/inscripcion/inscripcion.module#InscripcionPageModule' },
-  { path: 'formulario', loadChildren: './dbo/formulario/formulario.module#FormularioPageModule' },
+  { path: 'formulario/:id', loadChildren: './dbo/formulario/formulario.module#FormularioPageModule' },
   { path: 'exportar', loadChildren: './dbo/exportar/exportar.module#ExportarPageModule' },
   { path: 'formulariosuelos', loadChildren: './usosuelos/formulario/formulario.module#FormularioPageModule' },
   { path: 'usosueloshome', loadChildren: './usosuelos/usosueloshome/usosueloshome.module#UsosueloshomePageModule' },
@@ -49,12 +49,11 @@ const routes: Routes = [
   //{ path: 'mobiliario', loadChildren: './mobiliario/mobiliario.module#MobiliarioPageModule' },
   { path: 'inventario-redes-secas/inicio', loadChildren: './irs/inicio/inicio.module#InicioPageModule' },
   //{ path: 'inventario-postes', loadChildren: './irs/inventario-postes/inventario-postes.module#InventarioPostesPageModule' },
- // { path: 'inventario-otros', loadChildren: './irs/inventario-otros/inventario-otros.module#InventarioOtrosPageModule' },
+  // { path: 'inventario-otros', loadChildren: './irs/inventario-otros/inventario-otros.module#InventarioOtrosPageModule' },
   { path: 'predial', loadChildren: './predial/predial.module#PredialPageModule' },
-  { path: 'usoynivel', loadChildren: './usoynivel/usoynivel.module#UsoynivelPageModule' },  { path: 'infohabitantes', loadChildren: './Education/infohabitantes/infohabitantes.module#InfohabitantesPageModule' },
+  { path: 'usoynivel', loadChildren: './usoynivel/usoynivel.module#UsoynivelPageModule' },
+  { path: 'infohabitantes', loadChildren: './Education/infohabitantes/infohabitantes.module#InfohabitantesPageModule' },
   { path: 'registroinfo', loadChildren: './Education/registroinfo/registroinfo.module#RegistroinfoPageModule' },
-
-
 
 
 ];
@@ -65,5 +64,6 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
+
 

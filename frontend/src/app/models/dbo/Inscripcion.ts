@@ -4,9 +4,12 @@ export interface Inscripcion {
   id?: number;
   documento: number;
   nombre: string;
-  posicionamiento?: string;
+  lat?: string;
+  lng?: string;
+  direccion?: string;
   departamento?: string;
-  munipio?: string;
+  municipio?: string;
   usuario?: string;
-  fecha?: Date;
+  fecha: Date;
+  isUpdate: boolean;
 }

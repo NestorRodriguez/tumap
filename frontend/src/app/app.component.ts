@@ -30,6 +30,11 @@ export class AppComponent {
       title: 'Cerrar Sesión',
       url: '/',
       icon: 'ios-exit'
+    },
+    {
+      title: 'Encuesta Tipo de Suelo',
+      url: '/inscripcion',
+      icon: 'ios-person-add'
     }
   ];
 
