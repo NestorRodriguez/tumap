@@ -1557,13 +1557,14 @@ app.post('/irs-inventario-postes', (req, res) => {
     const data = req.body;
     const date = new Date().toISOString();
     const sql = `
-    INSERT INTO irs_inventarios_postes (
+    INSERT INTO irs_inventarios (
+        tipo,
         id_irs_material,
-        numero,
-        id_irs_estado_red,
+        identificador,
         tiene_lampara,
         tiene_transformador,
-        tipo_red,
+        id_irs_operador,
+        id_irs_estado_red,
         ubicacion,
         imagen,
         id_usuario,
@@ -1572,12 +1573,13 @@ app.post('/irs-inventario-postes', (req, res) => {
         fecha,
         ip
     ) VALUES (
+        '${data.tipo}',
         '${data.idIrsMaterial}',
-        '${data.numero}',
-        '${data.idIrsEstadoRed}',
+        '${data.identificador}',
         '${data.tieneLampara}',
         '${data.tieneTransformador}',
-        '${data.tipoRed}',
+        '${data.idIrsOperador}',
+        '${data.idIrsEstadoRed}',
         '${JSON.stringify(data.ubicacion)}',
         '${data.imagen}',
         '${data.idUsuario}',
