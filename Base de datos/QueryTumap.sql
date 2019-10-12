@@ -396,8 +396,9 @@ CREATE TABLE IF NOT EXISTS `tumap`.`dbo_inscripcion` (
   `documento` INT NOT NULL,
   `nombre` VARCHAR(45) NOT NULL,
   `departamento` VARCHAR(45) NULL DEFAULT NULL,
-  `munipio` VARCHAR(45) NULL DEFAULT NULL,
-  `posicionamiento` VARCHAR(45) NULL DEFAULT NULL,
+  `municipio` VARCHAR(45) NULL DEFAULT NULL,
+   `lat` VARCHAR(45) NULL DEFAULT NULL,
+   `lng` VARCHAR(45) NULL DEFAULT NULL,
   `direccion` VARCHAR(80) NULL DEFAULT NULL,
   `usuario` VARCHAR(45) NULL DEFAULT NULL,
   `fecha` timestamp default current_timestamp ,
@@ -447,9 +448,10 @@ CREATE  OR REPLACE VIEW `dbo_vListado` AS
 	dbo_inscripcion.documento, 
 	dbo_pregunta.orden,
 	dbo_inscripcion.nombre, 
-	dbo_inscripcion.posicionamiento,
+	dbo_inscripcion.lat,
+  dbo_inscripcion.lng,
 	dbo_inscripcion.departamento,  
-	dbo_inscripcion.munipio, 
+	dbo_inscripcion.municipio, 
 	dbo_inscripcion.fecha,
 	dbo_pregunta.pregunta,
 	dbo_imagen.nombre as imagen
@@ -493,11 +495,11 @@ INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALU
 INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('5', '2', 'imagen2', '\\imagen1.png');
 
 
-INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `direccion`, `departamento`, `munipio`, `fecha`) VALUES ('11', 'nombre1 apellido1', 'coordenadaXY','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
-INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `direccion`, `departamento`, `munipio`, `fecha`) VALUES ('22', 'nombre2 apellido2', 'coordenadaXY','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
-INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `direccion`, `departamento`, `munipio`, `fecha`) VALUES ('33', 'nombre3 apellido3', 'coordenadaXY','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
-INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `direccion`, `departamento`, `munipio`, `fecha`) VALUES ('44', 'nombre4 apellido4', 'coordenadaXY','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
-INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `direccion`, `departamento`, `munipio`, `fecha`) VALUES ('55', 'nombre5 apellido5', 'coordenadaXY','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `lat`,`lng`, `direccion`, `departamento`, `municipio`, `fecha`) VALUES ('11', 'nombre1 apellido1', '4.60972222222', '-74.0816666667','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `lat`,`lng`, `direccion`, `departamento`, `municipio`, `fecha`) VALUES ('22', 'nombre2 apellido2', '4.60972222222', '-74.0816666667','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `lat`,`lng`, `direccion`, `departamento`, `municipio`, `fecha`) VALUES ('33', 'nombre3 apellido3', '4.60972222222', '-74.0816666667','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `lat`,`lng`, `direccion`, `departamento`, `municipio`, `fecha`) VALUES ('44', 'nombre4 apellido4', '4.60972222222', '-74.0816666667','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `lat`,`lng`, `direccion`, `departamento`, `municipio`, `fecha`) VALUES ('55', 'nombre5 apellido5', '4.60972222222', '-74.0816666667','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
 
 INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('1', '1', '1');
 INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('1', '2', '4');

@@ -8,22 +8,25 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content class="padding">
 
-
-
-    <ion-item>
-        <ion-label color="secondary" position="floating">Departamento</ion-label>
-        <ion-input *ngIf="isValid; then templateDepartamento"> </ion-input>
-        <ng-template #templateDepartamento>{{inscripcion.departamento}}</ng-template>
-    </ion-item>
-
-    <ion-item>
-        <ion-label color="secondary" position="floating">Municipio</ion-label>
-        <ion-input *ngIf="isValid; then templateMunicipio"> </ion-input>
-        <ng-template #templateMunicipio>{{inscripcion.municipio}}</ng-template>
-    </ion-item>
-
+    <ion-card class="welcome-card">
+        <ion-card-header>
+            <ion-card-title> Mapa</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <!-- this creates a google map on the page with the given lat/lng from -->
+            <!-- the component as the initial center of the map: -->
+            <agm-map (mapClick)="agregarMarcador($event)" [latitude]="lat" [longitude]="lng" [zoom]='16'>
+                <agm-marker *ngFor="let marcador of marcadores" [latitude]="marcador.lat" [longitude]="marcador.lng" iconUrl="assets/location.png" width="20%">
+                    <agm-info-window>
+                        <strong>{{marcador.title}}</strong>
+                        <p>{{marcador.description}}</p>
+                    </agm-info-window>
+                </agm-marker>
+            </agm-map>
+        </ion-card-content>
+    </ion-card>
 </ion-content>
 
 

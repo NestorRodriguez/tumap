@@ -10,28 +10,25 @@
 <ion-content class="padding">
     <ion-card>
         <ion-item>
-            <ion-label color="secondary">Documento</ion-label>
-            <ion-input type="number" [(ngModel)]="documento" (ionBlur)="getInscripcion();"></ion-input>
+            <ion-input type="number" name="txtDocumento" placeholder="Documento" [(ngModel)]="inscripcion.documento" (ionBlur)="getInscripcion();"></ion-input>
         </ion-item>
-    </ion-card>
-    <ion-card>
         <ion-item>
-            <ion-label color="secondary">Nombre</ion-label>
-            <ion-input *ngIf="isValid; then templateNombre"></ion-input>
-            <ng-template #templateNombre>{{inscripcion.nombre}}</ng-template>
-
+            <ion-input type="text" name="txtNombre" placeholder="Nombre" [(ngModel)]="inscripcion.nombre"></ion-input>
         </ion-item>
-
         <ion-item>
-            <ion-label color="secondary">Direccion</ion-label>
-            <ion-input *ngIf="isValid; then templateDireccion"></ion-input>
-            <ng-template #templateDireccion>{{inscripcion.direccion}}</ng-template>
+            <ion-input type="text" name="txtDireccion" placeholder="Direccion" [(ngModel)]="inscripcion.direccion"></ion-input>
         </ion-item>
+        <ion-item>
+            <ion-input type="text" name="txtDepartamento" placeholder="Departamento" [(ngModel)]="inscripcion.departamento"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input type="text" name="txtMunicipio" placeholder="Municipio" [(ngModel)]="inscripcion.municipio"></ion-input>
+        </ion-item>
+        <ion-button class="btn btn-success btn-block" [routerLink]="['/ubicacion/',posicion]" routerDirection="forward" (click)="saveInscripcion();">Ingresar ubicacion en mapa</ion-button>
     </ion-card>
-    <ion-button [routerLink]="['/ubicacion/',documento]" routerDirection="forward">Siguiente</ion-button>
 </ion-content>
 <ion-footer>
-    <ion-toolbar color="primary" class="title">
 
+    <ion-toolbar color="primary" class="title">
     </ion-toolbar>
 </ion-footer>
