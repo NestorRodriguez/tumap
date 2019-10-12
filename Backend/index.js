@@ -1310,30 +1310,18 @@ app.get('/dbo_inscripcion/:documento', function(req, res) {
     // }
     // res.json({ message: 'documento no existe' });
 })
-app.post("/dbo_inscripcion", function(req, res) {
-    var sql = `
-        INSERT INTO dbo_inscripcion 
-        (
-            documento, 
-            nombre, 
-            lat, 
-            lng,
-            direccion,
-            departamento, 
-            municipio,
-            usuario
-        ) VALUES (
-            '${req.body.documento}',
-            '${req.body.nombre}',
-            '${req.body.lat}',
-            '${req.body.lng}',
-            '${req.body.direccion}',
-            '${req.body.departamento}',
-            '${req.body.municipio}',
-            '${req.body.usuario}'
-        )`;
 
-    console.log('Add inscripcion');
+app.post("/dbo_inscripcion", function(req, res) {
+    var sql = "INSERT INTO dbo_inscripcion(documento,nombre,lat,lng,direccion,departamento,municipio,usuario,fecha)"
+    sql = sql + ` VALUES ( ${req.body.documento} ,`
+    sql = sql + `'${req.body.nombre}',`
+    sql = sql + `'${req.body.lat}',`
+    sql = sql + `'${req.body.lng}',`
+    sql = sql + `'${req.body.direccion}',`
+    sql = sql + `'${req.body.departamento}',`
+    sql = sql + `'${req.body.municipio}',`
+    sql = sql + `'${req.body.usuario}',CURDATE());`;
+    console.log('Add inscripcion:');
     var query = db.query(sql, function(error, result) {
         if (error) {
             throw error;
@@ -1342,22 +1330,22 @@ app.post("/dbo_inscripcion", function(req, res) {
             res.json(result);
         }
     });
-    res.json({ text: 'Datos Ingresados ' + sql });
+    res.json({ text: 'Datos Ingresados: ' + sql });
 })
 
 app.put("/dbo_inscripcion/:id", function(req, res) {
     const { id } = req.params;
 
-    const sql = `UPDATE dbo_inscripcion SET 
-    documento='${req.body.documento}', 
-    nombre='${req.body.nombre}', 
-    lat='${req.body.lat}', 
-    lng='${req.body.lng}',
-    direccion='${req.body.direccion}', 
-    departamento='${req.body.departamento}', 
-    municipio='${req.body.municipio}',
-    usuario='${req.body.usuario}
-    WHERE id='${id}';`;
+    var sql = ` UPDATE dbo_inscripcion SET `
+    sql = sql + ` documento= ${req.body.documento} ,`
+    sql = sql + ` nombre='${req.body.nombre}', `
+    sql = sql + ` lat='${req.body.lat}', `
+    sql = sql + ` lng='${req.body.lng}',`
+    sql = sql + ` direccion='${req.body.direccion}', `
+    sql = sql + ` departamento='${req.body.departamento}', `
+    sql = sql + ` municipio='${req.body.municipio}',`
+    sql = sql + ` usuario='${req.body.usuario}' `
+    sql = sql + ` WHERE id= ${id};`;
 
     var query = db.query(sql, function(error, result) {
         if (error) {
@@ -1553,13 +1541,14 @@ app.post('/irs-inventario-postes', (req, res) => {
     const data = req.body;
     const date = new Date().toISOString();
     const sql = `
-    INSERT INTO irs_inventarios_postes (
+    INSERT INTO irs_inventarios (
+        tipo,
         id_irs_material,
-        numero,
-        id_irs_estado_red,
+        identificador,
         tiene_lampara,
         tiene_transformador,
-        tipo_red,
+        id_irs_operador,
+        id_irs_estado_red,
         ubicacion,
         imagen,
         id_usuario,
@@ -1568,12 +1557,13 @@ app.post('/irs-inventario-postes', (req, res) => {
         fecha,
         ip
     ) VALUES (
+        '${data.tipo}',
         '${data.idIrsMaterial}',
-        '${data.numero}',
-        '${data.idIrsEstadoRed}',
+        '${data.identificador}',
         '${data.tieneLampara}',
         '${data.tieneTransformador}',
-        '${data.tipoRed}',
+        '${data.idIrsOperador}',
+        '${data.idIrsEstadoRed}',
         '${JSON.stringify(data.ubicacion)}',
         '${data.imagen}',
         '${data.idUsuario}',
