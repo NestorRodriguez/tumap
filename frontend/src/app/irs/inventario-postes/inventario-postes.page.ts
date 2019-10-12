@@ -3,6 +3,9 @@ import {InventarioRedesSecasService} from '../../Services/irs/inventario-redes-s
 import {AlertController, ModalController} from '@ionic/angular';
 import {ModalMapaPage} from '../modal-mapa/modal-mapa.page';
 import {Router} from '@angular/router';
+import { NetworkInterface } from '@ionic-native/network-interface/ngx';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
 
 @Component({
   selector: 'app-inventario-postes',
@@ -13,12 +16,32 @@ export class InventarioPostesPage implements OnInit, OnDestroy {
 
   materiales: any = [];
   estados: any = [];
-  model: any = {}
+  model: any = {};
 
   constructor(private service: InventarioRedesSecasService,
               private modalCtrl: ModalController,
               private alertCtrl: AlertController,
-              private router: Router) { }
+              private router: Router,
+              private networkInterface: NetworkInterface,
+              private camera: Camera,
+              private geolocation: Geolocation) {
+
+    this.networkInterface.getWiFiIPAddress()
+        .then(address => {
+          console.log(`IP: ${address.ip}, Subnet: ${address.subnet}`);
+          this.model.ip = address.ip;
+        })
+        .catch(error => console.error(`Unable to get IP: ${error}`));
+
+    this.networkInterface.getCarrierIPAddress()
+        .then(address => {
+          console.log(`IP: ${address.ip}, Subnet: ${address.subnet}`);
+          if (!this.model.ip) {
+            this.model.ip = address.ip;
+          }
+        })
+        .catch(error => console.error(`Unable to get IP: ${error}`));
+  }
 
   ngOnInit() {
     this.service.getTiposMateriales().subscribe(data => {
@@ -56,7 +79,9 @@ export class InventarioPostesPage implements OnInit, OnDestroy {
   }
 
   save() {
+    if (this.model.idIrsMateriales && this.model.idIrsEstadoRed && this.model.ubicacion && this.model.imagen) {
 
+    }
   }
 
   async cancel() {
@@ -80,6 +105,19 @@ export class InventarioPostesPage implements OnInit, OnDestroy {
           ]
       });
       await alert.present();
+  }
+
+  loadCamera() {
+    const options = {
+      destinationType: this.camera.DestinationType.DATA_URL
+    };
+    this.camera.getPicture(options)
+        .then(imageData => {
+          this.model.imagen = 'data:image/jpeg;base64,' + imageData;
+        })
+        .catch(error => {
+          console.log(error);
+        });
   }
 
 }
