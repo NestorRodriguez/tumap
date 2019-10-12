@@ -25,10 +25,6 @@ const db = mysql.createConnection({
     multipleStatements: true
 });
 
-//Parse /Json
-app.use(bodyParser.urlencoded({ extended: false }))
-
-app.use(bodyParser.json())
 
 //Realizar la conexión a la base de datos
 db.connect(function(error) {
@@ -40,15 +36,14 @@ db.connect(function(error) {
 
 app.get('/', function(req, res) {
     console.log('Página de Inicio ');
-
-    res.send("Bienvenidos al servidor <strong> TuMap </strong>")
+    res.send("Bienvenidos al servidor <strong> TuMap </strong>");
 });
 
 //Manejo de Rutas Select users
 app.route('/users')
     .get((req, res) => {
         console.log('Consultar datos ');
-        var query = db.query('select * from users', (error, result) => {
+        const query = db.query('select * from users', (error, result) => {
             try {
                 if (error) {
                     throw error;
@@ -116,7 +111,8 @@ app.route('/users/:id')
             Rol_idRol: req.body.Rol_idRol,
         };
 
-        let sets = [];
+        let sets = [],
+            i;
         for (i in dato) {
             if (dato[i] || dato[i] == 0) {
                 sets.push(`${i}='${dato[i]}'`);
@@ -1314,26 +1310,18 @@ app.get('/dbo_inscripcion/:documento', function(req, res) {
     // }
     // res.json({ message: 'documento no existe' });
 })
-app.post("/dbo_inscripcion", function(req, res) {
-    var sql = `
-        INSERT INTO dbo_inscripcion 
-        (
-            documento, 
-            nombre, 
-            posicionamiento, 
-            direccion,
-            departamento, 
-            munipio
-        ) VALUES (
-            '${req.body.documento}',
-            '${req.body.nombre}',
-            '${req.body.posicionamiento}',
-            '${req.body.direccion}',
-            '${req.body.departamento}',
-            '${req.body.munipio}'
-        )`;
 
-    console.log('Add inscripcion');
+app.post("/dbo_inscripcion", function(req, res) {
+    var sql = "INSERT INTO dbo_inscripcion(documento,nombre,lat,lng,direccion,departamento,municipio,usuario,fecha)"
+    sql = sql + ` VALUES ( ${req.body.documento} ,`
+    sql = sql + `'${req.body.nombre}',`
+    sql = sql + `'${req.body.lat}',`
+    sql = sql + `'${req.body.lng}',`
+    sql = sql + `'${req.body.direccion}',`
+    sql = sql + `'${req.body.departamento}',`
+    sql = sql + `'${req.body.municipio}',`
+    sql = sql + `'${req.body.usuario}',CURDATE());`;
+    console.log('Add inscripcion:');
     var query = db.query(sql, function(error, result) {
         if (error) {
             throw error;
@@ -1342,20 +1330,22 @@ app.post("/dbo_inscripcion", function(req, res) {
             res.json(result);
         }
     });
-    res.json({ text: 'Datos Ingresados ' + sql });
+    res.json({ text: 'Datos Ingresados: ' + sql });
 })
 
 app.put("/dbo_inscripcion/:id", function(req, res) {
     const { id } = req.params;
 
-    const sql = `UPDATE dbo_inscripcion SET 
-    documento='${req.body.documento}', 
-    nombre='${req.body.nombre}', 
-    posicionamiento='${req.body.posicionamiento}', 
-    direccion='${req.body.direccion}', 
-    departamento='${req.body.departamento}', 
-    munipio='${req.body.munipio}'
-    WHERE id='${id}';`;
+    var sql = ` UPDATE dbo_inscripcion SET `
+    sql = sql + ` documento= ${req.body.documento} ,`
+    sql = sql + ` nombre='${req.body.nombre}', `
+    sql = sql + ` lat='${req.body.lat}', `
+    sql = sql + ` lng='${req.body.lng}',`
+    sql = sql + ` direccion='${req.body.direccion}', `
+    sql = sql + ` departamento='${req.body.departamento}', `
+    sql = sql + ` municipio='${req.body.municipio}',`
+    sql = sql + ` usuario='${req.body.usuario}' `
+    sql = sql + ` WHERE id= ${id};`;
 
     var query = db.query(sql, function(error, result) {
         if (error) {
@@ -1551,13 +1541,14 @@ app.post('/irs-inventario-postes', (req, res) => {
     const data = req.body;
     const date = new Date().toISOString();
     const sql = `
-    INSERT INTO irs_inventarios_postes (
+    INSERT INTO irs_inventarios (
+        tipo,
         id_irs_material,
-        numero,
-        id_irs_estado_red,
+        identificador,
         tiene_lampara,
         tiene_transformador,
-        tipo_red,
+        id_irs_operador,
+        id_irs_estado_red,
         ubicacion,
         imagen,
         id_usuario,
@@ -1566,17 +1557,18 @@ app.post('/irs-inventario-postes', (req, res) => {
         fecha,
         ip
     ) VALUES (
-        '${data.id_irs_material}',
-        '${data.numero}',
-        '${data.id_irs_estado_red}',
-        '${data.tiene_lampara}',
-        '${data.tiene_transformador}',
-        '${data.tipo_red}',
+        '${data.tipo}',
+        '${data.idIrsMaterial}',
+        '${data.identificador}',
+        '${data.tieneLampara}',
+        '${data.tieneTransformador}',
+        '${data.idIrsOperador}',
+        '${data.idIrsEstadoRed}',
         '${JSON.stringify(data.ubicacion)}',
         '${data.imagen}',
-        '${data.id_usuario}',
-        '${data.id_irs_operador_celular}',
-        '${data.id_irs_estado_red_celular}',
+        '${data.idUsuario}',
+        '${data.idIrsOperadorCelular}',
+        '${data.idIrsEstadoRedCelular}',
         '${date.substring(0, 10)}T${date.substring(11, 19)}',
         '${data.ip}'
     )`;
@@ -1973,10 +1965,10 @@ router
         });
     })
     .post('/vias', (req, res) => {
-        const dato = req.body
-
-        const sql = `INSERT INTO jf_descripcion_via (ubicacion, nombre_via, detalle, imagen, estado)
-            values (${dato.ubicacion}, ${dato.nombre_via}, ${dato.detalle}, ${dato.imagen}, ${dato.estado})`;
+        const dato = req.body;
+        const puntos = `ST_GeomFromText('POINT${dato.ubicacion}')`;
+        const sql = `INSERT INTO jf_descripcion_via (ubicacion, nombre_via, id_detalle_via, imagen, id_estado)
+            values (${puntos}, '${dato.nombre_via}', ${dato.id_detalle_via}, '${dato.imagen}', ${dato.id_estado})`;
 
         db.query(sql, (error, result) => {
             if (error) {
@@ -1989,22 +1981,10 @@ router
     .put('/vias/:id', (req, res) => {
 
         const id = req.params.id;
-        const dato = {
-            ubicacion: req.body.ubicacion,
-            nombre_via: req.body.nombre_via,
-            detalle: req.body.detalle,
-            imagen: req.body.imagen,
-            estado: req.body.estado,
-        };
+        const dato = req.body;
 
-        let sets = [];
-        for (i in dato) {
-            if (dato[i] || dato[i] == 0) {
-                sets.push(`${i}='${dato[i]}'`);
-            }
-        }
 
-        const sql = `UPDATE jf_descripcion_via SET ${sets.join(', ')} WHERE id='${id}';`;
+        const sql = `UPDATE jf_descripcion_via SET id_estado = ${dato.id_estado} WHERE id='${id}';`;
 
         console.log(sql);
 
@@ -2032,6 +2012,7 @@ router
         });
     });
 app.use(router);
+
 
 /***************************************************
  * Fin de servicios para vias   *
