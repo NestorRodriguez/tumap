@@ -2801,5 +2801,3 @@ app.get('/Estado-Solic', (req, res) => {
 app.listen(3000, function() {
     console.log(`Server running at port ${PORT}`);
 });
-console.log(`Server running at port ${PORT}`);
-});
