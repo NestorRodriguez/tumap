@@ -1320,17 +1320,21 @@ app.post("/dbo_inscripcion", function(req, res) {
         (
             documento, 
             nombre, 
-            posicionamiento, 
+            lat, 
+            lng,
             direccion,
             departamento, 
-            munipio
+            municipio,
+            usuario
         ) VALUES (
             '${req.body.documento}',
             '${req.body.nombre}',
-            '${req.body.posicionamiento}',
+            '${req.body.lat}',
+            '${req.body.lng}',
             '${req.body.direccion}',
             '${req.body.departamento}',
-            '${req.body.munipio}'
+            '${req.body.municipio}',
+            '${req.body.usuario}'
         )`;
 
     console.log('Add inscripcion');
@@ -1351,10 +1355,12 @@ app.put("/dbo_inscripcion/:id", function(req, res) {
     const sql = `UPDATE dbo_inscripcion SET 
     documento='${req.body.documento}', 
     nombre='${req.body.nombre}', 
-    posicionamiento='${req.body.posicionamiento}', 
+    lat='${req.body.lat}', 
+    lng='${req.body.lng}',
     direccion='${req.body.direccion}', 
     departamento='${req.body.departamento}', 
-    munipio='${req.body.munipio}'
+    municipio='${req.body.municipio}',
+    usuario='${req.body.usuario}
     WHERE id='${id}';`;
 
     var query = db.query(sql, function(error, result) {

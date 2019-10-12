@@ -24,8 +24,12 @@
         <ion-item>
             <ion-input type="text" name="txtMunicipio" placeholder="Municipio" [(ngModel)]="inscripcion.municipio"></ion-input>
         </ion-item>
-        <ion-button class="btn btn-success btn-block" [routerLink]="['/ubicacion/',posicion]" routerDirection="forward" (click)="saveInscripcion();">Ingresar ubicacion en mapa</ion-button>
+        <ion-item>
+            <ion-button class="btn btn-success" [routerLink]="['/ubicacion/',posicion]" routerDirection="forward">Ubicacion por mapa</ion-button>
+            <p>{{posicion}}</p>
+        </ion-item>
     </ion-card>
+    <ion-button class="btn btn-success btn-block" [routerLink]="['/formulario/',inscripcion.id]" routerDirection="forward" (click)="saveInscripcion();">Comenzar Encuesta</ion-button>
 </ion-content>
 <ion-footer>
 
