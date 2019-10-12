@@ -27,7 +27,8 @@ export class ListPage implements OnInit {
     this.items.push(
       {title: 'Señalización y mobiliario urbano', note: '',  route: '/categorias', icon: this.icons[0]},
       {title: 'Inventario uso de suelos', note: '',  route: '/formulariosuelos', icon: this.icons[1]},
-      {title: 'Aqui va otro servicio!', note: '', route: '/', icon: this.icons[2]}
+      {title: 'Información Predial', note: '',  route: '/predial', icon: this.icons[2]},
+      {title: 'Aqui va otro servicio!', note: '', route: '/', icon: this.icons[3]}
     );
   }
 
