@@ -6,7 +6,8 @@ import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/htt
 })
 export class InventarioRedesSecasService {
 
-  serverUrl = 'http://localhost:3000';
+  // serverUrl = 'http://localhost:3000';
+  serverUrl = 'http://10.0.75.1:3000';
 
   constructor( private http: HttpClient) { }
 
