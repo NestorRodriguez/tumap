@@ -1,14 +1,7 @@
-<ion-header>
-    <ion-toolbar color="primary">
-        <ion-buttons slot="start">
-            <ion-back-button [defaultHref]="['/']"></ion-back-button>
-        </ion-buttons>
-        <ion-title class="ion-title">Datos basicos</ion-title>
-    </ion-toolbar>
-</ion-header>
 
-<ion-content class="padding">
-    <ion-card>
+<ion-content >
+           
+                    <img src="assets/logo registro.svg" alt="">
         <ion-item>
             <ion-input type="number" name="txtDocumento" placeholder="Documento" [(ngModel)]="inscripcion.documento" (ionBlur)="getInscripcion();"></ion-input>
         </ion-item>
@@ -24,15 +17,17 @@
         <ion-item>
             <ion-input type="text" name="txtMunicipio" placeholder="Municipio" [(ngModel)]="inscripcion.municipio"></ion-input>
         </ion-item>
-        <ion-item>
-            <ion-button class="btn btn-success" [routerLink]="['/ubicacion/',posicion]" routerDirection="forward">Ubicacion por mapa</ion-button>
-            <p>{{posicion}}</p>
-        </ion-item>
-    </ion-card>
-    <ion-button class="btn btn-success btn-block" [routerLink]="['/formulario/',inscripcion.id]" routerDirection="forward" (click)="saveInscripcion();">Comenzar Encuesta</ion-button>
-</ion-content>
-<ion-footer>
 
-    <ion-toolbar color="primary" class="title">
-    </ion-toolbar>
-</ion-footer>
+        <ion-toolbar class="botonins" color="none">
+            <button padding class="btn btn-success" [routerLink]="['/ubicacion/',posicion]" routerDirection="forward">Ubicacion</button>
+            <button padding class="btn btn-success btn-block" [routerLink]="['/formulario/',inscripcion.id]" routerDirection="forward" (click)="saveInscripcion();">Siguiente</button>
+        </ion-toolbar>
+
+            <ion-toolbar  class="atrasins" color="none">
+            <ion-buttons slot="start">
+                <ion-back-button color="tertiary"  [defaultHref]="['/']"></ion-back-button>
+            </ion-buttons>
+            <ion-title color="white" class="ion-title">Atras</ion-title>
+        </ion-toolbar>
+    
+</ion-content>
