@@ -62,6 +62,9 @@ const routes: Routes = [
   { path: 'mapadmin', loadChildren: './Education/mapadmin/mapadmin.module#MapadminPageModule' },
   { path: 'centrosformacion', loadChildren: './Education/centrosformacion/centrosformacion.module#CentrosformacionPageModule' },
   { path: 'mapa', loadChildren: './minas/mapa/mapa.module#MapaPageModule' },
+  { path: 'comercioformal', loadChildren: './socioeconomico/comercioformal/comercioformal.module#ComercioformalPageModule' },
+  { path: 'comercioinformal', loadChildren: './socioeconomico/comercioinformal/comercioinformal.module#ComercioinformalPageModule' },
+  { path: 'encuestasocial', loadChildren: './socioeconomico/encuestasocial/encuestasocial.module#EncuestasocialPageModule' },
 
 
 
