@@ -1854,7 +1854,7 @@ app.route('/categoria')
 app.route('/item_senalizacion')
     .get(function(req, res) {
         console.log('Página de Validar Información ');
-        var query = db.query('select * from jyd_item where fk_categoria=1', function(error, result) {
+        var query = db.query('select * from jyd_item where fk_categoria=1 order by nombre', function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1874,7 +1874,7 @@ app.route('/item_senalizacion')
 app.route('/item_mobiliario')
     .get(function(req, res) {
         console.log('Página de Validar Información ');
-        var query = db.query('select * from jyd_item where fk_categoria=2', function(error, result) {
+        var query = db.query('select * from jyd_item where fk_categoria=2 order by nombre', function(error, result) {
             if (error) {
                 throw error;
             } else {
