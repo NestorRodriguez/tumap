@@ -19,7 +19,7 @@ app.use(bodyParser.json({ extended: true, limit: '10mb' }));
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "1234",
+    password: "12345",
     database: "tumap",
     port: 3306,
     multipleStatements: true
@@ -2286,7 +2286,7 @@ router
 
         const sql = `INSERT INTO MP_Registro_Mina (nombre_sesion,ubicacion, mineral, trabajadores, observacion, id_sistemaexplotacion, id_tipomaterial, id_estadomina,estadoregistro,pregunta)
             values ('${dato.nombre_sesion}',
-            '${dato.ubicacion}',
+            GeomFromText('${dato.ubicacion}'),
              '${dato.mineral}',
               '${dato.trabajadores}',
                '${dato.observacion}',

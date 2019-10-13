@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-minarmapa',
-  templateUrl: './minarmapa.page.html',
-  styleUrls: ['./minarmapa.page.scss'],
+  selector: 'app-mapavias',
+  templateUrl: './mapavias.page.html',
+  styleUrls: ['./mapavias.page.scss'],
 })
-export class MinarmapaPage implements OnInit {
+export class MapaviasPage implements OnInit {
 
   lat = 4.60972222222;
   lng = -74.0816666667;
@@ -13,8 +13,9 @@ export class MinarmapaPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    if (navigator) {
-      navigator.geolocation.getCurrentPosition(pos => {
+    if (navigator)
+    {
+    navigator.geolocation.getCurrentPosition( pos => {
         this.lng = +pos.coords.longitude;
         this.lat = +pos.coords.latitude;
       });
