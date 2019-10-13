@@ -35,7 +35,7 @@ export class MinaregistroPage implements OnInit {
 
   saveForm() {
     const data = {
-      nombre: this.nombre,
+      nombre_sesion: this.nombre,
       ubicacion: this.ubicacion,
       mineral: this.mineral,
       trabajadores: this.ntrabajadores,
@@ -46,7 +46,7 @@ export class MinaregistroPage implements OnInit {
       estadoregistro: this.estadoregistro,
       pregunta: this.pregunta,
     };
-    this.minasService.setEstadoActual(data).subscribe(response => {
+    this.minasService.setSistemaRegistroMina(data).subscribe(response => {
       console.log(response);
     });
   }
