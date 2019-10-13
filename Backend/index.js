@@ -10,10 +10,10 @@ const cors = require('cors');
 app.use(cors());
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
 // parse application/json
-app.use(bodyParser.json());
+app.use(bodyParser.json({ extended: true, limit: '10mb' }));
 
 //Parámetros de la conexión a la base de datos
 const db = mysql.createConnection({
@@ -1541,12 +1541,28 @@ app.get('/irs-operadores-celulares', (req, res) => {
     });
 });
 
-app.post('/irs-inventario-postes', (req, res) => {
+app.post('/irs-inventarios', (req, res) => {
     const data = req.body;
     const date = new Date().toISOString();
+
+    if(data.tieneLampara != null){
+        data.tieneLampara = (data.tieneLampara) ? 'S' : 'N';
+    }
+
+    if(data.tieneTransformador != null){
+        data.tieneTransformador = (data.tieneTransformador) ? 'S' : 'N';
+    }
+
+    if(data.tipo == 'Postes' && (data.tieneTransformador == true || data.tieneLampara == true)){
+        data.clasePoste = 'ELECTRICO';
+    } else if(data.tipo == 'Postes' && (data.tieneTransformador == false && data.tieneLampara == false)) {
+        data.clasePoste = 'TELECO';
+    }
+
     const sql = `
     INSERT INTO irs_inventarios (
         tipo,
+        clase_poste,
         id_irs_material,
         identificador,
         tiene_lampara,
@@ -1562,68 +1578,28 @@ app.post('/irs-inventario-postes', (req, res) => {
         ip
     ) VALUES (
         '${data.tipo}',
-        '${data.idIrsMaterial}',
-        '${data.identificador}',
-        '${data.tieneLampara}',
-        '${data.tieneTransformador}',
-        '${data.idIrsOperador}',
-        '${data.idIrsEstadoRed}',
+        '${data.clasePoste || ''}',
+        ${data.idIrsMaterial},
+        '${data.identificador || ''}',
+        '${data.tieneLampara || ''}',
+        '${data.tieneTransformador || ''}',
+        ${data.idIrsOperador},
+        ${data.idIrsEstadoRed},
         '${JSON.stringify(data.ubicacion)}',
         '${data.imagen}',
-        '${data.idUsuario}',
-        '${data.idIrsOperadorCelular}',
-        '${data.idIrsEstadoRedCelular}',
+        ${data.idUsuario},
+        ${data.idIrsOperadorCelular},
+        ${data.idIrsEstadoRedCelular},
         '${date.substring(0, 10)}T${date.substring(11, 19)}',
         '${data.ip}'
     )`;
 
     db.query(sql, (error, result) => {
         if (error) {
-            res.json({
+            res.status(400).json({
                 error: true,
-                message: "Ocurrió un error al guardar la encuesta."
-            });
-        } else {
-            res.json(result);
-        }
-    });
-});
-
-app.post('/irs-inventario-otros', (req, res) => {
-    const data = req.body;
-    const date = new Date().toISOString();
-    const sql = `
-    INSERT INTO irs_inventarios_otros (
-        tipo,
-        id_irs_estado_red,
-        identificador,
-        id_irs_operador,
-        ubicacion,
-        imagen,
-        id_usuario,
-        id_irs_operador_celular,
-        id_irs_estado_red_celular,
-        fecha,
-        ip
-    ) VALUES (
-        '${data.tipo}',
-        '${data.id_irs_estado_red}',
-        '${data.identificador}',
-        '${data.id_irs_operador}',
-        '${JSON.stringify(data.ubicacion)}',
-        '${data.imagen}',
-        '${data.id_usuario}',
-        '${data.id_irs_operador_celular}',
-        '${data.id_irs_estado_red_celular}',
-        '${date.substring(0, 10)}T${date.substring(11, 19)}',
-        '${data.ip}'
-    )`;
-
-    db.query(sql, (error, result) => {
-        if (error) {
-            res.json({
-                error: true,
-                message: "Ocurrió un error al guardar la encuesta."
+                message: "Ocurrió un error al guardar la encuesta.",
+                sql: error
             });
         } else {
             res.json(result);

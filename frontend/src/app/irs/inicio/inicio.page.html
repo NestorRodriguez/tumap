@@ -11,7 +11,7 @@
 
 <ion-content class="ion-padding">
   <div class="button-container" *ngFor="let t of tiposRedes">
-    <ion-button class="ion-text-capitalize" color="light" expand="block" size="large" shape="round" [routerLink]="getRouterLink(t.tipo)">
+    <ion-button class="ion-text-capitalize" color="light" expand="block" size="large" shape="round" [routerLink]="'/irs-inventario-postes/' + t.nombre" routerDirection="root">
       <ion-grid>
         <ion-row>
           <ion-col size="3">
