@@ -14,7 +14,7 @@
     <!-- </ion-toolbar> -->
     <ion-toolbar class="title">
         <ion-title color="primary">
-            Estado de la Mina </ion-title>
+            Tipo de Explotación </ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -30,10 +30,10 @@
             <ion-col>
                 <ion-item>
                     <ion-label position="floating">
-                        <h1>Nombre Estado<ion-text color="danger">*</ion-text>
+                        <h1>Nombre Tipo Explotación<ion-text color="danger">*</ion-text>
                         </h1>
                     </ion-label>
-                    <ion-input required type="text" [(ngModel)]="nombreEstadomina"></ion-input>
+                    <ion-input required type="text" [(ngModel)]="nombre"></ion-input>
                 </ion-item>
             </ion-col>
         </ion-row>
@@ -49,18 +49,18 @@
         <ion-row>
             <ion-col>
 
-                <ion-item-sliding *ngFor='let estado of estadoActual'>
+                <ion-item-sliding *ngFor='let estado of data'>
                     <ion-item-options side="start">
-                        <ion-item-option color="danger" (click)="deleteForm(estado.id_estadomina)">Eliminar
+                        <ion-item-option color="danger" (click)="deleteForm(estado.id_tipomaterial)">Eliminar
                         </ion-item-option>
                     </ion-item-options>
                     <ion-item>
                         <ion-label> 
-                            {{estado.nombre_estadomina}}
+                            {{estado.nombre_tipomaterial}}
                         </ion-label>
                     </ion-item>
                     <ion-item-options side="end">
-                            <ion-item-option  (click)="editForm(estado.id_estadomina)">Editar
+                            <ion-item-option  (click)="editForm(estado.id_tipomaterial)">Editar
                             </ion-item-option>
                         </ion-item-options>
                 </ion-item-sliding>

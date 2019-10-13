@@ -5,43 +5,42 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController, LoadingController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-minasestadoactual',
-  templateUrl: './minasestadoactual.page.html',
-  styleUrls: ['./minasestadoactual.page.scss'],
+  selector: 'app-minatipomaterial',
+  templateUrl: './minatipomaterial.page.html',
+  styleUrls: ['./minatipomaterial.page.scss'],
 })
-
-export class MinasestadoactualPage implements OnInit {
+export class MinatipomaterialPage implements OnInit {
 
   constructor(private minasService: MinasService, private navControl: NavController, private route: ActivatedRoute) { }
-  estadoActual: any = [];
+  data: any = [];
   errorMessage = '';
-  public nombreEstadomina: string;
+  public nombre: string;
   id: string;
 
   ngOnInit() {
-    this.getEstadoActual();
+    this.getForm();
   }
 
-  getEstadoActual() {
-    this.minasService.getMinasEstadoActual().subscribe(
-      estadoActual => {
-        console.log(estadoActual);
-        estadoActual.map((item: any) => {
+  getForm() {
+    this.minasService.getMinaMinasTipoMaterial().subscribe(
+      data => {
+        console.log(data);
+        data.map((item: any) => {
           Object.assign(item, { visible: false });
           return item;
         });
-        this.estadoActual = estadoActual;
+        this.data = data;
       }, error => this.errorMessage = error);
-    this.nombreEstadomina = '';
+    this.nombre = '';
   }
   editForm(id: string) {
-    this.navControl.navigateForward(`minasestadoactual-details/${id}`);
+    this.navControl.navigateForward(`minatipomaterialdetails/${id}`);
     this.ngOnInit();
   }
 
   deleteForm(id: string) {
     this.id = id;
-    this.minasService.deleteEstadoActual(id).subscribe(response => {
+    this.minasService.deleteMinasTipoMaterial(id).subscribe(response => {
       this.ngOnInit();
       console.log(response);
     });
@@ -49,10 +48,10 @@ export class MinasestadoactualPage implements OnInit {
 
   saveForm() {
     const data = {
-      nombre_estadomina: this.nombreEstadomina
+      nombre_tipomaterial: this.nombre
     };
-    this.minasService.setEstadoActual(data).subscribe(response => {
-      this.getEstadoActual();
+    this.minasService.setMinasTipoMaterial(data).subscribe(response => {
+      this.getForm();
       console.log(response);
     });
   }

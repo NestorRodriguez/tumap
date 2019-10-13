@@ -5,43 +5,42 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController, LoadingController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-minasestadoactual',
-  templateUrl: './minasestadoactual.page.html',
-  styleUrls: ['./minasestadoactual.page.scss'],
+  selector: 'app-minasistemaexplotacion',
+  templateUrl: './minasistemaexplotacion.page.html',
+  styleUrls: ['./minasistemaexplotacion.page.scss'],
 })
-
-export class MinasestadoactualPage implements OnInit {
+export class MinasistemaexplotacionPage implements OnInit {
 
   constructor(private minasService: MinasService, private navControl: NavController, private route: ActivatedRoute) { }
-  estadoActual: any = [];
+  data: any = [];
   errorMessage = '';
-  public nombreEstadomina: string;
+  public nombre: string;
   id: string;
 
   ngOnInit() {
-    this.getEstadoActual();
+    this.getForm();
   }
 
-  getEstadoActual() {
-    this.minasService.getMinasEstadoActual().subscribe(
-      estadoActual => {
-        console.log(estadoActual);
-        estadoActual.map((item: any) => {
+  getForm() {
+    this.minasService.getMinasSistemaExplotacion().subscribe(
+      data => {
+        console.log(data);
+        data.map((item: any) => {
           Object.assign(item, { visible: false });
           return item;
         });
-        this.estadoActual = estadoActual;
+        this.data = data;
       }, error => this.errorMessage = error);
-    this.nombreEstadomina = '';
+    this.nombre = '';
   }
   editForm(id: string) {
-    this.navControl.navigateForward(`minasestadoactual-details/${id}`);
+    this.navControl.navigateForward(`minasistemaexplotacion-details/${id}`);
     this.ngOnInit();
   }
 
   deleteForm(id: string) {
     this.id = id;
-    this.minasService.deleteEstadoActual(id).subscribe(response => {
+    this.minasService.deleteSistemaExplotacion(id).subscribe(response => {
       this.ngOnInit();
       console.log(response);
     });
@@ -49,10 +48,10 @@ export class MinasestadoactualPage implements OnInit {
 
   saveForm() {
     const data = {
-      nombre_estadomina: this.nombreEstadomina
+      nombre_sistemaexplotacion: this.nombre
     };
-    this.minasService.setEstadoActual(data).subscribe(response => {
-      this.getEstadoActual();
+    this.minasService.setSistemaExplotacion(data).subscribe(response => {
+      this.getForm();
       console.log(response);
     });
   }
