@@ -395,13 +395,11 @@ CREATE TABLE IF NOT EXISTS `tumap`.`dbo_inscripcion` (
   `id` INT(11) AUTO_INCREMENT,
   `documento` INT NOT NULL,
   `nombre` VARCHAR(45) NOT NULL,
+  `posicionamiento` VARCHAR(45) NULL DEFAULT NULL,
   `departamento` VARCHAR(45) NULL DEFAULT NULL,
-  `municipio` VARCHAR(45) NULL DEFAULT NULL,
-   `lat` VARCHAR(45) NULL DEFAULT NULL,
-   `lng` VARCHAR(45) NULL DEFAULT NULL,
-  `direccion` VARCHAR(80) NULL DEFAULT NULL,
+  `munipio` VARCHAR(45) NULL DEFAULT NULL,
   `usuario` VARCHAR(45) NULL DEFAULT NULL,
-  `fecha` timestamp default current_timestamp ,
+  `fecha` timestamp default current_timestamp,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -448,10 +446,9 @@ CREATE  OR REPLACE VIEW `dbo_vListado` AS
 	dbo_inscripcion.documento, 
 	dbo_pregunta.orden,
 	dbo_inscripcion.nombre, 
-	dbo_inscripcion.lat,
-  dbo_inscripcion.lng,
+	dbo_inscripcion.posicionamiento,
 	dbo_inscripcion.departamento,  
-	dbo_inscripcion.municipio, 
+	dbo_inscripcion.munipio, 
 	dbo_inscripcion.fecha,
 	dbo_pregunta.pregunta,
 	dbo_imagen.nombre as imagen
@@ -495,11 +492,11 @@ INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALU
 INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('5', '2', 'imagen2', '\\imagen1.png');
 
 
-INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `lat`,`lng`, `direccion`, `departamento`, `municipio`, `fecha`) VALUES ('11', 'nombre1 apellido1', '4.60972222222', '-74.0816666667','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
-INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `lat`,`lng`, `direccion`, `departamento`, `municipio`, `fecha`) VALUES ('22', 'nombre2 apellido2', '4.60972222222', '-74.0816666667','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
-INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `lat`,`lng`, `direccion`, `departamento`, `municipio`, `fecha`) VALUES ('33', 'nombre3 apellido3', '4.60972222222', '-74.0816666667','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
-INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `lat`,`lng`, `direccion`, `departamento`, `municipio`, `fecha`) VALUES ('44', 'nombre4 apellido4', '4.60972222222', '-74.0816666667','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
-INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `lat`,`lng`, `direccion`, `departamento`, `municipio`, `fecha`) VALUES ('55', 'nombre5 apellido5', '4.60972222222', '-74.0816666667','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `departamento`, `munipio`, `fecha`) VALUES ('11', 'nombre1 apellido1', 'coordenadaXY', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `departamento`, `munipio`, `fecha`) VALUES ('22', 'nombre2 apellido2', 'coordenadaXY', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `departamento`, `munipio`, `fecha`) VALUES ('33', 'nombre3 apellido3', 'coordenadaXY', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `departamento`, `munipio`, `fecha`) VALUES ('44', 'nombre4 apellido4', 'coordenadaXY', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `departamento`, `munipio`, `fecha`) VALUES ('55', 'nombre5 apellido5', 'coordenadaXY', 'Cundinamarca', 'Soacha', CURDATE());
 
 INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('1', '1', '1');
 INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('1', '2', '4');
@@ -771,31 +768,26 @@ create table jyd_registro_has_item (
 insert into jyd_categoria (descripcion, ruta) value ('señalizacion', '/senalizacion');
 insert into jyd_categoria (descripcion, ruta) value ('mobiliario urbano', '/mobiliario');
 
-/* jyd_item */
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('señal de transito', 'pare', 'assest/img_jyd/señal de transito', 1);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('semáforo', 'señales de control del tráfico', 'assest/img_jyd/semaforo', 1);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('postes de soportes para señales', 'elementos de fijación al suelo o sujeción ', 'assest/img_jyd/postes_senal.png', 1);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('porticos de soporte de señales', 'protección de seguridad', 'assest/img_jyd/porticos_de_senal.png', 1);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('hitos kilometricos', 'distancia de inicio de carretera', 'assest/img_jyd/hitos_kilometricos.png', 1);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('guardavia convencionales', 'barrera de seguridad metalica', 'assest/img_jyd/guardavia_convencional.png', 1);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('marcas sobre pavimento', 'señalizacion horizontal', 'assest/img_jyd/marcas_pavimento.png', 1);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('tachas retroreflectivas', 'marcación de carriles', 'assest/img_jyd/tachas_retroreflectivas.png', 1);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('tachones reflectivas', 'marcación ojo de gato en carriles', 'assest/img_jyd/tachones_reflectivos.png', 1);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('paradero', 'elemento urbano', 'assest/img_jyd/paradero.png', 2);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('panel publicitario', 'estructura de publicidad', 'assest/img_jyd/panel_publicitario.png', 2);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('banca de concreto', 'estructura de descanso urbano', 'assest/img_jyd/banca_concreto.png', 2);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('banca de madera', 'estructura de descanso urbano', 'assest/img_jyd/banca_madera.png', 2);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('baranda', 'accesibilidad de sujeción', 'assest/img_jyd/baranda.png', 2);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('protector de arbol', 'protección contra roedores', 'assest/img_jyd/protector_de_arbol.png', 2);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('ciclo parqueadero', 'estacionamiento de bicicletas', 'assest/img_jyd/ciclo_parqueadero.png', 2);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('bebedero', 'suministro de agua', 'assest/img_jyd/bebedero.png', 2);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('postes de alumbrado público ', 'suministro de iluminacion', 'assest/img_jyd/postes_alumbrado_publico.png', 2);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('módulo de ciclo estación', 'unidad de guardado', 'assest/img_jyd/modulo_ciclo_estacion.png', 2);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('módulo de servicio de sanitario', 'unidad humeda', 'assest/img_jyd/modulo_servisio_sanitario.png', 2);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('módulo de información', 'proporcion de ayuda', 'assest/img_jyd/modulo_informacion.png', 2);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('caneca basura', 'lugar de desechos', 'assest/img_jyd/caneca.png', 2);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('silla jardin', 'estructura para parque', 'assest/img_jyd/silla.png', 2);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('captafaros', 'dispositivos de guia optica', 'assest/img_jyd/captfaros.png', 2);
+/* jyd_item SENALIZACION */
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('CONTENSIÓN', 'Señal de transito', 'assets/img_jyd/senalizacion/logo_contension.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('VIAS', 'Control de trafico', 'assets/img_jyd/senalizacion/logo_vias.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('SUELOS', 'Movilización ', 'assets/img_jyd/senalizacion/logo_suelo.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('SOPORTES', 'Vias rapidas', 'assets/img_jyd/senalizacion/logo_soporte.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('SEÑAL', 'Vectores', 'assets/img_jyd/senalizacion/logo_senal.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('PAVIMENTO', 'Señalización horizontal', 'assets/img_jyd/senalizacion/logo_senal_pavimento.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('SEMAFORO', 'Señal luminosa', 'assets/img_jyd/senalizacion/logo_semaforo.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('REFLECTORES SUELO', 'Baliza reflectora', 'assets/img_jyd/senalizacion/logo_reflectores_suelo.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('POSTES', 'Montaje de luminaria', 'assets/img_jyd/senalizacion/logo_poste.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('PISO', 'Pegante epoxico', 'assets/img_jyd/senalizacion/logo_piso.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('K12', 'Hito kilometrico', 'assets/img_jyd/senalizacion/logo_k12.svg', 1);
+
+/* jyd_item MOBILIARIO */
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('SEPARADOR', 'Protección', 'assets/img_jyd/mobiliario/logo_separador_vias.svg', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('PROTECTOR ARBOL', 'Protección contra roedores', 'assets/img_jyd/mobiliario/logo_protector_arbol.svg', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('CANECA INDUSTRIAL', 'Industrial shut', 'assets/img_jyd/mobiliario/logo_caneca_industrial.svg', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('CANECA ACERO', 'Lugar desechos', 'assets/img_jyd/mobiliario/logo_caneca_acero.svg', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('BOLARDO', 'Estructura de cemento', 'assets/img_jyd/mobiliario/logo_bolardo.svg', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('BANCA SIN ESPALDAR', 'Estructura para parque', 'assets/img_jyd/mobiliario/logo_banca_sin_espaldar.svg', 2);
 
 /* jyd_estado */
 insert into jyd_estado (descripcion) value ('nuevo');
@@ -852,25 +844,6 @@ insert into jf_estado(estado)
 insert into jf_descripcion_via(ubicacion, nombre_via, detalle, imagen, estado)
 	values (ST_GeomFromText('point(1 1)'), 'av 68', 2, '/imagen/av68', 1), (ST_GeomFromText('point(0 1)'), 'boyaca', 1, '/imagen/boyaca', 2), (ST_GeomFromText('point(1 0)'), 'cali', 3, '/imagen/cali', 3);
 
-/*Borrado de tabla que quedo mal y correccion de esta*/
-drop table if exists jf_descripcion_via; 
-
-CREATE table jf_descripcion_via(
-	id int not null auto_increment primary key,
-    ubicacion geometry not null,
-    nombre_via varchar(200),
-    id_detalle_via int not null,
-		foreign key (id_detalle_via) references jf_detalle_via(id),
-	imagen varchar(200),
-    id_estado int not null,
-		foreign key (id_estado) references jf_estado(id)
-);
-/*DML*/
-/*CRUD tabla jf_descripcion_via*/
-insert into jf_descripcion_via(ubicacion, nombre_via, id_detalle_via, imagen, id_estado)
-	values (ST_GeomFromText('point(1 1)'), 'av 68', 2, '/imagen/av68', 1), (ST_GeomFromText('point(0 1)'), 'boyaca', 1, '/imagen/boyaca', 2), (ST_GeomFromText('point(1 0)'), 'cali', 3, '/imagen/cali', 3);
-
-select * from jf_descripcion_via
 
 --*********************************************************************************************************
 -- Creación tablas minas --

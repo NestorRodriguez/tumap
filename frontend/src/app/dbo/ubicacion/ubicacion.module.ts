@@ -7,8 +7,6 @@ import { IonicModule } from '@ionic/angular';
 
 import { UbicacionPage } from './ubicacion.page';
 
-import { AgmCoreModule } from '@agm/core'
-
 const routes: Routes = [
   {
     path: '',
@@ -21,10 +19,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes),
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyB2g5cFRZ6Cr6ozLb9hv6kow_Id066HQmo'
-    })
+    RouterModule.forChild(routes)
   ],
   declarations: [UbicacionPage]
 })

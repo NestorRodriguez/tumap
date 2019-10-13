@@ -9,17 +9,34 @@ import { ToastController } from '@ionic/angular';
 })
 export class PredialService {
 
-  private paisUrl = 'http://localhost:3000/usopredio';
+  private usoPredial = 'http://localhost:3000/usopredio';
+  private nivel = 'http://localhost:3000/nivel';
 
   constructor(private http: HttpClient) { }
 
-  obtenerData(): Observable<any[]> {
-    return this.http.get<any[]>(this.paisUrl).pipe(
+  /***************************************************************
+   *Obtener datos de la tabla servicios_Publicos (DB TUMAP)
+   **************************************************************/
+  obtenerusoPredial(): Observable<any[]> {
+    return this.http.get<any[]>(this.usoPredial).pipe(
       tap(data => (JSON.stringify(data))),
       catchError(this.handleError)
     );
   }
 
+  /***************************************************************
+   *Obtener datos de la tabla nivel_Vivienda (DB TUMAP)
+   **************************************************************/
+  obtenernivelVivienda(): Observable<any[]> {
+    return this.http.get<any[]>(this.nivel).pipe(
+      tap(data => (JSON.stringify(data))),
+      catchError(this.handleError)
+    );
+  }
+
+  /***************************************************************
+   *Captura de error en conexión
+   **************************************************************/
   private handleError(err: HttpErrorResponse) {
     let errorMessage = '';
     let errorStatus = '';
