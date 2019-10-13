@@ -40,19 +40,14 @@ const routes: Routes = [
   { path: 'instruccion', loadChildren: './usosuelos/instruccion/instruccion.module#InstruccionPageModule' },
   { path: 'homeadminedu', loadChildren: './Education/homeadminedu/homeadminedu.module#HomeadmineduPageModule' },
   { path: 'cambiarclave', loadChildren: './Education/cambiarclave/cambiarclave.module#CambiarclavePageModule' },
-  { path: 'inventario-redes-secas/inicio', loadChildren: './irs/inicio/inicio.module#InicioPageModule' },
   { path: 'predial', loadChildren: './predial/predial.module#PredialPageModule' },
   { path: 'usoynivel', loadChildren: './usoynivel/usoynivel.module#UsoynivelPageModule' },
   { path: 'minatipomaterial', loadChildren: './minas/minatipomaterial/minatipomaterial.module#MinatipomaterialPageModule' },
-  // tslint:disable-next-line:max-line-length
   { path: 'minatipomaterialdetails/:id', loadChildren: './minas/minatipomaterialdetails/minatipomaterialdetails.module#MinatipomaterialdetailsPageModule' },
-  // tslint:disable-next-line:max-line-length
   { path: 'minasistemaexplotacion', loadChildren: './minas/minasistemaexplotacion/minasistemaexplotacion.module#MinasistemaexplotacionPageModule' },
-  // tslint:disable-next-line:max-line-length
   { path: 'minasistemaexplotacion-details/:id', loadChildren: './minas/minasistemaexplotacion-details/minasistemaexplotacion-details.module#MinasistemaexplotacionDetailsPageModule' },
   { path: 'minaregistro/:lat/:lng', loadChildren: './minas/minaregistro/minaregistro.module#MinaregistroPageModule' },
   { path: 'minarmapa', loadChildren: './minas/minarmapa/minarmapa.module#MinarmapaPageModule' },
-  { path: 'inventario-redes-secas/inicio', loadChildren: './irs/inicio/inicio.module#InicioPageModule' },
   { path: 'predial', loadChildren: './predial/predial.module#PredialPageModule' },
   { path: 'usoynivel', loadChildren: './usoynivel/usoynivel.module#UsoynivelPageModule' },
   { path: 'resumen', loadChildren: './vistasjyd/resumen/resumen.module#ResumenPageModule' },
@@ -62,6 +57,8 @@ const routes: Routes = [
   { path: 'mapadmin', loadChildren: './Education/mapadmin/mapadmin.module#MapadminPageModule' },
   { path: 'centrosformacion', loadChildren: './Education/centrosformacion/centrosformacion.module#CentrosformacionPageModule' },
   { path: 'mapa', loadChildren: './minas/mapa/mapa.module#MapaPageModule' },
+  { path: 'colinda', loadChildren: './colinda/colinda.module#ColindaPageModule' },
+
 
 
 
