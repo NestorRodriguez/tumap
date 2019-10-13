@@ -97,7 +97,7 @@ export class InventarioPostesPage implements OnInit, OnDestroy {
     });
     await modal.present();
     const {data: { ubicacion }} = await modal.onDidDismiss();
-      this.model.ubicacion = ubicacion;
+    this.model.ubicacion = ubicacion;
   }
 
   async loadModalPoll() {
@@ -117,6 +117,9 @@ export class InventarioPostesPage implements OnInit, OnDestroy {
       this.loadModalPoll();
     } else {
       this.loading = true;
+      if (this.model.tipo === 'Postes') {
+        this.model.clasePoste = (!this.model.tieneLampara && !this.model.tieneTransformador) ? 'Teleco' : 'Eléctrico';
+      }
       this.service.setInventario(this.model).subscribe(async (response) => {
         const toast = await this.toastCtrl.create({
           message: 'Encuesta guardada con éxito',
