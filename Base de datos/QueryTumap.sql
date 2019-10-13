@@ -847,6 +847,25 @@ insert into jf_estado(estado)
 insert into jf_descripcion_via(ubicacion, nombre_via, detalle, imagen, estado)
 	values (ST_GeomFromText('point(1 1)'), 'av 68', 2, '/imagen/av68', 1), (ST_GeomFromText('point(0 1)'), 'boyaca', 1, '/imagen/boyaca', 2), (ST_GeomFromText('point(1 0)'), 'cali', 3, '/imagen/cali', 3);
 
+/*Borrado de tabla que quedo mal y correccion de esta*/
+drop table if exists jf_descripcion_via; 
+
+CREATE table jf_descripcion_via(
+	id int not null auto_increment primary key,
+    ubicacion geometry not null,
+    nombre_via varchar(200),
+    id_detalle_via int not null,
+		foreign key (id_detalle_via) references jf_detalle_via(id),
+	imagen varchar(200),
+    id_estado int not null,
+		foreign key (id_estado) references jf_estado(id)
+);
+/*DML*/
+/*CRUD tabla jf_descripcion_via*/
+insert into jf_descripcion_via(ubicacion, nombre_via, id_detalle_via, imagen, id_estado)
+	values (ST_GeomFromText('point(1 1)'), 'av 68', 2, '/imagen/av68', 1), (ST_GeomFromText('point(0 1)'), 'boyaca', 1, '/imagen/boyaca', 2), (ST_GeomFromText('point(1 0)'), 'cali', 3, '/imagen/cali', 3);
+
+select * from jf_descripcion_via
 
 --*********************************************************************************************************
 -- Creación tablas minas --

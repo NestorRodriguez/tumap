@@ -4,9 +4,9 @@ import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/htt
 @Injectable({
   providedIn: 'root'
 })
-export class InventarioRedesSecasService {
+export class IrsService {
 
-  serverUrl = 'http://localhost:3000';
+  serverUrl = 'http://tumap.tapplentos.com';
 
   constructor( private http: HttpClient) { }
 
@@ -26,12 +26,8 @@ export class InventarioRedesSecasService {
     return this.http.get(`${this.serverUrl}/irs-operadores-celulares`);
   }
 
-  setInventarioPostes(data) {
-    return this.http.post(`${this.serverUrl}/irs-inventario-postes`, data);
-  }
-
-  setOtrosInventarios(data) {
-    return this.http.post(`${this.serverUrl}/irs-inventario-otros`, data);
+  setInventario(data) {
+    return this.http.post(`${this.serverUrl}/irs-inventarios`, data);
   }
 
 }

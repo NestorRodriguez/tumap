@@ -3,7 +3,6 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { Inscripcion } from '../../models/dbo/Inscripcion';
 import { Observable, throwError  } from 'rxjs';
-import { catchError, tap, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,20 +16,15 @@ export class DboService {
   constructor(private http: HttpClient) {}
 
   public getInscripcion(documento: string): Observable<any[]> {
-    if ( documento > '0') {
       return this.http.get<any[]>(`${this.API_URL}/dbo_inscripcion/${documento}`);
-      tap(data => console.log('All: ' + JSON.stringify(data)));
-    }
-  }
+      }
 
   public saveInscripcion(inscripcion: Inscripcion): Observable<any> {
-    return this.http.post(`${this.API_URL}/dbo_inscripcion`, inscripcion);
-    tap(data => console.log('All: ' + JSON.stringify(data)));
+    return this.http.post<any>(`${this.API_URL}/dbo_inscripcion`, inscripcion);
   }
 
-  public updateInscripcion(id: string, inscripcion: Inscripcion): Observable<any> {
-    return this.http.put(`${this.API_URL}/dbo_inscripcion/${id}`, inscripcion);
-    tap(data => console.log('All: ' + JSON.stringify(data)));
+  public updateInscripcion(id: number, inscripcion: Inscripcion): Observable<any> {
+    return this.http.put<any>(`${this.API_URL}/dbo_inscripcion/${id}`, inscripcion);
   }
 
   public handleError(err: HttpErrorResponse) {
