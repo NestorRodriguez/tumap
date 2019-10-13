@@ -12,17 +12,27 @@ ion-img {
 }
 
 ion-label {
-    margin: 100px;
+    margin: 20px;
     color: #ffffff!important;
-    text-align: center;
 }
 
 ion-input {
-    text-align: center;
+    margin: 10px;
+    border-radius: 3px;
+    border: 3px;
+}
+.bsubir {
+    margin-left: 10px;
+    --background: #ffffff!important;
+    color: #7ecbc8!important;
+}
+.bcamara {
+    margin-left: 40px;
+    --background: #ffffff!important;
+    color: #7ecbc8!important;
 }
 .bconfirmar {
-    border-radius: 71px 71px 71px 71px!important;
-    margin-left: 115px;
+    margin-left: 110px;
     --background: #ffffff!important;
     color: #7ecbc8!important;
 }

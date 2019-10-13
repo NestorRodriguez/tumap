@@ -45,9 +45,16 @@ const routes: Routes = [
   //{ path: 'mobiliario', loadChildren: './mobiliario/mobiliario.module#MobiliarioPageModule' },
   //{ path: 'senalizacion', loadChildren: './senalizacion/senalizacion.module#SenalizacionPageModule' },
   //{ path: 'mobiliario', loadChildren: './mobiliario/mobiliario.module#MobiliarioPageModule' },
+  { path: 'inventario-redes-secas/inicio', loadChildren: './irs/inicio/inicio.module#InicioPageModule' },
+  //{ path: 'inventario-postes', loadChildren: './irs/inventario-postes/inventario-postes.module#InventarioPostesPageModule' },
+  // { path: 'inventario-otros', loadChildren: './irs/inventario-otros/inventario-otros.module#InventarioOtrosPageModule' },
   { path: 'predial', loadChildren: './predial/predial.module#PredialPageModule' },
   { path: 'usoynivel', loadChildren: './usoynivel/usoynivel.module#UsoynivelPageModule' },
-
+  { path: 'infohabitantes', loadChildren: './Education/infohabitantes/infohabitantes.module#InfohabitantesPageModule' },
+  { path: 'registroinfo', loadChildren: './Education/registroinfo/registroinfo.module#RegistroinfoPageModule' },
+  { path: 'verinfoinstitucion', loadChildren: './Education/verinfoinstitucion/verinfoinstitucion.module#VerinfoinstitucionPageModule' },
+  { path: 'mapadmin', loadChildren: './Education/mapadmin/mapadmin.module#MapadminPageModule' },
+  { path: 'centrosformacion', loadChildren: './Education/centrosformacion/centrosformacion.module#CentrosformacionPageModule' },
 
 
 ];
@@ -58,5 +65,6 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
+
 

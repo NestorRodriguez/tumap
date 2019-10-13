@@ -25,10 +25,6 @@ const db = mysql.createConnection({
     multipleStatements: true
 });
 
-//Parse /Json
-app.use(bodyParser.urlencoded({ extended: false }))
-
-app.use(bodyParser.json())
 
 //Realizar la conexión a la base de datos
 db.connect(function(error) {
@@ -40,15 +36,14 @@ db.connect(function(error) {
 
 app.get('/', function(req, res) {
     console.log('Página de Inicio ');
-
-    res.send("Bienvenidos al servidor <strong> TuMap </strong>")
+    res.send("Bienvenidos al servidor <strong> TuMap </strong>");
 });
 
 //Manejo de Rutas Select users
 app.route('/users')
     .get((req, res) => {
         console.log('Consultar datos ');
-        var query = db.query('select * from users', (error, result) => {
+        const query = db.query('select * from users', (error, result) => {
             try {
                 if (error) {
                     throw error;
@@ -116,7 +111,8 @@ app.route('/users/:id')
             Rol_idRol: req.body.Rol_idRol,
         };
 
-        let sets = [];
+        let sets = [],
+            i;
         for (i in dato) {
             if (dato[i] || dato[i] == 0) {
                 sets.push(`${i}='${dato[i]}'`);
@@ -1945,10 +1941,10 @@ router
         });
     })
     .post('/vias', (req, res) => {
-        const dato = req.body
-
-        const sql = `INSERT INTO jf_descripcion_via (ubicacion, nombre_via, detalle, imagen, estado)
-            values (${dato.ubicacion}, ${dato.nombre_via}, ${dato.detalle}, ${dato.imagen}, ${dato.estado})`;
+        const dato = req.body;
+        const puntos = `ST_GeomFromText('POINT${dato.ubicacion}')`;
+        const sql = `INSERT INTO jf_descripcion_via (ubicacion, nombre_via, id_detalle_via, imagen, id_estado)
+            values (${puntos}, '${dato.nombre_via}', ${dato.id_detalle_via}, '${dato.imagen}', ${dato.id_estado})`;
 
         db.query(sql, (error, result) => {
             if (error) {
@@ -1961,22 +1957,10 @@ router
     .put('/vias/:id', (req, res) => {
 
         const id = req.params.id;
-        const dato = {
-            ubicacion: req.body.ubicacion,
-            nombre_via: req.body.nombre_via,
-            detalle: req.body.detalle,
-            imagen: req.body.imagen,
-            estado: req.body.estado,
-        };
+        const dato = req.body;
 
-        let sets = [];
-        for (i in dato) {
-            if (dato[i] || dato[i] == 0) {
-                sets.push(`${i}='${dato[i]}'`);
-            }
-        }
 
-        const sql = `UPDATE jf_descripcion_via SET ${sets.join(', ')} WHERE id='${id}';`;
+        const sql = `UPDATE jf_descripcion_via SET id_estado = ${dato.id_estado} WHERE id='${id}';`;
 
         console.log(sql);
 
@@ -2004,6 +1988,7 @@ router
         });
     });
 app.use(router);
+
 
 /***************************************************
  * Fin de servicios para vias   *
