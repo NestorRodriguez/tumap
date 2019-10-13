@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { InventarioRedesSecasService } from './inventario-redes-secas.service';
+import { IrsService } from './irs.service';
 
 describe('InventarioRedesSecasService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: InventarioRedesSecasService = TestBed.get(InventarioRedesSecasService);
+    const service: IrsService = TestBed.get(IrsService);
     expect(service).toBeTruthy();
   });
 });

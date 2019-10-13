@@ -10,6 +10,7 @@ import { AlertController } from '@ionic/angular';
 export class PredialPage implements OnInit {
 
   usopredial: any[] = [];
+  nivelvivienda: any[] = [];
   errorMessage = ``;
   filtro: any[] = [];
   filteredProducts: any[] = [];
@@ -17,7 +18,7 @@ export class PredialPage implements OnInit {
   constructor(private servicioPredialService: PredialService, private alertController: AlertController) { }
 
   ngOnInit() {
-    this.servicioPredialService.obtenerData().subscribe(
+    this.servicioPredialService.obtenerusoPredial().subscribe(
       data => {
         this.usopredial = data;
         console.log(this.usopredial);
@@ -28,7 +29,16 @@ export class PredialPage implements OnInit {
       }
     );
 
-    
+    this.servicioPredialService.obtenernivelVivienda().subscribe(
+      data => {
+        this.nivelvivienda = data;
+        console.log(this.usopredial);
+      }, error => 
+      {
+          this.errorMessage = <any>error
+          this.presentAlert();
+      }
+    );
   }
 
   async presentAlert() {

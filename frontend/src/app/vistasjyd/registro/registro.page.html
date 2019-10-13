@@ -1,18 +1,9 @@
 <ion-header>
-  <ion-toolbar style="--ion-background-color: #2C689F; color: white;">
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-button routerLink="/categorias" routerDirection="forward">
-        <ion-icon slot="icon-only" name="arrow-round-back"> </ion-icon>
-      </ion-button>
+      <ion-back-button [defaultHref]="['/']"></ion-back-button>
     </ion-buttons>
-    <ion-title>
-      
-    </ion-title>
-    <ion-buttons slot="secondary">
-      <ion-button disabled>
-        <ion-icon slot="icon-only" name=""> </ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-title class="ion-title"></ion-title>
   </ion-toolbar>
 </ion-header>
 
