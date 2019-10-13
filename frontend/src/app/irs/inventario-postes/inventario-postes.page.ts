@@ -13,7 +13,7 @@ import {ToastController} from '@ionic/angular';
   templateUrl: './inventario-postes.page.html',
   styleUrls: ['./inventario-postes.page.scss'],
 })
-export class InventarioPostesPage implements OnInit, OnDestroy {
+export class InventarioPostesPage implements OnInit {
 
   materiales: any = [];
   operadores: any = [];

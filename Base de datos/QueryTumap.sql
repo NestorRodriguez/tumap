@@ -395,13 +395,11 @@ CREATE TABLE IF NOT EXISTS `tumap`.`dbo_inscripcion` (
   `id` INT(11) AUTO_INCREMENT,
   `documento` INT NOT NULL,
   `nombre` VARCHAR(45) NOT NULL,
+  `posicionamiento` VARCHAR(45) NULL DEFAULT NULL,
   `departamento` VARCHAR(45) NULL DEFAULT NULL,
-  `municipio` VARCHAR(45) NULL DEFAULT NULL,
-   `lat` VARCHAR(45) NULL DEFAULT NULL,
-   `lng` VARCHAR(45) NULL DEFAULT NULL,
-  `direccion` VARCHAR(80) NULL DEFAULT NULL,
+  `munipio` VARCHAR(45) NULL DEFAULT NULL,
   `usuario` VARCHAR(45) NULL DEFAULT NULL,
-  `fecha` timestamp default current_timestamp ,
+  `fecha` timestamp default current_timestamp,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -448,10 +446,9 @@ CREATE  OR REPLACE VIEW `dbo_vListado` AS
 	dbo_inscripcion.documento, 
 	dbo_pregunta.orden,
 	dbo_inscripcion.nombre, 
-	dbo_inscripcion.lat,
-  dbo_inscripcion.lng,
+	dbo_inscripcion.posicionamiento,
 	dbo_inscripcion.departamento,  
-	dbo_inscripcion.municipio, 
+	dbo_inscripcion.munipio, 
 	dbo_inscripcion.fecha,
 	dbo_pregunta.pregunta,
 	dbo_imagen.nombre as imagen
@@ -495,11 +492,11 @@ INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALU
 INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('5', '2', 'imagen2', '\\imagen1.png');
 
 
-INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `lat`,`lng`, `direccion`, `departamento`, `municipio`, `fecha`) VALUES ('11', 'nombre1 apellido1', '4.60972222222', '-74.0816666667','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
-INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `lat`,`lng`, `direccion`, `departamento`, `municipio`, `fecha`) VALUES ('22', 'nombre2 apellido2', '4.60972222222', '-74.0816666667','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
-INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `lat`,`lng`, `direccion`, `departamento`, `municipio`, `fecha`) VALUES ('33', 'nombre3 apellido3', '4.60972222222', '-74.0816666667','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
-INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `lat`,`lng`, `direccion`, `departamento`, `municipio`, `fecha`) VALUES ('44', 'nombre4 apellido4', '4.60972222222', '-74.0816666667','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
-INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `lat`,`lng`, `direccion`, `departamento`, `municipio`, `fecha`) VALUES ('55', 'nombre5 apellido5', '4.60972222222', '-74.0816666667','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `departamento`, `munipio`, `fecha`) VALUES ('11', 'nombre1 apellido1', 'coordenadaXY', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `departamento`, `munipio`, `fecha`) VALUES ('22', 'nombre2 apellido2', 'coordenadaXY', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `departamento`, `munipio`, `fecha`) VALUES ('33', 'nombre3 apellido3', 'coordenadaXY', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `departamento`, `munipio`, `fecha`) VALUES ('44', 'nombre4 apellido4', 'coordenadaXY', 'Cundinamarca', 'Soacha', CURDATE());
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `posicionamiento`, `departamento`, `munipio`, `fecha`) VALUES ('55', 'nombre5 apellido5', 'coordenadaXY', 'Cundinamarca', 'Soacha', CURDATE());
 
 INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('1', '1', '1');
 INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('1', '2', '4');
@@ -847,25 +844,6 @@ insert into jf_estado(estado)
 insert into jf_descripcion_via(ubicacion, nombre_via, detalle, imagen, estado)
 	values (ST_GeomFromText('point(1 1)'), 'av 68', 2, '/imagen/av68', 1), (ST_GeomFromText('point(0 1)'), 'boyaca', 1, '/imagen/boyaca', 2), (ST_GeomFromText('point(1 0)'), 'cali', 3, '/imagen/cali', 3);
 
-/*Borrado de tabla que quedo mal y correccion de esta*/
-drop table if exists jf_descripcion_via; 
-
-CREATE table jf_descripcion_via(
-	id int not null auto_increment primary key,
-    ubicacion geometry not null,
-    nombre_via varchar(200),
-    id_detalle_via int not null,
-		foreign key (id_detalle_via) references jf_detalle_via(id),
-	imagen varchar(200),
-    id_estado int not null,
-		foreign key (id_estado) references jf_estado(id)
-);
-/*DML*/
-/*CRUD tabla jf_descripcion_via*/
-insert into jf_descripcion_via(ubicacion, nombre_via, id_detalle_via, imagen, id_estado)
-	values (ST_GeomFromText('point(1 1)'), 'av 68', 2, '/imagen/av68', 1), (ST_GeomFromText('point(0 1)'), 'boyaca', 1, '/imagen/boyaca', 2), (ST_GeomFromText('point(1 0)'), 'cali', 3, '/imagen/cali', 3);
-
-select * from jf_descripcion_via
 
 --*********************************************************************************************************
 -- Creación tablas minas --

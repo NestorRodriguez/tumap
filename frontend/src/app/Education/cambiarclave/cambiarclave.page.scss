@@ -7,26 +7,18 @@ ion-content {
 }
 
 ion-img {
-    width: 105%;
-    height: 105px;
+    width: 100%;
+    height: 100px;
 }
 
 ion-label {
-    margin: 100px;
+    margin: 90px;
     color: #ffffff!important;
-    text-align: center;
 }
 
 ion-input {
+    margin-left: 40px;
+    border-radius: 3px;
+    border: 3px;
     text-align: center;
-}
-.bconfirmar {
-    border-radius: 71px 71px 71px 71px!important;
-    margin-left: 115px;
-    --background: #ffffff!important;
-    color: #7ecbc8!important;
-}
-.back{
-    margin: 20px;
-    color: #ffffff!important;
 }

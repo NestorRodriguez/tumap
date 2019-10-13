@@ -35,10 +35,6 @@ const routes: Routes = [
     ModalMapaPageModule,
     ModalEncuestaPageModule,
   ],
-  providers: [
-    NetworkInterface,
-    Camera,
-  ],
   declarations: [InventarioPostesPage]
 })
 export class InventarioPostesPageModule {

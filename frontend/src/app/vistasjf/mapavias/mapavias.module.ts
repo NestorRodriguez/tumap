@@ -2,30 +2,27 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
+import { AgmCoreModule } from '@agm/core';
 
 import { IonicModule } from '@ionic/angular';
 
-import { InscripcionPage } from './inscripcion.page';
+import { MapaviasPage } from './mapavias.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: InscripcionPage
+    component: MapaviasPage
   }
 ];
 
 @NgModule({
   imports: [
+    AgmCoreModule,
     CommonModule,
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [InscripcionPage]
+  declarations: [MapaviasPage]
 })
-export class InscripcionPageModule {
-
-  public getInscripcion() {
-    return fetch('http://localhost:3000/dbo_inscripcion/11').then(response => response.json );
-  }
-}
+export class MapaviasPageModule {}

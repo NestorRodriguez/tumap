@@ -5,12 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { InscripcionPage } from './inscripcion.page';
+import { InventarioOtrosPage } from './inventario-otros.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: InscripcionPage
+    component: InventarioOtrosPage
   }
 ];
 
@@ -21,11 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [InscripcionPage]
+  declarations: [InventarioOtrosPage]
 })
-export class InscripcionPageModule {
-
-  public getInscripcion() {
-    return fetch('http://localhost:3000/dbo_inscripcion/11').then(response => response.json );
-  }
-}
+export class InventarioOtrosPageModule {}

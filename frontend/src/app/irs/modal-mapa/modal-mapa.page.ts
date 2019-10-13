@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, Platform } from '@ionic/angular';
-import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-modal-mapa',
@@ -8,43 +7,26 @@ import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
   styleUrls: ['./modal-mapa.page.scss'],
 })
 export class ModalMapaPage implements OnInit {
-  lat = 4.60971;
-  lng = -74.08175;
+  lat;
+  lng;
   icon;
-
-  constructor(private modalCtrl: ModalController,
-              private geolocation: Geolocation,
-              private platform: Platform) {
-
-    this.icon = {
-      url: '/assets/LOGO VERDE.svg',
-      scaledSize: {
-        width: 35,
-        height: 35
-      }
-    };
-  }
-
-  getGeolocation() {
-    console.log('getGeolocation');
-    this.geolocation.getCurrentPosition()
-        .then((geoposition: Geoposition) => {
-          console.log('getGeolocation: ');
-          console.log(geoposition);
-          this.lat = geoposition.coords.latitude;
-          this.lng = geoposition.coords.longitude;
-        })
-        .catch(error => console.log(error));
+  constructor(private modalCtrl: ModalController) {
+    if (navigator) {
+      navigator.geolocation.getCurrentPosition( pos => {
+        this.lng = this.toFloat(pos.coords.longitude);
+        this.lat = this.toFloat(pos.coords.latitude);
+        this.icon = {
+          url: '/assets/LOGO VERDE.svg',
+          scaledSize: {
+            width: 35,
+            height: 35
+          }
+        };
+      });
+    }
   }
 
   ngOnInit() {
-  }
-
-  ionViewDidLoad() {
-    console.log('getGeolocation');
-    this.platform.ready().then(() => {
-      this.getGeolocation();
-    });
   }
 
   toFloat(value) {
