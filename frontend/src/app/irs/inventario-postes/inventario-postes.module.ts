@@ -1,16 +1,19 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {Routes, RouterModule} from '@angular/router';
 
-import { IonicModule } from '@ionic/angular';
+import {IonicModule} from '@ionic/angular';
 
-import { InventarioPostesPage } from './inventario-postes.page';
+import {InventarioPostesPage} from './inventario-postes.page';
 import {ModalMapaPage} from '../modal-mapa/modal-mapa.page';
 import {ModalMapaPageModule} from '../modal-mapa/modal-mapa.module';
 
-import { NetworkInterface } from '@ionic-native/network-interface/ngx';
-import { Camera } from '@ionic-native/camera/ngx';
+
+import {NetworkInterface} from '@ionic-native/network-interface/ngx';
+import {Camera} from '@ionic-native/camera/ngx';
+import {ModalEncuestaPage} from '../modal-encuesta/modal-encuesta.page';
+import {ModalEncuestaPageModule} from '../modal-encuesta/modal-encuesta.module';
 
 const routes: Routes = [
   {
@@ -22,6 +25,7 @@ const routes: Routes = [
 @NgModule({
   entryComponents: [
     ModalMapaPage,
+    ModalEncuestaPage,
   ],
   imports: [
     CommonModule,
@@ -29,6 +33,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     ModalMapaPageModule,
+    ModalEncuestaPageModule,
   ],
   providers: [
     NetworkInterface,
@@ -36,4 +41,5 @@ const routes: Routes = [
   ],
   declarations: [InventarioPostesPage]
 })
-export class InventarioPostesPageModule {}
+export class InventarioPostesPageModule {
+}
