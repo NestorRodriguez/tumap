@@ -45,11 +45,12 @@ const routes: Routes = [
   { path: 'inventario-redes-secas/inicio', loadChildren: './irs/inicio/inicio.module#InicioPageModule' },
   { path: 'predial', loadChildren: './predial/predial.module#PredialPageModule' },
   { path: 'usoynivel', loadChildren: './usoynivel/usoynivel.module#UsoynivelPageModule' },
-  //{ path: 'colindante', loadChildren: './colindante/colindante.module#ColindantePageModule' },
   { path: 'colinda', loadChildren: './colinda/colinda.module#ColindaPageModule' },
+
+  
+  
+  //{ path: 'colindante', loadChildren: './colindante/colindante.module#ColindantePageModule' },
   //{ path: 'colindante', loadChildren: './colindante/colindante/colindante.module' },
-    
-  //Revisar ***************************************
   //{ path: 'inventario-postes', loadChildren: './irs/inventario-postes/inventario-postes.module#InventarioPostesPageModule' },
  // { path: 'inventario-otros', loadChildren: './irs/inventario-otros/inventario-otros.module#InventarioOtrosPageModule' },
   //{ path: 'senalizacion', loadChildren: './senalizacion/senalizacion.module#SenalizacionPageModule' },
