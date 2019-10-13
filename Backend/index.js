@@ -25,6 +25,11 @@ const db = mysql.createConnection({
     multipleStatements: true
 });
 
+//Parse /Json
+app.use(bodyParser.urlencoded({ extended: false }))
+
+app.use(bodyParser.json())
+
 //Realizar la conexión a la base de datos
 db.connect(function (error) {
     if (error)
@@ -35,6 +40,7 @@ db.connect(function (error) {
 
 app.get('/', function (req, res) {
     console.log('Página de Inicio ');
+
     res.send("Bienvenidos al servidor <strong> TuMap </strong>")
 });
 
@@ -1264,8 +1270,8 @@ app.route('/validar_info')
 app.route('/dbo_pregunta/:orden')
     .get(function (req, res) {
         console.log('Página de pregunta ');
-        var orden = req.params.orden;
-        var query = db.query('select * from dbo_pregunta where orden = ?', orden, function (error, result) {
+        var { orden } = req.params;
+        var query = db.query('SELECT * FROM dbo_pregunta WHERE orden = ?', orden, function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1274,6 +1280,7 @@ app.route('/dbo_pregunta/:orden')
             }
         });
     });
+
 
 // dbo Lista las imagen por imagensuelos 30/09/2019
 app.route('/dbo_imagen/:id_Pregunta')
@@ -1291,40 +1298,165 @@ app.route('/dbo_imagen/:id_Pregunta')
     });
 
 // dbo Lista inscripciones por documento 30/09/2019
-app.route('/dbo_inscripcion/:documento')
-    .get(function (req, res) {
-        console.log('Página de inscripcion');
-        var documento = req.params.documento;
-        var query = db.query('select * from dbo_inscripcion Where documento = ?', documento, function (error, result) {
-            if (error) {
-                throw error;
-            } else {
-                console.log(result);
-                res.json(result);
-            }
-        });
+
+app.get('/dbo_inscripcion/:documento', function(req, res) {
+    const { documento } = req.params;
+    console.log('Página de inscripcion');
+    var query = db.query('SELECT  * FROM dbo_inscripcion WHERE documento = ?', documento, function(error, result) {
+        if (error) {
+            throw error;
+        } else {
+            console.log(result);
+            res.json(result);
+        }
+    });
+})
+
+app.post("/dbo_inscripcion", function(req, res) {
+    var sql = "INSERT INTO dbo_inscripcion(documento,nombre,lat,lng,direccion,departamento,municipio,usuario,fecha)"
+    sql = sql + ` VALUES ( ${req.body.documento} ,`
+    sql = sql + `'${req.body.nombre}',`
+    sql = sql + `'${req.body.lat}',`
+    sql = sql + `'${req.body.lng}',`
+    sql = sql + `'${req.body.direccion}',`
+    sql = sql + `'${req.body.departamento}',`
+    sql = sql + `'${req.body.municipio}',`
+    sql = sql + `'${req.body.usuario}',CURDATE());`;
+    console.log('Add inscripcion:');
+    var query = db.query(sql, function(error, result) {
+        if (error) {
+            throw error;
+        } else {
+            console.log(result);
+            var query = db.query('SELECT  * FROM dbo_inscripcion WHERE documento = ?', req.body.documento, function(error, result) {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(result);
+                    res.json(result);
+                }
+            });
+        }
+    });
+    // res.json({ text: 'Datos Ingresados: ' + sql });
+})
+
+app.put("/dbo_inscripcion/:id", function(req, res) {
+    const { id } = req.params;
+
+    var sql = ` UPDATE dbo_inscripcion SET `
+    sql = sql + ` documento= ${req.body.documento} ,`
+    sql = sql + ` nombre='${req.body.nombre}', `
+    sql = sql + ` lat='${req.body.lat}', `
+    sql = sql + ` lng='${req.body.lng}',`
+    sql = sql + ` direccion='${req.body.direccion}', `
+    sql = sql + ` departamento='${req.body.departamento}', `
+    sql = sql + ` municipio='${req.body.municipio}',`
+    sql = sql + ` usuario='${req.body.usuario}' `
+    sql = sql + ` WHERE id= ${id};`;
+
+    var query = db.query(sql, function(error, result) {
+        if (error) {
+            throw error;
+        } else {
+            console.log(result);
+            res.json(result);
+        }
     });
 
+    // res.json({ text: 'Datos Actualizados ' + sql });
+});
+
 // dbo Lista respuestas 30/09/2019
-app.route('/dbo_respuesta/:id_inscripcion')
-    .get(function (req, res) {
-        console.log('Página de respuesta');
-        var id_inscripcion = req.params.id_inscripcion;
-        var query = db.query('select * from dbo_respuesta where id_inscripcion = ?', id_inscripcion, function (error, result) {
-            if (error) {
-                throw error;
-            } else {
-                console.log(result);
-                res.json(result);
-            }
-        });
+// http://localhost:3000/dbo_respuesta/1/3
+app.get('/dbo_respuesta/:id_inscripcion/:id_pregunta', function(req, res) {
+    console.log('Página de respuesta');
+    const { id_inscripcion } = req.params;
+    const { id_pregunta } = req.params;
+
+    const sql = `SELECT * FROM dbo_respuesta WHERE id_inscripcion = '${id_inscripcion}' AND id_pregunta = '${id_pregunta}'`;
+
+    var query = db.query(sql, function(error, result) {
+        if (error) {
+            throw error;
+        } else {
+            console.log(result);
+            res.json(result);
+        }
+    })
+
+})
+app.post('/dbo_respuesta', function(req, res) {
+
+    var sql = `
+        INSERT INTO dbo_respuesta
+        (
+            id_inscripcion, 
+            id_pregunta, 
+            id_imagen
+        ) VALUES (
+            '${req.body.id_inscripcion}',
+            '${req.body.id_pregunta}',
+            '${req.body.id_imagen}'
+        );`;
+
+    console.log('Add dbo_respuesta');
+    var query = db.query(sql, function(error, result) {
+        if (error) {
+            throw error;
+        } else {
+            console.log(result);
+            res.json(result);
+        }
     });
+
+    var sql = `
+    SELECT * FROM dbo_respuesta 
+    WHERE id_inscripcion = ' ${req.body.id_inscripcion} 
+    ' AND id_pregunta=' ${req.body.id_pregunta}
+    ' AND id_imagen='${req.body.id_imagen} `;
+
+    var query = db.query(sql, function(error, result) {
+        if (error) {
+            throw error;
+        } else {
+            console.log(result);
+            res.json(result);
+        }
+    });
+
+    if (query.lenght > 0) {
+        return res.json(query[0]);
+    }
+    res.json({ message: 'Respuesta no existe' });
+
+})
+app.put('/dbo_respuesta/:id', function(req, res) {
+    const { id } = req.params;
+
+    const sql = `UPDATE dbo_respuesta SET 
+    id_inscripcion='${req.body.id_inscripcion}', 
+    id_pregunta='${req.body.id_pregunta}', 
+    id_imagen='${req.body.id_imagen}'
+    WHERE id='${id}';`;
+
+    var query = db.query(sql, function(error, result) {
+        if (error) {
+            throw error;
+        } else {
+            console.log(result);
+            res.json(result);
+        }
+    });
+
+    res.json({ text: 'Datos Actualizados ' + sql });
+});
 
 // dbo Lista las respuestas con texto vlistado 30/09/2019
 app.route('/dbo_vlistado')
     .get(function (req, res) {
         console.log('Página de vlistado ');
-        var query = db.query('select * from dbo_vlistado', function (error, result) {
+        var query = db.query('SELECT * FROM dbo_vlistado', function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1338,7 +1470,7 @@ app.route('/dbo_vlistado')
 app.route('/dbo_vlistadotodo')
     .get(function (req, res) {
         console.log('Página de vlistadotodo ');
-        var query = db.query('select * from dbo_vlistadotodo', function (error, result) {
+        var query = db.query('SELECT * FROM dbo_vlistadotodo', function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1358,7 +1490,7 @@ app.route('/dbo_vlistadotodo')
  *************************************************************************************/
 
 app.get('/irs-tipos-redes', (req, res) => {
-    const sql = 'SELECT id, nombre, icono FROM irs_tipos_redes';
+    const sql = 'SELECT id, nombre, tipo, icono FROM irs_tipos_redes';
     db.query(sql, (error, result) => {
         if (error) {
             res.json({
@@ -1432,17 +1564,17 @@ app.post('/irs-inventario-postes', (req, res) => {
         fecha,
         ip
     ) VALUES (
-        '${data.id_irs_material}',
+        '${data.idIrsMaterial}',
         '${data.numero}',
-        '${data.id_irs_estado_red}',
-        '${data.tiene_lampara}',
-        '${data.tiene_transformador}',
-        '${data.tipo_red}',
+        '${data.idIrsEstadoRed}',
+        '${data.tieneLampara}',
+        '${data.tieneTransformador}',
+        '${data.tipoRed}',
         '${JSON.stringify(data.ubicacion)}',
         '${data.imagen}',
-        '${data.id_usuario}',
-        '${data.id_irs_operador_celular}',
-        '${data.id_irs_estado_red_celular}',
+        '${data.idUsuario}',
+        '${data.idIrsOperadorCelular}',
+        '${data.idIrsEstadoRedCelular}',
         '${date.substring(0, 10)}T${date.substring(11, 19)}',
         '${data.ip}'
     )`;
@@ -1593,11 +1725,12 @@ app.get('/tipousosuelos', (req, res) => {
 /***************************************************
  * Fin de servicios para el inventario de suelos   *
  **************************************************/
+
 //Llamado de encuesta social 
 app.route('/encuesta-social')
-    .get(function (req, res) {
-        console.log('Método de encuesta social');
-        var query = db.query('select SEC_Encuesta_Social.id_Encuesta, SEC_Encuesta_Social.Vinculo_Territorial, SEC_Necesidades_Basicas.Nombre_Necesidad, SEC_Encuesta_Necesidades.Importancia  from SEC_Encuesta_Necesidades inner join SEC_Encuesta_Social on SEC_Encuesta_Necesidades.id_Encuesta = SEC_Encuesta_Social.id_Encuesta inner join SEC_Necesidades_Basicas on SEC_Encuesta_Necesidades.id_Necesidades = SEC_Necesidades_Basicas.id_Necesidades;', function (error, result) {
+    .get(function(req, res) {
+        console.log('Método de Encuesta_Social');
+        var query = db.query('select * from SEC_Encuesta_Social', function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1606,13 +1739,25 @@ app.route('/encuesta-social')
             }
         });
     })
-    .post(function (req, res) {
-        res.send('Add a encuesta_social');
+    .post(function(req, res) {
+        const data = req.body;
+        console.log(data);
+        const sql = `
+            INSERT INTO SEC_Encuesta_Social(vinculo_territorial, alimentacion, seguridad, servicios_publicos, transporte)
+        VALUES('${data.vinculo_territorial}','${data.alimentacion}','${data.seguridad}','${data.servicios_publicos}','${data.transporte}');
+        `
+        var query = db.query(sql, function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result)
+            }
+        });
     })
     .put(function (req, res) {
         res.send('Update the encuesta social');
     });
-
 //Llamado de SEC_Establecimiento_Comercial
 app.route('/establecimiento-comercial')
     .get(function (req, res) {
@@ -1626,8 +1771,21 @@ app.route('/establecimiento-comercial')
             }
         });
     })
-    .post(function (req, res) {
-        res.send('Add a Establecimiento_Comercial');
+    .post(function(req, res) {
+        const data = req.body;
+        console.log(data);
+        const sql = `
+        INSERT INTO SEC_Establecimiento_Comercial (Nombre_Establecimiento, Productos_Servicios, Descripcion , N_Empleados, Foto)
+        VALUES ('${data.Nombre_Establecimiento}','${data.Productos_Servicios}','${data.Descripcion}','${data.N_Empleados}','${data.Foto}');
+         `
+        var query = db.query(sql, function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result)
+            }
+        });
     })
     .put(function (req, res) {
         res.send('Update the Establecimiento_Comercial');
@@ -1646,8 +1804,21 @@ app.route('/comercio-informal')
             }
         });
     })
-    .post(function (req, res) {
-        res.send('Add a Comercio_Informal');
+    .post(function(req, res) {
+        const data = req.body;
+        console.log(data);
+        const sql = `
+        INSERT INTO SEC_Comercio_Informal (Productos_Servicios, Descripcion , Estatico_Movil, Periodicidad, Jornada, Foto)
+        VALUES ('${data.Productos_Servicios}','${data.Descripcion}','${data.Estatico_Movil}','${data.Periodicidad}','${data.Jornada}','${data.Foto}');
+        `
+        var query = db.query(sql, function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result);
+                res.json(result)
+            }
+        });
     })
     .put(function (req, res) {
         res.send('Update the Comercio_Informal');
@@ -2178,8 +2349,8 @@ router
     .post('/Minas/RegistroMina', (req, res) => {
         const dato = req.body
 
-        const sql = `INSERT INTO MP_Registro_Mina (ubicacion, mineral, trabajadores, observacion, id_sistemaexplotacion, id_tipomaterial, id_estadomina)
-            values (${dato.ubicacion}, ${dato.mineral}, ${dato.trabajadores}, ${dato.observacion}, ${dato.id_sistemaexplotacion}, ${dato.id_tipomaterial}, ${dato.id_estadomina})`;
+        const sql = `INSERT INTO MP_Registro_Mina (nombre_sesion,ubicacion, mineral, trabajadores, observacion, id_sistemaexplotacion, id_tipomaterial, id_estadomina,pregunta)
+            values (${dato.nombre_sesion},${dato.ubicacion}, ${dato.mineral}, ${dato.trabajadores}, ${dato.observacion}, ${dato.id_sistemaexplotacion}, ${dato.id_tipomaterial}, ${dato.id_estadomina}, ${dato.pregunta})`;
 
         db.query(sql, (error, result) => {
             if (error) {
@@ -2193,6 +2364,7 @@ router
 
         const id_registromina = req.params.id_registromina;
         const dato = {
+            nombre: req.body.nombre_sesion,
             ubicacion: req.body.ubicacion,
             mineral: req.body.mineral,
             trabajadores: req.body.trabajadores,
@@ -2200,6 +2372,7 @@ router
             id_sistemaexplotacion: req.body.id_sistemaexplotacion,
             id_tipomaterial: req.body.id_tipomaterial,
             id_estadomina: req.body.id_estadomina,
+            pregunta: req.body.pregunta,
         };
 
         let sets = [];
@@ -2241,6 +2414,405 @@ app.use(router);
 /***************************************************
  * Fin servicio Minas   *
  **************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***************************************************
+ * app_salud   *
+ **************************************************/
+
+app.post('/Datos-Establecimiento', (req, res) => {
+    const data = req.body;
+    const sql = `
+    INSERT INTO cav_Datos_Establecimiento (
+        Foto,
+        Nit,
+        Nom_Establecimiento,
+        Direccion,
+        Id_dpto_ciudad,
+        Id_Tipo_Entidad,
+        Observaciones,
+        Id_Estado
+    ) VALUES (
+        '${data.Foto}',
+        '${data.Nit}',
+        '${data.Nombre_Establecimiento}',
+        '${data.Direccion}',
+        '${data.Id_dpto_ciudad}',
+        '${data.Id_Tipo_Entidad}',
+        '${data.Observaciones}',
+        '${data.Id_Estado}'
+    )`;
+
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: "Ocurrió un error al guardar el formulario"
+            });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get('/Tipo-Entidad', (req, res) => {
+    const sql = 'SELECT * FROM cav_Tipo_Entidad';
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: error.message
+            });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get('/Listar-Departamentos', (req, res) => {
+    const sql = "SELECT * FROM cav_dpto_ciudad WHERE tipo='D' ORDER BY nombre;";
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: "Ocurrió un error al consultar los departamentos"
+            });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get('/Listar-Ciudades/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM cav_dpto_ciudad WHERE tipo='C' AND id_ciudad='${id}' ORDER BY nombre;";
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: "Ocurrió un error al consultar las ciudades"
+            });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get('/Estado-Solic', (req, res) => {
+    const sql = 'SELECT * FROM cav_Estado';
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: "Ocurrió un error al consultar el estado"
+            });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+
+
+
 
 //Inicio de servidor NodeJS
 app.listen(3000, function () {

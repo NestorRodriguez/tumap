@@ -18,9 +18,21 @@
     margin-right: 5%
 }
 
+.imgbody {
+    height: auto;
+    width: 100%;
+    position: absolute;
+}
+
 .imgfooter {
     height: 35px;
     width: 35px;
     margin-right: 20px;
     margin-left: 20px;
+}
+
+.fondo {
+    //position: relative;    
+    display: inline-block;
+    text-align: center;
 }

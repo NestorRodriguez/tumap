@@ -1,43 +1,38 @@
-<ion-header >
-  <ion-toolbar  color="primary">
-      <ion-icon class="icon" color="secondary" name="arrow-round-back"></ion-icon>
-    <ion-title padding color="secondary">Datos basicos</ion-title>
-  </ion-toolbar>
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button [defaultHref]="['/']"></ion-back-button>
+        </ion-buttons>
+        <ion-title class="ion-title">Datos basicos</ion-title>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content padding >
-    <ion-card  padding>
-
-      <ion-item >
-          <ion-label color="secondary" position="floating">Documento</ion-label>
-          <ion-input></ion-input>
-        </ion-item>
-
+<ion-content class="padding">
+    <ion-card>
         <ion-item>
-            <ion-label color="secondary" position="floating">Nombre</ion-label>
-            <ion-input></ion-input>
-          </ion-item>
-  
-          <ion-item>
-              <ion-label color="secondary" position="floating">Municipio</ion-label>
-              <ion-input></ion-input>
-            </ion-item>
-
-            <ion-item>
-                <ion-label color="secondary" position="floating">Dirección</ion-label>
-                <ion-input></ion-input>
-              </ion-item>
-
-              <ion-button>Siguiente</ion-button>
-            </ion-card>
-
-
+            <ion-input type="number" name="txtDocumento" placeholder="Documento" [(ngModel)]="inscripcion.documento" (ionBlur)="getInscripcion();"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input type="text" name="txtNombre" placeholder="Nombre" [(ngModel)]="inscripcion.nombre"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input type="text" name="txtDireccion" placeholder="Direccion" [(ngModel)]="inscripcion.direccion"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input type="text" name="txtDepartamento" placeholder="Departamento" [(ngModel)]="inscripcion.departamento"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input type="text" name="txtMunicipio" placeholder="Municipio" [(ngModel)]="inscripcion.municipio"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-button class="btn btn-success" [routerLink]="['/ubicacion/',posicion]" routerDirection="forward">Ubicacion por mapa</ion-button>
+            <p>{{posicion}}</p>
+        </ion-item>
+    </ion-card>
+    <ion-button class="btn btn-success btn-block" [routerLink]="['/formulario/',inscripcion.id]" routerDirection="forward" (click)="saveInscripcion();">Comenzar Encuesta</ion-button>
 </ion-content>
-
-
-
 <ion-footer>
-  <ion-toolbar color="primary" class="title">
-      
-  </ion-toolbar>
+
+    <ion-toolbar color="primary" class="title">
+    </ion-toolbar>
 </ion-footer>
