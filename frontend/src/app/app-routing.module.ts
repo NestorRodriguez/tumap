@@ -73,7 +73,8 @@ const routes: Routes = [
   { path: 'verinfoinstitucion', loadChildren: './Education/verinfoinstitucion/verinfoinstitucion.module#VerinfoinstitucionPageModule' },
   { path: 'mapadmin', loadChildren: './Education/mapadmin/mapadmin.module#MapadminPageModule' },
   { path: 'centrosformacion', loadChildren: './Education/centrosformacion/centrosformacion.module#CentrosformacionPageModule' },
-  { path: 'mapa', loadChildren: './minas/mapa/mapa.module#MapaPageModule' },
+  { path: 'mapa', loadChildren: './minas/mapa/mapa.module#MapaPageModule' },  { path: 'menuminas', loadChildren: './minas/menuminas/menuminas.module#MenuminasPageModule' },
+
 
 
 
