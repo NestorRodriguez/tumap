@@ -13,7 +13,7 @@ import {ToastController} from '@ionic/angular';
   templateUrl: './inventario-postes.page.html',
   styleUrls: ['./inventario-postes.page.scss'],
 })
-export class InventarioPostesPage implements OnInit {
+export class InventarioPostesPage implements OnInit, OnDestroy {
 
   materiales: any = [];
   operadores: any = [];
@@ -97,7 +97,7 @@ export class InventarioPostesPage implements OnInit {
     });
     await modal.present();
     const {data: { ubicacion }} = await modal.onDidDismiss();
-    this.model.ubicacion = ubicacion;
+      this.model.ubicacion = ubicacion;
   }
 
   async loadModalPoll() {
@@ -120,7 +120,7 @@ export class InventarioPostesPage implements OnInit {
       this.service.setInventario(this.model).subscribe(async (response) => {
         const toast = await this.toastCtrl.create({
           message: 'Encuesta guardada con éxito',
-          color: 'light',
+          color: 'primary',
           duration: 1800
         });
         await toast.present();

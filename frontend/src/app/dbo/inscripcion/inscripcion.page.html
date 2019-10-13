@@ -1,48 +1,33 @@
-<ion-header>
-    <ion-toolbar color="primary">
-        <ion-icon class="icon" color="secondary" name="arrow-round-back"></ion-icon>
-        <ion-title padding color="secondary">Datos basicos</ion-title>
-    </ion-toolbar>
-</ion-header>
 
-<ion-content padding>
-    <ion-card class="padding">
-
+<ion-content >
+           
+                    <img src="assets/logo registro.svg" alt="">
         <ion-item>
-            <ion-label color="secondary" position="floating">Documento</ion-label>
-            <ion-input id="idDocumento" type="number" [(ngModel)]="documento" (ionBlur)="getInscripcion();"></ion-input>
+            <ion-input type="number" name="txtDocumento" placeholder="Documento" [(ngModel)]="inscripcion.documento" (ionBlur)="getInscripcion();"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input type="text" name="txtNombre" placeholder="Nombre" [(ngModel)]="inscripcion.nombre"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input type="text" name="txtDireccion" placeholder="Direccion" [(ngModel)]="inscripcion.direccion"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input type="text" name="txtDepartamento" placeholder="Departamento" [(ngModel)]="inscripcion.departamento"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input type="text" name="txtMunicipio" placeholder="Municipio" [(ngModel)]="inscripcion.municipio"></ion-input>
         </ion-item>
 
-        <ion-item>
-            <ion-label id="nombre" color="secondary" position="floating">Nombre</ion-label>
-            <ion-input></ion-input>
-        </ion-item>
+        <ion-toolbar class="botonins" color="none">
+            <button padding class="btn btn-success" [routerLink]="['/ubicacion/',posicion]" routerDirection="forward">Ubicacion</button>
+            <button padding class="btn btn-success btn-block" [routerLink]="['/formulario/',inscripcion.id]" routerDirection="forward" (click)="saveInscripcion();">Siguiente</button>
+        </ion-toolbar>
 
-        <ion-item>
-            <ion-label id="Municipio" color="secondary" position="floating">Municipio</ion-label>
-            <ion-input *ngIf="isValid">{{inscripcion.municipio}}</ion-input>
-        </ion-item>
-
-        <ion-item>
-            <ion-label id="Direccion" color="secondary" position="floating">Dirección</ion-label>
-            <ion-input></ion-input>
-        </ion-item>
-
-
-
-
-    </ion-card>
-
-
-    <ion-button (onclick)="getInscripcion(11)">Siguiente</ion-button>
-
-
+            <ion-toolbar  class="atrasins" color="none">
+            <ion-buttons slot="start">
+                <ion-back-button color="tertiary"  [defaultHref]="['/']"></ion-back-button>
+            </ion-buttons>
+            <ion-title color="white" class="ion-title">Atras</ion-title>
+        </ion-toolbar>
+    
 </ion-content>
-
-
-
-<ion-footer>
-    <ion-toolbar color="primary" class="title">
-
-    </ion-toolbar>
-</ion-footer>

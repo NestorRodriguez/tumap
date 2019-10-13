@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { DboService } from '../../Services/dbo/dbo.service';
-import { InscripcionPageModule } from './inscripcion.module';
 import { Inscripcion } from 'src/app/models/dbo/Inscripcion';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-inscripcion',
@@ -11,11 +12,29 @@ import { Inscripcion } from 'src/app/models/dbo/Inscripcion';
 })
 export class InscripcionPage implements OnInit {
 
-  inscripcion: any;
-  documento = 0;
+  inscripciones: Inscripcion[] = [];
   isValid = false;
+  posicion: string;
 
-  constructor(private dboService: DboService) { }
+  latDef = 4.590244;
+  lngDef = -74.193179;
+
+
+  inscripcion: Inscripcion = {
+    id: 0,
+    documento: null,
+    nombre: '',
+    lat: this.latDef.toString(),
+    lng: this.lngDef.toString(),
+    direccion: '',
+    departamento: '',
+    municipio: '',
+    usuario: 'USER-DEFAULT',
+    fecha: new Date(),
+    isUpdate: false,
+  };
+
+  constructor(private dboService: DboService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     // this.posicion = this.activatedRoute.snapshot.paramMap.get('id');
@@ -31,8 +50,9 @@ export class InscripcionPage implements OnInit {
   }
 
   getInscripcion() {
+    if (this.inscripcion.documento === null) { return; }
     this.isValid = false;
-    this.dboService.getInscripcion(this.documento.toString()).subscribe(
+    this.dboService.getInscripcion(this.inscripcion.documento.toString()).subscribe(
       res => {
         this.inscripciones = res;
         if ( this.inscripciones.length > 0) {

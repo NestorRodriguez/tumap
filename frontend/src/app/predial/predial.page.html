@@ -61,17 +61,16 @@
                 <ion-label>Uso Predial</ion-label>
                 <ion-select interface="popover">
                     <span *ngFor='let i of usopredial'>
-                        <ion-select-option value="{{i.id_predio}}">{{i.descripcion}}</ion-select-option>
-                    </span>
+                    <ion-select-option value="{{i.id_predio}}">{{i.descripcion}}</ion-select-option>
+                </span>
                 </ion-select>
             </ion-item>
             <br/>
             <ion-item>
                 <ion-label>Nivel de Vivienda</ion-label>
                 <ion-select interface="popover">
-                    <span *ngFor='let i of nivelvivienda'>
-                        <ion-select-option value="{{i.idNivel}}">{{i.descripcion}}</ion-select-option>                    
-                    </span>
+                    <ion-select-option value="nes">NES</ion-select-option>
+                    <ion-select-option value="n64">Nintendo64</ion-select-option>
                 </ion-select>
             </ion-item>
         </ion-list>

@@ -23,9 +23,4 @@ const routes: Routes = [
   ],
   declarations: [InscripcionPage]
 })
-export class InscripcionPageModule {
-
-  public getInscripcion() {
-    return fetch('http://localhost:3000/dbo_inscripcion/11').then(response => response.json );
-  }
-}
+export class InscripcionPageModule {}

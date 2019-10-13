@@ -1,8 +1,10 @@
-.welcome-card ion-img {
-  max-height: 35vh;
-  overflow: hidden;
+ion-header{
+  --ion-background-color: #2C689F;
+  ion-toolbar{
+    color: #ffffff;
+  }
 }
 
 agm-map {
-  height: 500px;
+  height: 85%;
 }
