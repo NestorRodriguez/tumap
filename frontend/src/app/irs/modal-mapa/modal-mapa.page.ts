@@ -8,8 +8,9 @@ import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
   styleUrls: ['./modal-mapa.page.scss'],
 })
 export class ModalMapaPage implements OnInit {
-  lat = 4.60971;
-  lng = -74.08175;
+  lat = 4.6586508;
+  lng = -74.0669778;
+  zoom = 16;
   icon;
 
   constructor(private modalCtrl: ModalController,
