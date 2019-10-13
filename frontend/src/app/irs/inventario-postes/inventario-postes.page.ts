@@ -34,14 +34,12 @@ export class InventarioPostesPage implements OnInit, OnDestroy {
 
     this.networkInterface.getWiFiIPAddress()
         .then(address => {
-          console.log(`IP: ${address.ip}, Subnet: ${address.subnet}`);
           this.model.ip = address.ip;
         })
         .catch(error => console.error(`Unable to get IP: ${error}`));
 
     this.networkInterface.getCarrierIPAddress()
         .then(address => {
-          console.log(`IP: ${address.ip}, Subnet: ${address.subnet}`);
           if (!this.model.ip) {
             this.model.ip = address.ip;
           }
@@ -84,9 +82,9 @@ export class InventarioPostesPage implements OnInit, OnDestroy {
 
   isDisabled() {
     if (this.model.tipo === 'Postes') {
-      return (!this.model.idIrsMaterial && !this.model.idIrsEstadoRed && !this.model.ubicacion && !this.model.imagen);
+      return (!this.model.idIrsMaterial || !this.model.idIrsEstadoRed || !this.model.ubicacion || !this.model.imagen);
     } else if (this.model.tipo === 'Torres' || this.model.tipo === 'Antenas' || this.model.tipo === 'Armarios') {
-      return (!this.model.idIrsEstadoRed && !this.model.ubicacion && !this.model.imagen);
+      return (!this.model.idIrsEstadoRed || !this.model.ubicacion || !this.model.imagen);
     } else {
       return true;
     }
