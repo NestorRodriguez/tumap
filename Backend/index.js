@@ -1844,11 +1844,7 @@ app.route('/item_senalizacion')
 app.route('/item_mobiliario')
     .get(function (req, res) {
         console.log('Página de Validar Información ');
-<<<<<<< HEAD
-        var query = db.query('select * from jyd_item where fk_categoria=2', function (error, result) {
-=======
         var query = db.query('select * from jyd_item where fk_categoria=2 order by nombre', function(error, result) {
->>>>>>> 5cdab9381c44b28193e4f729b47be462f0e31307
             if (error) {
                 throw error;
             } else {
@@ -2290,7 +2286,7 @@ router
 
         const sql = `INSERT INTO MP_Registro_Mina (nombre_sesion,ubicacion, mineral, trabajadores, observacion, id_sistemaexplotacion, id_tipomaterial, id_estadomina,estadoregistro,pregunta)
             values ('${dato.nombre_sesion}',
-            '${dato.ubicacion}',
+            GeomFromText('${dato.ubicacion}'),
              '${dato.mineral}',
               '${dato.trabajadores}',
                '${dato.observacion}',
