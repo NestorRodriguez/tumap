@@ -19,8 +19,8 @@ export class DboService {
       return this.http.get<any[]>(`${this.API_URL}/dbo_inscripcion/${documento}`);
       }
 
-  public saveInscripcion(inscripcion: Inscripcion): Observable<any> {
-    return this.http.post<any>(`${this.API_URL}/dbo_inscripcion`, inscripcion);
+  public saveInscripcion(inscripcion: Inscripcion): Observable<any[]>  {
+    return this.http.post<any[]>(`${this.API_URL}/dbo_inscripcion`, inscripcion);
   }
 
   public updateInscripcion(id: number, inscripcion: Inscripcion): Observable<any> {

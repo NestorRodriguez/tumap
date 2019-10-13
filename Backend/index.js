@@ -1308,11 +1308,6 @@ app.get('/dbo_inscripcion/:documento', function(req, res) {
             res.json(result);
         }
     });
-
-    // if (query.lenght > 0) {
-    //     return res.json(query[0]);
-    // }
-    // res.json({ message: 'documento no existe' });
 })
 
 app.post("/dbo_inscripcion", function(req, res) {
@@ -1331,10 +1326,17 @@ app.post("/dbo_inscripcion", function(req, res) {
             throw error;
         } else {
             console.log(result);
-            res.json(result);
+            var query = db.query('SELECT  * FROM dbo_inscripcion WHERE documento = ?', req.body.documento, function(error, result) {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(result);
+                    res.json(result);
+                }
+            });
         }
     });
-    res.json({ text: 'Datos Ingresados: ' + sql });
+    // res.json({ text: 'Datos Ingresados: ' + sql });
 })
 
 app.put("/dbo_inscripcion/:id", function(req, res) {
@@ -1360,7 +1362,7 @@ app.put("/dbo_inscripcion/:id", function(req, res) {
         }
     });
 
-    res.json({ text: 'Datos Actualizados ' + sql });
+    // res.json({ text: 'Datos Actualizados ' + sql });
 });
 
 // dbo Lista respuestas 30/09/2019
@@ -1394,7 +1396,7 @@ app.post('/dbo_respuesta', function(req, res) {
             '${req.body.id_inscripcion}',
             '${req.body.id_pregunta}',
             '${req.body.id_imagen}'
-        )`;
+        );`;
 
     console.log('Add dbo_respuesta');
     var query = db.query(sql, function(error, result) {
