@@ -19,9 +19,6 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./Education/register/register.module').then(m => m.RegisterPageModule)
   },
-
-  /*{ path: 'register', loadChildren: './Education/register/register.module#RegisterPageModule' }*/
-
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'ubicacion/:id', loadChildren: './dbo/ubicacion/ubicacion.module#UbicacionPageModule' },
   { path: 'inscripcion/:id', loadChildren: './dbo/inscripcion/inscripcion.module#InscripcionPageModule' },
@@ -55,14 +52,7 @@ const routes: Routes = [
   { path: 'minasistemaexplotacion-details/:id', loadChildren: './minas/minasistemaexplotacion-details/minasistemaexplotacion-details.module#MinasistemaexplotacionDetailsPageModule' },
   { path: 'minaregistro/:lat/:lng', loadChildren: './minas/minaregistro/minaregistro.module#MinaregistroPageModule' },
   { path: 'minarmapa', loadChildren: './minas/minarmapa/minarmapa.module#MinarmapaPageModule' },
-
-  // { path: 'senalizacion', loadChildren: './senalizacion/senalizacion.module#SenalizacionPageModule' },
-  // { path: 'mobiliario', loadChildren: './mobiliario/mobiliario.module#MobiliarioPageModule' },
-  // { path: 'senalizacion', loadChildren: './senalizacion/senalizacion.module#SenalizacionPageModule' },
-  // { path: 'mobiliario', loadChildren: './mobiliario/mobiliario.module#MobiliarioPageModule' },
   { path: 'inventario-redes-secas/inicio', loadChildren: './irs/inicio/inicio.module#InicioPageModule' },
-  // { path: 'inventario-postes', loadChildren: './irs/inventario-postes/inventario-postes.module#InventarioPostesPageModule' },
-  // { path: 'inventario-otros', loadChildren: './irs/inventario-otros/inventario-otros.module#InventarioOtrosPageModule' },
   { path: 'predial', loadChildren: './predial/predial.module#PredialPageModule' },
   { path: 'usoynivel', loadChildren: './usoynivel/usoynivel.module#UsoynivelPageModule' },
   { path: 'resumen', loadChildren: './vistasjyd/resumen/resumen.module#ResumenPageModule' },
