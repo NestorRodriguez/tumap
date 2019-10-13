@@ -11,5 +11,9 @@ export class ExterioroptPage implements OnInit {
 
   ngOnInit() {
   }
+  segmentChanged( event ) {
+    const valorSegmento = event.detail.value;
+    console.log(event);
+  }
 
 }

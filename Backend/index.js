@@ -1308,51 +1308,50 @@ app.get('/dbo_inscripcion/:documento', function(req, res) {
             res.json(result);
         }
     });
-
-    // if (query.lenght > 0) {
-    //     return res.json(query[0]);
-    // }
-    // res.json({ message: 'documento no existe' });
 })
-app.post("/dbo_inscripcion", function(req, res) {
-    var sql = `
-        INSERT INTO dbo_inscripcion 
-        (
-            documento, 
-            nombre, 
-            posicionamiento, 
-            departamento, 
-            munipio
-        ) VALUES (
-            '${req.body.documento}',
-            '${req.body.nombre}',
-            '${req.body.posicionamiento}',
-            '${req.body.departamento}',
-            '${req.body.munipio}'
-        )`;
 
-    console.log('Add inscripcion');
+app.post("/dbo_inscripcion", function(req, res) {
+    var sql = "INSERT INTO dbo_inscripcion(documento,nombre,lat,lng,direccion,departamento,municipio,usuario,fecha)"
+    sql = sql + ` VALUES ( ${req.body.documento} ,`
+    sql = sql + `'${req.body.nombre}',`
+    sql = sql + `'${req.body.lat}',`
+    sql = sql + `'${req.body.lng}',`
+    sql = sql + `'${req.body.direccion}',`
+    sql = sql + `'${req.body.departamento}',`
+    sql = sql + `'${req.body.municipio}',`
+    sql = sql + `'${req.body.usuario}',CURDATE());`;
+    console.log('Add inscripcion:');
     var query = db.query(sql, function(error, result) {
         if (error) {
             throw error;
         } else {
             console.log(result);
-            res.json(result);
+            var query = db.query('SELECT  * FROM dbo_inscripcion WHERE documento = ?', req.body.documento, function(error, result) {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(result);
+                    res.json(result);
+                }
+            });
         }
     });
-    res.json({ text: 'Datos Ingresados ' + sql });
+    // res.json({ text: 'Datos Ingresados: ' + sql });
 })
 
 app.put("/dbo_inscripcion/:id", function(req, res) {
     const { id } = req.params;
 
-    const sql = `UPDATE dbo_inscripcion SET 
-    documento='${req.body.documento}', 
-    nombre='${req.body.nombre}', 
-    posicionamiento='${req.body.posicionamiento}', 
-    departamento='${req.body.departamento}', 
-    munipio='${req.body.munipio}'
-    WHERE id='${id}';`;
+    var sql = ` UPDATE dbo_inscripcion SET `
+    sql = sql + ` documento= ${req.body.documento} ,`
+    sql = sql + ` nombre='${req.body.nombre}', `
+    sql = sql + ` lat='${req.body.lat}', `
+    sql = sql + ` lng='${req.body.lng}',`
+    sql = sql + ` direccion='${req.body.direccion}', `
+    sql = sql + ` departamento='${req.body.departamento}', `
+    sql = sql + ` municipio='${req.body.municipio}',`
+    sql = sql + ` usuario='${req.body.usuario}' `
+    sql = sql + ` WHERE id= ${id};`;
 
     var query = db.query(sql, function(error, result) {
         if (error) {
@@ -1363,7 +1362,7 @@ app.put("/dbo_inscripcion/:id", function(req, res) {
         }
     });
 
-    res.json({ text: 'Datos Actualizados ' + sql });
+    // res.json({ text: 'Datos Actualizados ' + sql });
 });
 
 // dbo Lista respuestas 30/09/2019
@@ -1397,7 +1396,7 @@ app.post('/dbo_respuesta', function(req, res) {
             '${req.body.id_inscripcion}',
             '${req.body.id_pregunta}',
             '${req.body.id_imagen}'
-        )`;
+        );`;
 
     console.log('Add dbo_respuesta');
     var query = db.query(sql, function(error, result) {
@@ -1563,17 +1562,17 @@ app.post('/irs-inventario-postes', (req, res) => {
         fecha,
         ip
     ) VALUES (
-        '${data.id_irs_material}',
+        '${data.idIrsMaterial}',
         '${data.numero}',
-        '${data.id_irs_estado_red}',
-        '${data.tiene_lampara}',
-        '${data.tiene_transformador}',
-        '${data.tipo_red}',
+        '${data.idIrsEstadoRed}',
+        '${data.tieneLampara}',
+        '${data.tieneTransformador}',
+        '${data.tipoRed}',
         '${JSON.stringify(data.ubicacion)}',
         '${data.imagen}',
-        '${data.id_usuario}',
-        '${data.id_irs_operador_celular}',
-        '${data.id_irs_estado_red_celular}',
+        '${data.idUsuario}',
+        '${data.idIrsOperadorCelular}',
+        '${data.idIrsEstadoRedCelular}',
         '${date.substring(0, 10)}T${date.substring(11, 19)}',
         '${data.ip}'
     )`;

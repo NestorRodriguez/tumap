@@ -8,11 +8,14 @@
 </ion-header>
 
 <ion-content>
-    <h4>Calidad Hídrica</h4>
+    <!-- <h4>Calidad Hídrica</h4> -->
 
-    <h1 [routerLink]="['/hogaropt']">Hogar - Cobertura</h1>
-    <h1 [routerLink]="['/sincobopt']">Sin Cobertura</h1>
-    <h1 [routerLink]="['/exterioropt']">Exterior</h1>
+    <div class="drop"><img src="./assets/coberturagua.png" routerLink="/hogaropt"></div>
+    <h3>Hogar - Cobertura</h3>
+    <div class="drop"><img src="./assets/nowater.jpeg" routerLink="/sincobopt"></div>
+    <h3>Sin Cobertura</h3>
+    <div class="drop"><img src="./assets/stream.png" routerLink="/exterioropt"></div>
+    <h3>Exterior</h3>
 
 </ion-content>
 

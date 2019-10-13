@@ -9,6 +9,9 @@ import { InventarioPostesPage } from './inventario-postes.page';
 import {ModalMapaPage} from '../modal-mapa/modal-mapa.page';
 import {ModalMapaPageModule} from '../modal-mapa/modal-mapa.module';
 
+import { NetworkInterface } from '@ionic-native/network-interface/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
+
 const routes: Routes = [
   {
     path: '',
@@ -26,6 +29,10 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     ModalMapaPageModule,
+  ],
+  providers: [
+    NetworkInterface,
+    Camera,
   ],
   declarations: [InventarioPostesPage]
 })

@@ -8,7 +8,31 @@
 </ion-header>
 
 <ion-content>
+    <!--  <h5>Sin Cobertura</h5> -->
+    <ion-list class="te">
+        <ion-radio-group>
 
+            <ion-item>
+                <ion-label>Suspensión</ion-label>
+                <ion-radio slot="start" value="suspension" checked></ion-radio>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>Corte</ion-label>
+                <ion-radio slot="start" value="corte"></ion-radio>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>Nunca Ha Tenido El Servicio</ion-label>
+                <ion-radio slot="start" value="nuncaserv"></ion-radio>
+            </ion-item>
+        </ion-radio-group>
+    </ion-list>
+
+    <div class="boton">
+        <ion-button name="regresar" [routerLink]="['/hidrica']"> Regresar</ion-button>
+        <ion-button name="guardar"> Guardar</ion-button>
+    </div>
 </ion-content>
 
 <ion-footer>
