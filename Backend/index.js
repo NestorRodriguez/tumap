@@ -10,10 +10,10 @@ const cors = require('cors');
 app.use(cors());
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
 // parse application/json
-app.use(bodyParser.json());
+app.use(bodyParser.json({ extended: true, limit: '10mb' }));
 
 //Parámetros de la conexión a la base de datos
 const db = mysql.createConnection({
@@ -1308,11 +1308,6 @@ app.get('/dbo_inscripcion/:documento', function(req, res) {
             res.json(result);
         }
     });
-
-    // if (query.lenght > 0) {
-    //     return res.json(query[0]);
-    // }
-    // res.json({ message: 'documento no existe' });
 })
 app.post("/dbo_inscripcion", function(req, res) {
     var sql = `
@@ -1337,10 +1332,18 @@ app.post("/dbo_inscripcion", function(req, res) {
             throw error;
         } else {
             console.log(result);
-            res.json(result);
+            var query = db.query('SELECT  * FROM dbo_inscripcion WHERE documento = ?', req.body.documento, function(error, result) {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(result);
+                    res.json(result);
+                }
+            });
         }
     });
     res.json({ text: 'Datos Ingresados ' + sql });
+    // res.json({ text: 'Datos Ingresados: ' + sql });
 })
 
 app.put("/dbo_inscripcion/:id", function(req, res) {
@@ -1363,7 +1366,7 @@ app.put("/dbo_inscripcion/:id", function(req, res) {
         }
     });
 
-    res.json({ text: 'Datos Actualizados ' + sql });
+    // res.json({ text: 'Datos Actualizados ' + sql });
 });
 
 // dbo Lista respuestas 30/09/2019
@@ -1397,7 +1400,7 @@ app.post('/dbo_respuesta', function(req, res) {
             '${req.body.id_inscripcion}',
             '${req.body.id_pregunta}',
             '${req.body.id_imagen}'
-        )`;
+        );`;
 
     console.log('Add dbo_respuesta');
     var query = db.query(sql, function(error, result) {
@@ -1544,11 +1547,28 @@ app.get('/irs-operadores-celulares', (req, res) => {
     });
 });
 
-app.post('/irs-inventario-postes', (req, res) => {
+app.post('/irs-inventarios', (req, res) => {
     const data = req.body;
     const date = new Date().toISOString();
+
+    if (data.tieneLampara != null) {
+        data.tieneLampara = (data.tieneLampara) ? 'S' : 'N';
+    }
+
+    if (data.tieneTransformador != null) {
+        data.tieneTransformador = (data.tieneTransformador) ? 'S' : 'N';
+    }
+
+    if (data.tipo == 'Postes' && (data.tieneTransformador == true || data.tieneLampara == true)) {
+        data.clasePoste = 'ELECTRICO';
+    } else if (data.tipo == 'Postes' && (data.tieneTransformador == false && data.tieneLampara == false)) {
+        data.clasePoste = 'TELECO';
+    }
+
     const sql = `
-    INSERT INTO irs_inventarios_postes (
+    INSERT INTO irs_inventarios (
+        tipo,
+        clase_poste,
         id_irs_material,
         numero,
         id_irs_estado_red,
@@ -1563,68 +1583,29 @@ app.post('/irs-inventario-postes', (req, res) => {
         fecha,
         ip
     ) VALUES (
-        '${data.id_irs_material}',
-        '${data.numero}',
-        '${data.id_irs_estado_red}',
-        '${data.tiene_lampara}',
-        '${data.tiene_transformador}',
-        '${data.tipo_red}',
-        '${JSON.stringify(data.ubicacion)}',
-        '${data.imagen}',
-        '${data.id_usuario}',
-        '${data.id_irs_operador_celular}',
-        '${data.id_irs_estado_red_celular}',
-        '${date.substring(0, 10)}T${date.substring(11, 19)}',
-        '${data.ip}'
-    )`;
-
-    db.query(sql, (error, result) => {
-        if (error) {
-            res.json({
-                error: true,
-                message: "Ocurrió un error al guardar la encuesta."
-            });
-        } else {
-            res.json(result);
-        }
-    });
-});
-
-app.post('/irs-inventario-otros', (req, res) => {
-    const data = req.body;
-    const date = new Date().toISOString();
-    const sql = `
-    INSERT INTO irs_inventarios_otros (
-        tipo,
-        id_irs_estado_red,
-        identificador,
-        id_irs_operador,
-        ubicacion,
-        imagen,
-        id_usuario,
-        id_irs_operador_celular,
-        id_irs_estado_red_celular,
-        fecha,
-        ip
-    ) VALUES (
         '${data.tipo}',
-        '${data.id_irs_estado_red}',
-        '${data.identificador}',
-        '${data.id_irs_operador}',
+        '${data.clasePoste || ''}',
+        ${data.idIrsMaterial},
+        '${data.identificador || ''}',
+        '${data.tieneLampara || ''}',
+        '${data.tieneTransformador || ''}',
+        ${data.idIrsOperador},
+        ${data.idIrsEstadoRed},
         '${JSON.stringify(data.ubicacion)}',
         '${data.imagen}',
-        '${data.id_usuario}',
-        '${data.id_irs_operador_celular}',
-        '${data.id_irs_estado_red_celular}',
+        ${data.idUsuario},
+        ${data.idIrsOperadorCelular},
+        ${data.idIrsEstadoRedCelular},
         '${date.substring(0, 10)}T${date.substring(11, 19)}',
         '${data.ip}'
     )`;
 
     db.query(sql, (error, result) => {
         if (error) {
-            res.json({
+            res.status(400).json({
                 error: true,
-                message: "Ocurrió un error al guardar la encuesta."
+                message: "Ocurrió un error al guardar la encuesta.",
+                sql: error
             });
         } else {
             res.json(result);
@@ -1851,7 +1832,7 @@ app.route('/categoria')
 app.route('/item_senalizacion')
     .get(function(req, res) {
         console.log('Página de Validar Información ');
-        var query = db.query('select * from jyd_item where fk_categoria=1', function(error, result) {
+        var query = db.query('select * from jyd_item where fk_categoria=1 order by nombre', function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1871,7 +1852,7 @@ app.route('/item_senalizacion')
 app.route('/item_mobiliario')
     .get(function(req, res) {
         console.log('Página de Validar Información ');
-        var query = db.query('select * from jyd_item where fk_categoria=2', function(error, result) {
+        var query = db.query('select * from jyd_item where fk_categoria=2 order by nombre', function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -2076,7 +2057,7 @@ router
         const dato = req.body
 
         const sql = `INSERT INTO MP_EstadoActual_mina (nombre_estadomina)
-        values (${dato.nombre_estadomina})`;
+        values ('${dato.nombre_estadomina}')`;
 
         db.query(sql, (error, result) => {
             if (error) {
@@ -2086,21 +2067,11 @@ router
             }
         });
     })
-    .put('Minas/EstadoActual/:id_estadomina', (req, res) => {
+    .put('/Minas/EstadoActual', (req, res) => {
 
-        const id_estadomina = req.params.id_estadomina;
-        const dato = {
-            nombre: req.body.nombre_estadomina,
-        };
+        const dato = req.body
 
-        let sets = [];
-        for (i in dato) {
-            if (dato[i] || dato[i] == 0) {
-                sets.push(`${i}='${dato[i]}'`);
-            }
-        }
-
-        const sql = `UPDATE MP_EstadoActual_mina SET ${sets.join(', ')} WHERE id_estadomina='${id_estadomina}';`;
+        const sql = `UPDATE MP_EstadoActual_mina SET nombre_estadomina = '${dato.nombre_estadomina}' WHERE id_estadomina = '${dato.id_estadomina}';`;
 
         console.log(sql);
 
@@ -2112,9 +2083,9 @@ router
             }
         });
     })
-    .delete('Minas/EstadoActual/:id_estadomina', (req, res) => {
+    .delete('/Minas/EstadoActual/:id_estadomina', (req, res) => {
         const id_estadomina = req.params.id_estadomina;
-        const sql = `DELETE FROM MP_EstadoActual_mina WHERE id_estadomina='${id_estadomina}';`;
+        const sql = `DELETE FROM MP_EstadoActual_mina WHERE id_estadomina = '${id_estadomina}';`;
         const query = db.query(sql, (error, result) => {
             try {
                 if (error) {
@@ -2165,9 +2136,8 @@ router
     })
     .post('/Minas/TipoMaterial', (req, res) => {
         const dato = req.body
-
         const sql = `INSERT INTO MP_tipo_material (nombre_tipomaterial)
-        values (${dato.nombre_tipomaterial})`;
+        values ('${dato.nombre_tipomaterial}')`;
 
         db.query(sql, (error, result) => {
             if (error) {
@@ -2177,21 +2147,14 @@ router
             }
         });
     })
-    .put('/Minas/TipoMaterial/:id_tipomaterial', (req, res) => {
+    .put('/Minas/TipoMaterial', (req, res) => {
 
-        const id_tipomaterial = req.params.id_tipomaterial;
         const dato = {
+            id_tipomaterial: req.body.id_tipomaterial,
             nombre_tipomaterial: req.body.nombre_tipomaterial,
         };
 
-        let sets = [];
-        for (i in dato) {
-            if (dato[i] || dato[i] == 0) {
-                sets.push(`${i}='${dato[i]}'`);
-            }
-        }
-
-        const sql = `UPDATE MP_tipo_material SET ${sets.join(', ')} WHERE id_tipomaterial='${id_tipomaterial}';`;
+        const sql = `UPDATE MP_tipo_material SET  nombre_tipomaterial = '${dato.nombre_tipomaterial}' WHERE id_tipomaterial='${dato.id_tipomaterial}';`;
 
         console.log(sql);
 
@@ -2237,7 +2200,7 @@ router
             }
         });
     })
-    .get('/Minas/SistemaExplotacion:id_sistemaexplotacion', (req, res) => {
+    .get('/Minas/SistemaExplotacion/:id_sistemaexplotacion', (req, res) => {
         const id_sistemaexplotacion = req.params.id_sistemaexplotacion;
         const sql = `SELECT * FROM MP_Sistema_Explotacion WHERE id_sistemaexplotacion='${id_sistemaexplotacion}';`;
         const query = db.query(sql, (error, result) => {
@@ -2258,7 +2221,7 @@ router
         const dato = req.body
 
         const sql = `INSERT INTO MP_Sistema_Explotacion (nombre_sistemaexplotacion)
-        values (${dato.nombre_sistemaexplotacion})`;
+        values ('${dato.nombre_sistemaexplotacion}')`;
 
         db.query(sql, (error, result) => {
             if (error) {
@@ -2268,21 +2231,13 @@ router
             }
         });
     })
-    .put('/Minas/SistemaExplotacion:id_sistemaexplotacion', (req, res) => {
+    .put('/Minas/SistemaExplotacion', (req, res) => {
 
-        const id_sistemaexplotacion = req.params.id_sistemaexplotacion;
         const dato = {
+            id_sistemaexplotacion: req.body.id_sistemaexplotacion,
             nombre_sistemaexplotacion: req.body.nombre_sistemaexplotacion,
         };
-
-        let sets = [];
-        for (i in dato) {
-            if (dato[i] || dato[i] == 0) {
-                sets.push(`${i}='${dato[i]}'`);
-            }
-        }
-
-        const sql = `UPDATE MP_Sistema_Explotacion SET ${sets.join(', ')} WHERE id_sistemaexplotacion='${id_sistemaexplotacion}';`;
+        const sql = `UPDATE MP_Sistema_Explotacion SET nombre_sistemaexplotacion = '${dato.nombre_sistemaexplotacion}' WHERE id_sistemaexplotacion='${dato.id_sistemaexplotacion}';`;
 
         console.log(sql);
 
@@ -2294,7 +2249,7 @@ router
             }
         });
     })
-    .delete('/Minas/SistemaExplotacion:id_sistemaexplotacion', (req, res) => {
+    .delete('/Minas/SistemaExplotacion/:id_sistemaexplotacion', (req, res) => {
         const id_sistemaexplotacion = req.params.id_sistemaexplotacion;
         const sql = `DELETE FROM MP_Sistema_Explotacion WHERE id_sistemaexplotacion='${id_sistemaexplotacion}';`;
         const query = db.query(sql, (error, result) => {
@@ -2348,8 +2303,15 @@ router
     .post('/Minas/RegistroMina', (req, res) => {
         const dato = req.body
 
-        const sql = `INSERT INTO MP_Registro_Mina (nombre_sesion,ubicacion, mineral, trabajadores, observacion, id_sistemaexplotacion, id_tipomaterial, id_estadomina,pregunta)
-            values (${dato.nombre_sesion},${dato.ubicacion}, ${dato.mineral}, ${dato.trabajadores}, ${dato.observacion}, ${dato.id_sistemaexplotacion}, ${dato.id_tipomaterial}, ${dato.id_estadomina}, ${dato.pregunta})`;
+        const sql = `INSERT INTO MP_Registro_Mina (nombre_sesion,ubicacion, mineral, trabajadores, observacion, id_sistemaexplotacion, id_tipomaterial, id_estadomina,estadoregistro,pregunta)
+            values ('${dato.nombre_sesion}',
+            '${dato.ubicacion}',
+             '${dato.mineral}',
+              '${dato.trabajadores}',
+               '${dato.observacion}',
+                '${dato.id_sistemaexplotacion}',
+                 '${dato.id_tipomaterial}',
+                  '${dato.id_estadomina}', '${dato.estadoregistro}','${dato.pregunta}')`;
 
         db.query(sql, (error, result) => {
             if (error) {
@@ -2359,10 +2321,10 @@ router
             }
         });
     })
-    .put('/Minas/RegistroMina/:id_registromina', (req, res) => {
+    .put('/Minas/RegistroMina', (req, res) => {
 
-        const id_registromina = req.params.id_registromina;
         const dato = {
+            id_registromina: req.params.id_registromina,
             nombre: req.body.nombre_sesion,
             ubicacion: req.body.ubicacion,
             mineral: req.body.mineral,
@@ -2371,17 +2333,23 @@ router
             id_sistemaexplotacion: req.body.id_sistemaexplotacion,
             id_tipomaterial: req.body.id_tipomaterial,
             id_estadomina: req.body.id_estadomina,
+            estadoregistro: req.body.estadoregistro,
             pregunta: req.body.pregunta,
         };
 
-        let sets = [];
-        for (i in dato) {
-            if (dato[i] || dato[i] == 0) {
-                sets.push(`${i}='${dato[i]}'`);
-            }
-        }
 
-        const sql = `UPDATE MP_Registro_Mina SET ${sets.join(', ')} WHERE id_registromina='${id_registromina}';`;
+        const sql = `UPDATE MP_Registro_Mina SET 
+        nombre = '${dato.nombre_sesion}',
+        ubicacion = '${dato.ubicacion}',
+        mineral = '${dato.mineral}',
+        trabajadores = '${dato.trabajadores}',
+        observacion = '${dato.observacion}',
+        id_sistemaexplotacion = '${dato.id_sistemaexplotacion}',
+        id_tipomaterial = '${dato.id_tipomaterial}',
+        id_estadomina = '${dato.id_estadomina}',
+        estadoregistro = '${dato.estadoregistro}',
+        pregunta = '${dato.pregunta}'
+        WHERE id_registromina='${dato.id_registromina}';`;
 
         console.log(sql);
 

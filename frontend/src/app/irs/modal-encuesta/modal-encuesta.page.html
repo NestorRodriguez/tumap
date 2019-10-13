@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Evaluación de la red celular
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Operador celular utilizado </ion-label>
+      <ion-select [(ngModel)]="operadorCelular" interface="popover">
+        <ion-select-option value="{{o.id}}" *ngFor="let o of operadores">{{o.nombre}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Calidad del servicio </ion-label>
+      <ion-select [(ngModel)]="estadoRed" interface="popover">
+        <ion-select-option value="{{e.id}}" *ngFor="let e of estados">{{e.nombre}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item lines="none" class="ion-padding-top">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" class="ion-padding ion-text-center">
+            <ion-text>
+              Por favor evalúe el servicio de su operador de telefónia celular en el lugar donde realiza la encuesta.
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12" class="ion-text-end">
+            <ion-button class="ion-text-capitalize" color="primary" size="default" shape="round" expand="block" (click)="closeModal()">
+              <ion-label class="ion-padding"> Guadar evaluación </ion-label>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {InventarioRedesSecasService} from '../../Services/irs/inventario-redes-secas.service';
+import {IrsService} from '../../Services/irs/irs.service';
 
 @Component({
   selector: 'app-inicio',
@@ -8,16 +8,12 @@ import {InventarioRedesSecasService} from '../../Services/irs/inventario-redes-s
 })
 export class InicioPage implements OnInit {
   tiposRedes: any = [];
-  constructor(private service: InventarioRedesSecasService) { }
+  constructor(private service: IrsService) { }
 
   ngOnInit() {
     this.service.getTiposRedes().subscribe(data => {
       this.tiposRedes = data;
     });
-  }
-
-  getRouterLink(type) {
-    return (type === 1) ? '/irs-inventario-postes' : '/irs-inventario-otros';
   }
 
 }
