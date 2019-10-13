@@ -58,7 +58,9 @@ const routes: Routes = [
   { path: 'centrosformacion', loadChildren: './Education/centrosformacion/centrosformacion.module#CentrosformacionPageModule' },
   { path: 'mapa', loadChildren: './minas/mapa/mapa.module#MapaPageModule' },
   { path: 'colinda', loadChildren: './colinda/colinda.module#ColindaPageModule' },
-
+  { path: 'comercioformal', loadChildren: './socioeconomico/comercioformal/comercioformal.module#ComercioformalPageModule' },
+  { path: 'comercioinformal', loadChildren: './socioeconomico/comercioinformal/comercioinformal.module#ComercioinformalPageModule' },
+  { path: 'encuestasocial', loadChildren: './socioeconomico/encuestasocial/encuestasocial.module#EncuestasocialPageModule' },
 
 
 
