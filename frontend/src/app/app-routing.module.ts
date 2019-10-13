@@ -66,15 +66,12 @@ const routes: Routes = [
   { path: 'predial', loadChildren: './predial/predial.module#PredialPageModule' },
   { path: 'usoynivel', loadChildren: './usoynivel/usoynivel.module#UsoynivelPageModule' },
   { path: 'resumen', loadChildren: './vistasjyd/resumen/resumen.module#ResumenPageModule' },
-
-
   { path: 'infohabitantes', loadChildren: './Education/infohabitantes/infohabitantes.module#InfohabitantesPageModule' },
   { path: 'registroinfo', loadChildren: './Education/registroinfo/registroinfo.module#RegistroinfoPageModule' },
   { path: 'verinfoinstitucion', loadChildren: './Education/verinfoinstitucion/verinfoinstitucion.module#VerinfoinstitucionPageModule' },
   { path: 'mapadmin', loadChildren: './Education/mapadmin/mapadmin.module#MapadminPageModule' },
   { path: 'centrosformacion', loadChildren: './Education/centrosformacion/centrosformacion.module#CentrosformacionPageModule' },
-  { path: 'mapa', loadChildren: './minas/mapa/mapa.module#MapaPageModule' },  { path: 'menuminas', loadChildren: './minas/menuminas/menuminas.module#MenuminasPageModule' },
-
+  { path: 'mapa', loadChildren: './minas/mapa/mapa.module#MapaPageModule' },
 
 
 
@@ -87,4 +84,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-
