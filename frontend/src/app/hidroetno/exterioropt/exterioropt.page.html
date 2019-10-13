@@ -1,0 +1,83 @@
+<ion-header no-border>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/options">Atrás</ion-back-button>
+        </ion-buttons>
+        <ion-title>Exterior</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <div>
+
+        <div class="box">
+            <h4>Crecidas</h4>
+            <ion-segment class="abajo" (ionChange)="segmentChanged($event)">
+                <ion-segment-button href="#nmedio" value="nmedio">
+                    <ion-label>Nivel Medio</ion-label>
+                </ion-segment-button>
+                <ion-segment-button href="#nbajo" value="nbajo">
+                    <ion-label>Nivel Bajo</ion-label>
+                </ion-segment-button>
+            </ion-segment>
+        </div>
+
+        <div class="box2">
+            <h4>Conexiones</h4>
+            <ion-item>
+                <ion-label>Notas</ion-label>
+                <ion-textarea rows="6" cols="20" placeholder="Ingresa tus comentarios..."></ion-textarea>
+            </ion-item>
+
+            <h6>Foto</h6>
+            <ion-input class="photo" type="file"></ion-input>
+
+            <div class="boton">
+                <ion-button size="small" name="modificar"> Modificar</ion-button>
+                <ion-button size="small" name="guardar"> Guardar</ion-button>
+            </div>
+        </div>
+
+        <div class="box3">
+            <h4>Vertimiento</h4>
+            <ion-radio-group>
+                <ion-item>
+                    <ion-item>
+                        <ion-label>Líquido</ion-label>
+                        <ion-radio slot="end" color="primary"></ion-radio>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label>Sólido</ion-label>
+                        <ion-radio slot="end" color="primary"></ion-radio>
+                    </ion-item>
+                </ion-item>
+            </ion-radio-group>
+
+            <ion-item>
+                <ion-label>Notas</ion-label>
+                <ion-textarea rows="6" cols="20" placeholder="Ingresa tus comentarios..."></ion-textarea>
+            </ion-item>
+
+            <h6>Foto</h6>
+            <ion-input class="photo" type="file"></ion-input>
+
+            <div class="boton">
+                <ion-button size="small" name="modificar"> Modificar</ion-button>
+                <ion-button size="small" name="guardar"> Guardar</ion-button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="boton2">
+        <ion-button name="regresar" [routerLink]="['/hidrica']"> Regresar</ion-button>
+        <ion-button name="guardar"> Guardar</ion-button>
+    </div>
+
+</ion-content>
+
+<ion-footer>
+    <ion-toolbar color="primary" class="title"></ion-toolbar>
+</ion-footer>

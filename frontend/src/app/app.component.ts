@@ -35,6 +35,11 @@ export class AppComponent {
       title: 'Encuesta Tipo de Suelo',
       url: '/inscripcion',
       icon: 'ios-person-add'
+    },
+    {
+      title: 'Menu Minas',
+      url: '/menuminas',
+      icon: 'md-map'
     }
   ];
 
