@@ -84,8 +84,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-<<<<<<< HEAD
-=======
-
->>>>>>> 5cdab9381c44b28193e4f729b47be462f0e31307
 
