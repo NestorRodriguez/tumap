@@ -18,19 +18,19 @@
 
 <ion-content>
   <span *ngFor="let item of items">  
-    <ion-grid routerLink="/registro-item">
+    <ion-grid [routerLink]="['/registroitem/', item.pk_id_item, item.fk_categoria]">
       <ion-row style="border-top: 1px solid; border-color: gray;">
         <ion-col size="3">
           <div></div><br>
           <div style="padding-left: 12%;">
-            <img src="assets/img_jyd/mobiliario/logo bolardo.svg" height="80px" alt="">
+            <img src="{{item.imagen}}" height="80px" alt="">
           </div>          
         </ion-col>
         <ion-col size="9">
           <br><br>
           <div style="padding-left: 8%;">
             <ion-title style="padding: 0%; font-size: 100%;"><b>{{ item.nombre }}</b></ion-title>
-            <ion-title style="padding: 0%; font-size: 100%;">{{ item.nombre }}</ion-title>
+            <ion-title style="padding: 0%; font-size: 100%;">{{ item.descripcion }}</ion-title>
           </div>                    
         </ion-col>
       </ion-row>

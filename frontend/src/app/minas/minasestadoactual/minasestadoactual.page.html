@@ -27,49 +27,43 @@
             <ion-col></ion-col>
         </ion-row>
         <ion-row>
-            <ion-col></ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label position="floating">
+                        <h1>Nombre Estado<ion-text color="danger">*</ion-text>
+                        </h1>
+                    </ion-label>
+                    <ion-input required type="text" [(ngModel)]="nombreEstadomina"></ion-input>
+                </ion-item>
+            </ion-col>
         </ion-row>
         <ion-row>
             <ion-col></ion-col>
-        </ion-row>
-        <ion-row>
             <ion-col>
                 <ion-button (click)="saveForm()">
                     Guardar
                 </ion-button>
-                <ion-card *ngFor='let estado of estadoActual; let i = index'>
-                    <ion-card-content *ngIf="!estadoActual[i].visible">
-                        <ion-card-subtitle>
-                            <ion-list lines='none'>
-                                <ion-list-header>
-                                    <ion-label>
-                                        <h2>Datos {{ estadoActual[i].visible }}</h2>
-                                    </ion-label>
-                                </ion-list-header>
-                                <ion-item>
-                                    <ion-icon slot="start" color="medium" name="book"></ion-icon>
-                                    <ion-label>Nombre: {{estado.nombre_estadomina}}</ion-label>
-                                    <ion-button type="text" (click)="setEditForm(i)">Editar</ion-button>
-                                </ion-item>
-                            </ion-list>
-                        </ion-card-subtitle>
-                    </ion-card-content>
-                    <ion-card-content *ngIf="estadoActual[i].visible">
-                        <ion-card-subtitle>
-                            <ion-list lines='none'>
-                                <ion-list-header>
-                                    <ion-label>
-                                        <h2>Datos {{ estadoActual[i].visible }}</h2>
-                                    </ion-label>
-                                </ion-list-header>
-                                <ion-item>
-                                    FORMULARIO EDICION
-                                    <ion-button type="text" (click)="setViewForm(i)">Editar</ion-button>
-                                </ion-item>
-                            </ion-list>
-                        </ion-card-subtitle>
-                    </ion-card-content>
-                </ion-card>
+            </ion-col>
+            <ion-col></ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+
+                <ion-item-sliding *ngFor='let estado of estadoActual'>
+                    <ion-item-options side="start">
+                        <ion-item-option color="danger" (click)="deleteForm(estado.id_estadomina)">Eliminar
+                        </ion-item-option>
+                    </ion-item-options>
+                    <ion-item>
+                        <ion-label> 
+                            {{estado.nombre_estadomina}}
+                        </ion-label>
+                    </ion-item>
+                    <ion-item-options side="end">
+                            <ion-item-option  (click)="editForm(estado.id_estadomina)">Editar
+                            </ion-item-option>
+                        </ion-item-options>
+                </ion-item-sliding>
             </ion-col>
         </ion-row>
     </ion-grid>
