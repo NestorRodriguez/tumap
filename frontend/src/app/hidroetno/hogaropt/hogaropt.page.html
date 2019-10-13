@@ -1,0 +1,65 @@
+<ion-header no-border>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/options">Atrás</ion-back-button>
+        </ion-buttons>
+        <ion-title>Hogar - Cobertura</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div>
+        <div class="box">
+            <h4>Color</h4>
+            <ion-segment class="abajo" (ionChange)="segmentChanged($event)">
+                <ion-segment-button href="#cafe" value="cafe">
+                    <ion-label>Café</ion-label>
+                </ion-segment-button>
+                <ion-segment-button href="#amarillo" value="amarillo">
+                    <ion-label>Amarillo</ion-label>
+                </ion-segment-button>
+                <ion-segment-button href="#incoloro" value="incoloro">
+                    <ion-label>Incoloro</ion-label>
+                </ion-segment-button>
+            </ion-segment>
+        </div>
+
+        <div class="box">
+            <h4>Presión</h4>
+            <ion-segment class="abajo" (ionChange)="segmentChanged($event)">
+                <ion-segment-button href="#alta" value="alta">
+                    <ion-label>Alta</ion-label>
+                </ion-segment-button>
+                <ion-segment-button href="#media" value="media">
+                    <ion-label>Media</ion-label>
+                </ion-segment-button>
+                <ion-segment-button href="#baja" value="baja">
+                    <ion-label>Baja</ion-label>
+                </ion-segment-button>
+            </ion-segment>
+        </div>
+
+        <div class="box">
+            <h4>Tipo</h4>
+            <ion-segment class="abajo" (ionChange)="segmentChanged($event)">
+                <ion-segment-button href="#intermitente" value="intermitente">
+                    <ion-label>Intermitente</ion-label>
+                </ion-segment-button>
+                <ion-segment-button href="#permanente" value="permanente">
+                    <ion-label>Permanente</ion-label>
+                </ion-segment-button>
+            </ion-segment>
+        </div>
+
+    </div>
+
+    <div class="boton">
+        <ion-button name="regresar"> Regresar</ion-button>
+        <ion-button name="guardar"> Guardar</ion-button>
+    </div>
+</ion-content>
+
+<ion-footer>
+    <ion-toolbar color="primary" class="title">
+    </ion-toolbar>
+</ion-footer>

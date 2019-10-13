@@ -1,0 +1,65 @@
+<ion-header no-border>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/options">Atrás</ion-back-button>
+        </ion-buttons>
+        <ion-title>Etnobotánica</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <h4>Etnobotánica</h4>
+    <!-- Ingreso de nombre común de la mata-->
+    <ion-item class="et">
+        <ion-label position="floating">Nombre Común</ion-label>
+        <ion-input></ion-input>
+    </ion-item>
+
+    <!-- Elección de opción de uso de la mata -->
+    <ion-list>
+        <ion-radio-group class="et">
+
+            <h5>
+                <ion-label>Uso</ion-label>
+            </h5>
+
+            <ion-item>
+                <ion-label>Medicinal</ion-label>
+                <ion-radio slot="start" value="medicinal" checked></ion-radio>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>Alimenticia</ion-label>
+                <ion-radio slot="start" value="alimenticio"></ion-radio>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>Decorativa</ion-label>
+                <ion-radio slot="start" value="decorativo"></ion-radio>
+            </ion-item>
+        </ion-radio-group>
+    </ion-list>
+
+    <!--<ion-item>
+        <p>{{imageFileName}}</p>
+        <button ion-button color="secondary" (click)="getImage()">Obtener una imagen</button>
+    </ion-item>
+    <ion-item>
+        <h4>Vista previa de imagen</h4>
+        <img style="display:block" [src]="imageURI" *ngIf="imageURI" alt="Ionic File" width="300" />
+    </ion-item> -->
+    <!-- <ion-item>
+        <button ion-button (click)="uploadFile()">Subir imagen</button>
+    </ion-item> -->
+
+    <h5 class="te">Foto</h5>
+
+    <ion-input type="file"></ion-input>
+
+</ion-content>
+
+<ion-footer>
+    <ion-toolbar color="primary" class="title">
+    </ion-toolbar>
+</ion-footer>
