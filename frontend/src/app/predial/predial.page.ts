@@ -42,14 +42,14 @@ export class PredialPage implements OnInit {
   }
 
   async presentAlert() {
-    const alert = await this.alertController.create({
-      header: 'Alert',
-      subHeader: 'Server not found',
-      message: 'Error en la conexión a Server.',
-      buttons: ['OK']
-    });
+    // const alert = await this.alertController.create({
+    //   header: 'Alert',
+    //   subHeader: 'Server not found',
+    //   message: 'Error en la conexión a Server.',
+    //   buttons: ['OK']
+    // });
 
-    await alert.present();
+    // await alert.present();
   }
 
 }
