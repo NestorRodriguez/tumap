@@ -9,12 +9,20 @@ import { ToastController } from '@ionic/angular';
 })
 export class PredialService {
 
-  private paisUrl = 'http://localhost:3000/usopredio';
+  private predialUrl = 'http://localhost:3000/usopredio';
+  private nivelUrl = 'http://localhost:3000/nivel';
 
   constructor(private http: HttpClient) { }
 
-  obtenerData(): Observable<any[]> {
-    return this.http.get<any[]>(this.paisUrl).pipe(
+  obtenerPredial(): Observable<any[]> {
+    return this.http.get<any[]>(this.predialUrl).pipe(
+      tap(data => (JSON.stringify(data))),
+      catchError(this.handleError)
+    );
+  }
+
+  obtenerNivel(): Observable<any[]> {
+    return this.http.get<any[]>(this.nivelUrl).pipe(
       tap(data => (JSON.stringify(data))),
       catchError(this.handleError)
     );
@@ -27,7 +35,6 @@ export class PredialService {
       errorMessage = `An error ocurred: ${err.error.message}`;
       errorStatus = `${err.status}`
     } else {
-      /*errorMessage = `Error en la conexiónOjo Diego Server returned code: ${err.status}, error message is: ${err.message}`;*/
       errorMessage = `Error en la conexión`;
       errorStatus = `${err.status}`
     }

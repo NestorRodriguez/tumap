@@ -1,26 +1,38 @@
-<ion-header >
-  <ion-toolbar  color="primary">
-      <ion-icon  padding color="secondary" name="arrow-round-back"></ion-icon>
-    <ion-title padding color="secondary">Exportar</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content  >
 
-<ion-content padding>
-
-   <ion-title class="tituloexportar" color="primary">Que desea hacer</ion-title>
-<p></p>
-
-   <ion-button>guardar en el movil</ion-button>
-   <P>
-   </P>
-   <ion-button>Enviar al correo</ion-button>
+    <img class="img1" padding src="assets/logo registro.svg" alt="">
+   
+   
   
-</ion-content>
-
-
-
-<ion-footer>
-  <ion-toolbar color="primary" class="title">
+  <ion-toolbar class="text" color="none">
+          <ion-title color="tertiary">¿Que desea hacer?</ion-title><br>
+        </ion-toolbar>
+        
+  
+          
+  
+              <ion-toolbar class="packimagen">
+                  <img src="assets/boton compartir Email.svg" alt="">
+                  <img src="assets/boton guardar en local.svg" alt="">
+                  
+                </ion-toolbar>
+                
+  
+                  
+                  
+                      
+          <ion-toolbar color="none" padding class="centrado">         
+            <button color="primary" text-color="secondary" name="hola">Guardar</button>       
+           </ion-toolbar > 
+  
+           <ion-toolbar  class="atrasins" color="none">
+              <ion-buttons slot="start">
+                  <ion-back-button color="tertiary"  [defaultHref]="['/']"></ion-back-button>
+              </ion-buttons>
+              <ion-title color="tertiary" class="ion-title">Atras</ion-title>
+          </ion-toolbar>
       
-  </ion-toolbar>
-</ion-footer>
+   
+  </ion-content>
+  
+  

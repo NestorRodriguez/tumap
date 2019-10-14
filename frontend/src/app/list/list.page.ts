@@ -28,6 +28,7 @@ export class ListPage implements OnInit {
       {title: 'Señalización y mobiliario urbano', note: '',  route: '/categorias', icon: this.icons[0]},
       {title: 'Inventario uso de suelos', note: '',  route: '/instruccion', icon: this.icons[1]},
       {title: 'Inventario redes secas', note: '',  route: '/irs-inicio', icon: this.icons[4]},
+      {title: 'Encuesta Socio Economica', note: '',  route: '/encuestasocial', icon: this.icons[1]},
       {title: 'Aqui va otro servicio!', note: '', route: '/', icon: this.icons[2]}
     );
   }

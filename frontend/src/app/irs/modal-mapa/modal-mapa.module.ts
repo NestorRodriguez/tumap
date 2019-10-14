@@ -4,7 +4,9 @@ import {FormsModule} from '@angular/forms';
 
 import {IonicModule} from '@ionic/angular';
 
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 
 import {ModalMapaPage} from './modal-mapa.page';
 import {AgmCoreModule} from '@agm/core';
@@ -19,7 +21,7 @@ import {AgmCoreModule} from '@agm/core';
     })
   ],
   declarations: [ModalMapaPage],
-  providers: [Geolocation]
+  providers: [AndroidPermissions, Geolocation, LocationAccuracy]
 })
 export class ModalMapaPageModule {
 }

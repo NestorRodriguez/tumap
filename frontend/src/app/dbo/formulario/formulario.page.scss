@@ -1,4 +1,76 @@
 
-ion-icon{
-    float: left;
+ion-content{
+    --background: url(../../../assets/dbo_img/fondor.jpg) no-repeat center center / cover;
 }
+  .registrof{
+      margin-top: 0px;
+    margin-left: 50px;
+      width: 250px; height: 150px;
+  }
+  
+  //texto
+  ion-title{
+      margin-top: 3px;
+  }
+
+  //preguntas
+  .pregunta1{
+      color: #ffffff;
+      text-align: center;
+      margin:6px;
+  }
+    //botones
+    .centrado{
+        text-align: center;
+        margin-top: 15px;
+    }
+  
+    .botpregunta{
+      margin-top: 10px;   
+      padding: 3px 20px;
+      color: white;
+      background-color: #0A9D97;
+      border-radius: 7px;
+   font-size: 25px;
+   border-color: #0A9D97;
+   margin:10px;
+   height: 155px;
+   width: 155PX;
+  
+    }
+    
+    .botguardar { 
+        margin-top: 0px;   
+        padding: 3px 20px;
+        color: #0A9D97;
+        background-color: white;
+        border-radius: 7px;
+     font-size: 25px;
+     border-color: #0A9D97;
+     
+       
+    }
+    
+    button:hover{
+        background-color: rgb(129, 230, 226); 
+    }
+    .volver1{
+        margin-left: 15px; 
+    }
+    
+    on-icon{
+        size: 30px;
+    }
+    
+    .packimagen{
+        height: 176px;
+        text-align: center
+    }
+    
+  .text{
+      text-align:center;
+  }
+  
+  .respueta{
+    height: 176px;
+  }

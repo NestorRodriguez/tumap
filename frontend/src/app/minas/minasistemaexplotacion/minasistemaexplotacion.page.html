@@ -1,0 +1,78 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-img class="img" src="./assets/perfil mujer.svg" slot="start"></ion-img>
+        <ion-title>
+            Parametrización
+        </ion-title>
+        <ion-img class="img" src="./assets/configuracion.svg" slot="end"></ion-img>
+    </ion-toolbar>
+    <!-- <ion-toolbar color="secondary" class="menu"> -->
+    <span class="menu" color="secondary"></span>
+    <!-- </ion-toolbar> -->
+    <ion-toolbar class="title">
+        <ion-title color="primary">
+            Tipo de Explotación </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-grid>
+        <ion-row>
+            <ion-col></ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col></ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label position="floating">
+                        <h1>Nombre Tipo Explotación<ion-text color="danger">*</ion-text>
+                        </h1>
+                    </ion-label>
+                    <ion-input required type="text" [(ngModel)]="nombre"></ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col></ion-col>
+            <ion-col>
+                <ion-button (click)="saveForm()">
+                    Guardar
+                </ion-button>
+            </ion-col>
+            <ion-col></ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+
+                <ion-item-sliding *ngFor='let estado of data'>
+                    <ion-item-options side="start">
+                        <ion-item-option color="danger" (click)="deleteForm(estado.id_sistemaexplotacion)">Eliminar
+                        </ion-item-option>
+                    </ion-item-options>
+                    <ion-item>
+                        <ion-label> 
+                            {{estado.nombre_sistemaexplotacion}}
+                        </ion-label>
+                    </ion-item>
+                    <ion-item-options side="end">
+                            <ion-item-option  (click)="editForm(estado.id_sistemaexplotacion)">Editar
+                            </ion-item-option>
+                        </ion-item-options>
+                </ion-item-sliding>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<ion-footer>
+    <ion-toolbar color="primary" class="title">
+        <ion-img class="imgfooter" src="./assets/news.svg" slot="start"></ion-img>
+        <ion-img class="imgfooter" src="./assets/nueva incidencia.svg"></ion-img>
+        <ion-img class="imgfooter" src="./assets/campana de notificacion.svg" slot="end"></ion-img>
+    </ion-toolbar>
+</ion-footer>

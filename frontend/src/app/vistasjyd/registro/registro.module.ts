@@ -6,6 +6,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { RegistroPage } from './registro.page';
+import {MapaPage} from '../mapa/mapa.page';
+import {MapaPageModule} from '../mapa/mapa.module';
+
+import {NetworkInterface} from '@ionic-native/network-interface/ngx';
+import {Camera} from '@ionic-native/camera/ngx';
 
 const routes: Routes = [
   {
@@ -15,11 +20,19 @@ const routes: Routes = [
 ];
 
 @NgModule({
+  entryComponents: [
+    MapaPage,
+  ],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    MapaPageModule
+  ],
+  providers: [
+    NetworkInterface,
+    Camera,
   ],
   declarations: [RegistroPage]
 })
