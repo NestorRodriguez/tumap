@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-img class="img" src="./assets/perfil mujer.svg" slot="start"></ion-img>
+    <ion-title>
+      Parametrización
+    </ion-title>
+    <ion-img class="img" src="./assets/configuracion.svg" slot="end"></ion-img>
+  </ion-toolbar>
+  <!-- <ion-toolbar color="secondary" class="menu"> -->
+  <span class="menu" color="secondary"></span>
+  <!-- </ion-toolbar> -->
+  <ion-toolbar class="title">
+    <ion-title color="primary">
+      Estado de la Mina </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-list>
+        <ion-item>
+          <ion-label >Código: </ion-label>
+          <ion-label  type="text" >{{estadoActual.id_estadomina}}</ion-label>
+        </ion-item>
+        <ion-item >
+            <ion-label >Nombre: </ion-label>
+          <ion-input required type="text" [(ngModel)]="estadoActual.nombre_estadomina"></ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-button expand="full" (click)="saveTodo(estadoActual.nombre_estadomina)" >Actualizar</ion-button>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="primary" class="title">
+    <ion-img class="imgfooter" src="./assets/news.svg" slot="start"></ion-img>
+    <ion-img class="imgfooter" src="./assets/nueva incidencia.svg"></ion-img>
+    <ion-img class="imgfooter" src="./assets/campana de notificacion.svg" slot="end"></ion-img>
+  </ion-toolbar>
+</ion-footer>

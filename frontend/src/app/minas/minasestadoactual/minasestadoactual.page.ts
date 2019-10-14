@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MinasService } from '../../Services/Minas/Minas.service';
+import { TaskEstadoActual } from '../../Services/Minas/task.interface';
+import { ActivatedRoute } from '@angular/router';
+import { NavController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-minasestadoactual',
@@ -9,10 +12,11 @@ import { MinasService } from '../../Services/Minas/Minas.service';
 
 export class MinasestadoactualPage implements OnInit {
 
-  constructor(private minasService: MinasService) { }
+  constructor(private minasService: MinasService, private navControl: NavController, private route: ActivatedRoute) { }
   estadoActual: any = [];
   errorMessage = '';
-  nombreEstadomina = 'VALOR A';
+  public nombreEstadomina: string;
+  id: string;
 
   ngOnInit() {
     this.getEstadoActual();
@@ -21,21 +25,26 @@ export class MinasestadoactualPage implements OnInit {
   getEstadoActual() {
     this.minasService.getMinasEstadoActual().subscribe(
       estadoActual => {
-      console.log(estadoActual);
-      estadoActual.map((item: any) => {
-        Object.assign(item, {visible: false});
-        return item;
-      });
-      this.estadoActual = estadoActual;
-    }, error => this.errorMessage = error);
+        console.log(estadoActual);
+        estadoActual.map((item: any) => {
+          Object.assign(item, { visible: false });
+          return item;
+        });
+        this.estadoActual = estadoActual;
+      }, error => this.errorMessage = error);
+    this.nombreEstadomina = '';
+  }
+  editForm(id: string) {
+    this.navControl.navigateForward(`minasestadoactual-details/${id}`);
+    this.ngOnInit();
   }
 
-  setEditForm(index) {
-    this.estadoActual[index].visible = true;
-  }
-
-  setViewForm(index) {
-    this.estadoActual[index].visible = false;
+  deleteForm(id: string) {
+    this.id = id;
+    this.minasService.deleteEstadoActual(id).subscribe(response => {
+      this.ngOnInit();
+      console.log(response);
+    });
   }
 
   saveForm() {
