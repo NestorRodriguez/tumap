@@ -34,7 +34,7 @@ const routes: Routes = [
   { path: 'minasestadoactual-details/:idcodigo', loadChildren: './minas/minasestadoactual-details/minasestadoactual-details.module#MinasestadoactualDetailsPageModule' },
   { path: 'senalizacion', loadChildren: './vistasjyd/senalizacion/senalizacion.module#SenalizacionPageModule' },
   { path: 'categorias', loadChildren: './vistasjyd/categorias/categorias.module#CategoriasPageModule' },
-  { path: 'mapa-item', loadChildren: './vistasjyd/mapa/mapa.module#MapaPageModule' },
+  // { path: 'mapa-item', loadChildren: './vistasjyd/mapa/mapa.module#MapaPageModule' },
   { path: 'registroitem/:id/:categoria', loadChildren: './vistasjyd/registro/registro.module#RegistroPageModule' },
   { path: 'mobiliario', loadChildren: './vistasjyd/mobiliario/mobiliario.module#MobiliarioPageModule' },
   { path: 'instruccion', loadChildren: './usosuelos/instruccion/instruccion.module#InstruccionPageModule' },
