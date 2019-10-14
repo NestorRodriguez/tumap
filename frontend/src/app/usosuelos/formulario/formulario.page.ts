@@ -16,11 +16,11 @@ export class FormularioPage implements OnInit {
               private sendData: ObtenerdataService ) { }
   model: any = {};
   ngOnInit() {
-    this.suelosService.getData().subscribe(registros => {
-    this.registros = registros;
-    console.log(this.registros);
-    // tslint:disable-next-line: no-unused-expression
-    }, error => this.errorMessage = error);
+    // this.suelosService.getData().subscribe(registros => {
+    // this.registros = registros;
+    // console.log(this.registros);
+    // // tslint:disable-next-line: no-unused-expression
+    // }, error => this.errorMessage = error);s
     this.model = {
     nombrepropietario : null,
     nombrepredio : null,

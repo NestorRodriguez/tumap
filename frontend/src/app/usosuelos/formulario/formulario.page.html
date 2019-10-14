@@ -23,30 +23,28 @@
             <ion-list class="ion-no-margin ion-no-padding" style="--ion-background-color: #008abb; padding-left: 15%; padding-right: 15%; padding-top: 4%;">
                 <ion-item>
                     <ion-label style="color: white; --placeholder-font-weight: 100%;" position="stacked"><b>Nombre del propietario</b>
-                        <ion-text color="danger">*</ion-text>
                     </ion-label>
-                    <ion-input [(ngModel)]="model.nombrepropietario" name="nombrepropietario" required type="text"></ion-input>
+                    <ion-input [(ngModel)]="model.nombrepropietario" style="color: white;" name="nombrepropietario" required type="text"></ion-input>
                 </ion-item>
 
                 <ion-item>
                     <ion-label style="color: white;" position="stacked"><b>Nombre del predio</b>
-                        <ion-text color="danger">*</ion-text>
                     </ion-label>
-                    <ion-input [(ngModel)]="model.nombrepredio" name="nombrepredio" required type="text"></ion-input>
+                    <ion-input [(ngModel)]="model.nombrepredio" name="nombrepredio" style="color: white;" required type="text"></ion-input>
                 </ion-item>
 
                 <ion-item>
                     <ion-label style="color: white;" position="stacked"><b>Área del predio</b>
                         <ion-text color="danger">*</ion-text>
                     </ion-label>
-                    <ion-input [(ngModel)]="model.area" required name="area" type="text"></ion-input>
+                    <ion-input [(ngModel)]="model.area" required name="area" style="color: white;" type="text"></ion-input>
                 </ion-item>
 
                 <ion-item>
                     <ion-label style="color: white;" position="stacked"><b>Dirección</b>
                         <ion-text color="danger">*</ion-text>
                     </ion-label>
-                    <ion-input [(ngModel)]="model.direccion" name="direccion" required type="text"></ion-input>
+                    <ion-input [(ngModel)]="model.direccion" name="direccion" style="color: white;" required type="text"></ion-input>
                 </ion-item>
 
             </ion-list>

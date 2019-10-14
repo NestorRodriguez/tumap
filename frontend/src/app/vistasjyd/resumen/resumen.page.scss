@@ -1,0 +1,23 @@
+ion-content{
+  --background: url(../../../assets/img_jyd/fondo resumen.svg) no-repeat center center / cover;
+}
+
+.img_resumen{
+  border: 1.5px solid #0A9D97;
+  border-radius: 10px 10px 10px 10px;
+  -webkit-box-shadow: 2px 4px 9px -4px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 4px 9px -4px rgba(0,0,0,0.75);
+  box-shadow: 2px 4px 9px -4px rgba(0,0,0,0.75);
+}
+
+.div_datos{
+  background-color: white;
+  border: 1.5px solid #0A9D97;
+  border-radius: 10px 10px 10px 10px;
+  -webkit-box-shadow: 2px 4px 9px -4px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 4px 9px -4px rgba(0,0,0,0.75);
+  box-shadow: 2px 4px 9px -4px rgba(0,0,0,0.75);
+  padding-left: 4%;
+  padding-right: 4%;
+  padding-bottom: 2%;
+}

@@ -23,15 +23,21 @@
         </ion-fab-button>
     </ion-fab>
     <ion-fab *ngIf="polygon" vertical="bottom" horizontal="endStart" slot="fixed">
-        <ion-fab-button color="danger">
+        <ion-fab-button (click)="presentModal()" color="danger">
             <ion-icon name="trash"></ion-icon>
         </ion-fab-button>
     </ion-fab>
     <agm-map (mapClick)="agregarMarcador($event)" [latitude]="lat" [longitude]="lng" [streetViewControl]="false" [zoom]='16' [zoomControl]="false" [usePanning]="true">
         <agm-marker *ngFor="let marcador of marcadores " [latitude]="marcador.lat" [longitude]="marcador.lng" width="50%">
         </agm-marker>
-        <agm-polygon *ngIf="polygon" [paths]="poligonoPrincipal">
-
+        <agm-polygon *ngIf="poligonoCerrado" [paths]="poligonoPrincipal">
         </agm-polygon>
+        <agm-marker *ngFor=" let marcador of marcadoresSubpoligono " [latitude]="marcador.lat " [longitude]="marcador.lng " width="50% ">
+        </agm-marker>
+        <span *ngFor="let poligono of arraySubPoligono">
+        <agm-polygon *ngIf="polygonSub" [paths]="poligono" [fillColor]="poligonColor">
+        </agm-polygon>
+        </span>
     </agm-map>
+
 </ion-content>

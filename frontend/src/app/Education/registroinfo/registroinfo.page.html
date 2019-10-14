@@ -1,0 +1,39 @@
+<ion-header>
+</ion-header>
+
+<ion-content>
+    <form (ngSubmit)="saveRegInfo()">
+  <br>
+  <ion-img src="assets/logo_registro_info.svg"></ion-img>
+  <ion-label>Nombre institución:</ion-label>
+  <ion-input placeholder="Ingrese el nombre de la institución"></ion-input>
+  <ion-label>Ubicación:</ion-label>
+  <ion-input readonly="readonly"></ion-input>
+  <ion-label>Foto:</ion-label><br>
+  <br>
+  <ion-button class="bcamara">Usar Camara</ion-button> <ion-button class="bsubir">Subir Imagen</ion-button> 
+  <br><br>
+  <ion-label>Referencias Aledañas al sector:</ion-label>
+  <ion-input placeholder="Ingrese referencias del sector"></ion-input>
+  <ion-label>Tipos de Formación:</ion-label>
+  <ion-select name="tipos_formacion " placeholder="Selecciona una opción ">
+      <ion-select-option value="Preescolar y Primaria">Preescolar y Primaria</ion-select-option>
+      <ion-select-option value="Bachiller Basico">Bachiller Basico</ion-select-option>
+      <ion-select-option value="Bachiller Completo">Bachiller Completo</ion-select-option>
+      <ion-select-option value="Técnicos Y Tecnologos">Técnicos Y Tecnologos</ion-select-option>
+      <ion-select-option value="Carreras Porfesionales">Carreras Porfesionales</ion-select-option>
+      <ion-select-option value="Cursos Presenciales">Cursos Presenciales</ion-select-option>
+      <ion-select-option value="Cursos Virtuales">Cursos Virtuales</ion-select-option>
+  </ion-select>
+  <ion-label>Especifique:</ion-label>
+  <ion-input placeholder="información detallada del tipo de formación ofrecida"></ion-input>
+  <ion-label>Pagina web:</ion-label>
+  <ion-input placeholder="Pagina web de la institución"></ion-input>
+  <ion-label>Teléfono:</ion-label>
+  <ion-input placeholder="Ingrse el/los números telefonicos de la institución"></ion-input>
+  <ion-label>Correo:</ion-label>
+  <ion-input type="email" placeholder="Ingrse un correo de contacto de la institución"></ion-input>
+  <ion-button class="bconfirmar"><b>Confirmar</b></ion-button><br><br>
+  <ion-label class="back "><b>◄ Volver</b></ion-label>
+  </form>
+</ion-content>

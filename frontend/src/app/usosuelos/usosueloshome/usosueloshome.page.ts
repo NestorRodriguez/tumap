@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ObtenerdataService } from '../../Services/inventario de suelos/obtenerdata.service';
 import { Storage } from '@ionic/storage';
 import { Marcador } from '../class';
+import { ModalController } from '@ionic/angular';
+import { ModalSuelosPage } from '../modal-suelos/modal-suelos.page';
 
 @Component({
   selector: 'app-usosueloshome',
@@ -10,9 +11,13 @@ import { Marcador } from '../class';
   styleUrls: ['./usosueloshome.page.scss'],
 })
 export class UsosueloshomePage implements OnInit {
-  @Input()
+  tipoArea: string;
+  // Area construida, Area de cultivo, Area de ganadería, Area de reserva, Area comúm
   dataUser: any;
   polygon: boolean;
+  polygonSub: boolean;
+  poligonoCerrado: boolean;
+  poligonColor = '#5cb85c';
   poligonoPrincipal: Array<any> = [];
   lat = 4.60972222222;
   lng = -74.0816666667;
@@ -20,9 +25,14 @@ export class UsosueloshomePage implements OnInit {
   latB: number;
   lngA: number;
   lngB: number;
+  arraySubPoligono: any[] = [];
+  arrayColores: any[] = [];
   marcadores: Marcador[] = [];
+  marcadoresSubpoligono: any[] = [];
+  subPoligonoCerrado: boolean;
   constructor(private obtenerData: ObtenerdataService,
-              private storage: Storage) { }
+              private storage: Storage,
+              public modal: ModalController) { }
 
   ngOnInit() {
     if (navigator) {
@@ -33,7 +43,6 @@ export class UsosueloshomePage implements OnInit {
       });
     }
     this.dataUser = this.obtenerData.enviarData();
-    console.log( 'DATOS', this.dataUser );
     this.storage.get('poligono').then((poligono => {
       const marcador: Marcador = JSON.parse(poligono);
       // tslint:disable-next-line: prefer-const
@@ -45,24 +54,66 @@ export class UsosueloshomePage implements OnInit {
     }));
   }
   public cerrarPoligono() {
-  
-
+    if ( this.poligonoCerrado  ) {
+      this.subPoligonoCerrado = true;
+      this.arraySubPoligono.push(this.marcadoresSubpoligono);
+      this.marcadoresSubpoligono = [];
+      this.polygonSub = true;
+      this.poligonColor = '#d9534f';
+    } else {
+      this.poligonoCerrado = true;
   }
+  }
+
+  public borrarPoligono() {
+    this.marcadores = [];
+    this.poligonoPrincipal = [];
+    this.poligonoCerrado = false;
+    this.polygon = false;
+  }
+  // Agregar ubicación inicial al arreglo marcador
   ingresarMarcador(lat, lng) {
     const nuevoMarcador = new Marcador(lat, lng);
     this.marcadores.push(nuevoMarcador);
-  }
-
+}
+  // Agregar puntos al local storage poligono
   public agregarMarcador(evento) {
-    this.ingresarMarcador(parseFloat(evento.coords.lat), parseFloat(evento.coords.lng));
-    this.storage.set('poligono', JSON.stringify(this.marcadores));
-    if (this.marcadores.length >= 4 ) {
-      this.polygon = true;
+    if (!this.poligonoCerrado) {
+      this.ingresarMarcador(parseFloat(evento.coords.lat), parseFloat(evento.coords.lng));
+      this.storage.set('poligono', JSON.stringify(this.marcadores));
+      if (this.marcadores.length >= 3 ) {
+        this.polygon = true;
+      } else {
+        this.polygon = false;
+      }
     } else {
-      this.polygon = false;
+      this.agregarSubpoligonos(evento);
     }
   }
+  // Ingreso de puntos al array de subpoligonos
+  ingresarMarcadorSubpoligonos(lat, lng) {
+      const nuevoMarcador = new Marcador(lat, lng);
+      this.marcadoresSubpoligono.push(nuevoMarcador);
+      console.log('SubPoligonos', this.arraySubPoligono);
+    }
+  // Almacenamiento en storage de subpoligonos
+  public agregarSubpoligonos(evento) {
+    this.ingresarMarcadorSubpoligonos(parseFloat(evento.coords.lat), parseFloat(evento.coords.lng));
+    this.storage.set('subpoligono', JSON.stringify(this.marcadoresSubpoligono));
+    this.polygonSub = false;
+    console.log(this.arraySubPoligono);
+  }
+
+
+
+  // Llamado del modal
+  public async presentModal() {
+    const modal = await this.modal.create({
+      component: ModalSuelosPage
+    });
+    await modal.present();
+    const data = await modal.onWillDismiss();
+    console.log(data);
+  }
 }
-
-
 
