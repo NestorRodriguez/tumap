@@ -1,28 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
-import { AgmCoreModule } from '@agm/core';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MapaPage } from './mapa.page';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
-const routes: Routes = [
-  {
-    path: '',
-    component: MapaPage
-  }
-];
+import { MapaPage } from './mapa.page';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   imports: [
-    AgmCoreModule,
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyB2g5cFRZ6Cr6ozLb9hv6kow_Id066HQmo'
+    })
   ],
-  declarations: [MapaPage]
+  declarations: [MapaPage],
+  providers: [Geolocation]
 })
 export class MapaPageModule {}
