@@ -24,7 +24,7 @@ export class ModalSuelosPage implements OnInit {
     this.data = {
       id: null,
       tipouso: null
-    }
+    };
   }
   public seleccion(id: any) {
     this.data = (id.detail);

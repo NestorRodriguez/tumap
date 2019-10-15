@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage';
 import { Marcador } from '../class';
 import { ModalController } from '@ionic/angular';
 import { ModalSuelosPage } from '../modal-suelos/modal-suelos.page';
+import { present } from '@ionic/core/dist/types/utils/overlays';
 
 @Component({
   selector: 'app-usosueloshome',
@@ -19,8 +20,8 @@ export class UsosueloshomePage implements OnInit {
   poligonoCerrado: boolean;
   poligonColor = '#5cb85c';
   poligonoPrincipal: Array<any> = [];
-  lat = 4.60972222222;
-  lng = -74.0816666667;
+  lat: number ;
+  lng: number;
   latA: number;
   latB: number;
   lngA: number;
@@ -55,6 +56,7 @@ export class UsosueloshomePage implements OnInit {
   }
   public cerrarPoligono() {
     if ( this.poligonoCerrado  ) {
+      this.presentModal();
       this.subPoligonoCerrado = true;
       this.arraySubPoligono.push(this.marcadoresSubpoligono);
       this.marcadoresSubpoligono = [];
