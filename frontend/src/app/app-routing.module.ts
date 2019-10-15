@@ -20,7 +20,6 @@ const routes: Routes = [
     loadChildren: () => import('./Education/register/register.module').then(m => m.RegisterPageModule)
   },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'ubicacion/:id', loadChildren: './dbo/ubicacion/ubicacion.module#UbicacionPageModule' },
   { path: 'inscripcion/:id', loadChildren: './dbo/inscripcion/inscripcion.module#InscripcionPageModule' },
   { path: 'formulario/:id', loadChildren: './dbo/formulario/formulario.module#FormularioPageModule' },
   { path: 'exportar', loadChildren: './dbo/exportar/exportar.module#ExportarPageModule' },
