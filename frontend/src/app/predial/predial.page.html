@@ -9,60 +9,30 @@
     </ion-toolbar>
   </ion-header>
 
-<ion-content>
-    <div class="fondo">
-        <!-- <ion-img class="imgbody" src="./assets/fondo predia.svg"></ion-img> -->
-        <ion-list class="fondo_predial">
-            <ion-item class="ssptop">
-                <ion-label>Agua</ion-label>
-                <ion-checkbox color="primary" slot="start"></ion-checkbox>
-            </ion-item>
-            <ion-item class="ssp">
-                <ion-checkbox color="dark" slot="start"></ion-checkbox>
-                <ion-label>Luz</ion-label>
-            </ion-item>
-            <ion-item class="ssp">
-                <ion-checkbox color="secondary" slot="start"></ion-checkbox>
-                <ion-label>Gas Natural</ion-label>
-            </ion-item>
-            <ion-item class="ssp">
-                <ion-checkbox color="danger" slot="start"></ion-checkbox>
-                <ion-label>Telefonía Movil</ion-label>
-            </ion-item>
-            <ion-item class="ssp">
-                <ion-checkbox color="primary" slot="start"></ion-checkbox>
-                <ion-label>Telefonia Fija</ion-label>
-            </ion-item>
-            <ion-item class="ssp">
-                <ion-checkbox color="medium" slot="start"></ion-checkbox>
-                <ion-label>Internet</ion-label>
-            </ion-item>
-            <ion-item class="ssp">
-                <ion-checkbox color="primary" slot="start"></ion-checkbox>
-                <ion-label>Alcantarillado</ion-label>
-            </ion-item>
-            <ion-item class="ssp">
-                <ion-checkbox color="dark" slot="start"></ion-checkbox>
-                <ion-label>Gas propano</ion-label>
-            </ion-item>
-            <br/>
-            <!-- <ion-item>
-                <ion-label>Uso Predial</ion-label>
-                <ion-select interface="popover">
-                    <span *ngFor='let i of usopredial'>
-                    <ion-select-option value="{{i.id_predio}}">{{i.descripcion}}</ion-select-option>
-                </span>
-                </ion-select>
-            </ion-item>
-            <br/>
-            <ion-item>
-                <ion-label>Nivel de Vivienda</ion-label>
-                <ion-select interface="popover">
-                    <span *ngFor='let i of usonivel'>
-                        <ion-select-option value="{{i.id_nivel}}">{{i.descripcion}}</ion-select-option>                    
-                    </span>
-                </ion-select>
-            </ion-item> -->
-        </ion-list>
-    </div>
-</ion-content>
+  <ion-content class="ion-padding">  
+    <ion-list>
+      <ion-item button *ngFor="let i of buttonServicios" >
+        <!--ion-icon slot="start" [name]="i.iconStart" color="light"></ion-icon-->                     
+        <ion-label color="light">
+          <h3>{{i.nombreMenu}}</h3>
+        </ion-label>
+        <ion-toggle slot="end" [name]="i.nombreMenu" checked></ion-toggle>
+      </ion-item>
+    </ion-list>
+    <ion-item lines="none" class="ion-padding-top">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6" class="ion-text-end">
+              <ion-button class="ion-text-capitalize" color="primary" size="default" shape="round" expand="block" (click)="save()">
+                <ion-label>{{ (complete) ? 'Finalizar' : 'Guardar' }}</ion-label>
+              </ion-button>
+            </ion-col>
+            <ion-col size="6" class="ion-text-end">
+              <ion-button class="ion-text-capitalize" color="danger" size="default" shape="round" expand="block" (click)="cancel()" [disabled]="loading">
+                <ion-label>Cancelar</ion-label>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+  </ion-content>
