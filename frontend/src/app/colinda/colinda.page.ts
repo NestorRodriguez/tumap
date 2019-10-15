@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Marcador } from '../models/colinda/marcador';
+import { Router } from '@angular/router'
+import { LoadingController } from '@ionic/angular'
 
 @Component({
   selector: 'app-colinda',
@@ -8,19 +10,19 @@ import { Marcador } from '../models/colinda/marcador';
 })
 export class ColindaPage implements OnInit {
 
-  marcadores : Marcador[] = [];
+  //marcadores : Marcador[] = [];
+  markets: any = [
+      {lat: '', lng: '', title: '', description: ''}
+  ];
   lat = 4.60972222222;
   lng = -74.0816666667;
-  paths: Array<any> = [];
-  polygon = false;
-  latA: number;
-  latB: number;
-  lngA: number;
-  lngB: number;
-  polyline = false;
   icon: any = {};
+  btnState: boolean = true;
+  varColor: string = 'medium';
 
-  constructor() {}
+  constructor(
+    private router: Router,
+    private loadingController: LoadingController) {}
 
   ngOnInit()
   {
@@ -30,46 +32,42 @@ export class ColindaPage implements OnInit {
         width: 35,
         height: 35
       }
-    }
-    /*this.polygon = false;
-    this.polyline = false;
-    //this.storage.get('marker').then((val) =>
-    {
-      let marcador : Marcador = JSON.parse(val);
-      // tslint:disable-next-line: forin
-      for (let i in marcador)
-      {
-        this.marcadores.push(marcador[i]);
-        console.log(this.marcadores);
-        if(parseInt(i)<=2)
-        {
-          this.paths.push(marcador[i]);
-        }
-        if(parseInt(i)==3)
-        {
-          this.polygon=true;
-          this.latA = (marcador[i].lat);
-          this.lngA = (marcador[i].lng);
-        }
-        if(parseInt(i)==4)
-        {
-          this.latB = (marcador[4].lat);
-          this.lngB = (marcador[4].lng);
-          this.polyline = true;
-        }
-      }
-    });*/
+    }    
   }
-  ingresarMarcador(lat, lng, title, description){
-    const nuevoMarcador = new Marcador(lat, lng, title, description);
-    this.marcadores.push(nuevoMarcador);
+  ingresarMarcador(lat: number, lng: number, title: string, description: string){
+    //const nuevoMarcador = new Marcador(lat, lng, title, description);
+    this.markets[0] = new Marcador(lat, lng, title, description);
+    console.log(this.markets);
+    this.lat = lat;
+    this.lng = lng;
+    this.btnState = false;
+    this.varColor = 'primary'
   }
 
   agregarMarcador(evento){
-    this.ingresarMarcador(parseFloat(evento.coords.lat), parseFloat(evento.coords.lng), evento.coords.title, evento.coords.description);
-    // Almacenamiento en local storage
-    // this.storage.set('marker', JSON.stringify(this.marcadores) );
-    console.log(this.marcadores.length);
+    this.ingresarMarcador(parseFloat(evento.coords.lat), parseFloat(evento.coords.lng), evento.coords.title, evento.coords.description);    
+  }
+
+  async SaveCoordenda(){
+    await this.presentLoading()
+    this.router.navigateByUrl('/ibpredial-inicio/1-lim_col')
+      .then(e => {
+        if (e) {
+          console.log("Navigation is successful!");
+        } else {
+          console.log("Navigation has failed!");
+        }
+      });
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Guardando',
+      duration: 2000,
+      spinner: 'bubbles'
+    });
+    await loading.present()
+    await loading.onDidDismiss()
   }
 
 }
