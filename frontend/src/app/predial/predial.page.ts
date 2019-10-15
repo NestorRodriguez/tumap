@@ -10,6 +10,7 @@ import { AlertController } from '@ionic/angular';
 export class PredialPage implements OnInit {
 
   usopredial: any[] = [];
+  usonivel: any[] = [];
   errorMessage = ``;
   filtro: any[] = [];
   filteredProducts: any[] = [];
@@ -17,7 +18,7 @@ export class PredialPage implements OnInit {
   constructor(private servicioPredialService: PredialService, private alertController: AlertController) { }
 
   ngOnInit() {
-    this.servicioPredialService.obtenerData().subscribe(
+    this.servicioPredialService.obtenerPredial().subscribe(
       data => {
         this.usopredial = data;
         console.log(this.usopredial);
@@ -28,18 +29,27 @@ export class PredialPage implements OnInit {
       }
     );
 
-    
+    this.servicioPredialService.obtenerNivel().subscribe(
+      data => {
+        this.usonivel = data;
+        console.log(this.usonivel);
+      }, error => 
+      {
+          this.errorMessage = <any>error
+          this.presentAlert();
+      }
+    );
   }
 
   async presentAlert() {
-    const alert = await this.alertController.create({
-      header: 'Alert',
-      subHeader: 'Server not found',
-      message: 'Error en la conexión a Server.',
-      buttons: ['OK']
-    });
+    // const alert = await this.alertController.create({
+    //   header: 'Alert',
+    //   subHeader: 'Server not found',
+    //   message: 'Error en la conexión a Server.',
+    //   buttons: ['OK']
+    // });
 
-    await alert.present();
+    // await alert.present();
   }
 
 }

@@ -12,8 +12,8 @@ export class InvsuelosService {
   bodyForm: any;
   constructor( private http: HttpClient) { }
 
-getData(): Observable<any[]> {
-  return this.http.get<any[]>(this.serverUrl + '/suelos').pipe(
+getData(ruta: string): Observable<any[]> {
+  return this.http.get<any[]>(this.serverUrl + `/${ruta}`).pipe(
     tap(data => console.log(JSON.stringify(data))),
     catchError(this.handleError)
   );

@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-img class="img" src="./assets/perfil mujer.svg" slot="start"></ion-img>
+    <ion-title>
+      Parametrización
+    </ion-title>
+    <ion-img class="img" src="./assets/configuracion.svg" slot="end"></ion-img>
+  </ion-toolbar>
+  <!-- <ion-toolbar color="secondary" class="menu"> -->
+  <span class="menu" color="secondary"></span>
+  <!-- </ion-toolbar> -->
+  <ion-toolbar class="title">
+    <ion-title color="primary">
+      Ubicación </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      <h1>Información Mina</h1>
+    </ion-list-header>
+    <ion-item>
+      <ion-label>Tipo de Explotación</ion-label>
+      <ion-select [(ngModel)]="tipoexplotacion" placeholder="Seleccione una">
+        <ion-select-option value="1">Cielo Abierto</ion-select-option>
+        <ion-select-option value="2">Subetarraneo</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Estado Actual</ion-label>
+      <ion-select [(ngModel)]="estadoactual" placeholder="Seleccione una">
+        <ion-select-option value="1">Activo</ion-select-option>
+        <ion-select-option value="2">Inactiva</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Tipo de Material</ion-label>
+      <ion-select [(ngModel)]="tipomaterial" placeholder="Seleccione una">
+        <ion-select-option value="1">Metalico</ion-select-option>
+        <ion-select-option value="2">No Metalico</ion-select-option>
+        <ion-select-option value="3">Carbones</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Mineral</ion-label>
+      <ion-input type="text" [(ngModel)]="mineral"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Numero de Trabajadores</ion-label>
+      <ion-input type="text" [(ngModel)]="ntrabajadores"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>¿Es una Fuente de Desarrollo?</ion-label>
+      <ion-select placeholder="Seleccione una">
+        <ion-select-option value="1">Si</ion-select-option>
+        <ion-select-option value="2">No</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Observaciones</ion-label>
+      <ion-input type="text" [(ngModel)]="observaciones"></ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-button color="primary" size="block" (click)="saveForm()">Guardar</ion-button>
+</ion-content>
+<ion-footer>
+  <ion-toolbar color="primary" class="title">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-img class="imgfooter" src="./assets/news.svg"></ion-img>
+        </ion-col>
+        <ion-col>
+          <ion-img class="imgfooter" src="./assets/nueva incidencia.svg" [routerLink]="['/']"></ion-img>
+        </ion-col>
+        <ion-col>
+          <ion-img class="imgfooter" src="./assets/campana de notificacion.svg"></ion-img>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

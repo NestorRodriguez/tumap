@@ -117,10 +117,13 @@ export class InventarioPostesPage implements OnInit, OnDestroy {
       this.loadModalPoll();
     } else {
       this.loading = true;
+      if (this.model.tipo === 'Postes') {
+        this.model.clasePoste = (!this.model.tieneLampara && !this.model.tieneTransformador) ? 'Teleco' : 'Eléctrico';
+      }
       this.service.setInventario(this.model).subscribe(async (response) => {
         const toast = await this.toastCtrl.create({
           message: 'Encuesta guardada con éxito',
-          color: 'light',
+          color: 'primary',
           duration: 1800
         });
         await toast.present();
