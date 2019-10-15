@@ -34,7 +34,7 @@
     "@ionic/angular": "^4.7.1",
     "@ionic/storage": "^2.2.0",
     "cordova-android": "^8.1.0",
-    "cordova-plugin-android-permissions": "^1.0.0",
+    "cordova-plugin-android-permissions": "^1.0.2",
     "cordova-plugin-camera": "^4.1.0",
     "cordova-plugin-geolocation": "^4.0.2",
     "cordova-plugin-networkinterface": "^2.0.0",
@@ -82,7 +82,9 @@
   "cordova": {
     "plugins": {
       "cordova-plugin-networkinterface": {},
-      "cordova-plugin-camera": {},
+      "cordova-plugin-camera": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
       "cordova-plugin-whitelist": {},
       "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},

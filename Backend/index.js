@@ -1862,6 +1862,25 @@ app.route('/item_mobiliario')
         res.send('Update the rol');
     });
 
+app.route('/item/:id_item')
+    .get(function (req, res) {
+        const id_item = req.params.id_item;        
+        const sql = `SELECT i.pk_id_item,i.nombre,c.descripcion FROM jyd_item i, jyd_categoria c where i.pk_id_item='${id_item}' and i.fk_categoria=c.pk_id_categoria;`;
+        const query = db.query(sql, (error, result) => {
+            try {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(result);
+                    const [data] = result;
+                    res.json(data)
+                }
+            } catch (error) {
+                res.json({ error: error.message })
+            }
+        });
+    })
+
 /* MANEJADOR DE RUTA ESTADO DE REGISTRO DEL ITEM */
 app.route('/estado')
     .get(function (req, res) {

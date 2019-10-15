@@ -768,21 +768,16 @@ create table jyd_registro_has_item (
 );
 
 /* jyd_categoria */
-insert into jyd_categoria (descripcion, ruta) value ('señalizacion', '/senalizacion');
-insert into jyd_categoria (descripcion, ruta) value ('mobiliario urbano', '/mobiliario');
+insert into jyd_categoria (descripcion, ruta) value ('Señalización', '/senalizacion');
+insert into jyd_categoria (descripcion, ruta) value ('Mobiliario Urbano', '/mobiliario');
 
 /* jyd_item SENALIZACION */
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('CONTENSIÓN', 'Señal de transito', 'assets/img_jyd/senalizacion/logo_contension.svg', 1);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('VIAS', 'Control de trafico', 'assets/img_jyd/senalizacion/logo_vias.svg', 1);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('SUELOS', 'Movilización ', 'assets/img_jyd/senalizacion/logo_suelo.svg', 1);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('SOPORTES', 'Vias rapidas', 'assets/img_jyd/senalizacion/logo_soporte.svg', 1);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('SEÑAL', 'Vectores', 'assets/img_jyd/senalizacion/logo_senal.svg', 1);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('PAVIMENTO', 'Señalización horizontal', 'assets/img_jyd/senalizacion/logo_senal_pavimento.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('CONTENSIÓN', 'Señal de carretera', 'assets/img_jyd/senalizacion/logo_contension.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('ELEVADAS', 'Señal de transito', 'assets/img_jyd/senalizacion/logo_soporte.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('VERTICAL', 'Señal de transito', 'assets/img_jyd/senalizacion/logo_senal.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('HORIZONTAL', 'Señalización de piso', 'assets/img_jyd/senalizacion/logo_senal_pavimento.svg', 1);
 insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('SEMAFORO', 'Señal luminosa', 'assets/img_jyd/senalizacion/logo_semaforo.svg', 1);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('REFLECTORES SUELO', 'Baliza reflectora', 'assets/img_jyd/senalizacion/logo_reflectores_suelo.svg', 1);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('POSTES', 'Montaje de luminaria', 'assets/img_jyd/senalizacion/logo_poste.svg', 1);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('PISO', 'Pegante epoxico', 'assets/img_jyd/senalizacion/logo_piso.svg', 1);
-insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('K12', 'Hito kilometrico', 'assets/img_jyd/senalizacion/logo_k12.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('PR-K12', 'Señal de carretera', 'assets/img_jyd/senalizacion/logo_k12.svg', 1);
 
 /* jyd_item MOBILIARIO */
 insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('SEPARADOR', 'Protección', 'assets/img_jyd/mobiliario/logo_separador_vias.svg', 2);
@@ -803,13 +798,13 @@ insert into jyd_registro (fk_users, fecha_registro) value (2, '2019-9-28');
 
 /* jyd_registro_has_jyd_item */
 insert into jyd_registro_has_item (fk_id_registro, fk_id_item, latitud, longitud, imagen, descripcion, fk_estado) 
-            value (1, 1, 4.6579711999999995, -74.1122048, 'assest/img_jyd/captura_1234', 'señal en mal estado', 2);
+            value (1, 1, 4.6579711999999995, -74.1122048, 'assets/img_jyd/captura_1234', 'señal en mal estado', 2);
 insert into jyd_registro_has_item (fk_id_registro, fk_id_item, latitud, longitud, imagen, descripcion, fk_estado) 
-            value (1, 2, 4.6579711999999995, -74.1122048, 'assest/img_jyd/captura_4321', 'semaforo nuevo', 1);
+            value (1, 5, 4.6579711999999995, -74.1122048, 'assets/img_jyd/captura_4321', 'semaforo nuevo', 1);
 insert into jyd_registro_has_item (fk_id_registro, fk_id_item, latitud, longitud, imagen, descripcion, fk_estado) 
-            value (1, 22, 4.6579711999999995, -74.1122048, 'assest/img_jyd/captura_2341', 'caneca nueva', 1);
+            value (1, 10, 4.6579711999999995, -74.1122048, 'assets/img_jyd/captura_2341', 'caneca nueva', 1);
 insert into jyd_registro_has_item (fk_id_registro, fk_id_item, latitud, longitud, imagen, descripcion, fk_estado) 
-            value (3, 22, 4.6579711999999995, -74.1122048, 'assest/img_jyd/captura_4231', 'caneca nueva', 1);
+            value (3, 10, 4.6579711999999995, -74.1122048, 'assets/img_jyd/captura_4231', 'caneca nueva', 1);
 
 --*********************************************************************************************************
 -- FIN TABLAS SENALIZACION | MOBILIARIO URBANO --

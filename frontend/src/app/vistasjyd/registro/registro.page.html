@@ -15,15 +15,15 @@
     <ion-title style="font-size: 130%; color: white;"><b>¿Qué desea registrar?</b></ion-title><br>
     <div class="lista">
       <ion-list>
-        <ion-radio-group>
+        <ion-radio-group [(ngModel)]="model.estadoItem">
           <ion-item>
             <ion-label style="color: white;"><b>Nuevo</b></ion-label>
-            <ion-radio class="radio" slot="start" value="nuevo" checked></ion-radio>
+            <ion-radio class="radio" slot="start" value="1"></ion-radio>
           </ion-item>
       
           <ion-item>
             <ion-label style="color: white;"><b>Mal Estado</b></ion-label>
-            <ion-radio class="radio" slot="start" value="mal_estado"></ion-radio>
+            <ion-radio class="radio" slot="start" value="2"></ion-radio>
           </ion-item>
         </ion-radio-group>
       </ion-list>
@@ -55,8 +55,13 @@
       </div>
       <ion-grid style="border: 0px solid; padding-right: 12%;">
         <ion-row>
-          <ion-col size="4" class="ion-text-center" *ngIf="model.imagen">
+          <!-- <ion-col size="4" class="ion-text-center" *ngIf="model.imagen">
             <ion-img [src]="model.imagen"></ion-img>
+          </ion-col> -->
+          <ion-col size="4" *ngIf="model.imagen">
+            <ion-button color="light" size="small" shape="round">
+              <ion-icon slot="icon-only" color="primary" name="checkmark"></ion-icon>
+            </ion-button>
           </ion-col>
           <ion-col size="{{(model.imagen) ? 8 : 12}}" class="ion-text-end">
             <ion-button color="light" size="small" shape="round" expand="block" (click)="loadCamera()">
@@ -73,11 +78,11 @@
       </div><br>        
       <ion-item style="border-radius:  5px 5px 5px 5px; --ion-background-color: white;">
         <!-- <ion-label position="stacked">Descripción</ion-label> -->
-        <ion-textarea></ion-textarea>
+        <ion-textarea [(ngModel)]="model.descripcion"></ion-textarea>
       </ion-item>
     </div><br>
     <section>        
-      <ion-button routerLink="/resumen" color="white" size="medium" style="background-color: white; color: #0A9D97; border-radius: 5px 5px 5px 5px;"><b>Continuar</b></ion-button>
+      <ion-button (click)="save()" routerLink="/resumen" color="white" size="medium" style="background-color: white; color: #0A9D97; border-radius: 5px 5px 5px 5px;"><b>Continuar</b></ion-button>
     </section>
   </div>
 </ion-content>
