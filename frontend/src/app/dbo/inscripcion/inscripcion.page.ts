@@ -4,6 +4,8 @@ import { DboService } from '../../Services/dbo/dbo.service';
 import { Inscripcion } from 'src/app/models/dbo/Inscripcion';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { ActivatedRoute } from '@angular/router';
+import { ModalController, NavController } from '@ionic/angular';
+import { UbicacionPage } from '../ubicacion/ubicacion.page';
 
 @Component({
   selector: 'app-inscripcion',
@@ -14,7 +16,7 @@ export class InscripcionPage implements OnInit {
 
   inscripciones: Inscripcion[] = [];
   isValid = false;
-  posicion: string;
+  posicion: string = null;
 
   latDef = 4.590244;
   lngDef = -74.193179;
@@ -34,40 +36,49 @@ export class InscripcionPage implements OnInit {
     isUpdate: false,
   };
 
-  constructor(private dboService: DboService, private activatedRoute: ActivatedRoute) { }
+  constructor(private dbo: DboService, private navCtrl: NavController, private actRoute: ActivatedRoute, private  modalCtrl: ModalController) { }
 
   ngOnInit() {
-    // this.posicion = this.activatedRoute.snapshot.paramMap.get('id');
-    // if ( this.posicion === '0') {
-    //   this.inscripcion.lat = this.latDef.toString();
-    //   this.inscripcion.lng = this.lngDef.toString();
-    // } else {
-    //   this.inscripcion.lat =  this.posicion.split(',')[0];
-    //   this.inscripcion.lng =  this.posicion.split(',')[1];
-    // }
-    // this.posicion = this.inscripcion.lat  + ',' + this.inscripcion.lng;
-    // console.log('posicion: ' + this.posicion);
+    this.posicion = this.actRoute.snapshot.paramMap.get('id');
+    this.ValidarPosicion();
+  }
+
+  ValidarPosicion() {
+    if ( this.posicion === '0') {
+      this.inscripcion.lat = this.latDef.toString();
+      this.inscripcion.lng = this.lngDef.toString();
+    } else {
+      this.inscripcion.lat =  this.posicion.split(',')[0];
+      this.inscripcion.lng =  this.posicion.split(',')[1];
+    }
+    this.posicion = this.inscripcion.lat  + ',' + this.inscripcion.lng;
+    console.log('posicion: ' + this.posicion);
   }
 
   getInscripcion() {
     if (this.inscripcion.documento === null) { return; }
     this.isValid = false;
-    this.dboService.getInscripcion(this.inscripcion.documento.toString()).subscribe(
+    this.dbo.getInscripcion(this.inscripcion.documento.toString()).subscribe(
       res => {
         this.inscripciones = res;
         if ( this.inscripciones.length > 0) {
           this.inscripcion = this.inscripciones[0];
           this.inscripcion.isUpdate = this.isValid = true;
+          if ( this.inscripcion.lat.length === 0 && this.inscripcion.lng.length === 0 ){
+            this.inscripcion.lat = this.latDef.toString();
+            this.inscripcion.lng = this.lngDef.toString();
+            console.log('lat y lng a vacio');
+          }
         } else {
-          // this.inscripcion.id = 0;
-          // this.inscripcion.nombre = '';
-          // this.inscripcion.lat = this.latDef.toString();
-          // this.inscripcion.lng = this.lngDef.toString();
-          // this.inscripcion.direccion = '';
-          // this.inscripcion.departamento = '';
-          // this.inscripcion.municipio = '';
-          // this.inscripcion.usuario = 'USER-DEFAULT';
-          // this.inscripcion.isUpdate = false;
+          this.inscripcion.id = 0;
+          this.inscripcion.nombre = '';
+          this.inscripcion.lat = this.latDef.toString();
+          this.inscripcion.lng = this.lngDef.toString();
+          this.inscripcion.direccion = '';
+          this.inscripcion.departamento = '';
+          this.inscripcion.municipio = '';
+          this.inscripcion.usuario = 'USER-DEFAULT';
+          this.inscripcion.isUpdate = false;
         }
 
         this.posicion = this.inscripcion.lat  + ',' + this.inscripcion.lng;
@@ -79,6 +90,7 @@ export class InscripcionPage implements OnInit {
   }
 
   saveInscripcion() {
+    this.ValidarPosicion();
     console.log(JSON.stringify(this.inscripcion));
     if (this.latDef.toString() === this.inscripcion.lat && this.lngDef.toString() === this.inscripcion.lng){
       this.inscripcion.lat = '';
@@ -86,18 +98,11 @@ export class InscripcionPage implements OnInit {
       console.log('lat y lng a vacio');
     }
     if (this.inscripcion.isUpdate === true  && this.inscripcion.id > 0) {
-      // delete this.inscripcion.isUpdate;
-      // delete this.inscripcion.fecha;
-      this.dboService.updateInscripcion(this.inscripcion.id, this.inscripcion).subscribe(
-        res => console.log(res)
-        ,
-        err => console.error(err)
-      );
+      this.dbo.updateInscripcion(this.inscripcion.id, this.inscripcion).subscribe(
+        res => console.log(res), err => console.error(err));
       console.log('Update Inscripcion' + JSON.stringify(this.inscripcion));
     } else {
-      // delete this.inscripcion.isUpdate;
-      // delete this.inscripcion.fecha;
-      this.dboService.saveInscripcion(this.inscripcion).subscribe(
+        this.dbo.saveInscripcion(this.inscripcion).subscribe(
         res => {
           this.inscripciones = res;
           if ( this.inscripciones.length > 0) {
@@ -107,7 +112,24 @@ export class InscripcionPage implements OnInit {
         },
         err => console.error(err)
       );
-      console.log('Save Inscripcion' + JSON.stringify(this.inscripcion));
     }
+    console.log('Save Inscripcion' + JSON.stringify(this.inscripcion));
+    this.navCtrl.navigateForward(`/formulario/${this.inscripcion.id}`);
+  }
+
+
+  async openModal() {
+    const modal = await this.modalCtrl.create({
+      component: UbicacionPage,
+      componentProps: {
+        custom_id: this.posicion,
+        custom_titulo: this.inscripcion.nombre,
+        custom_descripcion: this.inscripcion.direccion
+      }
+    });
+    await modal.present();
+    const {data: { posicion }} = await modal.onDidDismiss();
+    this.posicion = posicion;
+    this.ValidarPosicion();
   }
 }

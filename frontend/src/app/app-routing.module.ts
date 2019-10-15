@@ -23,7 +23,6 @@ const routes: Routes = [
   /*{ path: 'register', loadChildren: './Education/register/register.module#RegisterPageModule' }*/
 
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'ubicacion/:id', loadChildren: './dbo/ubicacion/ubicacion.module#UbicacionPageModule' },
   { path: 'inscripcion/:id', loadChildren: './dbo/inscripcion/inscripcion.module#InscripcionPageModule' },
   { path: 'formulario/:id', loadChildren: './dbo/formulario/formulario.module#FormularioPageModule' },
   { path: 'exportar', loadChildren: './dbo/exportar/exportar.module#ExportarPageModule' },
