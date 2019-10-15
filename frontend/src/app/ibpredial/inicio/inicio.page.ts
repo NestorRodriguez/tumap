@@ -14,34 +14,42 @@ export class InicioPage implements OnInit {
     'radio-button-off', 'radio-button-on'
   ]
 
+  iconColor = [
+    'danger', 'success'
+  ]
+
   buttonContainer: any = [
     {
       id: 'serv_pub',
       nombreMenu: 'Servicios Públicos',
       rLink: '/predial',
       icon: this.iconName[0],
-      iconStart: 'phone-portrait'
+      iconStart: 'phone-portrait',
+      colori: this.iconColor[0]
     },
     {
       id: 'uso_sue',
       nombreMenu: 'Uso de Suelos',
       rLink: '/pd',
       icon: this.iconName[0],
-      iconStart: 'speedometer'
+      iconStart: 'speedometer',
+      colori: this.iconColor[0]
     },
     {
       id: 'niv_viv',
       nombreMenu: 'Nivel de vivienda',
       rLink: '/pd',
       icon: this.iconName[0],
-      iconStart: 'home'
+      iconStart: 'home',
+      colori: this.iconColor[0]
     },
     {
       id: 'lim_col',
       nombreMenu: 'Límites - Colindantes',
       rLink: '/colinda',
       icon: this.iconName[0],
-      iconStart: 'pin'
+      iconStart: 'pin',
+      colori: this.iconColor[0]
     },    
   ];
   constructor(
@@ -65,6 +73,7 @@ export class InicioPage implements OnInit {
         console.log(key)
         if(data.id=== optMenu){
           this.buttonContainer[key].icon = this.iconName[1]
+          this.buttonContainer[key].colori = this.iconColor[1]
         }
       });
       console.log(this.buttonContainer);      

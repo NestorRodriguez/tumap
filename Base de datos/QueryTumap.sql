@@ -713,7 +713,7 @@ create table jyd_item (
   pk_id_item int not null auto_increment,
   nombre varchar(45) not null,
   descripcion varchar(45) null,
-  imagen varchar(45) null,
+  imagen varchar(300) null,
   fk_categoria int not null,
   primary key (pk_id_item, fk_categoria),
   index fk_item_categoria1_idx (fk_categoria asc),

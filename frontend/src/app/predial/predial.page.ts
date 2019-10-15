@@ -9,6 +9,37 @@ import { AlertController } from '@ionic/angular';
 })
 export class PredialPage implements OnInit {
 
+  buttonServicios: any = [
+    {      
+      nombreMenu: 'Agua'
+    },
+    {
+      nombreMenu: 'Luz'
+    },
+    {
+      nombreMenu: 'Internet'
+    },
+    {
+      nombreMenu: 'Gas natural'
+    },    
+    {
+      nombreMenu: 'Gas propano'
+    },    
+    {
+      nombreMenu: 'Tel Móvil'
+    },    
+    {
+      nombreMenu: 'Tel Fija'
+    },    
+    {
+      nombreMenu: 'Alcantarillado'
+    },    
+    {
+      nombreMenu: 'Ninguno'
+    },    
+  ];
+
+
   usopredial: any[] = [];
   usonivel: any[] = [];
   errorMessage = ``;

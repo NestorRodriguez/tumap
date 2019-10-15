@@ -12,7 +12,7 @@
   <ion-list>
     <ion-item button *ngFor="let i of buttonContainer" (click)="showDetail(i.rLink)">
       <ion-icon slot="start" [name]="i.iconStart" color="light"></ion-icon>           
-        <ion-icon slot="end" [name]="i.icon" color="light"></ion-icon>  
+        <ion-icon slot="end" [name]="i.icon" [color]="i.colori"></ion-icon>  
       <ion-label color="light">
         <h3>{{i.nombreMenu}}</h3>
       </ion-label>
