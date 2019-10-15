@@ -13,11 +13,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule } from '@ionic/storage';
-<<<<<<< HEAD
 import { UbicacionPageModule } from './dbo/ubicacion/ubicacion.module';
-=======
 import { ModalSuelosPage } from './usosuelos/modal-suelos/modal-suelos.page';
->>>>>>> 2680b6034ef3c5c8ecc32f1ef8eff987546cf212
 
 
 @NgModule({
