@@ -1,25 +1,7 @@
-<<<<<<< HEAD
-<ion-content class="padding">
-
-=======
-<ion-header>
-
-    <ion-toolbar color="primary">
-        <ion-buttons slot="start">
-            <ion-back-button [defaultHref]="['/inscripcion']"></ion-back-button>
-        </ion-buttons>
-        <ion-title padding class="ion-title">Elejir ubicación</ion-title>
-    </ion-toolbar>
-</ion-header>
-
-<ion-content  >
-        <ion-title class="map" color="primary"> Mapa</ion-title>
->>>>>>> 2680b6034ef3c5c8ecc32f1ef8eff987546cf212
+<ion-content>
+    <ion-title class="map" color="primary"> Mapa</ion-title>
     <ion-card class="welcome-card">
-       
         <ion-card-content>
-            <!-- this creates a google map on the page with the given lat/lng from -->
-            <!-- the component as the initial center of the map: -->
             <agm-map (mapClick)="agregarMarcador($event)" [latitude]="lat" [longitude]="lng" [zoom]='16'>
                 <agm-marker *ngFor="let marcador of marcadores; let i = index" [latitude]="marcador.lat" [longitude]="marcador.lng" iconUrl="assets/location.png" width="20%">
                     <agm-info-window>
@@ -29,10 +11,6 @@
                 </agm-marker>
             </agm-map>
         </ion-card-content>
-<<<<<<< HEAD
-=======
-        
->>>>>>> 2680b6034ef3c5c8ecc32f1ef8eff987546cf212
     </ion-card>
     <ion-buttons>
         <button slot="end" (click)="closeModal()">Cerrar</button>
@@ -40,11 +18,7 @@
 </ion-content>
 
 <ion-footer>
-<<<<<<< HEAD
-    <ion-toolbar color="primary" class="title">
-=======
     <ion-toolbar color="secondary" class="title">
 
->>>>>>> 2680b6034ef3c5c8ecc32f1ef8eff987546cf212
     </ion-toolbar>
 </ion-footer>
