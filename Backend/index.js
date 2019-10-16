@@ -1486,7 +1486,7 @@ app.route('/dbo_vlistadotodo')
  *************************************************************************************/
 
 app.get('/irs-tipos-redes', (req, res) => {
-    const sql = 'SELECT id, nombre, tipo, icono FROM irs_tipos_redes';
+    const sql = 'SELECT id, nombre, icono FROM irs_tipos_redes';
     db.query(sql, (error, result) => {
         if (error) {
             res.json({
@@ -1553,12 +1553,6 @@ app.post('/irs-inventarios', (req, res) => {
         data.tieneTransformador = (data.tieneTransformador) ? 'S' : 'N';
     }
 
-    if(data.tipo == 'Postes' && (data.tieneTransformador == true || data.tieneLampara == true)){
-        data.clasePoste = 'ELECTRICO';
-    } else if(data.tipo == 'Postes' && (data.tieneTransformador == false && data.tieneLampara == false)) {
-        data.clasePoste = 'TELECO';
-    }
-
     const sql = `
     INSERT INTO irs_inventarios (
         tipo,
@@ -1603,6 +1597,42 @@ app.post('/irs-inventarios', (req, res) => {
             });
         } else {
             res.json(result);
+        }
+    });
+});
+
+app.get('/irs-inventarios-totales', (req, res) => {
+    const sql = 'SELECT * FROM irs_inventarios_totales';
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.status(400).send('<h1>Ocurrió un error</h1>');
+        } else {
+            const style = 'style="border: 1px solid black;"';
+            let html = '<table style="width:80%; border: 1px solid black;">';
+            for (let i in result) {
+                html = html + `
+                <tr ${style}>
+                    <td ${style}>${result[i].id}</td>
+                    <td ${style}>${result[i].tipo}</td>
+                    <td ${style}>${result[i].clase_poste}</td>
+                    <td ${style}>${result[i].material}</td>
+                    <td ${style}>${result[i].identificador}</td>
+                    <td ${style}>${result[i].lampara}</td>
+                    <td ${style}>${result[i].transformador}</td>
+                    <td ${style}>${result[i].operador}</td>
+                    <td ${style}>${result[i].estado}</td>
+                    <td ${style}>${result[i].ubicacion}</td>
+                    <td ${style}><img src="${result[i].imagen}" width="50" height="auto"/></td>
+                    <td ${style}>${result[i].id_usuario}</td>
+                    <td ${style}>${result[i].encuesta_operador}</td>
+                    <td ${style}>${result[i].encuesta_estado}</td>
+                    <td ${style}>${result[i].fecha}</td>
+                    <td ${style}>${result[i].ip}</td>
+                </tr>
+                `;
+            }
+            html = html + '</table>';
+            res.send(html);
         }
     });
 });
