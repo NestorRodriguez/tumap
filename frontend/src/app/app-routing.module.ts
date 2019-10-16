@@ -72,6 +72,7 @@ const routes: Routes = [
   { path: 'colinda', loadChildren: './colinda/colinda.module#ColindaPageModule' },
   { path: 'comercioformal', loadChildren: './socioeconomico/comercioformal/comercioformal.module#ComercioformalPageModule' },
   { path: 'comercioinformal', loadChildren: './socioeconomico/comercioinformal/comercioinformal.module#ComercioinformalPageModule' },
+  { path: 'tipocomercio', loadChildren: './socioeconomico/tipocomercio/tipocomercio.module#TipocomercioPageModule' },
   { path: 'encuestasocial', loadChildren: './socioeconomico/encuestasocial/encuestasocial.module#EncuestasocialPageModule' },
   { path: 'options', loadChildren: './hidroetno/options/options.module#OptionsPageModule' },
   { path: 'hidrica', loadChildren: './hidroetno/hidrica/hidrica.module#HidricaPageModule' },
