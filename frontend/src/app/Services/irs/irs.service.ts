@@ -30,4 +30,8 @@ export class IrsService {
     return this.http.post(`${this.serverUrl}/irs-inventarios`, data);
   }
 
+  getServerUrl() {
+    return this.serverUrl;
+  }
+
 }

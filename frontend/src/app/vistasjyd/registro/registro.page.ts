@@ -69,6 +69,9 @@ export class RegistroPage implements OnInit {
     console.log(this.idCategoriaItem)
 
     this.model = {
+      codItem: this.idItem,
+      estadoItem: null,
+      descripcion: null,
       tipo: null,
       clasePoste: null,
       idIrsMaterial: null,
@@ -78,6 +81,7 @@ export class RegistroPage implements OnInit {
       idIrsOperador: null,
       idIrsEstadoRed: null,
       ubicacion: null,
+      // imagen: 'assets/img_jyd/foto_calle.png',
       imagen: null,
       idUsuario: 1,
       idIrsOperadorCelular: null,
@@ -108,23 +112,29 @@ export class RegistroPage implements OnInit {
   //   this.complete = (this.model.idIrsOperadorCelular && this.model.idIrsEstadoRedCelular) ? true : false;
   // }
 
-  // save() {
-  //   if (!this.complete) {
-  //     this.loadModalPoll();
-  //   } else {
-  //     this.loading = true;
-  //     this.service.setInventario(this.model).subscribe(async (response) => {
-  //       const toast = await this.toastCtrl.create({
-  //         message: 'Encuesta guardada con éxito',
-  //         color: 'light',
-  //         duration: 1800
-  //       });
-  //       await toast.present();
-  //       await this.navCtrl.navigateBack('/irs-inicio');
-  //       this.loading = false;
-  //     });
-  //   }
-  // }
+  save() {
+    // if (!this.complete) {
+    //   this.loadModalPoll();
+    // } else {
+    //   this.loading = true;
+    //   this.service.setInventario(this.model).subscribe(async (response) => {
+    //     const toast = await this.toastCtrl.create({
+    //       message: 'Encuesta guardada con éxito',
+    //       color: 'light',
+    //       duration: 1800
+    //     });
+    //     await toast.present();
+    //     await this.navCtrl.navigateBack('/irs-inicio');
+    //     this.loading = false;
+    //   });
+    // }
+    console.log("ITEM : " + this.model.codItem);
+    console.log("ESTADOITEM : " + this.model.estadoItem);
+    console.log("UBICACIÓN : " + JSON.stringify(this.model.ubicacion));
+    console.log("IMAGEN : " + this.model.imagen);
+    console.log("DESCRIPCIÓN : " + this.model.descripcion);
+    localStorage.setItem('infoItem', JSON.stringify(this.model));
+  }
 
   async cancel() {
     const alert = await this.alertCtrl.create({

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {IrsService} from '../../Services/irs/irs.service';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-inicio',
@@ -8,12 +9,17 @@ import {IrsService} from '../../Services/irs/irs.service';
 })
 export class InicioPage implements OnInit {
   tiposRedes: any = [];
-  constructor(private service: IrsService) { }
+  constructor(private service: IrsService, private iab: InAppBrowser) { }
 
   ngOnInit() {
     this.service.getTiposRedes().subscribe(data => {
       this.tiposRedes = data;
     });
+  }
+
+  openBrowser() {
+    const browser = this.iab.create(this.service.getServerUrl() + '/irs-inventarios-totales', '_blank');
+    browser.show();
   }
 
 }
