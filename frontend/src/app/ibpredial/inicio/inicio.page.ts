@@ -30,7 +30,7 @@ export class InicioPage implements OnInit {
     {
       id: 'uso_sue',
       nombreMenu: 'Uso de Suelos',
-      rLink: '/pd',
+      rLink: '/estrato',
       icon: this.iconName[0],
       iconStart: 'speedometer',
       colori: this.iconColor[0]
@@ -38,7 +38,7 @@ export class InicioPage implements OnInit {
     {
       id: 'niv_viv',
       nombreMenu: 'Nivel de vivienda',
-      rLink: '/pd',
+      rLink: '/nivel',
       icon: this.iconName[0],
       iconStart: 'home',
       colori: this.iconColor[0]
@@ -50,7 +50,7 @@ export class InicioPage implements OnInit {
       icon: this.iconName[0],
       iconStart: 'pin',
       colori: this.iconColor[0]
-    },    
+    },
   ];
   constructor(
     private route:Router, 
@@ -68,7 +68,7 @@ export class InicioPage implements OnInit {
       this.flag = this.var.split('-')
       let optMenu = this.var.split('-')[1]
       console.log(this.flag);
-      
+
       this.buttonContainer.find( (data, key) => {
         console.log(key)
         if(data.id=== optMenu){

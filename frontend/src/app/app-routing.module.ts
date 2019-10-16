@@ -68,7 +68,9 @@ const routes: Routes = [
 
 
   { path: 'ibpredial-inicio', loadChildren: './ibpredial/inicio/inicio.module#InicioPageModule' },
-  { path: 'ibpredial-inicio/:id', loadChildren: './ibpredial/inicio/inicio.module#InicioPageModule' },
+  { path: 'ibpredial-inicio/:id', loadChildren: './ibpredial/inicio/inicio.module#InicioPageModule' },  { path: 'estrato', loadChildren: './ibpredial/estrato/estrato.module#EstratoPageModule' },
+  { path: 'nivel', loadChildren: './ibpredial/nivel/nivel.module#NivelPageModule' },
+
 ];
 
 @NgModule({
