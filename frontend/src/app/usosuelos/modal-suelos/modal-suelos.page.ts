@@ -19,21 +19,17 @@ export class ModalSuelosPage implements OnInit {
 
     this.service.getData('tipousosuelos').subscribe( data => {
       this.usosuelos = data;
-      console.log(this.usosuelos);
     });
-    this.data = {
-      id: null,
-      tipouso: null
-    };
+
   }
   public seleccion(id: any) {
     this.data = (id.detail);
   }
 
   dismiss() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
-      this.view.dismiss(this.data);
+
+   const result = this.usosuelos.find( ({ ID }) => ID === this.data.value );
+   this.view.dismiss(result);
   }
 
 }
