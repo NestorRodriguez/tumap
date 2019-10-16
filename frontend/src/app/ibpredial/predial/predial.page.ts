@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PredialService } from '../api/predial.service';
+import { PredialService } from '../../api/predial.service';
 import { AlertController } from '@ionic/angular';
 
 @Component({
