@@ -4,7 +4,6 @@ import { Storage } from '@ionic/storage';
 import { Marcador } from '../class';
 import { ModalController } from '@ionic/angular';
 import { ModalSuelosPage } from '../modal-suelos/modal-suelos.page';
-import { present } from '@ionic/core/dist/types/utils/overlays';
 
 @Component({
   selector: 'app-usosueloshome',
@@ -22,15 +21,13 @@ export class UsosueloshomePage implements OnInit {
   poligonoPrincipal: Array<any> = [];
   lat: number ;
   lng: number;
-  latA: number;
-  latB: number;
-  lngA: number;
-  lngB: number;
   arraySubPoligono: any[] = [];
   arrayColores: any[] = [];
   marcadores: Marcador[] = [];
   marcadoresSubpoligono: any[] = [];
   subPoligonoCerrado: boolean;
+  poligonoInicial: boolean;
+  checkmarkEnabled: boolean;
   constructor(private obtenerData: ObtenerdataService,
               private storage: Storage,
               public modal: ModalController) { }
@@ -40,73 +37,83 @@ export class UsosueloshomePage implements OnInit {
       navigator.geolocation.getCurrentPosition( pos => {
         this.lng = +pos.coords.longitude;
         this.lat = +pos.coords.latitude;
-        this.ingresarMarcador(this.lat, this.lng);
+        this.ingresarMarcadorSubpoligonos(this.lat, this.lng);
       });
     }
     this.dataUser = this.obtenerData.enviarData();
-    this.storage.get('poligono').then((poligono => {
-      const marcador: Marcador = JSON.parse(poligono);
+    this.storage.get('subpoligono').then(( subpoligonos => {
+      const subpoligono: Marcador = JSON.parse(subpoligonos);
+      this.polygonSub = true;
       // tslint:disable-next-line: prefer-const
       // tslint:disable-next-line: forin
-      for (const i in marcador) {
-        this.marcadores.push(marcador[i]);
+      for (const i in subpoligono) {
+        this.marcadoresSubpoligono.push(subpoligono[i].poligono);
+        this.arraySubPoligono.push({
+          poligono: subpoligono[i].poligono,
+          color: subpoligono[i].color });
       }
-      this.poligonoPrincipal = this.marcadores;
     }));
   }
-  public cerrarPoligono() {
-    if ( this.poligonoCerrado  ) {
-      this.presentModal();
-      this.subPoligonoCerrado = true;
-      this.arraySubPoligono.push(this.marcadoresSubpoligono);
+  public async cerrarPoligono() {
+    // if ( this.poligonoCerrado  ) {
+      const modal: any = await this.presentModal();
+      this.arraySubPoligono.push({
+        poligono: this.marcadoresSubpoligono,
+        color: modal.data.HEX
+      });
+      this.storage.set('subpoligono', JSON.stringify(this.arraySubPoligono));
+      this.checkmarkEnabled = true;
       this.marcadoresSubpoligono = [];
       this.polygonSub = true;
-      this.poligonColor = '#d9534f';
-    } else {
-      this.poligonoCerrado = true;
-  }
+  //   } else {
+  //     this.poligonoCerrado = true;
+  // }
   }
 
   public borrarPoligono() {
-    this.marcadores = [];
-    this.poligonoPrincipal = [];
+    this.marcadores.length = 0;
+    this.poligonoPrincipal.length = 0;
     this.poligonoCerrado = false;
     this.polygon = false;
+    this.arraySubPoligono.length = 0;
+    this.subPoligonoCerrado = false;
+    this.marcadoresSubpoligono.length = 0;
+    this.polygonSub = false;
+    this.storage.clear();
+
   }
   // Agregar ubicación inicial al arreglo marcador
-  ingresarMarcador(lat, lng) {
-    const nuevoMarcador = new Marcador(lat, lng);
-    this.marcadores.push(nuevoMarcador);
-}
-  // Agregar puntos al local storage poligono
-  public agregarMarcador(evento) {
-    if (!this.poligonoCerrado) {
-      this.ingresarMarcador(parseFloat(evento.coords.lat), parseFloat(evento.coords.lng));
-      this.storage.set('poligono', JSON.stringify(this.marcadores));
-      if (this.marcadores.length >= 3 ) {
-        this.polygon = true;
-      } else {
-        this.polygon = false;
-      }
-    } else {
-      this.agregarSubpoligonos(evento);
-    }
-  }
+//   ingresarMarcador(lat, lng) {
+//     const nuevoMarcador = new Marcador(lat, lng);
+//     this.marcadores.push(nuevoMarcador);
+// }
+//   // Agregar puntos al local storage poligono
+//   public agregarMarcador(evento) {
+//     if (!this.poligonoCerrado) {
+//       this.ingresarMarcador(parseFloat(evento.coords.lat), parseFloat(evento.coords.lng));
+//       this.storage.set('poligono', JSON.stringify(this.marcadores));
+//       if (this.marcadores.length >= 3 ) {
+//         this.polygon = true;
+//       } else {
+//         this.polygon = false;
+//       }
+//     } else {
+//       this.agregarSubpoligonos(evento);
+//     }
+//   }
   // Ingreso de puntos al array de subpoligonos
   ingresarMarcadorSubpoligonos(lat, lng) {
       const nuevoMarcador = new Marcador(lat, lng);
       this.marcadoresSubpoligono.push(nuevoMarcador);
-      console.log('SubPoligonos', this.arraySubPoligono);
+      if (this.marcadoresSubpoligono.length > 3 ) {
+      this.polygonSub = true;
+      }
     }
   // Almacenamiento en storage de subpoligonos
   public agregarSubpoligonos(evento) {
     this.ingresarMarcadorSubpoligonos(parseFloat(evento.coords.lat), parseFloat(evento.coords.lng));
-    this.storage.set('subpoligono', JSON.stringify(this.marcadoresSubpoligono));
-    this.polygonSub = false;
-    console.log(this.arraySubPoligono);
+    // this.polygonSub = false;
   }
-
-
 
   // Llamado del modal
   public async presentModal() {
@@ -114,8 +121,7 @@ export class UsosueloshomePage implements OnInit {
       component: ModalSuelosPage
     });
     await modal.present();
-    const data = await modal.onWillDismiss();
-    console.log(data);
-  }
+    const dataModal = await modal.onWillDismiss();
+    return dataModal;
+    }
 }
-
