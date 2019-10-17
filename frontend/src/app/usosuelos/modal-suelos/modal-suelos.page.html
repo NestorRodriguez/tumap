@@ -1,8 +1,11 @@
 <ion-header>
     <ion-toolbar color="primary">
-        <ion-button (click)="dismiss()">
-            <ion-icon slot="icon-only" name="arrow-round-back"> </ion-icon>
-        </ion-button>
+        <ion-buttons slot="secondary">
+
+            <ion-button (click)="dismiss()">
+                <ion-icon slot="icon-only" name="checkmark"> </ion-icon>
+            </ion-button>
+        </ion-buttons>
         <ion-title class="ion-title"></ion-title>
     </ion-toolbar>
 </ion-header>
@@ -20,9 +23,6 @@
                     </ion-item>
                 </ion-radio-group>
             </ion-list>
-        </div><br><br>
-        <section>
-            <ion-button routerLink="/mapa-item" color="white" size="medium" style="background-color: white; color: #0A9D97; border-radius: 5px 5px 5px 5px;"><b>Continuar</b></ion-button>
-        </section>
+        </div>
     </div>
 </ion-content>

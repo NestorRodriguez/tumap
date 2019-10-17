@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Marcador } from '../models/colinda/marcador';
+import { Marcador } from '../../models/colinda/marcador';
 import { Router } from '@angular/router'
 import { LoadingController } from '@ionic/angular'
 

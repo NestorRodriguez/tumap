@@ -535,79 +535,95 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 --*********************************************************************************************************
 
 
---*********************************************************************************************************
--- Tablas Inventarios Redes Secas --
---*********************************************************************************************************
+/*
+=======================================================================
+TABLAS PARA INVENTARIO DE REDES SECAS
+=======================================================================
+*/
 
-CREATE TABLE IF NOT EXISTS `irs_estados_redes` (
+/* Creación de las tablas */
+CREATE TABLE `irs_estados_redes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `irs_inventarios_otros` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `tipo` varchar(20) NOT NULL,
-  `id_irs_estado_red` int(10) unsigned NOT NULL,
-  `identificador` varchar(30) DEFAULT NULL,
-  `id_irs_operador` int(10) unsigned DEFAULT NULL,
-  `ubicacion` json NOT NULL,
-  `imagen` varchar(150) DEFAULT NULL,
-  `id_usuario` int(10) unsigned NOT NULL,
-  `id_irs_operador_celular` int(10) unsigned DEFAULT NULL,
-  `id_irs_estado_red_celular` int(10) unsigned DEFAULT NULL,
-  `fecha` datetime NOT NULL,
-  `ip` varchar(60) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE IF NOT EXISTS `irs_inventarios_postes` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `id_irs_material` int(10) unsigned NOT NULL,
-  `numero` varchar(20) DEFAULT NULL,
-  `id_irs_estado_red` int(10) unsigned NOT NULL,
-  `tiene_lampara` varchar(1) NOT NULL,
-  `tiene_transformador` varchar(1) NOT NULL,
-  `tipo_red` varchar(10) NOT NULL,
-  `ubicacion` json NOT NULL,
-  `imagen` varchar(150) DEFAULT NULL,
-  `id_usuario` int(10) unsigned NOT NULL,
-  `id_irs_operador_celular` int(10) unsigned DEFAULT NULL,
-  `id_irs_estado_red_celular` int(10) unsigned DEFAULT NULL,
-  `fecha` datetime NOT NULL,
-  `ip` varchar(60) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE IF NOT EXISTS `irs_materiales_postes` (
+CREATE TABLE `irs_materiales_postes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `irs_operadores_celulares` (
+CREATE TABLE `irs_operadores_celulares` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
   `logotipo` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `irs_tipos_redes` (
+CREATE TABLE `irs_tipos_redes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
-  `tipo` tinyint(1) unsigned NOT NULL,
   `icono` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `irs_estados_redes` (`nombre`) VALUES ('Bueno'), ('Regular'), ('Malo');
-INSERT INTO `irs_materiales_postes` (`nombre`) VALUES ('Concreto'), ('Madera'), ('Metal');
-INSERT INTO `irs_operadores_celulares` (`nombre`, `logotipo`) VALUES ('Claro', 'claro.svg'), ('Movistar', 'movistar.svg'), ('Tigo', 'tigo.svg'), ('Avantel', 'avantel.svg');
-INSERT INTO `irs_tipos_redes` (`nombre`, `tipo`, `icono`) VALUES ('Postes', 1, 'irs-postes.svg'), ('Torres', 0, 'irs-torres.svg'), ('Antenas', 0, 'irs-antenas.svg'), ('Armarios', 0, 'irs-armarios.svg');
+CREATE TABLE `irs_inventarios` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `tipo` varchar(10) NOT NULL,
+  `clase_poste` varchar(10) DEFAULT NULL,
+  `id_irs_material` int(10) unsigned DEFAULT NULL,
+  `identificador` varchar(20) DEFAULT NULL,
+  `tiene_lampara` varchar(1) DEFAULT NULL,
+  `tiene_transformador` varchar(1) DEFAULT NULL,
+  `id_irs_operador` int(10) unsigned DEFAULT NULL,
+  `id_irs_estado_red` int(10) unsigned NOT NULL,
+  `ubicacion` json NOT NULL,
+  `imagen` longtext NOT NULL,
+  `id_usuario` int(10) unsigned DEFAULT NULL,
+  `id_irs_operador_celular` int(10) unsigned DEFAULT NULL,
+  `id_irs_estado_red_celular` int(10) unsigned DEFAULT NULL,
+  `fecha` datetime NOT NULL,
+  `ip` varchar(60) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---*********************************************************************************************************
--- Fin Tablas Inventarios Redes Secas --
---*********************************************************************************************************
+/* Datos de las tablas */
+INSERT INTO irs_estados_redes (nombre) VALUES ('Bueno'), ('Regular'), ('Malo');
+INSERT INTO irs_materiales_postes (nombre) VALUES ('Concreto'), ('Madera'), ('Metal');
+INSERT INTO irs_operadores_celulares (nombre) VALUES ('Claro'), ('Movistar'), ('Tigo'), ('Avantel'), ('ETB'), ('Virgin'), ('UFF');
+INSERT INTO irs_tipos_redes (nombre, icono) VALUES ('Postes', 'irs-postes.svg'), ('Torres', 'irs-torres.svg'), ('Antenas', 'irs-antenas.svg'), ('Armarios', 'irs-armarios.svg');
+
+CREATE VIEW `irs_inventarios_totales` AS
+SELECT
+	i.id,
+    i.tipo,
+    i.clase_poste,
+    ma.nombre AS material,
+    i.identificador,
+    i.tiene_lampara AS lampara,
+    i.tiene_transformador AS transformador,
+    oc.nombre AS operador,
+    er.nombre AS estado,
+    i.ubicacion,
+    i.imagen,
+    i.id_usuario,
+    eo.nombre AS encuesta_operador,
+    sr.nombre AS encuesta_estado,
+    i.fecha,
+    i.ip
+FROM irs_inventarios i
+LEFT JOIN irs_materiales_postes ma ON i.id_irs_material = ma.id
+LEFT JOIN irs_operadores_celulares oc ON i.id_irs_operador = oc.id
+LEFT JOIN irs_estados_redes er ON i.id_irs_estado_red = er.id
+LEFT JOIN irs_operadores_celulares eo ON i.id_irs_operador_celular = eo.id
+LEFT JOIN irs_estados_redes sr ON i.id_irs_estado_red_celular = sr.id;
+
+/*
+=======================================================================
+FIN TABLAS PARA INVENTARIO DE REDES SECAS
+=======================================================================
+*/
 
 /*Crear tabla encuesta social*/
 create table SEC_Encuesta_Social(
@@ -680,7 +696,8 @@ ID_REGISTROS INT NOT NULL
 );
 CREATE TABLE IM_TIPO_USOS (
 ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-DESCRIPCION VARCHAR(45) NOT NULL
+DESCRIPCION VARCHAR(45) NOT NULL,
+HEX VARCHAR(10) NOT NULL
 );
 CREATE TABLE IM_USOS_PREDIO (
 ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -713,7 +730,7 @@ create table jyd_item (
   pk_id_item int not null auto_increment,
   nombre varchar(45) not null,
   descripcion varchar(45) null,
-  imagen varchar(45) null,
+  imagen varchar(300) null,
   fk_categoria int not null,
   primary key (pk_id_item, fk_categoria),
   index fk_item_categoria1_idx (fk_categoria asc),

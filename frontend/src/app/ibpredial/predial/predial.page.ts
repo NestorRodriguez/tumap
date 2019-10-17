@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PredialService } from '../api/predial.service';
+import { PredialService } from '../../api/predial.service';
 import { AlertController } from '@ionic/angular';
 
 @Component({
@@ -8,6 +8,37 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./predial.page.scss'],
 })
 export class PredialPage implements OnInit {
+
+  buttonServicios: any = [
+    {
+      nombreMenu: 'Agua'
+    },
+    {
+      nombreMenu: 'Luz'
+    },
+    {
+      nombreMenu: 'Internet'
+    },
+    {
+      nombreMenu: 'Gas natural'
+    },
+    {
+      nombreMenu: 'Gas propano'
+    },
+    {
+      nombreMenu: 'Tel Móvil'
+    },
+    {
+      nombreMenu: 'Tel Fija'
+    },
+    {
+      nombreMenu: 'Alcantarillado'
+    },
+    {
+      nombreMenu: 'Ninguno'
+    },
+  ];
+
 
   usopredial: any[] = [];
   usonivel: any[] = [];

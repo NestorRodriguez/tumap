@@ -41,14 +41,19 @@ ion-content{
     
     .botguardar { 
         margin-top: 0px;   
-        padding: 3px 20px;
+        padding: 3px 10px;
         color: #0A9D97;
         background-color: white;
         border-radius: 7px;
      font-size: 25px;
      border-color: #0A9D97;
-     
-       
+    }
+
+    .centrado{
+        height: 65px;
+        text-align: center;
+        
+    
     }
     
     button:hover{
@@ -71,6 +76,17 @@ ion-content{
       text-align:center;
   }
   
-  .respueta{
-    height: 176px;
+ 
+//respuestas con imagenes
+  img{
+      height: 180px;
+      width: 180px,
+  }
+  .organizaimg{
+    height: 200px;  
+  }
+  
+  ion-slide{
+      animation: none;
+    
   }

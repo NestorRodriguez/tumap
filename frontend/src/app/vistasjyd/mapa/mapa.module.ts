@@ -1,13 +1,15 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
-import { IonicModule } from '@ionic/angular';
+import {IonicModule} from '@ionic/angular';
 
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 
 import { MapaPage } from './mapa.page';
-import { AgmCoreModule } from '@agm/core';
+import {AgmCoreModule} from '@agm/core';
 
 @NgModule({
   imports: [
@@ -19,6 +21,6 @@ import { AgmCoreModule } from '@agm/core';
     })
   ],
   declarations: [MapaPage],
-  providers: [Geolocation]
+  providers: [AndroidPermissions, Geolocation, LocationAccuracy]
 })
 export class MapaPageModule {}

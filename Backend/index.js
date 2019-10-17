@@ -1492,7 +1492,7 @@ app.route('/dbo_vlistadotodo')
  *************************************************************************************/
 
 app.get('/irs-tipos-redes', (req, res) => {
-    const sql = 'SELECT id, nombre, tipo, icono FROM irs_tipos_redes';
+    const sql = 'SELECT id, nombre, icono FROM irs_tipos_redes';
     db.query(sql, (error, result) => {
         if (error) {
             res.json({
@@ -1563,52 +1563,115 @@ app.post('/irs-inventarios', (req, res) => {
         data.clasePoste = 'ELECTRICO';
     } else if (data.tipo == 'Postes' && (data.tieneTransformador == false && data.tieneLampara == false)) {
         data.clasePoste = 'TELECO';
+        data.fecha = date.substring(0, 10) + 'T' + date.substring(11, 19);
+
+        const mapper = {
+            tipo: 'tipo',
+            clasePoste: 'clase_poste',
+            idIrsMaterial: 'id_irs_material',
+            identificador: 'identificador',
+            tieneLampara: 'tiene_lampara',
+            tieneTransformador: 'tiene_transformador',
+            idIrsOperador: 'id_irs_operador',
+            idIrsEstadoRed: 'id_irs_estado_red',
+            ubicacion: 'ubicacion',
+            imagen: 'imagen',
+            idUsuario: 'id_usuario',
+            idIrsOperadorCelular: 'id_irs_operador_celular',
+            idIrsEstadoRedCelular: 'id_irs_estado_red_celular',
+            fecha: 'fecha',
+            ip: 'ip'
+        }
+
+        if (data.tipo == 'Postes') {
+            if (data.tieneLampara != null) {
+                data.tieneLampara = (data.tieneLampara) ? 'S' : 'N';
+            }
+            if (data.tieneTransformador != null) {
+                data.tieneTransformador = (data.tieneTransformador) ? 'S' : 'N';
+            }
+        } else {
+            data.clasePoste = '';
+            data.tieneLampara = '';
+            data.tieneTransformador = '';
+        }
+
+        let sets = [];
+        for (i in data) {
+            if (data[i] || data[i] == '') {
+                if (i != 'ubicacion') {
+                    sets.push(`${mapper[i]}='${data[i]}'`);
+                } else {
+                    sets.push(`${mapper[i]}='${JSON.stringify(data[i])}'`);
+                }
+            }
+        }
+
+        const sql = `INSERT INTO irs_inventarios SET ${sets.join(', ')};`;
+
+        db.query(sql, (error, result) => {
+            if (error) {
+                res.status(400).send(`${sql}`);
+            } else {
+                res.json(result);
+            }
+        });
     }
+});
 
-    const sql = `
-    INSERT INTO irs_inventarios (
-        tipo,
-        clase_poste,
-        id_irs_material,
-        identificador,
-        tiene_lampara,
-        tiene_transformador,
-        id_irs_operador,
-        id_irs_estado_red,
-        ubicacion,
-        imagen,
-        id_usuario,
-        id_irs_operador_celular,
-        id_irs_estado_red_celular,
-        fecha,
-        ip
-    ) VALUES (
-        '${data.tipo}',
-        '${data.clasePoste || ''}',
-        ${data.idIrsMaterial},
-        '${data.identificador || ''}',
-        '${data.tieneLampara || ''}',
-        '${data.tieneTransformador || ''}',
-        ${data.idIrsOperador},
-        ${data.idIrsEstadoRed},
-        '${JSON.stringify(data.ubicacion)}',
-        '${data.imagen}',
-        ${data.idUsuario},
-        ${data.idIrsOperadorCelular},
-        ${data.idIrsEstadoRedCelular},
-        '${date.substring(0, 10)}T${date.substring(11, 19)}',
-        '${data.ip}'
-    )`;
-
+app.get('/irs-inventarios-totales', (req, res) => {
+    const sql = 'SELECT * FROM irs_inventarios_totales';
     db.query(sql, (error, result) => {
         if (error) {
-            res.status(400).json({
-                error: true,
-                message: "Ocurrió un error al guardar la encuesta.",
-                sql: error
-            });
+            res.status(400).send('<h1>Ocurrió un error al consultar las encuestas.</h1>');
         } else {
-            res.json(result);
+            const style = 'style="border: 1px solid black;"';
+            let html = '<table style="width:100%; border: 1px solid black;">';
+            html = html + `
+                <tr ${style}>
+                    <td ${style}>id</td>
+                    <td ${style}>tipo</td>
+                    <td ${style}>clase poste</td>
+                    <td ${style}>material</td>
+                    <td ${style}>numero / empresa</td>
+                    <td ${style}>tiene lámpara</td>
+                    <td ${style}>tiene transformador</td>
+                    <td ${style}>operador</td>
+                    <td ${style}>estado</td>
+                    <td ${style}>ubicacion</td>
+                    <td ${style}>imagen</td>
+                    <td ${style}>usuario</td>
+                    <td ${style}>encuesta operador</td>
+                    <td ${style}>encuesta estado</td>
+                    <td ${style}>fecha</td>
+                    <td ${style}>ip</td>
+                </tr>
+            `;
+
+            for (let i in result) {
+                html = html + `
+                <tr ${style}>
+                    <td ${style}>${result[i].id}</td>
+                    <td ${style}>${result[i].tipo}</td>
+                    <td ${style}>${result[i].clase_poste}</td>
+                    <td ${style}>${result[i].material}</td>
+                    <td ${style}>${result[i].identificador}</td>
+                    <td ${style}>${result[i].lampara}</td>
+                    <td ${style}>${result[i].transformador}</td>
+                    <td ${style}>${result[i].operador}</td>
+                    <td ${style}>${result[i].estado}</td>
+                    <td ${style}>${result[i].ubicacion}</td>
+                    <td ${style}><img src="${result[i].imagen}" width="50" height="auto"/></td>
+                    <td ${style}>${result[i].id_usuario}</td>
+                    <td ${style}>${result[i].encuesta_operador}</td>
+                    <td ${style}>${result[i].encuesta_estado}</td>
+                    <td ${style}>${result[i].fecha}</td>
+                    <td ${style}>${result[i].ip}</td>
+                </tr>
+                `;
+            }
+            html = html + '</table>';
+            res.send(html);
         }
     });
 });
