@@ -36,7 +36,10 @@ export class InscripcionPage implements OnInit {
     isUpdate: false,
   };
 
-  constructor(private dbo: DboService, private navCtrl: NavController, private actRoute: ActivatedRoute, private  modalCtrl: ModalController) { }
+  constructor(private dbo: DboService,
+    private navCtrl: NavController,
+    private actRoute: ActivatedRoute,
+    private  modalCtrl: ModalController) { }
 
   ngOnInit() {
     this.posicion = this.actRoute.snapshot.paramMap.get('id');
