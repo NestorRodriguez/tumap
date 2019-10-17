@@ -1550,73 +1550,59 @@ app.get('/irs-operadores-celulares', (req, res) => {
 app.post('/irs-inventarios', (req, res) => {
     const data = req.body;
     const date = new Date().toISOString();
+    data.fecha = date.substring(0, 10) + 'T' + date.substring(11, 19);
 
-    if (data.tieneLampara != null) {
-        data.tieneLampara = (data.tieneLampara) ? 'S' : 'N';
+    const mapper = {
+        tipo: 'tipo',
+        clasePoste: 'clase_poste',
+        idIrsMaterial: 'id_irs_material',
+        identificador: 'identificador',
+        tieneLampara: 'tiene_lampara',
+        tieneTransformador: 'tiene_transformador',
+        idIrsOperador: 'id_irs_operador',
+        idIrsEstadoRed: 'id_irs_estado_red',
+        ubicacion: 'ubicacion',
+        imagen: 'imagen',
+        idUsuario: 'id_usuario',
+        idIrsOperadorCelular: 'id_irs_operador_celular',
+        idIrsEstadoRedCelular: 'id_irs_estado_red_celular',
+        fecha: 'fecha',
+        ip: 'ip'
     }
 
-    if (data.tieneTransformador != null) {
-        data.tieneTransformador = (data.tieneTransformador) ? 'S' : 'N';
+    if (data.tipo == 'Postes') {
+        if(data.tieneLampara != null) {
+            data.tieneLampara = (data.tieneLampara) ? 'S' : 'N';
+        }
+        if(data.tieneTransformador != null) {
+            data.tieneTransformador = (data.tieneTransformador) ? 'S' : 'N';
+        }
+    } else {
+        data.clasePoste = '';
+        data.tieneLampara = '';
+        data.tieneTransformador = '';
     }
 
-    if (data.tipo == 'Postes' && (data.tieneTransformador == true || data.tieneLampara == true)) {
-        data.clasePoste = 'ELECTRICO';
-    } else if (data.tipo == 'Postes' && (data.tieneTransformador == false && data.tieneLampara == false)) {
-        data.clasePoste = 'TELECO';
-        data.fecha = date.substring(0, 10) + 'T' + date.substring(11, 19);
-
-        const mapper = {
-            tipo: 'tipo',
-            clasePoste: 'clase_poste',
-            idIrsMaterial: 'id_irs_material',
-            identificador: 'identificador',
-            tieneLampara: 'tiene_lampara',
-            tieneTransformador: 'tiene_transformador',
-            idIrsOperador: 'id_irs_operador',
-            idIrsEstadoRed: 'id_irs_estado_red',
-            ubicacion: 'ubicacion',
-            imagen: 'imagen',
-            idUsuario: 'id_usuario',
-            idIrsOperadorCelular: 'id_irs_operador_celular',
-            idIrsEstadoRedCelular: 'id_irs_estado_red_celular',
-            fecha: 'fecha',
-            ip: 'ip'
-        }
-
-        if (data.tipo == 'Postes') {
-            if (data.tieneLampara != null) {
-                data.tieneLampara = (data.tieneLampara) ? 'S' : 'N';
-            }
-            if (data.tieneTransformador != null) {
-                data.tieneTransformador = (data.tieneTransformador) ? 'S' : 'N';
-            }
-        } else {
-            data.clasePoste = '';
-            data.tieneLampara = '';
-            data.tieneTransformador = '';
-        }
-
-        let sets = [];
-        for (i in data) {
-            if (data[i] || data[i] == '') {
-                if (i != 'ubicacion') {
-                    sets.push(`${mapper[i]}='${data[i]}'`);
-                } else {
-                    sets.push(`${mapper[i]}='${JSON.stringify(data[i])}'`);
-                }
-            }
-        }
-
-        const sql = `INSERT INTO irs_inventarios SET ${sets.join(', ')};`;
-
-        db.query(sql, (error, result) => {
-            if (error) {
-                res.status(400).send(`${sql}`);
+    let sets = [];
+    for (i in data) {
+        if (data[i] || data[i] == '') {
+            if(i != 'ubicacion'){
+                sets.push(`${mapper[i]}='${data[i]}'`);
             } else {
-                res.json(result);
+                sets.push(`${mapper[i]}='${JSON.stringify(data[i])}'`);
             }
-        });
+        }
     }
+
+    const sql = `INSERT INTO irs_inventarios SET ${sets.join(', ')};`;
+
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.status(400).send(`${sql}`);
+        } else {
+            res.json(result);
+        }
+    });
 });
 
 app.get('/irs-inventarios-totales', (req, res) => {
@@ -1646,8 +1632,7 @@ app.get('/irs-inventarios-totales', (req, res) => {
                     <td ${style}>fecha</td>
                     <td ${style}>ip</td>
                 </tr>
-            `;
-
+            `
             for (let i in result) {
                 html = html + `
                 <tr ${style}>
