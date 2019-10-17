@@ -1584,7 +1584,7 @@ app.post('/irs-inventarios', (req, res) => {
     }
 
     let sets = [];
-    for (i in data) {
+    for (let i in data) {
         if (data[i] || data[i] == '') {
             if(i != 'ubicacion'){
                 sets.push(`${mapper[i]}='${data[i]}'`);
