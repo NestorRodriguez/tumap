@@ -68,9 +68,13 @@ const routes: Routes = [
   { path: 'exterioropt', loadChildren: './hidroetno/exterioropt/exterioropt.module#ExterioroptPageModule' },
   { path: 'ibpredial-inicio', loadChildren: './ibpredial/inicio/inicio.module#InicioPageModule' },
   { path: 'ibpredial-inicio/:id', loadChildren: './ibpredial/inicio/inicio.module#InicioPageModule' },
+  { path: 'respuestas', loadChildren: './dbo/respuestas/respuestas.module#RespuestasPageModule' },
   { path: 'estrato', loadChildren: './ibpredial/estrato/estrato.module#EstratoPageModule' },
   { path: 'nivel', loadChildren: './ibpredial/nivel/nivel.module#NivelPageModule' },
-]
+];
+
+
+
 
 @NgModule({
   imports: [
