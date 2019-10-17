@@ -28,7 +28,6 @@ const db = mysql.createConnection({
 
 //Realizar la conexión a la base de datos
 db.connect(function (error) {
-db.connect(function(error) {
     if (error)
         console.log(error);
     else
@@ -1263,19 +1262,12 @@ app.route('/validar_info')
 
 //**************************************************************************
 // dbo inicio 
-//*Ej: http://localhost:3000/dbo_pregunta**********************************
-app.route('/dbo_pregunta')
-    .get(function(req, res) {
+//*Ej: http://localhost:3000/dbo_pregunta/1**********************************
+app.route('/dbo_pregunta/:orden')
+    .get(function (req, res) {
         console.log('Página de pregunta ');
         var { orden } = req.params;
-
-        var sql = `select p.id as id_pregunta , p.orden as orden_pregunta, p.pregunta, i.id as id_imagen,i.orden as orden_imagen ,i.nombre,i.ruta `
-        sql = sql + `from dbo_pregunta as p `
-        sql = sql + `inner join dbo_imagen as i `
-        sql = sql + `on p.id= i.id_pregunta `
-        sql = sql + `order by p.orden, i.orden;`;
-
-        var query = db.query(sql, function(error, result) {
+        var query = db.query('SELECT * FROM dbo_pregunta WHERE orden = ?', orden, function (error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1288,10 +1280,10 @@ app.route('/dbo_pregunta')
 
 // dbo Lista las imagen por imagensuelos 30/09/2019
 app.route('/dbo_imagen/:id_Pregunta')
-    .get(function(req, res) {
+    .get(function (req, res) {
         console.log('Página de imagen ');
         var id_Pregunta = req.params.id_Pregunta;
-        var query = db.query('select * from dbo_imagen where id_Pregunta= ?', id_Pregunta, function(error, result) {
+        var query = db.query('select * from dbo_imagen where id_Pregunta= ?', id_Pregunta, function (error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1303,10 +1295,10 @@ app.route('/dbo_imagen/:id_Pregunta')
 
 // dbo Lista inscripciones por documento 30/09/2019
 
-app.get('/dbo_inscripcion/:documento', function(req, res) {
+app.get('/dbo_inscripcion/:documento', function (req, res) {
     const { documento } = req.params;
     console.log('Página de inscripcion');
-    var query = db.query('SELECT  * FROM dbo_inscripcion WHERE documento = ?', documento, function(error, result) {
+    var query = db.query('SELECT  * FROM dbo_inscripcion WHERE documento = ?', documento, function (error, result) {
         if (error) {
             throw error;
         } else {
@@ -1345,7 +1337,7 @@ app.post("/dbo_inscripcion", function(req, res) {
     // res.json({ text: 'Datos Ingresados: ' + sql });
 })
 
-app.put("/dbo_inscripcion/:id", function(req, res) {
+app.put("/dbo_inscripcion/:id", function (req, res) {
     const { id } = req.params;
 
     var sql = ` UPDATE dbo_inscripcion SET `
@@ -1359,6 +1351,7 @@ app.put("/dbo_inscripcion/:id", function(req, res) {
     sql = sql + ` usuario='${req.body.usuario}' `
     sql = sql + ` WHERE id= ${id};`;
 
+    var query = db.query(sql, function (error, result) {
         if (error) {
             throw error;
         } else {
@@ -1372,14 +1365,14 @@ app.put("/dbo_inscripcion/:id", function(req, res) {
 
 // dbo Lista respuestas 30/09/2019
 // http://localhost:3000/dbo_respuesta/1/3
-app.get('/dbo_respuesta/:id_inscripcion/:id_pregunta', function(req, res) {
+app.get('/dbo_respuesta/:id_inscripcion/:id_pregunta', function (req, res) {
     console.log('Página de respuesta');
     const { id_inscripcion } = req.params;
     const { id_pregunta } = req.params;
 
     const sql = `SELECT * FROM dbo_respuesta WHERE id_inscripcion = '${id_inscripcion}' AND id_pregunta = '${id_pregunta}'`;
 
-    var query = db.query(sql, function(error, result) {
+    var query = db.query(sql, function (error, result) {
         if (error) {
             throw error;
         } else {
@@ -1389,7 +1382,7 @@ app.get('/dbo_respuesta/:id_inscripcion/:id_pregunta', function(req, res) {
     })
 
 })
-app.post('/dbo_respuesta', function(req, res) {
+app.post('/dbo_respuesta', function (req, res) {
 
     var sql = `
         INSERT INTO dbo_respuesta
@@ -1404,7 +1397,7 @@ app.post('/dbo_respuesta', function(req, res) {
         );`;
 
     console.log('Add dbo_respuesta');
-    var query = db.query(sql, function(error, result) {
+    var query = db.query(sql, function (error, result) {
         if (error) {
             throw error;
         } else {
@@ -1419,7 +1412,7 @@ app.post('/dbo_respuesta', function(req, res) {
     ' AND id_pregunta=' ${req.body.id_pregunta}
     ' AND id_imagen='${req.body.id_imagen} `;
 
-    var query = db.query(sql, function(error, result) {
+    var query = db.query(sql, function (error, result) {
         if (error) {
             throw error;
         } else {
@@ -1434,7 +1427,7 @@ app.post('/dbo_respuesta', function(req, res) {
     res.json({ message: 'Respuesta no existe' });
 
 })
-app.put('/dbo_respuesta/:id', function(req, res) {
+app.put('/dbo_respuesta/:id', function (req, res) {
     const { id } = req.params;
 
     const sql = `UPDATE dbo_respuesta SET 
@@ -1443,7 +1436,7 @@ app.put('/dbo_respuesta/:id', function(req, res) {
     id_imagen='${req.body.id_imagen}'
     WHERE id='${id}';`;
 
-    var query = db.query(sql, function(error, result) {
+    var query = db.query(sql, function (error, result) {
         if (error) {
             throw error;
         } else {
@@ -1457,9 +1450,9 @@ app.put('/dbo_respuesta/:id', function(req, res) {
 
 // dbo Lista las respuestas con texto vlistado 30/09/2019
 app.route('/dbo_vlistado')
-    .get(function(req, res) {
+    .get(function (req, res) {
         console.log('Página de vlistado ');
-        var query = db.query('SELECT * FROM dbo_vlistado', function(error, result) {
+        var query = db.query('SELECT * FROM dbo_vlistado', function (error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1471,9 +1464,9 @@ app.route('/dbo_vlistado')
 
 // dbo Listar todos las respuestas con ids vlistadotodo 30/09/2019
 app.route('/dbo_vlistadotodo')
-    .get(function(req, res) {
+    .get(function (req, res) {
         console.log('Página de vlistadotodo ');
-        var query = db.query('SELECT * FROM dbo_vlistadotodo', function(error, result) {
+        var query = db.query('SELECT * FROM dbo_vlistadotodo', function (error, result) {
             if (error) {
                 throw error;
             } else {

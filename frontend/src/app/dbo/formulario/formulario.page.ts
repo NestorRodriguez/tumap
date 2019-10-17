@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DboService } from '../../Services/dbo/dbo.service';
-import { NavController } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-formulario',
@@ -10,12 +7,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class FormularioPage implements OnInit {
 
-  constructor(private dbo: DboService, private navCtrl: NavController, private actRoute: ActivatedRoute) { }
+  constructor() { }
 
   ngOnInit() {
-    // this.service.getEstadosRedes().subscribe(data => {
-    //   this.estados = data;
-    // });
   }
-// Fin FormularioPage
+
 }
