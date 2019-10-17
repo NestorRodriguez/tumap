@@ -10,7 +10,7 @@ import { AlertController } from '@ionic/angular';
 export class PredialPage implements OnInit {
 
   buttonServicios: any = [
-    {      
+    {
       nombreMenu: 'Agua'
     },
     {
@@ -21,22 +21,22 @@ export class PredialPage implements OnInit {
     },
     {
       nombreMenu: 'Gas natural'
-    },    
+    },
     {
       nombreMenu: 'Gas propano'
-    },    
+    },
     {
       nombreMenu: 'Tel Móvil'
-    },    
+    },
     {
       nombreMenu: 'Tel Fija'
-    },    
+    },
     {
       nombreMenu: 'Alcantarillado'
-    },    
+    },
     {
       nombreMenu: 'Ninguno'
-    },    
+    },
   ];
 
 

@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { InicioPage } from './inicio.page';
 
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+
 const routes: Routes = [
   {
     path: '',
@@ -21,6 +23,9 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [InicioPage]
+  declarations: [InicioPage],
+  providers: [
+    InAppBrowser,
+  ]
 })
 export class InicioPageModule {}
