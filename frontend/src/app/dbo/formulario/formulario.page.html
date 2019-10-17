@@ -8,16 +8,14 @@
           <ion-title color="tertiary">Estado de el suelo</ion-title>
               <p  color="tertiary" class="pregunta1">¿Hay precencia de cobertura vegetal en la zona?</p>
             </ion-toolbar>
-            
-                  <ion-toolbar class="packimagen">   
-                          
-                                     
-                          <img class="respueta" padding src="assets/Imagen11.jpg" alt="">
-                          <img class="respueta" padding src="assets/Imagen21.jpg" alt="">
-                         
-                          
-                        
-                        </ion-toolbar>
+
+            <ion-toolbar class="organizaimg">
+            <ion-slides pager="true" [options]="slideOpts">
+              <ion-slide *ngFor="let imagen of imagenes">
+                  <img class="resimagen" src="{{imagen}}" srcset="" (click)="verImagen()"> 
+              </ion-slide>
+            </ion-slides>
+          </ion-toolbar>
     
                    
                       <ion-toolbar class="text" color="none">

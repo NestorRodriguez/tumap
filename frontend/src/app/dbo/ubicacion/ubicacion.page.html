@@ -1,5 +1,7 @@
 <ion-content>
-    <ion-title class="map" color="primary"> Mapa</ion-title>
+    <ion-item slot="start">
+        <ion-title class="map" color="primary">Mapa</ion-title>
+    </ion-item>
     <ion-card class="welcome-card">
         <ion-card-content>
             <agm-map (mapClick)="agregarMarcador($event)" [latitude]="lat" [longitude]="lng" [zoom]='16'>
