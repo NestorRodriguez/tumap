@@ -1,33 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-nivel',
-  templateUrl: './nivel.page.html',
-  styleUrls: ['./nivel.page.scss'],
+  selector: "app-nivel",
+  templateUrl: "./nivel.page.html",
+  styleUrls: ["./nivel.page.scss"]
 })
 export class NivelPage implements OnInit {
-
   buttonNiveles: any = [
-    {
-      nombreMenu: 'Un Piso'
-    },
-    {
-      nombreMenu: 'Dos Pisos'
-    },
-    {
-      nombreMenu: 'Tres Pisos'
-    },
-    {
-      nombreMenu: 'Cuatro Pisos'
-    },
-    {
-      nombreMenu: 'Cinco Pisos'
-    },
+    "Un Piso",
+    "Dos Pisos",
+    "Tres Pisos",
+    "Cuatro Pisos",
+    "Cinco Pisos"
   ];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }
