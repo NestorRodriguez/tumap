@@ -9,7 +9,6 @@ import { catchError, tap, map } from 'rxjs/operators';
 })
 export class InvsuelosService {
   serverUrl = 'http://localhost:3000';
-  bodyForm: any;
   constructor( private http: HttpClient) { }
 
 getData(ruta: string): Observable<any[]> {
@@ -18,8 +17,9 @@ getData(ruta: string): Observable<any[]> {
     catchError(this.handleError)
   );
 }
-saveFormData(): Observable<any[]> {
-  return this.http.post<any[]>(this.serverUrl + '/suelos', this.bodyForm).pipe(
+saveFormData(registro: any): Observable<any[]> {
+
+  return this.http.post<any[]>(this.serverUrl + '/usosuelos', registro).pipe(
     tap(data => console.log(JSON.stringify(data))),
     catchError(this.handleError)
   );
