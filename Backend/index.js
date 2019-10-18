@@ -1324,7 +1324,7 @@ app.post("/dbo_inscripcion", function(req, res) {
     sql = sql + `'${req.body.departamento}',`
     sql = sql + `'${req.body.municipio}',`
     sql = sql + `'${req.body.usuario}',CURDATE());`;
-    console.log('Add inscripcion:');
+    console.log('Add inscripcion:', sql);
     var query = db.query(sql, function(error, result) {
         if (error) {
             throw error;
@@ -1371,12 +1371,12 @@ app.put("/dbo_inscripcion/:id", function(req, res) {
 
 // dbo Lista respuestas 30/09/2019
 // http://localhost:3000/dbo_respuesta/1/3
-app.get('/dbo_respuesta/:id_inscripcion/:id_pregunta', function(req, res) {
+app.get('/dbo_respuesta/:id_inscripcion', function(req, res) {
     console.log('Página de respuesta');
     const { id_inscripcion } = req.params;
     const { id_pregunta } = req.params;
 
-    const sql = `SELECT * FROM dbo_respuesta WHERE id_inscripcion = '${id_inscripcion}' AND id_pregunta = '${id_pregunta}'`;
+    const sql = `SELECT * FROM dbo_respuesta WHERE id_inscripcion = '${id_inscripcion}'`;
 
     var query = db.query(sql, function(error, result) {
         if (error) {
@@ -1388,70 +1388,14 @@ app.get('/dbo_respuesta/:id_inscripcion/:id_pregunta', function(req, res) {
     })
 
 })
-app.post('/dbo_respuesta', function(req, res) {
 
-    var sql = `
-        INSERT INTO dbo_respuesta
-        (
-            id_inscripcion, 
-            id_pregunta, 
-            id_imagen
-        ) VALUES (
-            '${req.body.id_inscripcion}',
-            '${req.body.id_pregunta}',
-            '${req.body.id_imagen}'
-        );`;
-
-    console.log('Add dbo_respuesta');
-    var query = db.query(sql, function(error, result) {
-        if (error) {
-            throw error;
-        } else {
-            console.log(result);
-            res.json(result);
-        }
-    });
-
-    var sql = `
-    SELECT * FROM dbo_respuesta 
-    WHERE id_inscripcion = ' ${req.body.id_inscripcion} 
-    ' AND id_pregunta=' ${req.body.id_pregunta}
-    ' AND id_imagen='${req.body.id_imagen} `;
-
-    var query = db.query(sql, function(error, result) {
-        if (error) {
-            throw error;
-        } else {
-            console.log(result);
-            res.json(result);
-        }
-    });
-
-    if (query.lenght > 0) {
-        return res.json(query[0]);
-    }
-    res.json({ message: 'Respuesta no existe' });
-
+app.post("/dbo_respuesta", function(req, res) {
+    res.json({ text: 'Add respuesta: ' });
 })
-app.put('/dbo_respuesta/:id', function(req, res) {
-    const { id } = req.params;
 
-    const sql = `UPDATE dbo_respuesta SET 
-    id_inscripcion='${req.body.id_inscripcion}', 
-    id_pregunta='${req.body.id_pregunta}', 
-    id_imagen='${req.body.id_imagen}'
-    WHERE id='${id}';`;
 
-    var query = db.query(sql, function(error, result) {
-        if (error) {
-            throw error;
-        } else {
-            console.log(result);
-            res.json(result);
-        }
-    });
-
-    res.json({ text: 'Datos Actualizados ' + sql });
+app.put('/dbo_respuesta', function(req, res) {
+    res.json({ message: 'Update dbo_respuesta' });
 });
 
 // dbo Lista las respuestas con texto vlistado 30/09/2019
