@@ -17,47 +17,49 @@ export class DboService {
   private data = [
     {
       category: '¿Hay presencia de cobertura vegetal en la zona?',
+      id_Pregunta: 1,
       expanded: true,
-      idPregunta: 1,
-      products: [
-        { id: 1, name: 'Si', path: '/assets/dbo/imagen11.jpg' },
-        { id: 2, name: 'No', path: '/assets/dbo/imagen12.jpg' }
+      isAdd: false,
+      respuestas: [
+        { id_Imagen: 1, id_Pregunta: 1, id_Inscripcion: 0, name: '', path: 'assets/dbo_img/imagen11.jpg' },
+        { id_Imagen: 2, id_Pregunta: 1, id_Inscripcion: 0, name: '', path: 'assets/dbo_img/imagen12.jpg' }
       ]
     },
     {
       category: '¿Qué tipo de vegetación se encuentra en el terreno?',
-      idPregunta: 2,
-      products: [
-        { id: 3, name: 'imagen21', path: '/assets/dbo/imagen21.jpg' },
-        { id: 4, name: 'imagen22', path: '/assets/dbo/imagen22.jpg' },
-        { id: 5, name: 'imagen23', path: '/assets/dbo/imagen23.jpg' }
+      id_Pregunta: 2,
+      isAdd: false,
+      respuestas: [
+        { id_Imagen: 3, id_Pregunta: 2, id_Inscripcion: 0, name: 'Pasto y maleza', path: 'assets/dbo_img/imagen21.jpg' },
+        { id_Imagen: 4, id_Pregunta: 2, id_Inscripcion: 0, name: 'Muchos arbustos', path: 'assets/dbo_img/imagen22.jpg' },
+        { id_Imagen: 5, id_Pregunta: 2, id_Inscripcion: 0, name: 'Presencia de arboles', path: 'assets/dbo_img/imagen23.jpg' }
       ]
     },
     {
       category: '¿Qué se puede observar en la superficie del suelo?',
-      idPregunta: 3,
-      products: [
-        { id: 6, name: 'Suelo de color oscuro', path: '/assets/dbo/imagen31.jpg' },
-        { id: 7, name: 'Suelo arcilloso o arenoso', path: '/assets/dbo/imagen32.jpg' },
-        { id: 8, name: 'Roca / material pétreo', path: '/assets/dbo/imagen33.jpg' }
+      id_Pregunta: 3,
+      isAdd: false,
+      respuestas: [
+        { id_Imagen: 6, id_Pregunta: 3, id_Inscripcion: 0, name: 'Tierra oscura', path: 'assets/dbo_img/imagen31.jpg' },
+        { id_Imagen: 7, id_Pregunta: 3, id_Inscripcion: 0, name: 'Suelo arcilloso o arenoso', path: 'assets/dbo_img/imagen32.jpg' },
+        { id_Imagen: 8, id_Pregunta: 3, id_Inscripcion: 0, name: 'Roca', path: 'assets/dbo_img/imagen33.jpg' }
       ]
     },
     {
       category: '¿Cuál es el color del suelo?',
-      idPregunta: 4,
-      products: [
-        { id: 9, name: 'imagen41', path: '/assets/dbo/imagen41.jpg' },
-        { id: 10, name: 'imagen42', path: '/assets/dbo/imagen42.jpg' },
-        { id: 11, name: 'imagen43', path: '/assets/dbo/imagen43.jpg' },
-        { id: 12, name: 'imagen44', path: '/assets/dbo/imagen44.jpg' }
+      id_Pregunta: 4,
+      isAdd: false,
+      respuestas: [
+        { id_Imagen: 9, id_Pregunta: 4, id_Inscripcion: 0, name: 'Colores claros', path: 'assets/dbo_img/imagen41.jpg' },
+        { id_Imagen: 10, id_Pregunta: 4, id_Inscripcion: 0, name: 'Negra o oscura', path: 'assets/dbo_img/imagen42.jpg' },
+        { id_Imagen: 11, id_Pregunta: 4, id_Inscripcion: 0, name: 'Rojiza', path: 'assets/dbo_img/imagen43.jpg' },
+        { id_Imagen: 12, id_Pregunta: 4, id_Inscripcion: 0, name: 'Amarillento', path: 'assets/dbo_img/imagen44.jpg' },
+        { id_Imagen: 13, id_Pregunta: 4, id_Inscripcion: 0, name: 'Grisaceo', path: 'assets/dbo_img/imagen45.jpg' }
       ]
     }
   ];
 
-  private cart = [];
-
-
-  // : Observable<Inscripcion>
+  private respuestas = [];
 
   constructor(private http: HttpClient) {}
 
@@ -82,11 +84,18 @@ export class DboService {
     return this.data;
   }
   getRespuestas() {
-    return this.cart;
+    return this.respuestas;
   }
-  addRespuesta(product) {
-    this.cart.push(product);
+  addRespuesta(respuesta) {
+    this.respuestas.push(respuesta);
   }
+
+  public saveRespuesta(): Observable<any[]>  {
+    // for (const respuesta of this.respuestas) {
+      return this.http.post<any[]>(`${this.API_URL}/dbo_respuesta`, this.respuestas);
+    // }
+  }
+
 
   public handleError(err: HttpErrorResponse) {
     let errorMessage = '';
