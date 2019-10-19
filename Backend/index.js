@@ -1948,6 +1948,21 @@ router
             }
         });
     })
+    .get('/detalle_vias', (req, res) => {
+        console.log('Consultar datos jf_detalle_via');
+        var query = db.query('SELECT * FROM tumap.jf_detalle_via', (error, result) => {
+            try {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(result);
+                    res.json(result)
+                }
+            } catch (error) {
+                res.json({ error: error.message })
+            }
+        });
+    })
     .get('/vias/:id', (req, res) => {
         const id = req.params.id;
         const sql = `SELECT * FROM jf_descripcion_via WHERE id='${id}';`;

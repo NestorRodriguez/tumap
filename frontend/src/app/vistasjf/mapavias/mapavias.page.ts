@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { JfService } from '../../Services/estadoVias/jf.service';
 
 @Component({
   selector: 'app-mapavias',
@@ -10,7 +11,9 @@ export class MapaviasPage implements OnInit {
   lat = 4.60972222222;
   lng = -74.0816666667;
 
-  constructor() { }
+  almacenamiento: any;
+
+  constructor(private servicio: JfService) {}
 
   ngOnInit() {
     if (navigator)
@@ -20,6 +23,8 @@ export class MapaviasPage implements OnInit {
         this.lat = +pos.coords.latitude;
       });
     }
+    this.almacenamiento = this.servicio.enviarDatos();
+    console.log('Esto es de la anterior', this.almacenamiento);
   }
 
 }

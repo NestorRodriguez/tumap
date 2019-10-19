@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 })
 export class UsosueloshomePage implements OnInit {
   tipoArea: string;
-  dataUser: object;
+  dataUser: any;
   polygon: boolean;
   polygonSub: boolean;
   poligonoCerrado: boolean;
