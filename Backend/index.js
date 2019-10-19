@@ -9,6 +9,12 @@ const cors = require('cors');
 // Se agrega la librería para habilitar cors
 app.use(cors());
 
+app.all('/*', function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    next();
+});
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
@@ -1096,7 +1102,7 @@ router
     })
     .get('/predios/:id', (req, res) => {
         const id = req.params.id;
-        const sql = `SELECT * FROM predios WHERE id_predio='${id}';`;
+        const sql = `SELECT * FROM predios WHERE matricula='${id}';`;
         const query = db.query(sql, (error, result) => {
             try {
                 if (error) {
