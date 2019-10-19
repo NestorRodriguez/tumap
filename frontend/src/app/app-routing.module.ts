@@ -67,7 +67,8 @@ const routes: Routes = [
   { path: 'etnobotanica', loadChildren: './hidroetno/etnobotanica/etnobotanica.module#EtnobotanicaPageModule' },
   { path: 'hogaropt', loadChildren: './hidroetno/hogaropt/hogaropt.module#HogaroptPageModule' },
   { path: 'sincobopt', loadChildren: './hidroetno/sincobopt/sincobopt.module#SincoboptPageModule' },
-  { path: 'exterioropt', loadChildren: './hidroetno/exterioropt/exterioropt.module#ExterioroptPageModule' },
+  { path: 'exterioropt', loadChildren: './hidroetno/exterioropt/exterioropt.module#ExterioroptPageModule' },  { path: 'mapa', loadChildren: './hidroetno/mapa/mapa.module#MapaPageModule' },
+
 
 ];
 
