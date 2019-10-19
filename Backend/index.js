@@ -1654,7 +1654,6 @@ app.route('/suelos')
 // POST Para agregar subpolígonos 
 app.post('/usosuelos', (req, res) => {
     let data = (req.body);
-    console.log("##", data.idRegistro)
     let sql = `INSERT INTO IM_REGISTROS (NOMBRE_PROPIETARIO, NOMBRE_PREDIO, AREA, DIRECCION)
     VALUES('${data.nombrePropietario}', '${data.nombrePredio}','${data.area}','${data.direccion}');`;
     sql += `INSERT INTO IM_USOS_PREDIO (POLIGONO, ID_REGISTRO) VALUES( '${data.poligono}', ${data.idRegistro});`;
@@ -1937,6 +1936,21 @@ router
     .get('/vias', (req, res) => {
         console.log('Consultar datos jf_descripcion_via');
         var query = db.query('select * from jf_descripcion_via', (error, result) => {
+            try {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(result);
+                    res.json(result)
+                }
+            } catch (error) {
+                res.json({ error: error.message })
+            }
+        });
+    })
+    .get('/detalle_vias', (req, res) => {
+        console.log('Consultar datos jf_detalle_via');
+        var query = db.query('SELECT * FROM tumap.jf_detalle_via', (error, result) => {
             try {
                 if (error) {
                     throw error;
