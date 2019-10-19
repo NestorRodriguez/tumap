@@ -6,6 +6,9 @@ import { ModalController, AlertController } from '@ionic/angular';
 import { ModalSuelosPage } from '../modal-suelos/modal-suelos.page';
 import { ModalSuelosOkPage } from '../modal-suelos-ok/modal-suelos-ok.page';
 import { InvsuelosService } from 'src/app/Services/inventario de suelos/invsuelos.service';
+import { isUndefined } from 'util';
+import { isEmpty } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-usosueloshome',
@@ -14,7 +17,7 @@ import { InvsuelosService } from 'src/app/Services/inventario de suelos/invsuelo
 })
 export class UsosueloshomePage implements OnInit {
   tipoArea: string;
-  dataUser: any;
+  dataUser: object;
   polygon: boolean;
   polygonSub: boolean;
   poligonoCerrado: boolean;
@@ -35,7 +38,8 @@ export class UsosueloshomePage implements OnInit {
               private storage: Storage,
               public modal: ModalController,
               public modalOk: ModalController,
-              public alertController: AlertController) { }
+              public alertController: AlertController,
+              private router: Router) { }
 
   ngOnInit() {
     if (navigator) {
@@ -46,6 +50,7 @@ export class UsosueloshomePage implements OnInit {
       });
     }
     this.dataUser = this.obtenerData.enviarData();
+    ( isUndefined(this.dataUser)) ? this.router.navigateByUrl('formulariosuelos') :
     this.service.getData('usosuelosid').subscribe( Id => { this.idRegistro = Id[0].lastID;
     });
     try {
