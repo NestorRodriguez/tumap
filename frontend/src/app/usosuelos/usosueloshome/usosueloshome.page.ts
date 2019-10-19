@@ -2,8 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ObtenerdataService } from '../../Services/inventario de suelos/obtenerdata.service';
 import { Storage } from '@ionic/storage';
 import { Marcador } from '../class';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { ModalSuelosPage } from '../modal-suelos/modal-suelos.page';
+import { ModalSuelosOkPage } from '../modal-suelos-ok/modal-suelos-ok.page';
 import { InvsuelosService } from 'src/app/Services/inventario de suelos/invsuelos.service';
 
 @Component({
@@ -13,7 +14,6 @@ import { InvsuelosService } from 'src/app/Services/inventario de suelos/invsuelo
 })
 export class UsosueloshomePage implements OnInit {
   tipoArea: string;
-  // Area construida, Area de cultivo, Area de ganadería, Area de reserva, Area comúm
   dataUser: any;
   polygon: boolean;
   polygonSub: boolean;
@@ -33,7 +33,9 @@ export class UsosueloshomePage implements OnInit {
   constructor(private obtenerData: ObtenerdataService,
               private service: InvsuelosService,
               private storage: Storage,
-              public modal: ModalController) { }
+              public modal: ModalController,
+              public modalOk: ModalController,
+              public alertController: AlertController) { }
 
   ngOnInit() {
     if (navigator) {
@@ -64,7 +66,6 @@ export class UsosueloshomePage implements OnInit {
      }
   }
   public async cerrarPoligono() {
-    // if ( this.poligonoCerrado  ) {
       const modal: any = await this.presentModal();
       this.arraySubPoligono.push({
         poligono: this.marcadoresSubpoligono,
@@ -74,9 +75,7 @@ export class UsosueloshomePage implements OnInit {
       this.checkmarkEnabled = true;
       this.marcadoresSubpoligono = [];
       this.polygonSub = true;
-  //   } else {
-  //     this.poligonoCerrado = true;
-  // }
+
   }
 
   public borrarPoligono() {
@@ -91,25 +90,6 @@ export class UsosueloshomePage implements OnInit {
     this.storage.clear();
 
   }
-  // Agregar ubicación inicial al arreglo marcador
-//   ingresarMarcador(lat, lng) {
-//     const nuevoMarcador = new Marcador(lat, lng);
-//     this.marcadores.push(nuevoMarcador);
-// }
-//   // Agregar puntos al local storage poligono
-//   public agregarMarcador(evento) {
-//     if (!this.poligonoCerrado) {
-//       this.ingresarMarcador(parseFloat(evento.coords.lat), parseFloat(evento.coords.lng));
-//       this.storage.set('poligono', JSON.stringify(this.marcadores));
-//       if (this.marcadores.length >= 3 ) {
-//         this.polygon = true;
-//       } else {
-//         this.polygon = false;
-//       }
-//     } else {
-//       this.agregarSubpoligonos(evento);
-//     }
-//   }
   // Ingreso de puntos al array de subpoligonos
   ingresarMarcadorSubpoligonos(lat, lng) {
       const nuevoMarcador = new Marcador(lat, lng);
@@ -120,11 +100,11 @@ export class UsosueloshomePage implements OnInit {
     }
   // Almacenamiento en storage de subpoligonos
   public agregarSubpoligonos(evento) {
+    this.checkmarkEnabled = false;
     this.ingresarMarcadorSubpoligonos(parseFloat(evento.coords.lat), parseFloat(evento.coords.lng));
-    // this.polygonSub = false;
   }
 
-  // Llamado del modal
+  // Llamado del modal tipo de suelos
   public async presentModal() {
     const modal = await this.modal.create({
       component: ModalSuelosPage
@@ -133,9 +113,16 @@ export class UsosueloshomePage implements OnInit {
     const dataModal = await modal.onWillDismiss();
     return dataModal;
     }
+    // Llamado del modal de confirmación de registro
+  public async presentModalOk() {
+    const modal = await this.modal.create({
+      component: ModalSuelosOkPage
+    });
+    await modal.present();
+    }
 
     public saveData() {
-      console.log('@@@', this.idRegistro);
+      try {
       const regData = {
         nombrePropietario: this.dataUser.nombrepropietario,
         nombrePredio: this.dataUser.nombrepredio,
@@ -144,9 +131,37 @@ export class UsosueloshomePage implements OnInit {
         poligono: JSON.stringify(this.arraySubPoligono),
         idRegistro: this.idRegistro
       };
-      console.log(regData);
       this.service.saveFormData(regData).subscribe( res => {
-       console.log('RESPUESTA', res);
-      });
+        this.presentModalOk();
+      }, error => {
+      } );
+
+      } catch (error) {
+        console.log(`Ocurrió un error ${ error }`);
+      }
     }
+
+    // Muestreo del alert
+    public async  presentAlert() {
+      const alert = await this.alertController.create({
+        header: '¿Guardar estos registros?',
+        message: '¿Confirma que desea guardar estos registros?',
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('Confirm Cancel: blah');
+            }
+          }, {
+            text: 'Guardar',
+            handler: () => {
+              this.saveData();
+            }
+          }
+        ]
+    });
+      await alert.present();
+  }
 }
