@@ -21,7 +21,8 @@ export class ListPage implements OnInit {
     "boat",
     "bluetooth",
     "build",
-    "list-box"
+    "list-box",
+    "film"
   ];
   public items: Array<{
     title: string;
@@ -61,6 +62,12 @@ export class ListPage implements OnInit {
         note: "",
         route: "/matricula",
         icon: this.icons[8]
+      },
+      {
+        title: 'Estado de vias',
+        note: '',
+        route: '/slides',
+         icon: this.icons[14]
       },
       {
         title: "Aqui va otro servicio!",
