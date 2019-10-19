@@ -9,28 +9,36 @@
 <ion-content>
     <br>
     <ion-img src="assets/logo_encuesta_social.PNG"></ion-img>
-    <br>
-    <ion-label>
+    <h1>
         ¿Vives o trabajas en los Soches?
-    </ion-label>
-    <ion-select class="ion-select" name="vivo o trabajo " placeholder="Selecciona una opción ">
-        <ion-select-option value="vivo ">Vivo</ion-select-option>
-        <ion-select-option value="trabajo ">Trabajo</ion-select-option>
-        <ion-select-option value="ambos ">Ambos</ion-select-option>
+    </h1>
+    <ion-select class="ion-select" name="vivo o trabajo " placeholder="Selecciona una opción">
+        <ion-select-option value="vivo">Vivo</ion-select-option>
+        <ion-select-option value="trabajo">Trabajo</ion-select-option>
+        <ion-select-option value="ambos">Ambos</ion-select-option>
     </ion-select>
-    <br><br>
-    <ion-label class="segundapregunta">
-        Segun el nivel de importancia, ordene las necesiadades que se presentan en su comunidad. 1 sera el de mayor importancia y 4 el de menor importancia.
-    </ion-label>
-    <br><br><br><br>
-    <ion-label>Alimentacion</ion-label>
-    <ion-input class="cajas" placeholder=""></ion-input>
-    <ion-label>Seguridad</ion-label>
-    <ion-input class="cajas" placeholder=""></ion-input>
-    <ion-label>Servicios Publicos</ion-label>
-    <ion-input class="cajas" placeholder=""></ion-input>
-    <ion-label>Transporte</ion-label>
-    <ion-input class="cajas" placeholder=""></ion-input>
-    <br><br>
-    <ion-button class="register" type="submit " (click)="presentAlert()"><b>Enviar</b></ion-button>
+    <br>
+    <h2>
+        Asigna el nivel de atención que requieren las necesidades de tu comunidad, 1 será la de mayor atención requerida y 4 la menor:
+    </h2>
+    <div id="general">
+        <div>
+            <ion-label>Alimentación</ion-label>
+            <ion-input placeholder=""></ion-input>
+        </div>
+        <div>
+            <ion-label>Seguridad</ion-label>
+            <ion-input placeholder=""></ion-input>
+        </div>
+        <div>
+            <ion-label>Servicios Públicos</ion-label>
+            <ion-input placeholder=""></ion-input>
+        </div>
+        <div>
+            <ion-label>Transporte</ion-label>
+            <ion-input placeholder=""></ion-input>
+        </div>
+    </div>
+    <br>
+    <ion-button type="submit " (click)="presentAlert()"><b>Enviar</b></ion-button>
 </ion-content>

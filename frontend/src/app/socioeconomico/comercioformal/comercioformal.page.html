@@ -7,41 +7,52 @@
 </ion-header>
 
 <ion-content>
-    <br>
-    <ion-img src="assets/LOGO VERDE.svg"></ion-img>
-    <br>
-    <br><br><br><br>
-    <ion-label>Nombre establecimiento</ion-label>
-    <ion-input class="cajas" placeholder=""></ion-input>
-    <ion-list>
-        <ion-radio-group>
-            <ion-list-header>
-                <ion-label> Venden productos o servicios</ion-label>
-            </ion-list-header>
+    <ion-img class="img1" src="assets/logo_encuesta_comercio_formal.JPG"></ion-img>
+    <h1 id="h1">Ingrese el nombre del establecimiento:</h1>
+    <ion-input class="box1" placeholder=""></ion-input>
+    <div id="general1">
+        <h1 id="h2">¿Venden productos o servicios?</h1>
+        <br>
+        <div id="div1">
+            <ion-radio class="botones" slot="start" value="biff"></ion-radio>
+            <ion-label>Productos</ion-label>
+        </div>
 
-            <ion-item>
-                <ion-label>Productos</ion-label>
-                <ion-radio slot="start" value="biff" checked></ion-radio>
+        <div id="div2">
+            <ion-radio class="botones" slot="start" value="griff"></ion-radio>
+            <ion-label>Servicios</ion-label>
+        </div>
 
-            </ion-item>
-
-            <ion-item>
-                <ion-label>Servicios</ion-label>
-                <ion-radio slot="start" value="griff"></ion-radio>
-            </ion-item>
-
-            <ion-item>
-                <ion-label>Ambos</ion-label>
-                <ion-radio slot="start" value="buford"></ion-radio>
-            </ion-item>
-        </ion-radio-group>
-    </ion-list>
-    <ion-label>¿cuales?</ion-label>
-    <ion-input class="cajas" placeholder=""></ion-input>
+        <div id="div3">
+            <ion-radio class="botones" slot="start" value="buford"></ion-radio>
+            <ion-label>Ambos</ion-label>
+        </div>
+    </div>
     <br><br>
-    <br><br><br><br>
-    <ion-label>Cuantos empleados tiene</ion-label>
-    <ion-input class="cajas" placeholder=""></ion-input>
-    <br><br><br><br>
-    <ion-button class="register " type="submit "><b>Enviar</b></ion-button>
+    <ion-input class="box2" placeholder="¿Cuales?"></ion-input>
+
+    <div id="general2">
+        <h1 id="h2">¿Cuantos empleados tiene?</h1>
+        <br>
+        <div id="div1">
+            <ion-radio class="botones" slot="start" value="biff"></ion-radio>
+            <ion-label>1</ion-label>
+        </div>
+
+        <div id="div2">
+            <ion-radio class="botones" slot="start" value="griff"></ion-radio>
+            <ion-label>2</ion-label>
+        </div>
+
+        <div id="div3">
+            <ion-radio class="botones" slot="start" value="buford"></ion-radio>
+            <ion-label>3</ion-label>
+        </div>
+        <div id="div4">
+            <ion-radio class="botones" slot="start" value="buford"></ion-radio>
+            <ion-label>Más de 3</ion-label>
+        </div>
+    </div>
+    <ion-img src="assets/camaratumap.png"></ion-img>
+    <ion-button type="submit "><b>Enviar</b></ion-button>
 </ion-content>
