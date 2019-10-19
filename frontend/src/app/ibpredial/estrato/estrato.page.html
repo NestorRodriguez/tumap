@@ -5,15 +5,20 @@
         <ion-icon slot="icon-only" name="arrow-round-back"> </ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title> Uso Predial </ion-title>
+    <ion-title> Uso predial de Suelo </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-radio-group allow-empty-selection>
-    <ion-item *ngFor="let i of buttonUsos">
-      <ion-label color="light">{{ i }}</ion-label>
-      <ion-radio slot="end" color="light" (click)="activo()"></ion-radio>
+  <ion-radio-group allow-empty-selection [(ngModel)]="idUsoSuelo">
+    <ion-item *ngFor="let i of buttonUsos" (click)="testRadio()">
+      <ion-label color="light">{{ i.descripcion }}</ion-label>
+      <ion-radio
+        slot="end"
+        color="light"
+        (click)="activo()"
+        [value]="i.id_suelo"
+      ></ion-radio>
     </ion-item>
   </ion-radio-group>
 
@@ -26,7 +31,7 @@
     (click)="Aceptar()"
     [disabled]="btnState"
   >
-    <ion-label>Guardar</ion-label>
+    <ion-label>Aceptar</ion-label>
   </ion-button>
   <ion-button
     class="ion-text-capitalize"

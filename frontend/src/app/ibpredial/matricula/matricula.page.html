@@ -10,68 +10,54 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-item>
-    <ion-label position="stacked" color="light"
-      >Número de matrícula del predio<ion-text color="light">*</ion-text>
-    </ion-label>
-    <ion-input
-      required
-      type="text"
-      oninput="handleFirstNameValue(event)"
-    ></ion-input>
-  </ion-item>
-
-  <ion-item>
-    <ion-label position="stacked" color="light"
-      >Dirección del predio <ion-text color="light">*</ion-text>
-    </ion-label>
-    <ion-input
-      required
-      type="text"
-      oninput="handleLastNameValue(event)"
-    ></ion-input>
-  </ion-item>
-
-  <ion-button
-    class="ion-text-capitalize"
-    color="primary"
-    size="default"
-    shape="round"
-    expand="block"
-    (click)="Aceptar()"
-    [disabled]="btnState"
-  >
-    <ion-label>Guardar</ion-label>
-  </ion-button>
-  <ion-button
-    class="ion-text-capitalize"
-    color="danger"
-    size="default"
-    shape="round"
-    expand="block"
-    (click)="Cancelar()"
-    [disabled]="loading"
-  >
-    <ion-label>Cancelar</ion-label>
-  </ion-button>
-  <ion-button
-    class="ion-text-capitalize"
-    color="danger"
-    size="default"
-    shape="round"
-    expand="block"
-    (click)="getDataFromNodeJs()"
-  >
-    Obtener data from NodeJs
-  </ion-button>
-  <ion-button
-    class="ion-text-capitalize"
-    color="danger"
-    size="default"
-    shape="round"
-    expand="block"
-    (click)="getDataFromNodeJsId()"
-  >
-    Obtener data from NodeJs by Id
-  </ion-button>
+  <form [formGroup]="validarForm" (ngSubmit)="getDataFromNodeJsId()">
+    <ion-item>
+      <ion-label position="stacked" color="light"
+        >Número de matrícula del predio<ion-text color="light">*</ion-text>
+      </ion-label>
+      <ion-input
+        formControlName="matricula"
+        type="text"
+        color="light"
+      ></ion-input>
+    </ion-item>
+    <div class="validationError">
+      <ng-container
+        *ngIf="
+          (validarForm.get('matricula').hasError('minlength') ||
+            validarForm.get('matricula').hasError('required')) &&
+          (validarForm.get('matricula').dirty ||
+            validarForm.get('matricula').touched)
+        "
+      >
+        <ion-label>Minimo 3 caractres en matrícula</ion-label>
+      </ng-container>
+    </div>
+    <ion-item>
+      <ion-label position="stacked" color="light">{{ direccion }} </ion-label>
+    </ion-item>
+    <ion-button
+      class="ion-text-capitalize"
+      type="submit"
+      color="primary"
+      size="default"
+      shape="round"
+      expand="block"
+      [disabled]="validarForm.invalid"
+    >
+      <ion-label>Aceptar</ion-label>
+    </ion-button>
+    <ion-button
+      class="ion-text-capitalize"
+      color="danger"
+      size="default"
+      shape="round"
+      expand="block"
+      (click)="Cancelar()"
+      [disabled]="loading"
+      routerLink="/list"
+    >
+      <ion-label>Cancelar </ion-label>
+    </ion-button>
+  </form>
 </ion-content>
