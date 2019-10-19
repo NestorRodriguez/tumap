@@ -1571,10 +1571,10 @@ app.post('/irs-inventarios', (req, res) => {
     }
 
     if (data.tipo == 'Postes') {
-        if(data.tieneLampara != null) {
+        if (data.tieneLampara != null) {
             data.tieneLampara = (data.tieneLampara) ? 'S' : 'N';
         }
-        if(data.tieneTransformador != null) {
+        if (data.tieneTransformador != null) {
             data.tieneTransformador = (data.tieneTransformador) ? 'S' : 'N';
         }
     } else {
@@ -1586,7 +1586,7 @@ app.post('/irs-inventarios', (req, res) => {
     let sets = [];
     for (let i in data) {
         if (data[i] || data[i] == '') {
-            if(i != 'ubicacion'){
+            if (i != 'ubicacion') {
                 sets.push(`${mapper[i]}='${data[i]}'`);
             } else {
                 sets.push(`${mapper[i]}='${JSON.stringify(data[i])}'`);
@@ -1988,6 +1988,21 @@ router
     .get('/vias', (req, res) => {
         console.log('Consultar datos jf_descripcion_via');
         var query = db.query('select * from jf_descripcion_via', (error, result) => {
+            try {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(result);
+                    res.json(result)
+                }
+            } catch (error) {
+                res.json({ error: error.message })
+            }
+        });
+    })
+    .get('/detalle_vias', (req, res) => {
+        console.log('Consultar datos jf_detalle_via');
+        var query = db.query('SELECT * FROM tumap.jf_detalle_via', (error, result) => {
             try {
                 if (error) {
                     throw error;

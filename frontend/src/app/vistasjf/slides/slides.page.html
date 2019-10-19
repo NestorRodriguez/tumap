@@ -1,0 +1,45 @@
+<ion-header>
+    <ion-toolbar style="--ion-background-color: #2C689F; color: white;">
+        <ion-buttons slot="start">
+            <ion-button routerLink="/list" routerDirection="forward">
+                <ion-icon slot="icon-only" name="arrow-round-back"> </ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>
+            Estado de las via
+        </ion-title>
+        <ion-buttons slot="secondary">
+            <ion-button disabled>
+                <ion-icon slot="icon-only" name=""> </ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div style="text-align: center; padding-top: 12%;">
+        <img src="assets/img_jyd/logo registro.svg" height="80px" alt=""><br><br><br>
+        <form onsubmit="">
+            <ion-list class="ion-no-margin ion-no-padding" style="--ion-background-color: #008abb; padding-left: 15%; padding-right: 15%; padding-top: 4%;">
+                <ion-item>
+                    <ion-label style="color: white;" position="stacked"><b>Dirección:</b>
+                    </ion-label>
+                    <ion-input name="nombrepredio" [(ngModel)]="datos.direccion" style="color: white;" required type="text"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-select (ionChange)="seleccion($event)">
+                        <ion-select-option value="{{detalle.id}}" *ngFor="let detalle of estadoVias">{{detalle.detalle}}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+
+
+
+            </ion-list>
+            <br>
+            <div class="ion-padding">
+                <ion-button (click)="guardar()" [routerLink]="['/mapavias']" color="white" size="medium" style="background-color: white; color: #0A9D97; border-radius: 5px 5px 5px 5px;"><b>Continuar</b></ion-button>
+            </div>
+        </form>
+    </div>
+</ion-content>

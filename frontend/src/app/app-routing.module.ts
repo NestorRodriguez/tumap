@@ -68,13 +68,12 @@ const routes: Routes = [
   { path: 'exterioropt', loadChildren: './hidroetno/exterioropt/exterioropt.module#ExterioroptPageModule' },
   { path: 'ibpredial-inicio', loadChildren: './ibpredial/inicio/inicio.module#InicioPageModule' },
   { path: 'ibpredial-inicio/:id', loadChildren: './ibpredial/inicio/inicio.module#InicioPageModule' },
-<<<<<<< HEAD
   { path: 'mapavias', loadChildren: './vistasjf/mapavias/mapavias.module#MapaviasPageModule' },
-=======
+  { path: 'slides', loadChildren: './vistasjf/slides/slides.module#SlidesPageModule' },
+
   { path: 'respuestas', loadChildren: './dbo/respuestas/respuestas.module#RespuestasPageModule' },
   { path: 'estrato', loadChildren: './ibpredial/estrato/estrato.module#EstratoPageModule' },
   { path: 'nivel', loadChildren: './ibpredial/nivel/nivel.module#NivelPageModule' },
->>>>>>> 3a28eb8b5fdf842bf4db879a5d342c575f662912
 ];
 
 
