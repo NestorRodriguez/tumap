@@ -9,6 +9,12 @@ const cors = require('cors');
 // Se agrega la librería para habilitar cors
 app.use(cors());
 
+app.all('/*', function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    next();
+});
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
@@ -27,14 +33,14 @@ const db = mysql.createConnection({
 
 
 //Realizar la conexión a la base de datos
-db.connect(function (error) {
+db.connect(function(error) {
     if (error)
         console.log(error);
     else
         console.log(`Base de datos conectada!`);
 });
 
-app.get('/', function (req, res) {
+app.get('/', function(req, res) {
     console.log('Página de Inicio ');
     res.send("Bienvenidos al servidor <strong> TuMap </strong>");
 });
@@ -637,7 +643,7 @@ app.route('/ethnobotany')
             common_name: req.body.common_name,
             image: req.body.image,
             use: req.body.use,
-            users_id_User: req.body.users_id_User,  
+            users_id_User: req.body.users_id_User,
         };
 
         const useField = '`use`';
@@ -664,8 +670,8 @@ app.route('/ethnobotany/:id')
         };
         const sets = [];
         for (i in dato) {
-            if(i == 'use'){
-                sets.push('`use`'+`='${dato[i]}'`);
+            if (i == 'use') {
+                sets.push('`use`' + `='${dato[i]}'`);
             } else if (dato[i] || dato[i] == 0) {
                 sets.push(`${i}='${dato[i]}'`);
             }
@@ -1096,7 +1102,7 @@ router
     })
     .get('/predios/:id', (req, res) => {
         const id = req.params.id;
-        const sql = `SELECT * FROM predios WHERE id_predio='${id}';`;
+        const sql = `SELECT * FROM predios WHERE matricula='${id}';`;
         const query = db.query(sql, (error, result) => {
             try {
                 if (error) {
@@ -1202,9 +1208,9 @@ app.use(router);
 
 // Manejador de ruta Registro de Información
 app.route('/registro_info')
-    .get(function (req, res) {
+    .get(function(req, res) {
         console.log('Página de Registro de Información ');
-        var query = db.query('select * from registro_info', function (error, result) {
+        var query = db.query('select * from registro_info', function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1213,18 +1219,18 @@ app.route('/registro_info')
             }
         });
     })
-    .post(function (req, res) {
+    .post(function(req, res) {
         res.send('Add a rol');
     })
-    .put(function (req, res) {
+    .put(function(req, res) {
         res.send('Update the rol');
     });
 
 // Manejador de ruta Administrador
 app.route('/administrador')
-    .get(function (req, res) {
+    .get(function(req, res) {
         console.log('Página de Administradores ');
-        var query = db.query('select * from administrador', function (error, result) {
+        var query = db.query('select * from administrador', function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1233,18 +1239,18 @@ app.route('/administrador')
             }
         });
     })
-    .post(function (req, res) {
+    .post(function(req, res) {
         res.send('Add a rol');
     })
-    .put(function (req, res) {
+    .put(function(req, res) {
         res.send('Update the rol');
     });
 
 // Manejador de ruta Validar Información
 app.route('/validar_info')
-    .get(function (req, res) {
+    .get(function(req, res) {
         console.log('Página de Validar Información ');
-        var query = db.query('select * from validar_info', function (error, result) {
+        var query = db.query('select * from validar_info', function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1253,21 +1259,27 @@ app.route('/validar_info')
             }
         });
     })
-    .post(function (req, res) {
+    .post(function(req, res) {
         res.send('Add a rol');
     })
-    .put(function (req, res) {
+    .put(function(req, res) {
         res.send('Update the rol');
     });
 
 //**************************************************************************
 // dbo inicio 
-//*Ej: http://localhost:3000/dbo_pregunta/1**********************************
-app.route('/dbo_pregunta/:orden')
-    .get(function (req, res) {
+//*Ej: http://localhost:3000/dbo_pregunta**********************************
+app.route('/dbo_pregunta')
+    .get(function(req, res) {
         console.log('Página de pregunta ');
-        var { orden } = req.params;
-        var query = db.query('SELECT * FROM dbo_pregunta WHERE orden = ?', orden, function (error, result) {
+
+        var sql = `select p.id as id_pregunta , p.orden as orden_pregunta, p.pregunta, i.id as id_imagen,i.orden as orden_imagen ,i.nombre,i.ruta `
+        sql = sql + `from dbo_pregunta as p `
+        sql = sql + `inner join dbo_imagen as i `
+        sql = sql + `on p.id= i.id_pregunta `
+        sql = sql + `order by p.orden, i.orden;`;
+
+        var query = db.query(sql, function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1280,10 +1292,10 @@ app.route('/dbo_pregunta/:orden')
 
 // dbo Lista las imagen por imagensuelos 30/09/2019
 app.route('/dbo_imagen/:id_Pregunta')
-    .get(function (req, res) {
+    .get(function(req, res) {
         console.log('Página de imagen ');
         var id_Pregunta = req.params.id_Pregunta;
-        var query = db.query('select * from dbo_imagen where id_Pregunta= ?', id_Pregunta, function (error, result) {
+        var query = db.query('select * from dbo_imagen where id_Pregunta= ?', id_Pregunta, function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1295,10 +1307,10 @@ app.route('/dbo_imagen/:id_Pregunta')
 
 // dbo Lista inscripciones por documento 30/09/2019
 
-app.get('/dbo_inscripcion/:documento', function (req, res) {
+app.get('/dbo_inscripcion/:documento', function(req, res) {
     const { documento } = req.params;
     console.log('Página de inscripcion');
-    var query = db.query('SELECT  * FROM dbo_inscripcion WHERE documento = ?', documento, function (error, result) {
+    var query = db.query('SELECT  * FROM dbo_inscripcion WHERE documento = ?', documento, function(error, result) {
         if (error) {
             throw error;
         } else {
@@ -1318,7 +1330,7 @@ app.post("/dbo_inscripcion", function(req, res) {
     sql = sql + `'${req.body.departamento}',`
     sql = sql + `'${req.body.municipio}',`
     sql = sql + `'${req.body.usuario}',CURDATE());`;
-    console.log('Add inscripcion:');
+    console.log('Add inscripcion:', sql);
     var query = db.query(sql, function(error, result) {
         if (error) {
             throw error;
@@ -1337,7 +1349,7 @@ app.post("/dbo_inscripcion", function(req, res) {
     // res.json({ text: 'Datos Ingresados: ' + sql });
 })
 
-app.put("/dbo_inscripcion/:id", function (req, res) {
+app.put("/dbo_inscripcion/:id", function(req, res) {
     const { id } = req.params;
 
     var sql = ` UPDATE dbo_inscripcion SET `
@@ -1351,7 +1363,7 @@ app.put("/dbo_inscripcion/:id", function (req, res) {
     sql = sql + ` usuario='${req.body.usuario}' `
     sql = sql + ` WHERE id= ${id};`;
 
-    var query = db.query(sql, function (error, result) {
+    var query = db.query(sql, function(error, result) {
         if (error) {
             throw error;
         } else {
@@ -1365,14 +1377,14 @@ app.put("/dbo_inscripcion/:id", function (req, res) {
 
 // dbo Lista respuestas 30/09/2019
 // http://localhost:3000/dbo_respuesta/1/3
-app.get('/dbo_respuesta/:id_inscripcion/:id_pregunta', function (req, res) {
+app.get('/dbo_respuesta/:id_inscripcion', function(req, res) {
     console.log('Página de respuesta');
     const { id_inscripcion } = req.params;
     const { id_pregunta } = req.params;
 
-    const sql = `SELECT * FROM dbo_respuesta WHERE id_inscripcion = '${id_inscripcion}' AND id_pregunta = '${id_pregunta}'`;
+    const sql = `SELECT * FROM dbo_respuesta WHERE id_inscripcion = '${id_inscripcion}'`;
 
-    var query = db.query(sql, function (error, result) {
+    var query = db.query(sql, function(error, result) {
         if (error) {
             throw error;
         } else {
@@ -1382,77 +1394,21 @@ app.get('/dbo_respuesta/:id_inscripcion/:id_pregunta', function (req, res) {
     })
 
 })
-app.post('/dbo_respuesta', function (req, res) {
 
-    var sql = `
-        INSERT INTO dbo_respuesta
-        (
-            id_inscripcion, 
-            id_pregunta, 
-            id_imagen
-        ) VALUES (
-            '${req.body.id_inscripcion}',
-            '${req.body.id_pregunta}',
-            '${req.body.id_imagen}'
-        );`;
-
-    console.log('Add dbo_respuesta');
-    var query = db.query(sql, function (error, result) {
-        if (error) {
-            throw error;
-        } else {
-            console.log(result);
-            res.json(result);
-        }
-    });
-
-    var sql = `
-    SELECT * FROM dbo_respuesta 
-    WHERE id_inscripcion = ' ${req.body.id_inscripcion} 
-    ' AND id_pregunta=' ${req.body.id_pregunta}
-    ' AND id_imagen='${req.body.id_imagen} `;
-
-    var query = db.query(sql, function (error, result) {
-        if (error) {
-            throw error;
-        } else {
-            console.log(result);
-            res.json(result);
-        }
-    });
-
-    if (query.lenght > 0) {
-        return res.json(query[0]);
-    }
-    res.json({ message: 'Respuesta no existe' });
-
+app.post("/dbo_respuesta", function(req, res) {
+    res.json({ text: 'Add respuesta: ' });
 })
-app.put('/dbo_respuesta/:id', function (req, res) {
-    const { id } = req.params;
 
-    const sql = `UPDATE dbo_respuesta SET 
-    id_inscripcion='${req.body.id_inscripcion}', 
-    id_pregunta='${req.body.id_pregunta}', 
-    id_imagen='${req.body.id_imagen}'
-    WHERE id='${id}';`;
 
-    var query = db.query(sql, function (error, result) {
-        if (error) {
-            throw error;
-        } else {
-            console.log(result);
-            res.json(result);
-        }
-    });
-
-    res.json({ text: 'Datos Actualizados ' + sql });
+app.put('/dbo_respuesta', function(req, res) {
+    res.json({ message: 'Update dbo_respuesta' });
 });
 
 // dbo Lista las respuestas con texto vlistado 30/09/2019
 app.route('/dbo_vlistado')
-    .get(function (req, res) {
+    .get(function(req, res) {
         console.log('Página de vlistado ');
-        var query = db.query('SELECT * FROM dbo_vlistado', function (error, result) {
+        var query = db.query('SELECT * FROM dbo_vlistado', function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1464,9 +1420,9 @@ app.route('/dbo_vlistado')
 
 // dbo Listar todos las respuestas con ids vlistadotodo 30/09/2019
 app.route('/dbo_vlistadotodo')
-    .get(function (req, res) {
+    .get(function(req, res) {
         console.log('Página de vlistadotodo ');
-        var query = db.query('SELECT * FROM dbo_vlistadotodo', function (error, result) {
+        var query = db.query('SELECT * FROM dbo_vlistadotodo', function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1565,10 +1521,10 @@ app.post('/irs-inventarios', (req, res) => {
     }
 
     if (data.tipo == 'Postes') {
-        if(data.tieneLampara != null) {
+        if (data.tieneLampara != null) {
             data.tieneLampara = (data.tieneLampara) ? 'S' : 'N';
         }
-        if(data.tieneTransformador != null) {
+        if (data.tieneTransformador != null) {
             data.tieneTransformador = (data.tieneTransformador) ? 'S' : 'N';
         }
     } else {
@@ -1578,9 +1534,9 @@ app.post('/irs-inventarios', (req, res) => {
     }
 
     let sets = [];
-    for (i in data) {
+    for (let i in data) {
         if (data[i] || data[i] == '') {
-            if(i != 'ubicacion'){
+            if (i != 'ubicacion') {
                 sets.push(`${mapper[i]}='${data[i]}'`);
             } else {
                 sets.push(`${mapper[i]}='${JSON.stringify(data[i])}'`);
@@ -1626,8 +1582,7 @@ app.get('/irs-inventarios-totales', (req, res) => {
                     <td ${style}>fecha</td>
                     <td ${style}>ip</td>
                 </tr>
-            `;
-
+            `
             for (let i in result) {
                 html = html + `
                 <tr ${style}>
@@ -1663,7 +1618,6 @@ app.get('/irs-inventarios-totales', (req, res) => {
 /***********************************************************
  * Servicio para la consulta de inventario de uso de Suelos*
  **********************************************************/
-
 app.route('/suelos')
     .get((req, res) => {
         const sql = `SELECT r.ID, NOMBRE_PROPIETARIO, NOMBRE_PREDIO, AREA, DIRECCION, 
@@ -1697,26 +1651,13 @@ app.route('/suelos')
     });
 // POST Para agregar Polígono principal 
 
-app.post('/predio/:id', (req, res) => {
-    let polygon = (req.body.polygon);
-    let sql = `SET @g = 'POLYGON(${polygon})';`;
-    sql += `INSERT INTO IM_PREDIO (PREDIO,ID_REGISTROS) VALUES( ST_PolygonFromText(@g),${req.params.id});`;
-    db.query(sql, (error, result) => {
-        if (error) {
-            res.json({
-                error: true,
-                message: error.message
-            });
-        } else {
-            res.json(result);
-        }
-    })
-});
 // POST Para agregar subpolígonos 
-app.post('/usosuelos/:id', (req, res) => {
+app.post('/usosuelos', (req, res) => {
     let data = (req.body);
-    let sql = `SET @g = 'POLYGON(${data.polygon})';`;
-    sql += `INSERT INTO IM_USOS_PREDIO (POLIGONO, ID_PREDIO, ID_TIPO_USOS) VALUES( ST_PolygonFromText(@g),${req.params.id}, ${data.idTipoUso});`;
+    console.log("##", data.idRegistro)
+    let sql = `INSERT INTO IM_REGISTROS (NOMBRE_PROPIETARIO, NOMBRE_PREDIO, AREA, DIRECCION)
+    VALUES('${data.nombrePropietario}', '${data.nombrePredio}','${data.area}','${data.direccion}');`;
+    sql += `INSERT INTO IM_USOS_PREDIO (POLIGONO, ID_REGISTRO) VALUES( '${data.poligono}', ${data.idRegistro});`;
     db.query(sql, (error, result) => {
         if (error) {
             res.json({
@@ -1745,15 +1686,28 @@ app.get('/tipousosuelos', (req, res) => {
         }
     })
 });
+app.get('/usosuelosid', (req, res) => {
+    let sql = `select MAX(ID)+1 as lastID FROM im_registros;`;
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: error.message
+            });
+        } else {
+            res.json(result);
+        }
+    })
+});
 /***************************************************
  * Fin de servicios para el inventario de suelos   *
  **************************************************/
 
 //Llamado de encuesta social 
 app.route('/encuesta-social')
-    .get(function (req, res) {
+    .get(function(req, res) {
         console.log('Método de Encuesta_Social');
-        var query = db.query('select * from SEC_Encuesta_Social', function (error, result) {
+        var query = db.query('select * from SEC_Encuesta_Social', function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1762,14 +1716,14 @@ app.route('/encuesta-social')
             }
         });
     })
-    .post(function (req, res) {
+    .post(function(req, res) {
         const data = req.body;
         console.log(data);
         const sql = `
             INSERT INTO SEC_Encuesta_Social(vinculo_territorial, alimentacion, seguridad, servicios_publicos, transporte)
         VALUES('${data.vinculo_territorial}','${data.alimentacion}','${data.seguridad}','${data.servicios_publicos}','${data.transporte}');
         `
-        var query = db.query(sql, function (error, result) {
+        var query = db.query(sql, function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1778,14 +1732,14 @@ app.route('/encuesta-social')
             }
         });
     })
-    .put(function (req, res) {
+    .put(function(req, res) {
         res.send('Update the encuesta social');
     });
 //Llamado de SEC_Establecimiento_Comercial
 app.route('/establecimiento-comercial')
-    .get(function (req, res) {
+    .get(function(req, res) {
         console.log('Método de Establecimiento_Comercial ');
-        var query = db.query('select * from SEC_Establecimiento_Comercial', function (error, result) {
+        var query = db.query('select * from SEC_Establecimiento_Comercial', function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1794,14 +1748,14 @@ app.route('/establecimiento-comercial')
             }
         });
     })
-    .post(function (req, res) {
+    .post(function(req, res) {
         const data = req.body;
         console.log(data);
         const sql = `
         INSERT INTO SEC_Establecimiento_Comercial (Nombre_Establecimiento, Productos_Servicios, Descripcion , N_Empleados, Foto)
         VALUES ('${data.Nombre_Establecimiento}','${data.Productos_Servicios}','${data.Descripcion}','${data.N_Empleados}','${data.Foto}');
          `
-        var query = db.query(sql, function (error, result) {
+        var query = db.query(sql, function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1810,15 +1764,15 @@ app.route('/establecimiento-comercial')
             }
         });
     })
-    .put(function (req, res) {
+    .put(function(req, res) {
         res.send('Update the Establecimiento_Comercial');
     });
 
 //Llamado de SEC_Comercio_Informal
 app.route('/comercio-informal')
-    .get(function (req, res) {
+    .get(function(req, res) {
         console.log('Método de Comercio_Informal');
-        var query = db.query('select * from SEC_Comercio_Informal', function (error, result) {
+        var query = db.query('select * from SEC_Comercio_Informal', function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1827,14 +1781,14 @@ app.route('/comercio-informal')
             }
         });
     })
-    .post(function (req, res) {
+    .post(function(req, res) {
         const data = req.body;
         console.log(data);
         const sql = `
         INSERT INTO SEC_Comercio_Informal (Productos_Servicios, Descripcion , Estatico_Movil, Periodicidad, Jornada, Foto)
         VALUES ('${data.Productos_Servicios}','${data.Descripcion}','${data.Estatico_Movil}','${data.Periodicidad}','${data.Jornada}','${data.Foto}');
         `
-        var query = db.query(sql, function (error, result) {
+        var query = db.query(sql, function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1843,7 +1797,7 @@ app.route('/comercio-informal')
             }
         });
     })
-    .put(function (req, res) {
+    .put(function(req, res) {
         res.send('Update the Comercio_Informal');
     });
 
@@ -1853,9 +1807,9 @@ app.route('/comercio-informal')
 
 /* MANEJADOR DE RUTA CATEGORIA DEL ITEM */
 app.route('/categoria')
-    .get(function (req, res) {
+    .get(function(req, res) {
         console.log('Página de Validar Información ');
-        var query = db.query('select * from jyd_categoria', function (error, result) {
+        var query = db.query('select * from jyd_categoria', function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1864,16 +1818,16 @@ app.route('/categoria')
             }
         });
     })
-    .post(function (req, res) {
+    .post(function(req, res) {
         res.send('Add a rol');
     })
-    .put(function (req, res) {
+    .put(function(req, res) {
         res.send('Update the rol');
     });
 
 /* MANEJADOR DE RUTA ITEMS SENALIZACION */
 app.route('/item_senalizacion')
-    .get(function (req, res) {
+    .get(function(req, res) {
         console.log('Página de Validar Información ');
         var query = db.query('select * from jyd_item where fk_categoria=1 order by nombre', function(error, result) {
             if (error) {
@@ -1884,16 +1838,16 @@ app.route('/item_senalizacion')
             }
         });
     })
-    .post(function (req, res) {
+    .post(function(req, res) {
         res.send('Add a rol');
     })
-    .put(function (req, res) {
+    .put(function(req, res) {
         res.send('Update the rol');
     });
 
 /* MANEJADOR DE RUTA ITEMS MOBILIARIO URBANO */
 app.route('/item_mobiliario')
-    .get(function (req, res) {
+    .get(function(req, res) {
         console.log('Página de Validar Información ');
         var query = db.query('select * from jyd_item where fk_categoria=2 order by nombre', function(error, result) {
             if (error) {
@@ -1904,16 +1858,16 @@ app.route('/item_mobiliario')
             }
         });
     })
-    .post(function (req, res) {
+    .post(function(req, res) {
         res.send('Add a rol');
     })
-    .put(function (req, res) {
+    .put(function(req, res) {
         res.send('Update the rol');
     });
 
 app.route('/item/:id_item')
-    .get(function (req, res) {
-        const id_item = req.params.id_item;        
+    .get(function(req, res) {
+        const id_item = req.params.id_item;
         const sql = `SELECT i.pk_id_item,i.nombre,c.descripcion FROM jyd_item i, jyd_categoria c where i.pk_id_item='${id_item}' and i.fk_categoria=c.pk_id_categoria;`;
         const query = db.query(sql, (error, result) => {
             try {
@@ -1932,9 +1886,9 @@ app.route('/item/:id_item')
 
 /* MANEJADOR DE RUTA ESTADO DE REGISTRO DEL ITEM */
 app.route('/estado')
-    .get(function (req, res) {
+    .get(function(req, res) {
         console.log('Página de Validar Información ');
-        var query = db.query('select * from jyd_estado', function (error, result) {
+        var query = db.query('select * from jyd_estado', function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1943,18 +1897,18 @@ app.route('/estado')
             }
         });
     })
-    .post(function (req, res) {
+    .post(function(req, res) {
         res.send('Add a rol');
     })
-    .put(function (req, res) {
+    .put(function(req, res) {
         res.send('Update the rol');
     });
 
 /* MANEJADOR DE RUTA REGISTRO DEL ITEM */
 app.route('/registro')
-    .get(function (req, res) {
+    .get(function(req, res) {
         console.log('Página de Validar Información ');
-        var query = db.query('select i.nombre, a.latitud, a.longitud, e.descripcion estado, a.descripcion descripcion from jyd_registro r, jyd_registro_has_item a, jyd_item i, jyd_estado e where pk_id_registro=fk_id_registro and pk_id_estado=fk_estado and pk_id_item=fk_id_item', function (error, result) {
+        var query = db.query('select i.nombre, a.latitud, a.longitud, e.descripcion estado, a.descripcion descripcion from jyd_registro r, jyd_registro_has_item a, jyd_item i, jyd_estado e where pk_id_registro=fk_id_registro and pk_id_estado=fk_estado and pk_id_item=fk_id_item', function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1963,10 +1917,10 @@ app.route('/registro')
             }
         });
     })
-    .post(function (req, res) {
+    .post(function(req, res) {
         res.send('Add a rol');
     })
-    .put(function (req, res) {
+    .put(function(req, res) {
         res.send('Update the rol');
     });
 /*************************************************************
@@ -2530,6 +2484,6 @@ app.get('/Estado-Solic', (req, res) => {
 });
 
 //Inicio de servidor NodeJS
-app.listen(PORT, function () {
+app.listen(PORT, function() {
     console.log(`Server running at port ${PORT}`);
 });

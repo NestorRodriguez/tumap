@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DboService } from 'src/app/Services/dbo/dbo.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-formulario',
@@ -7,30 +9,50 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormularioPage implements OnInit {
 
-  constructor() { }
-  imagenes = [ 
-    'assets/dbo_img/imagen11.jpg',
-    'assets/dbo_img/imagen21.jpg',
-    'assets/dbo_img/imagen32.jpg',
-    'assets/dbo_img/imagen42.jpg',
-    'assets/dbo_img/Imagen52.jpg',
-    'assets/dbo_img/imagen63.jpg',
-    'assets/dbo_img/Imagen73.jpg',
-    'assets/dbo_img/imagen83.jpg',
-    'assets/dbo_img/Imagen94.jpg',
-    'assets/dbo_img/imagen104.jpg',
-    'assets/dbo_img/imagen114.jpg',
-    'assets/dbo_img/imagen124.jpg',
-    'assets/dbo_img/imagen134.jpg',
-    
-  
-  ];
-  verImagen(){
-  alert('assets/respuestas/imagen 11.jpg')
-}
+  preguntas = [];
+  items = [];
+  idInscripcion: string;
+
+  sliderConfig = {
+    spaceBetween: 10,
+    centeredSlides: true,
+    slidesPerView: 1.6
+  };
+
+
+  constructor(private dboService: DboService, private router: Router, private actRoute: ActivatedRoute) {}
 
   ngOnInit() {
+    this.idInscripcion = this.actRoute.snapshot.paramMap.get('id');
+    this.preguntas = this.dboService.getPreguntasData();
+    console.log(this.preguntas);
+    this.items = this.dboService.getRespuestas();
+    console.log(this.items);
   }
-  
+
+  addToRespuestas(pregunta, respuesta) {
+    pregunta.isAdd = true;
+    // delete respuesta.name;
+    // delete respuesta.path;
+    respuesta.id_Inscripcion = Number(this.idInscripcion);
+    this.dboService.addRespuesta(respuesta);
+    console.log('addRespuesta: ', respuesta);
+
+  }
+
+  openRespuestas() {
+    this.router.navigate(['respuestas']);
+    console.log('navegate respuestas');
+  }
+
+  saveRespuestas() {
+    this.dboService.saveRespuesta().subscribe(
+      res => {
+        console.log(res);
+      },
+      err => console.error(err)
+    );
+    console.log('save respuestas');
+  }
 
 }
