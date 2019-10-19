@@ -9,6 +9,12 @@ const cors = require('cors');
 // Se agrega la librería para habilitar cors
 app.use(cors());
 
+app.all('/*', function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    next();
+});
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
@@ -1096,7 +1102,7 @@ router
     })
     .get('/predios/:id', (req, res) => {
         const id = req.params.id;
-        const sql = `SELECT * FROM predios WHERE id_predio='${id}';`;
+        const sql = `SELECT * FROM predios WHERE matricula='${id}';`;
         const query = db.query(sql, (error, result) => {
             try {
                 if (error) {
@@ -1515,10 +1521,10 @@ app.post('/irs-inventarios', (req, res) => {
     }
 
     if (data.tipo == 'Postes') {
-        if(data.tieneLampara != null) {
+        if (data.tieneLampara != null) {
             data.tieneLampara = (data.tieneLampara) ? 'S' : 'N';
         }
-        if(data.tieneTransformador != null) {
+        if (data.tieneTransformador != null) {
             data.tieneTransformador = (data.tieneTransformador) ? 'S' : 'N';
         }
     } else {
@@ -1530,7 +1536,7 @@ app.post('/irs-inventarios', (req, res) => {
     let sets = [];
     for (let i in data) {
         if (data[i] || data[i] == '') {
-            if(i != 'ubicacion'){
+            if (i != 'ubicacion') {
                 sets.push(`${mapper[i]}='${data[i]}'`);
             } else {
                 sets.push(`${mapper[i]}='${JSON.stringify(data[i])}'`);
@@ -1612,7 +1618,6 @@ app.get('/irs-inventarios-totales', (req, res) => {
 /***********************************************************
  * Servicio para la consulta de inventario de uso de Suelos*
  **********************************************************/
-
 app.route('/suelos')
     .get((req, res) => {
         const sql = `SELECT r.ID, NOMBRE_PROPIETARIO, NOMBRE_PREDIO, AREA, DIRECCION, 
@@ -1646,26 +1651,13 @@ app.route('/suelos')
     });
 // POST Para agregar Polígono principal 
 
-app.post('/predio/:id', (req, res) => {
-    let polygon = (req.body.polygon);
-    let sql = `SET @g = 'POLYGON(${polygon})';`;
-    sql += `INSERT INTO IM_PREDIO (PREDIO,ID_REGISTROS) VALUES( ST_PolygonFromText(@g),${req.params.id});`;
-    db.query(sql, (error, result) => {
-        if (error) {
-            res.json({
-                error: true,
-                message: error.message
-            });
-        } else {
-            res.json(result);
-        }
-    })
-});
 // POST Para agregar subpolígonos 
-app.post('/usosuelos/:id', (req, res) => {
+app.post('/usosuelos', (req, res) => {
     let data = (req.body);
-    let sql = `SET @g = 'POLYGON(${data.polygon})';`;
-    sql += `INSERT INTO IM_USOS_PREDIO (POLIGONO, ID_PREDIO, ID_TIPO_USOS) VALUES( ST_PolygonFromText(@g),${req.params.id}, ${data.idTipoUso});`;
+    console.log("##", data.idRegistro)
+    let sql = `INSERT INTO IM_REGISTROS (NOMBRE_PROPIETARIO, NOMBRE_PREDIO, AREA, DIRECCION)
+    VALUES('${data.nombrePropietario}', '${data.nombrePredio}','${data.area}','${data.direccion}');`;
+    sql += `INSERT INTO IM_USOS_PREDIO (POLIGONO, ID_REGISTRO) VALUES( '${data.poligono}', ${data.idRegistro});`;
     db.query(sql, (error, result) => {
         if (error) {
             res.json({
@@ -1683,6 +1675,19 @@ app.post('/usosuelos/:id', (req, res) => {
 app.get('/tipousosuelos', (req, res) => {
     let data = (req.body);
     let sql = `SELECT * FROM IM_TIPO_USOS`;
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: error.message
+            });
+        } else {
+            res.json(result);
+        }
+    })
+});
+app.get('/usosuelosid', (req, res) => {
+    let sql = `select MAX(ID)+1 as lastID FROM im_registros;`;
     db.query(sql, (error, result) => {
         if (error) {
             res.json({
