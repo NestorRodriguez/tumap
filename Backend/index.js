@@ -9,6 +9,12 @@ const cors = require('cors');
 // Se agrega la librería para habilitar cors
 app.use(cors());
 
+app.all('/*', function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    next();
+});
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
@@ -1096,7 +1102,7 @@ router
     })
     .get('/predios/:id', (req, res) => {
         const id = req.params.id;
-        const sql = `SELECT * FROM predios WHERE id_predio='${id}';`;
+        const sql = `SELECT * FROM predios WHERE matricula='${id}';`;
         const query = db.query(sql, (error, result) => {
             try {
                 if (error) {
@@ -1324,7 +1330,7 @@ app.post("/dbo_inscripcion", function(req, res) {
     sql = sql + `'${req.body.departamento}',`
     sql = sql + `'${req.body.municipio}',`
     sql = sql + `'${req.body.usuario}',CURDATE());`;
-    console.log('Add inscripcion:');
+    console.log('Add inscripcion:', sql);
     var query = db.query(sql, function(error, result) {
         if (error) {
             throw error;
@@ -1371,12 +1377,12 @@ app.put("/dbo_inscripcion/:id", function(req, res) {
 
 // dbo Lista respuestas 30/09/2019
 // http://localhost:3000/dbo_respuesta/1/3
-app.get('/dbo_respuesta/:id_inscripcion/:id_pregunta', function(req, res) {
+app.get('/dbo_respuesta/:id_inscripcion', function(req, res) {
     console.log('Página de respuesta');
     const { id_inscripcion } = req.params;
     const { id_pregunta } = req.params;
 
-    const sql = `SELECT * FROM dbo_respuesta WHERE id_inscripcion = '${id_inscripcion}' AND id_pregunta = '${id_pregunta}'`;
+    const sql = `SELECT * FROM dbo_respuesta WHERE id_inscripcion = '${id_inscripcion}'`;
 
     var query = db.query(sql, function(error, result) {
         if (error) {
@@ -1388,70 +1394,14 @@ app.get('/dbo_respuesta/:id_inscripcion/:id_pregunta', function(req, res) {
     })
 
 })
-app.post('/dbo_respuesta', function(req, res) {
 
-    var sql = `
-        INSERT INTO dbo_respuesta
-        (
-            id_inscripcion, 
-            id_pregunta, 
-            id_imagen
-        ) VALUES (
-            '${req.body.id_inscripcion}',
-            '${req.body.id_pregunta}',
-            '${req.body.id_imagen}'
-        );`;
-
-    console.log('Add dbo_respuesta');
-    var query = db.query(sql, function(error, result) {
-        if (error) {
-            throw error;
-        } else {
-            console.log(result);
-            res.json(result);
-        }
-    });
-
-    var sql = `
-    SELECT * FROM dbo_respuesta 
-    WHERE id_inscripcion = ' ${req.body.id_inscripcion} 
-    ' AND id_pregunta=' ${req.body.id_pregunta}
-    ' AND id_imagen='${req.body.id_imagen} `;
-
-    var query = db.query(sql, function(error, result) {
-        if (error) {
-            throw error;
-        } else {
-            console.log(result);
-            res.json(result);
-        }
-    });
-
-    if (query.lenght > 0) {
-        return res.json(query[0]);
-    }
-    res.json({ message: 'Respuesta no existe' });
-
+app.post("/dbo_respuesta", function(req, res) {
+    res.json({ text: 'Add respuesta: ' });
 })
-app.put('/dbo_respuesta/:id', function(req, res) {
-    const { id } = req.params;
 
-    const sql = `UPDATE dbo_respuesta SET 
-    id_inscripcion='${req.body.id_inscripcion}', 
-    id_pregunta='${req.body.id_pregunta}', 
-    id_imagen='${req.body.id_imagen}'
-    WHERE id='${id}';`;
 
-    var query = db.query(sql, function(error, result) {
-        if (error) {
-            throw error;
-        } else {
-            console.log(result);
-            res.json(result);
-        }
-    });
-
-    res.json({ text: 'Datos Actualizados ' + sql });
+app.put('/dbo_respuesta', function(req, res) {
+    res.json({ message: 'Update dbo_respuesta' });
 });
 
 // dbo Lista las respuestas con texto vlistado 30/09/2019
@@ -1668,7 +1618,6 @@ app.get('/irs-inventarios-totales', (req, res) => {
 /***********************************************************
  * Servicio para la consulta de inventario de uso de Suelos*
  **********************************************************/
-
 app.route('/suelos')
     .get((req, res) => {
         const sql = `SELECT r.ID, NOMBRE_PROPIETARIO, NOMBRE_PREDIO, AREA, DIRECCION, 
@@ -1702,26 +1651,13 @@ app.route('/suelos')
     });
 // POST Para agregar Polígono principal 
 
-app.post('/predio/:id', (req, res) => {
-    let polygon = (req.body.polygon);
-    let sql = `SET @g = 'POLYGON(${polygon})';`;
-    sql += `INSERT INTO IM_PREDIO (PREDIO,ID_REGISTROS) VALUES( ST_PolygonFromText(@g),${req.params.id});`;
-    db.query(sql, (error, result) => {
-        if (error) {
-            res.json({
-                error: true,
-                message: error.message
-            });
-        } else {
-            res.json(result);
-        }
-    })
-});
 // POST Para agregar subpolígonos 
-app.post('/usosuelos/:id', (req, res) => {
+app.post('/usosuelos', (req, res) => {
     let data = (req.body);
-    let sql = `SET @g = 'POLYGON(${data.polygon})';`;
-    sql += `INSERT INTO IM_USOS_PREDIO (POLIGONO, ID_PREDIO, ID_TIPO_USOS) VALUES( ST_PolygonFromText(@g),${req.params.id}, ${data.idTipoUso});`;
+    console.log("##", data.idRegistro)
+    let sql = `INSERT INTO IM_REGISTROS (NOMBRE_PROPIETARIO, NOMBRE_PREDIO, AREA, DIRECCION)
+    VALUES('${data.nombrePropietario}', '${data.nombrePredio}','${data.area}','${data.direccion}');`;
+    sql += `INSERT INTO IM_USOS_PREDIO (POLIGONO, ID_REGISTRO) VALUES( '${data.poligono}', ${data.idRegistro});`;
     db.query(sql, (error, result) => {
         if (error) {
             res.json({
@@ -1739,6 +1675,19 @@ app.post('/usosuelos/:id', (req, res) => {
 app.get('/tipousosuelos', (req, res) => {
     let data = (req.body);
     let sql = `SELECT * FROM IM_TIPO_USOS`;
+    db.query(sql, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: error.message
+            });
+        } else {
+            res.json(result);
+        }
+    })
+});
+app.get('/usosuelosid', (req, res) => {
+    let sql = `select MAX(ID)+1 as lastID FROM im_registros;`;
     db.query(sql, (error, result) => {
         if (error) {
             res.json({

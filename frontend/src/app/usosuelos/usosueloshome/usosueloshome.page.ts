@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage';
 import { Marcador } from '../class';
 import { ModalController } from '@ionic/angular';
 import { ModalSuelosPage } from '../modal-suelos/modal-suelos.page';
+import { InvsuelosService } from 'src/app/Services/inventario de suelos/invsuelos.service';
 
 @Component({
   selector: 'app-usosueloshome',
@@ -28,7 +29,9 @@ export class UsosueloshomePage implements OnInit {
   subPoligonoCerrado: boolean;
   poligonoInicial: boolean;
   checkmarkEnabled: boolean;
+  idRegistro: any[];
   constructor(private obtenerData: ObtenerdataService,
+              private service: InvsuelosService,
               private storage: Storage,
               public modal: ModalController) { }
 
@@ -41,6 +44,9 @@ export class UsosueloshomePage implements OnInit {
       });
     }
     this.dataUser = this.obtenerData.enviarData();
+    this.service.getData('usosuelosid').subscribe( Id => { this.idRegistro = Id[0].lastID;
+    });
+    try {
     this.storage.get('subpoligono').then(( subpoligonos => {
       const subpoligono: Marcador = JSON.parse(subpoligonos);
       this.polygonSub = true;
@@ -53,6 +59,9 @@ export class UsosueloshomePage implements OnInit {
           color: subpoligono[i].color });
       }
     }));
+  } catch (error) {
+    console.log(error);
+     }
   }
   public async cerrarPoligono() {
     // if ( this.poligonoCerrado  ) {
@@ -123,5 +132,21 @@ export class UsosueloshomePage implements OnInit {
     await modal.present();
     const dataModal = await modal.onWillDismiss();
     return dataModal;
+    }
+
+    public saveData() {
+      console.log('@@@', this.idRegistro);
+      const regData = {
+        nombrePropietario: this.dataUser.nombrepropietario,
+        nombrePredio: this.dataUser.nombrepredio,
+        area: this.dataUser.area,
+        direccion: this.dataUser.direccion,
+        poligono: JSON.stringify(this.arraySubPoligono),
+        idRegistro: this.idRegistro
+      };
+      console.log(regData);
+      this.service.saveFormData(regData).subscribe( res => {
+       console.log('RESPUESTA', res);
+      });
     }
 }
