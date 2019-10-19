@@ -24,11 +24,12 @@
                 <ion-item>
                     <ion-label style="color: white;" position="stacked"><b>Dirección:</b>
                     </ion-label>
-                    <ion-input name="nombrepredio" [(ngModel)]="datos.direccion" style="color: white;" required type="text"></ion-input>
+                    <ion-input name="direccion" [(ngModel)]="datos.direccion" style="color: white;" required type="text"></ion-input>
                 </ion-item>
 
                 <ion-item>
-                    <ion-select (ionChange)="seleccion($event)">
+                    <ion-label style="color: white;" position="stacked">Detalle:</ion-label>
+                    <ion-select style="color: white;" (ionChange)="seleccion($event)" interface="popover">
                         <ion-select-option value="{{detalle.id}}" *ngFor="let detalle of estadoVias">{{detalle.detalle}}</ion-select-option>
                     </ion-select>
                 </ion-item>
@@ -37,7 +38,7 @@
 
             </ion-list>
             <br>
-            <div class="ion-padding">
+            <div class="ion-padding" style="padding-top:30vh">
                 <ion-button (click)="guardar()" [routerLink]="['/mapavias']" color="white" size="medium" style="background-color: white; color: #0A9D97; border-radius: 5px 5px 5px 5px;"><b>Continuar</b></ion-button>
             </div>
         </form>
