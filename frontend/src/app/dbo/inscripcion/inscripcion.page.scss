@@ -14,10 +14,8 @@ ion-icon{
     float: left
 }
 
-ion-button{
-    margin-top: 60px;
-    float: right
-}
+t
+
 ion-card{
     margin-top: 30px;
     
@@ -32,16 +30,23 @@ ion-item{
 
 
 button { 
+    height: 35px;
+    width: 100px;
     margin:5px;
-    margin-top: 30px;   
-    padding: 10px 20px;
+    margin-top: 30px; 
+ text-align: center; 
+  margin-left: 50px;
     color: #0A9D97;
     background-color: white;
     border-radius: 7px;
- font-size: 25px;
+ font-size: 20px;
  border-color: #0A9D97;
-   
+   float:none ;
 }
+
+
+
+
 
 button:hover{
     background-color: rgb(129, 230, 226); 
@@ -56,4 +61,10 @@ button:hover{
     
 width: 200px;
 text-align: justify;
+}
+
+ion-back-button:hover{
+    background-color: rgb(129, 230, 226); 
+    border-radius: 30px;
+   
 }
