@@ -91,16 +91,15 @@ export class DboService {
   getRespuestas() {
     return this.respuestas;
   }
+
   addRespuesta(respuesta) {
     this.respuestas.push(respuesta);
   }
 
-  public saveRespuesta(): Observable<any[]>  {
-    // for (const respuesta of this.respuestas) {
+  public saveRespuesta()  {
+      console.log(JSON.stringify(this.getRespuestas()));
       return this.http.post<any[]>(`${this.API_URL}/dbo_respuesta`, this.respuestas);
-    // }
   }
-
 
   public handleError(err: HttpErrorResponse) {
     let errorMessage = '';

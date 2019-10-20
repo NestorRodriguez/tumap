@@ -1,7 +1,7 @@
 /*Crear base de datos*/
 create database tumap;
 use tumap;
-
+select * from users;
 /*Crear tabla rol*/
 create table rol (id int not null primary key auto_increment , namerol varchar(20) not null );
 insert into rol (namerol) values ('usuario');
@@ -11,8 +11,8 @@ insert into rol (namerol) values ('admin');
 create table users (id int not null primary key auto_increment , nameuser varchar(20) not null,
 password varchar(20) not null , email varchar(60) not null, id_rol int not null, foreign key (id_rol) references rol (id)
  );
-insert into users (nameuser, password, email, id_rol) values ('nrodriguez', '1234', 'nrodriguez@sena.edu.co', 2);
 insert into users (nameuser, password, email, id_rol) values ('nrodriguez', '1234', 'nrodriguez@sena.edu.co', 1);
+insert into users (nameuser, password, email, id_rol) values ('cvergara', '1234', 'nrodriguez@sena.edu.co', 2);
 insert into users (nameuser, password, email, id_rol) values ('juanherrera', '1234', 'jcherreraa@sena.edu.co', 1);
 insert into users (nameuser, password, email, id_rol) values ('davidr', '1234', 'davidreyes@sena.edu.co', 1);
 insert into users (nameuser, password, email, id_rol) values ('scamacho', '1234', 'secamacho5@misena.edu.co', 1);
@@ -485,7 +485,7 @@ CREATE  OR REPLACE VIEW `dbo_vListado` AS
 	dbo_pregunta.pregunta,
 	dbo_imagen.nombre as imagen
 	from dbo_inscripcion
-	inner join dbo_respuesta on dbo_respuesta.id = dbo_inscripcion.id
+	inner join dbo_respuesta on dbo_respuesta.id_inscripcion = dbo_inscripcion.id
 	inner join dbo_pregunta on dbo_pregunta.id = dbo_respuesta.id_pregunta
 	inner join dbo_imagen on dbo_imagen.id= dbo_respuesta.id_imagen
 	order by dbo_inscripcion.documento, dbo_pregunta.orden;
