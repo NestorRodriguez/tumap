@@ -1,7 +1,7 @@
 
     <ion-content>
-
-    <ion-content >
+            
+   
             <ion-toolbar color="none">
                     <ion-buttons slot="start">
                             <ion-back-button style="font-size: 90px" color="tertiary" [defaultHref]="['/']"></ion-back-button>
@@ -33,7 +33,7 @@
                 <ion-slide *ngFor="let respuesta of pregunta.respuestas">
                     <div *ngIf="pregunta.expanded">
                         <ion-card>
-                       
+                        
                             <ion-card-header>
                                 <ion-card-title color="tertiary">
                                     {{ respuesta.name }}
@@ -52,13 +52,12 @@
                 </ion-slide>
             </ion-slides>
         </div>
-    </ion-content>
+ 
 
-    <ion-toolbar class="atrasins" color="none">
-        <ion-buttons>
-            <ion-back-button color="tertiary" [defaultHref]="['/inscripcion/0']">Volver</ion-back-button>
-            <ion-button slot="end" (click)="saveRespuestas()">Grabar</ion-button>
-        </ion-buttons>
+    <ion-toolbar class="guardar-tool" color="none">
+       
+            <button class="botonguardar" slot="end" (click)="saveRespuestas()">Guardar</button>
+        
     </ion-toolbar>
 
 </ion-content>
