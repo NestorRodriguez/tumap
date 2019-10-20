@@ -25,8 +25,8 @@ app.use(bodyParser.json({ extended: true, limit: '10mb' }));
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "",
-    database: "hidrico",
+    password: "12345",
+    database: "tumap",
     port: 3306,
     multipleStatements: true
 });
@@ -1170,7 +1170,8 @@ router
         const query = db.query(sql, (error, result) => {
             try {
                 if (error) {
-                    throw error;               } else {
+                    throw error;
+                } else {
                     console.log(result);
                     const [data] = result;
                     res.json(data)
@@ -1188,7 +1189,7 @@ router
             limites,
             serv_publicos
         } = req.body;
-        
+
         const dato = {
             matricula: matricula,
             direccion: 'Cl 7a Bis c 80 a 50',
@@ -1213,13 +1214,13 @@ router
         db.query(sql, (error, result) => {
             if (error) {
                 res.json({ error: error })
-            } else {           
-                result.message = 'ok'     
+            } else {
+                result.message = 'ok'
                 res.json(result)
             }
             console.log(result)
         });
-        
+
         //res.json('ok')
     })
     .put('/predios/:id', (req, res) => {
