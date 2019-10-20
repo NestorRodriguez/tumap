@@ -67,7 +67,7 @@ app.route('/users')
 app.route('/users/:id')
     .get((req, res) => {
         const id = req.params.id;
-        const sql = `SELECT * FROM users WHERE id_User='${id}';`;
+        const sql = `SELECT * FROM users WHERE id='${id}';`;
         const query = db.query(sql, (error, result) => {
             try {
                 if (error) {
@@ -1170,7 +1170,8 @@ router
         const query = db.query(sql, (error, result) => {
             try {
                 if (error) {
-                    throw error;               } else {
+                    throw error;
+                } else {
                     console.log(result);
                     const [data] = result;
                     res.json(data)
@@ -1188,7 +1189,7 @@ router
             limites,
             serv_publicos
         } = req.body;
-        
+
         const dato = {
             matricula: matricula,
             direccion: 'Cl 7a Bis c 80 a 50',
@@ -1213,13 +1214,13 @@ router
         db.query(sql, (error, result) => {
             if (error) {
                 res.json({ error: error })
-            } else {           
-                result.message = 'ok'     
+            } else {
+                result.message = 'ok'
                 res.json(result)
             }
             console.log(result)
         });
-        
+
         //res.json('ok')
     })
     .put('/predios/:id', (req, res) => {
