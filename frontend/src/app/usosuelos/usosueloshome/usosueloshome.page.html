@@ -15,8 +15,14 @@
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
-
 <ion-content>
+
+    <div class="contenedorconvenciones">
+        <ul type="none">
+            <li><span class="tipoarea"></span><label>Construida</label></li>
+        </ul>
+    </div>
+
     <ion-fab *ngIf="polygonSub" vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button (click)="cerrarPoligono()">
             <ion-icon name="checkmark"></ion-icon>
