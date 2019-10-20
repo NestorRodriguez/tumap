@@ -65,7 +65,7 @@ export class LoginPage implements OnInit {
                     rol = 1;
                   }
                   else if (value.id_rol === 2){
-                  rol = 2;
+                    rol = 2;
                   } 
                 }
               });
