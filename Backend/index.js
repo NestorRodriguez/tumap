@@ -9,7 +9,7 @@ const cors = require('cors');
 // Se agrega la librería para habilitar cors
 app.use(cors());
 
-app.all('/*', function (req, res, next) {
+app.all('/*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Content-Type");
     next();
@@ -1273,11 +1273,7 @@ app.route('/dbo_pregunta')
     .get(function(req, res) {
         console.log('Página de pregunta ');
 
-        var sql = `select p.id as id_pregunta , p.orden as orden_pregunta, p.pregunta, i.id as id_imagen,i.orden as orden_imagen ,i.nombre,i.ruta `
-        sql = sql + `from dbo_pregunta as p `
-        sql = sql + `inner join dbo_imagen as i `
-        sql = sql + `on p.id= i.id_pregunta `
-        sql = sql + `order by p.orden, i.orden;`;
+        var sql = `select id, pregunta from tumap.dbo_pregunta order by orden; `;
 
         var query = db.query(sql, function(error, result) {
             if (error) {
@@ -1290,12 +1286,66 @@ app.route('/dbo_pregunta')
     });
 
 
+app.get('/dbo_preguntas-respuestas', (req, res) => {
+
+    const sqlp = 'select id, pregunta from tumap.dbo_pregunta order by orden;';
+    const sqlr = 'Select id, id_pregunta, nombre, ruta from tumap.dbo_imagen order by id_pregunta, orden;';
+
+    let preguntas = [];
+    let respuestas = [];
+
+    db.query(sqlp, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: "Ocurrió un error al consultar las preguntas"
+            });
+        } else {
+            //preguntas.concat(result);
+            preguntas = result;
+            console.log(preguntas);
+        }
+    });
+
+    db.query(sqlr, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: "Ocurrió un error al consultar las respuestas"
+            });
+        } else {
+            respuestas = result;
+            console.log(respuestas);
+
+        }
+    });
+
+
+    if (preguntas) {
+
+        preguntas.map(p => {
+            p.respuestas = respuestas.filter(r => p.id = r.id_pregunta);
+        });
+        console.log("respuestas:", respuestas);
+        return res.json(preguntas);
+    } else {
+        res.json({
+            error: true,
+            message: "Ocurrió un error al consultar preguntas y respuestas"
+        });
+    }
+
+    res.json({ text: 'Datos Merge', respuestas });
+});
+
 // dbo Lista las imagen por imagensuelos 30/09/2019
-app.route('/dbo_imagen/:id_Pregunta')
+app.route('/dbo_imagen')
     .get(function(req, res) {
         console.log('Página de imagen ');
-        var id_Pregunta = req.params.id_Pregunta;
-        var query = db.query('select * from dbo_imagen where id_Pregunta= ?', id_Pregunta, function(error, result) {
+
+        var sql = `Select id as id_imagen,id_pregunta,nombre,ruta from tumap.dbo_imagen order by id_pregunta, orden;`;
+
+        var query = db.query(sql, function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1396,7 +1446,28 @@ app.get('/dbo_respuesta/:id_inscripcion', function(req, res) {
 })
 
 app.post("/dbo_respuesta", function(req, res) {
-    res.json({ text: 'Add respuesta: ' });
+
+    console.log(req.body);
+    console.log(req.body.id_inscripcion);
+    console.log(req.body.id_pregunta);
+
+
+    var sql = "INSERT INTO tumap.dbo_respuesta(id_inscripcion,id_pregunta,id_imagen) VALUES ( "
+    sql = sql + ` ${req.body.id_inscripcion} ,`
+    sql = sql + ` ${req.body.id_pregunta} ,`
+    sql = sql + ` ${req.body.id_imagen});`;
+
+    console.log('Add inscripcion:', sql);
+
+    var query = db.query(sql, function(error, result) {
+        if (error) {
+            throw error;
+        } else {
+            console.log(result);
+            res.json(result);
+        }
+    });
+    // res.json({ text: 'Add respuesta: ' });
 })
 
 
