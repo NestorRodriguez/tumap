@@ -91,13 +91,15 @@ export class DboService {
   getRespuestas() {
     return this.respuestas;
   }
+
   addRespuesta(respuesta) {
     this.respuestas.push(respuesta);
   }
 
-  public saveRespuesta(): Observable<any[]>  {
+  public saveRespuesta()  {
     // for (const respuesta of this.respuestas) {
-      return this.http.post<any[]>(`${this.API_URL}/dbo_respuesta`, this.respuestas);
+      console.log(JSON.stringify(this.getRespuestas()));
+      // return this.http.post<any[]>(`${this.API_URL}/dbo_respuesta`, this.respuestas);
     // }
   }
 

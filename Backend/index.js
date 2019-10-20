@@ -1106,7 +1106,8 @@ router
         const query = db.query(sql, (error, result) => {
             try {
                 if (error) {
-                    throw error;               } else {
+                    throw error;
+                } else {
                     console.log(result);
                     const [data] = result;
                     res.json(data)
@@ -1124,7 +1125,7 @@ router
             limites,
             serv_publicos
         } = req.body;
-        
+
         const dato = {
             matricula: matricula,
             direccion: 'Cl 7a Bis c 80 a 50',
@@ -1149,13 +1150,13 @@ router
         db.query(sql, (error, result) => {
             if (error) {
                 res.json({ error: error })
-            } else {           
-                result.message = 'ok'     
+            } else {
+                result.message = 'ok'
                 res.json(result)
             }
             console.log(result)
         });
-        
+
         //res.json('ok')
     })
     .put('/predios/:id', (req, res) => {
@@ -1315,38 +1316,38 @@ app.get('/dbo_preguntas-respuestas', (req, res) => {
             //preguntas.concat(result);
             preguntas = result;
             console.log(preguntas);
-        }
-    });
 
-    db.query(sqlr, (error, result) => {
-        if (error) {
-            res.json({
-                error: true,
-                message: "Ocurrió un error al consultar las respuestas"
+            db.query(sqlr, (error, result) => {
+                if (error) {
+                    res.json({
+                        error: true,
+                        message: "Ocurrió un error al consultar las respuestas"
+                    });
+                } else {
+                    respuestas = result;
+                    console.log(respuestas);
+
+
+                    if (preguntas) {
+
+                        preguntas.map(p => {
+                            p.respuestas = respuestas.filter(r => p.id = r.id_pregunta);
+                        });
+                        console.log("respuestas:", respuestas);
+                        return res.json(preguntas);
+                    } else {
+                        res.json({
+                            error: true,
+                            message: "Ocurrió un error al consultar preguntas y respuestas"
+                        });
+                    }
+
+                    res.json({ preguntas, respuestas });
+
+                }
             });
-        } else {
-            respuestas = result;
-            console.log(respuestas);
-
         }
     });
-
-
-    if (preguntas) {
-
-        preguntas.map(p => {
-            p.respuestas = respuestas.filter(r => p.id = r.id_pregunta);
-        });
-        console.log("respuestas:", respuestas);
-        return res.json(preguntas);
-    } else {
-        res.json({
-            error: true,
-            message: "Ocurrió un error al consultar preguntas y respuestas"
-        });
-    }
-
-    res.json({ text: 'Datos Merge', respuestas });
 });
 
 // dbo Lista las imagen por imagensuelos 30/09/2019
@@ -1438,47 +1439,85 @@ app.put("/dbo_inscripcion/:id", function(req, res) {
 
 // dbo Lista respuestas 30/09/2019
 // http://localhost:3000/dbo_respuesta/1/3
-app.get('/dbo_respuesta/:id_inscripcion', function(req, res) {
-    console.log('Página de respuesta');
-    const { id_inscripcion } = req.params;
-    const { id_pregunta } = req.params;
-
-    const sql = `SELECT * FROM dbo_respuesta WHERE id_inscripcion = '${id_inscripcion}'`;
-
-    var query = db.query(sql, function(error, result) {
+app.get('/dbo_respuesta/', function(req, res) {
+    const sql = 'SELECT * FROM irs_inventarios_totales';
+    db.query(sql, (error, result) => {
         if (error) {
-            throw error;
+            res.status(400).send('<h1>Ocurrió un error al consultar las encuestas.</h1>');
         } else {
-            console.log(result);
-            res.json(result);
+            const style = 'style="border: 1px solid black;"';
+            let html = '<table style="width:100%; border: 1px solid black;">';
+            html = html + `
+                    <tr ${style}>
+                        <td ${style}>id</td>
+                        <td ${style}>tipo</td>
+                        <td ${style}>clase poste</td>
+                        <td ${style}>material</td>
+                        <td ${style}>numero / empresa</td>
+                        <td ${style}>tiene lámpara</td>
+                        <td ${style}>tiene transformador</td>
+                        <td ${style}>operador</td>
+                        <td ${style}>estado</td>
+                        <td ${style}>ubicacion</td>
+                        <td ${style}>imagen</td>
+                        <td ${style}>usuario</td>
+                        <td ${style}>encuesta operador</td>
+                        <td ${style}>encuesta estado</td>
+                        <td ${style}>fecha</td>
+                        <td ${style}>ip</td>
+                    </tr>
+                `
+            for (let i in result) {
+                html = html + `
+                    <tr ${style}>
+                        <td ${style}>${result[i].id}</td>
+                        <td ${style}>${result[i].tipo}</td>
+                        <td ${style}>${result[i].clase_poste}</td>
+                        <td ${style}>${result[i].material}</td>
+                        <td ${style}>${result[i].identificador}</td>
+                        <td ${style}>${result[i].lampara}</td>
+                        <td ${style}>${result[i].transformador}</td>
+                        <td ${style}>${result[i].operador}</td>
+                        <td ${style}>${result[i].estado}</td>
+                        <td ${style}>${result[i].ubicacion}</td>
+                        <td ${style}><img src="${result[i].imagen}" width="50" height="auto"/></td>
+                        <td ${style}>${result[i].id_usuario}</td>
+                        <td ${style}>${result[i].encuesta_operador}</td>
+                        <td ${style}>${result[i].encuesta_estado}</td>
+                        <td ${style}>${result[i].fecha}</td>
+                        <td ${style}>${result[i].ip}</td>
+                    </tr>
+                    `;
+            }
+            html = html + '</table>';
+            res.send(html);
         }
-    })
-
+    });
 })
+
 
 app.post("/dbo_respuesta", function(req, res) {
 
-    console.log(req.body);
-    console.log(req.body.id_inscripcion);
-    console.log(req.body.id_pregunta);
+    const data = req.body;
+    const errors = 0;
 
+    data.map(item => {
+        const sql = `INSERT INTO dbo_respuesta (id_inscripcion,id_pregunta,id_imagen) VALUES (${item.id_Inscripcion}, ${item.id_Pregunta},${item.id_Imagen});`;
+        // console.log('Add inscripcion:', sql);
+        db.query(sql, function(error, result) {
+            if (error) {
+                errors++;
+                // console.log(error)
+            }
+        });
 
-    var sql = "INSERT INTO tumap.dbo_respuesta(id_inscripcion,id_pregunta,id_imagen) VALUES ( "
-    sql = sql + ` ${req.body.id_inscripcion} ,`
-    sql = sql + ` ${req.body.id_pregunta} ,`
-    sql = sql + ` ${req.body.id_imagen});`;
-
-    console.log('Add inscripcion:', sql);
-
-    var query = db.query(sql, function(error, result) {
-        if (error) {
-            throw error;
-        } else {
-            console.log(result);
-            res.json(result);
-        }
     });
-    // res.json({ text: 'Add respuesta: ' });
+
+    if (errors) {
+        res.json({ success: false, error: `Se presentaron (${errors}) errores al guardar la respuesta` });
+    } else {
+        res.json({ success: true });
+    }
 })
 
 
