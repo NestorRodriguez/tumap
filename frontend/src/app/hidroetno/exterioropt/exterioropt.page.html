@@ -30,13 +30,13 @@
                 <ion-textarea rows="6" cols="20" placeholder="Ingresa tus comentarios..."></ion-textarea>
             </ion-item>
 
-            <h6>Foto</h6>
+            <!--h6>Foto</h6>
             <ion-input class="photo" type="file"></ion-input>
 
             <div class="boton">
                 <ion-button size="small" name="modificar"> Modificar</ion-button>
                 <ion-button size="small" name="guardar"> Guardar</ion-button>
-            </div>
+            </div-->
         </div>
 
         <div class="box3">
@@ -62,6 +62,9 @@
 
             <h6>Foto</h6>
             <ion-input class="photo" type="file"></ion-input>
+
+            <ion-button (click)="tomarFoto()">Tomar foto</ion-button>
+            <img ngIf="image" src="image" alt="image">
 
             <div class="boton">
                 <ion-button size="small" name="modificar"> Modificar</ion-button>
