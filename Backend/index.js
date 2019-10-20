@@ -67,7 +67,7 @@ app.route('/users')
 app.route('/users/:id')
     .get((req, res) => {
         const id = req.params.id;
-        const sql = `SELECT * FROM users WHERE id_User='${id}';`;
+        const sql = `SELECT * FROM users WHERE id='${id}';`;
         const query = db.query(sql, (error, result) => {
             try {
                 if (error) {
