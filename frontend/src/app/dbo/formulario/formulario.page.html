@@ -33,10 +33,12 @@
                 <ion-slide *ngFor="let respuesta of pregunta.respuestas">
                     <div *ngIf="pregunta.expanded">
                         <ion-card>
+                       
                             <ion-card-header>
-                                <ion-card-title>
+                                <ion-card-title color="tertiary">
                                     {{ respuesta.name }}
                                 </ion-card-title>
+                            
                               
                                     <!-- <img src="https://via.placeholder.com/300x300"> -->
                                     <button [disabled]="pregunta.isAdd" expand="full" (click)="addToRespuestas(pregunta, respuesta)">
