@@ -22,6 +22,13 @@ export class MatriculaPage implements OnInit {
   getWebService: any;
   validarForm: FormGroup;
   direccion: string = "";
+  predial_basica: {
+    matricula: number;
+    uso_suelo: number;
+    nivel_vivienda: number;
+    limites: number[];
+    serv_publicos: boolean[];
+  };
 
   constructor(
     private httpClient: HttpClient,
@@ -48,6 +55,19 @@ export class MatriculaPage implements OnInit {
     //   },
     //   error => console.log(error)
     // );
+    this.InicializarPredialBasico();
+  }
+
+  InicializarPredialBasico() {
+    let validar = this.predialService.GetLocalStorageItem("predial_basica");
+    this.predial_basica = {
+      matricula: 0,
+      uso_suelo: 0,
+      nivel_vivienda: 0,
+      limites: [0.0, 0.0],
+      serv_publicos: [false, false, false, false, false, false, false]
+    };
+    this.SaveLocalLstorage();
   }
 
   async getDataFromNodeJsId() {
@@ -63,7 +83,7 @@ export class MatriculaPage implements OnInit {
             JSON.stringify(this.loadingController)
           );
           this.loadingController.dismiss();
-          this.router.navigateByUrl("/ibpredial-inicio");
+          //this.router.navigateByUrl("/ibpredial-inicio");
           console.log(this.loadPredial);
         } else {
           this.loadingController.dismiss();
@@ -72,7 +92,7 @@ export class MatriculaPage implements OnInit {
       },
       error => {
         this.loadingController.dismiss();
-        console.log(error);
+        alert("Error en la conexion");
       }
     );
   }
@@ -97,6 +117,10 @@ export class MatriculaPage implements OnInit {
         {
           text: "Ok",
           handler: () => {
+            this.GetLocalStorage();
+            console.log(this.validarForm.value);
+            this.predial_basica.matricula = this.validarForm.value.matricula;
+            this.SaveLocalLstorage();
             this.router.navigateByUrl("/ibpredial-inicio");
           }
         }
@@ -114,5 +138,16 @@ export class MatriculaPage implements OnInit {
     });
     await loading.present();
     //await loading.onDidDismiss();
+  }
+
+  GetLocalStorage() {
+    this.predial_basica = JSON.parse(
+      this.predialService.GetLocalStorageItem("predial_basica")
+    );
+    console.log(this.predial_basica);
+  }
+
+  SaveLocalLstorage() {
+    localStorage.setItem("predial_basica", JSON.stringify(this.predial_basica));
   }
 }

@@ -1,7 +1,11 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Observable, throwError } from "rxjs";
-import { catchError, tap, map } from "rxjs/operators";
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders
+} from "@angular/common/http";
+import { Observable, throwError, of } from "rxjs";
+import { catchError, tap, map, switchMap } from "rxjs/operators";
 import { ToastController } from "@ionic/angular";
 import { Matricula } from "../Interfaces/interfaces";
 
@@ -12,6 +16,11 @@ export class PredialService {
   private predialUrl = "http://localhost:3000/usopredio";
   private nivelUrl = "http://localhost:3000/nivel";
   urlApi: string = "http://localhost:3000/predios";
+  httpOptions = {
+    headers: new HttpHeaders({
+      "Content-Type": "application/json"
+    })
+  };
 
   constructor(private http: HttpClient) {}
 
@@ -30,7 +39,26 @@ export class PredialService {
   }
 
   obtenerPredialRoswell(matricula: string): Observable<any> {
-    return this.http.get<Matricula>(`${this.urlApi}/${matricula}`);
+    return this.http.get<Matricula>(`${this.urlApi}/${matricula}`).pipe(
+      tap(data => JSON.stringify(data)),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Envia variable a Web Service con toda la data
+   * @param coord = data con las coordenadas
+   */
+  SavePredial(): Observable<any> {
+    let data = this.GetLocalStorageItem("predial_basica");
+    const body = data;
+    return this.http.post<any>(`${this.urlApi}`, body, this.httpOptions).pipe(
+      switchMap(response => {
+        console.log(response);
+        return response.message !== "ok" ? throwError(response) : of(response);
+      }),
+      catchError(this.handleError)
+    );
   }
 
   private handleError(err: HttpErrorResponse) {

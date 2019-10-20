@@ -19,6 +19,7 @@ export class NivelPage implements OnInit {
 
   id_nivel: number;
   predialBasico: any;
+  state: any;
   constructor(
     private router: Router,
     private loadingController: LoadingController,
@@ -31,6 +32,7 @@ export class NivelPage implements OnInit {
 
   Aceptar() {
     this.predialBasico.nivel_vivienda = this.id_nivel;
+    this.StateCheck();
     this.predialService.SaveLocalStorageItem(
       "predial_basica",
       JSON.stringify(this.predialBasico)
@@ -47,5 +49,17 @@ export class NivelPage implements OnInit {
       this.predialService.GetLocalStorageItem("predial_basica")
     );
     console.log(this.predialBasico);
+  }
+
+  SaveLocalLstorage() {
+    localStorage.setItem("checkState", JSON.stringify(this.state));
+  }
+
+  StateCheck() {
+    this.state = JSON.parse(
+      this.predialService.GetLocalStorageItem("checkState")
+    );
+    this.state.niv_viv = true;
+    this.SaveLocalLstorage();
   }
 }
