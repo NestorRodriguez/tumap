@@ -75,8 +75,6 @@ const routes: Routes = [
   { path: 'mapavias', loadChildren: './vistasjf/mapavias/mapavias.module#MapaviasPageModule' },
   { path: 'slides', loadChildren: './vistasjf/slides/slides.module#SlidesPageModule' },
   { path: 'resumenjf', loadChildren: './vistasjf/resumen/resumen.module#ResumenPageModule' },
-
-
 ];
 
 @NgModule({
