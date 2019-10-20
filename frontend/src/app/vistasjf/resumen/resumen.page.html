@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="['/']"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-title">Resumen</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngFor="let data of registro">
+    <div style="padding-left: 17%; padding-right: 17%; padding-top: 6%;">
+      <img [src]="data.imagen" class="img_resumen" width="350px" height="390px" alt="">
+    </div>
+    <div style="padding-left: 8%; padding-right: 8%; padding-top: 2%;">
+      <div class="div_datos">    
+        <span *ngFor="let item of registro">
+          <ion-label><b>DIRECCIÓN.</b> {{item.direccion}}</ion-label><br>
+          <ion-label><b>DETALLE.</b> {{item.detalle}}</ion-label><br>
+        </span>        
+        <ion-label><b>LATITUD.</b> {{data.ubicacion.lat}}</ion-label><br>
+        <ion-label><b>LONGITUD.</b> {{data.ubicacion.lng}}</ion-label><br>            
+      </div>
+    </div>
+    <section style="text-align: center; padding-top: 2%;">        
+      <ion-button routerLink="/" color="primary" size="medium" style="border-radius: 5px 5px 5px 5px;"><b>Finalizar</b></ion-button>
+    </section>
+  </div>
+</ion-content>

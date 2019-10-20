@@ -165,26 +165,55 @@ CREATE TABLE estrato (
 );
 
 /* Creamos tabla predios */
-CREATE TABLE predios (
-    id_predio INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    matricula varchar(55) NOT NULL,	
-    direccion varchar(55) NOT NULL,
-    ide_estrato INT NOT NULL,
-    id_usosuelo INT NOT NULL,
-    ide_nivel INT NOT NULL,
-    estado_Vivienda char not null, 
-	servicio_agua boolean NOT NULL,
-    servicio_energia boolean NOT NULL,
-    servicio_internet boolean NOT NULL,
-    servicio_telefoniaFija boolean NOT NULL,
-    servicio_telefoniaMovil boolean NOT NULL,
-    servicio_gasNatural boolean NOT NULL,
-    servicio_gasPropano boolean NOT NULL,
-    punto_locaclizacion point,    
-    foreign key (ide_estrato) references estrato (id_estrato),
-    foreign key (ide_nivel) references nivel_Vivienda (id_nivel),
-    foreign key (id_usosuelo) references uso_Predio (id_predio)
-);
+CREATE TABLE `predios`
+(
+  `id_predio` int
+(11) NOT NULL AUTO_INCREMENT,
+  `matricula` varchar
+(55) NOT NULL UNIQUE,
+  `direccion` varchar
+(55) NOT NULL,
+  `ide_estrato` int
+(11) NOT NULL,
+  `id_usosuelo` int
+(11) NOT NULL,
+  `ide_nivel` int
+(11) NOT NULL,
+  `estado_Vivienda` char
+(1) NOT NULL,
+  `servicio_agua` tinyint
+(1) NOT NULL,
+  `servicio_energia` tinyint
+(1) NOT NULL,
+  `servicio_internet` tinyint
+(1) NOT NULL,
+  `servicio_telefoniaFija` tinyint
+(1) NOT NULL,
+  `servicio_telefoniaMovil` tinyint
+(1) NOT NULL,
+  `servicio_gasNatural` tinyint
+(1) NOT NULL,
+  `servicio_gasPropano` tinyint
+(1) NOT NULL,
+  `punto_locaclizacion` point DEFAULT NULL,
+  PRIMARY KEY
+(`id_predio`),
+  KEY `ide_estrato`
+(`ide_estrato`),
+  KEY `ide_nivel`
+(`ide_nivel`),
+  KEY `id_usosuelo`
+(`id_usosuelo`),
+  CONSTRAINT `predios_ibfk_1` FOREIGN KEY
+(`ide_estrato`) REFERENCES `estrato`
+(`id_estrato`),
+  CONSTRAINT `predios_ibfk_2` FOREIGN KEY
+(`ide_nivel`) REFERENCES `nivel_vivienda`
+(`id_nivel`),
+  CONSTRAINT `predios_ibfk_3` FOREIGN KEY
+(`id_usosuelo`) REFERENCES `uso_predio`
+(`id_predio`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 insert into uso_predio (descripcion)
 values ('Comercial');

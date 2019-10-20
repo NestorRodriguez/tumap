@@ -14,6 +14,13 @@ export class InicioPage implements OnInit {
 
   iconColor = ["danger", "success"];
 
+  checkState = {
+    ser_pub: false,
+    uso_sue: false,
+    niv_viv: false,
+    lim_col: false
+  };
+
   buttonContainer: any = [
     {
       id: "serv_pub",
@@ -49,6 +56,7 @@ export class InicioPage implements OnInit {
     }
   ];
 
+  disabled = true;
   predial_basica: any;
 
   constructor(
@@ -61,19 +69,14 @@ export class InicioPage implements OnInit {
   var: any;
 
   ngOnInit() {
-    this.InicializarPredialBasico();
+    this.SvCheckStateLocalStorage();
+    this.estadoBoton();
+    //this.checkList();
     this.var = this.activatedRoute.snapshot.paramMap.get("id");
     if (this.var !== null) {
       this.flag = this.var.split("-");
       let optMenu = this.var.split("-")[1];
       console.log(this.flag);
-
-      this.buttonContainer.find((data, key) => {
-        if (data.id === optMenu) {
-          this.buttonContainer[key].icon = this.iconName[1];
-          this.buttonContainer[key].colori = this.iconColor[1];
-        }
-      });
     }
   }
 
@@ -85,18 +88,59 @@ export class InicioPage implements OnInit {
     localStorage.setItem("predial_basica", JSON.stringify(this.predial_basica));
   }
 
-  InicializarPredialBasico() {
-    let validar = this.predialService.GetLocalStorageItem("predial_basica");
-    console.log(validar);
-    console.log(validar === null);
-    if (validar === null) {
-      this.predial_basica = {
-        uso_suelo: 0,
-        nivel_vivienda: 0,
-        limites: [0.0, 0.0],
-        serv_publicos: [0, 0, 0, 0, 0, 0, 0, 0, 0]
-      };
-      this.SaveLocalLstorage();
+  SvCheckStateLocalStorage() {
+    if (this.predialService.GetLocalStorageItem("checkState") === null) {
+      localStorage.setItem("checkState", JSON.stringify(this.checkState));
     }
+  }
+
+  // checkList() {
+  //   let optMenu = JSON.parse(
+  //     this.predialService.GetLocalStorageItem("checkState")
+  //   );
+
+  //   this.buttonContainer.id["lim_col"] = optMenu.lim_col;
+  //   this.buttonContainer.id["niv_viv"] = optMenu.niv_viv;
+  //   this.buttonContainer.id["ser_pub"] = optMenu.ser_pub;
+  //   this.buttonContainer.id["uso_sue"] = optMenu.uso_sue;
+
+  //   this.buttonContainer.find((data, key) => {
+  //     if (data.id === optMenu) {
+  //       this.buttonContainer[key].icon = this.iconName[1];
+  //       this.buttonContainer[key].colori = this.iconColor[1];
+  //     }
+  //   });
+
+  //   this.buttonContainer.find((data, key) => {
+  //     if (data.id === optMenu) {
+  //       this.buttonContainer[key].icon = this.iconName[1];
+  //       this.buttonContainer[key].colori = this.iconColor[1];
+  //     }
+  //   });
+  // }
+
+  estadoBoton() {
+    let checkState = JSON.parse(
+      this.predialService.GetLocalStorageItem("checkState")
+    );
+    console.log("cheksate...", checkState);
+    if (
+      checkState.ser_pub === true &&
+      checkState.uso_sue === true &&
+      checkState.niv_viv === true &&
+      checkState.lim_col === true
+    ) {
+      this.disabled = false;
+    }
+  }
+
+  Grabar() {
+    this.predialService
+      .SavePredial()
+      .subscribe(resp => console.log(resp), error => console.log(error));
+  }
+
+  Cancelar() {
+    this.route.navigateByUrl("/matricula");
   }
 }

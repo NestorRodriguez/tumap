@@ -11,12 +11,19 @@
 
 <ion-content class="ion-padding">
   <ion-list>
-    <ion-item button *ngFor="let i of buttonServicios">
+    <ion-item *ngFor="let i of buttonServicios">
       <!--ion-icon slot="start" [name]="i.iconStart" color="light"></ion-icon-->
       <ion-label color="light">
         {{ i.nombreMenu }}
       </ion-label>
-      <ion-toggle slot="end" [name]="i.nombreMenu" checked></ion-toggle>
+      <ion-toggle
+        [disabled]="i.disabled"
+        [checked]="i.checked"
+        slot="end"
+        [name]="i.nombreMenu"
+        [(ngModel)]="i.toogleService"
+        (click)="Toogle()"
+      ></ion-toggle>
     </ion-item>
   </ion-list>
   <ion-item lines="none" class="ion-padding-top">
@@ -29,7 +36,7 @@
             size="default"
             shape="round"
             expand="block"
-            (click)="save()"
+            (click)="Aceptar()"
           >
             <ion-label>{{ complete ? "Finalizar" : "Guardar" }}</ion-label>
           </ion-button>

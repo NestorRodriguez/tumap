@@ -18,6 +18,7 @@ export class EstratoPage implements OnInit {
   idUsoSuelo: number;
   predialBasico: any;
   btnState: boolean = true;
+  state: any;
 
   constructor(
     public alertController: AlertController,
@@ -61,6 +62,7 @@ export class EstratoPage implements OnInit {
 
   Aceptar() {
     this.predialBasico.uso_suelo = this.idUsoSuelo;
+    this.StateCheck();
     this.predialService.SaveLocalStorageItem(
       "predial_basica",
       JSON.stringify(this.predialBasico)
@@ -77,5 +79,17 @@ export class EstratoPage implements OnInit {
       this.predialService.GetLocalStorageItem("predial_basica")
     );
     console.log(this.predialBasico);
+  }
+
+  SaveLocalLstorage() {
+    localStorage.setItem("checkState", JSON.stringify(this.state));
+  }
+
+  StateCheck() {
+    this.state = JSON.parse(
+      this.predialService.GetLocalStorageItem("checkState")
+    );
+    this.state.uso_sue = true;
+    this.SaveLocalLstorage();
   }
 }
