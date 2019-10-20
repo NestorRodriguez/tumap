@@ -97,12 +97,9 @@ export class DboService {
   }
 
   public saveRespuesta()  {
-    // for (const respuesta of this.respuestas) {
       console.log(JSON.stringify(this.getRespuestas()));
-      // return this.http.post<any[]>(`${this.API_URL}/dbo_respuesta`, this.respuestas);
-    // }
+      return this.http.post<any[]>(`${this.API_URL}/dbo_respuesta`, this.respuestas);
   }
-
 
   public handleError(err: HttpErrorResponse) {
     let errorMessage = '';

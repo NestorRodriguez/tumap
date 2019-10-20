@@ -1,65 +1,83 @@
-ion-content{
-        --background: url(../../../assets/dbo_img/fondor.jpg) no-repeat center center / cover;
-    }
-  
-  .img1{
-      margin-top: 0px;
+ion-content {
+    --background: url(../../../assets/dbo_img/fondor.jpg) no-repeat center center / cover;
+}
+
+.img1 {
+    margin-top: 0px;
     margin-left: 50px;
-   
-    
-      width: 250px; height: 150px;
-  
-  }
-  
-  //texto
-  ion-title{
-      margin-top: 10px;
-      
-  }
-  
- 
- 
-  //boton
-  .centrado{
-      text-align: center;
-      margin-top: 15px;
-      
-  
-  }
-  
-  button { 
-      margin-top: 10px;   
-      padding: 3px 20px;
-      color: #0A9D97;
-      background-color: white;
-      border-radius: 7px;
-   font-size: 25px;
-   border-color: #0A9D97;
-     
-  }
-  
-  button:hover{
-      background-color: rgb(129, 230, 226); 
-  }
-  .volver1{
-      margin-left: 15px; 
-  }
-  //icon volver
-  on-icon{
-      size: 30px;
-  }
-  //imagen
+    width: 250px;
+    height: 150px;
+}
 
-  .packimagen{
-      height: 220px;
-      text-align:center;
-  }
-img{
+//texto
+ion-title {
     margin-top: 10px;
-    width: 250px; height: 90px;
-}
-  //texto
-.text{
-    text-align:center;
 }
 
+//boton
+.centrado {
+    text-align: center;
+    margin-top: 15px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 3px 20px;
+    color: #0A9D97;
+    background-color: white;
+    border-radius: 7px;
+    font-size: 25px;
+    border-color: #0A9D97;
+}
+
+button:hover {
+    background-color: rgb(129, 230, 226);
+}
+
+.volver1 {
+    margin-left: 15px;
+}
+
+//icon volver
+on-icon {
+    size: 30px;
+}
+
+//imagen
+.packimagen {
+    height: 220px;
+    text-align: center;
+}
+
+img {
+    margin-top: 10px;
+    width: 250px;
+    height: 90px;
+}
+
+//texto
+.text {
+    text-align: center;
+}
+
+page-home {
+    .data-scroll {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+}
+
+.data-table {
+    min-width: 800px;
+}
+
+.data-col {
+    background: #f0f0f0;
+}
+
+.has-focus {
+    --background: #fdf696;
+}
