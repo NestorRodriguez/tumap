@@ -25,8 +25,8 @@ app.use(bodyParser.json({ extended: true, limit: '10mb' }));
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "12345",
-    database: "tumap",
+    password: "",
+    database: "hidrico",
     port: 3306,
     multipleStatements: true
 });
@@ -704,6 +704,70 @@ app.route('/ethnobotany/:id')
                 }
             } catch (error) {
                 res.json({ error: error.message })
+            }
+        });
+    })
+
+//Location
+
+//Select Location
+app.route('/location')
+    .get((req, res) => {
+        console.log('Consultar datos');
+        var query = db.query('select * from location', (error, result) => {
+            try {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(result);
+                    res.json(result)
+                }
+            } catch (error) {
+                res.json({ error: error.message })
+            }
+        });
+    })
+
+//Manejo de Rutas Select lacation por id
+app.route('/location/:id')
+    .get((req, res) => {
+        const id = req.params.id;
+        const sql = `SELECT * FROM Location WHERE id_Location='${id}';`;
+        const query = db.query(sql, (error, result) => {
+            try {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(result);
+                    const [data] = result;
+                    res.json(result)
+                }
+            } catch (error) {
+                res.json({ error: error.message })
+            }
+        });
+    })
+
+
+//Insercion datos location
+
+app.route('/location')
+    .post((req, res) => {
+        const dato = {
+            color: req.body.color,
+            presion: req.body.presion,
+            tipoFlujo: req.body.tipoFlujo,
+            estado: req.body.estado,
+            ubicacion: req.body.ubicacion,
+        };
+
+        const sql = `INSERT INTO connections SET color='${dato.color}', presion='${dato.presion}', tipoFlujo='${dato.tipoFlujo}', estado='${dato.estado}', ubicacion='${dato.ubicacion}'`;
+        console.log(sql);
+        db.query(sql, (error, result) => {
+            if (error) {
+                res.json({ error: error })
+            } else {
+                res.json(result)
             }
         });
     })
