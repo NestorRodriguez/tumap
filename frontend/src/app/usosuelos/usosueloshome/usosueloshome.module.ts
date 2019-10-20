@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { AgmCoreModule } from '@agm/core';
-
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -24,6 +26,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [UsosueloshomePage]
+  declarations: [UsosueloshomePage],
+  providers: [AndroidPermissions, Geolocation, LocationAccuracy]
 })
 export class UsosueloshomePageModule {}

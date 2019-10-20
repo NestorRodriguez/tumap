@@ -1,35 +1,53 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-button routerLink="/ibpredial-inicio" routerDirection="forward">
-          <ion-icon slot="icon-only" name="arrow-round-back"> </ion-icon>
-        </ion-button>
-      </ion-buttons>
-      <ion-title> Límites - Colindantes </ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/ibpredial-inicio" routerDirection="forward">
+        <ion-icon slot="icon-only" name="arrow-round-back"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title> Límites - Colindantes </ion-title>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content class="welcome-card">
-    <!-- this creates a google map on the page with the given lat/lng from -->
-    <!-- the component as the initial center of the map: -->
-    <agm-map (mapClick)="agregarMarcador($event)" [latitude]="lat" [longitude]="lng" [zoom]='16'>
-        <agm-marker  *ngFor="let market of markets" [latitude]="market.lat" [longitude]="market.lng"  width="50%">
-            <agm-info-window>
-                <p>{{market.lat}}</p>
-                <p>{{market.lng}}</p>
-            </agm-info-window>
-        </agm-marker>
-    </agm-map>
-    <ion-item lines="none">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="12" class="ion-text-center">
-            <ion-button class="ion-text-capitalize" [color]="varColor" size="default" shape="round" expand="block" (click)="SaveCoordenda()" [disabled]="btnState">
-              <ion-icon slot="start" name="save"></ion-icon> Guardar
-            </ion-button>
-            <small> Lat:{{ lat }} Lng:{{ lng }} </small>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-item>
+  <!-- this creates a google map on the page with the given lat/lng from -->
+  <!-- the component as the initial center of the map: -->
+  <agm-map
+    (mapClick)="agregarMarcador($event)"
+    [latitude]="lat"
+    [longitude]="lng"
+    [zoom]="16"
+  >
+    <agm-marker
+      *ngFor="let market of markets"
+      [latitude]="market.lat"
+      [longitude]="market.lng"
+      width="50%"
+    >
+      <agm-info-window>
+        <p>{{ market.lat }}</p>
+        <p>{{ market.lng }}</p>
+      </agm-info-window>
+    </agm-marker>
+  </agm-map>
+  <ion-item lines="none">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" class="ion-text-center">
+          <ion-button
+            class="ion-text-capitalize"
+            [color]="varColor"
+            size="default"
+            shape="round"
+            expand="block"
+            (click)="SaveCoordenda()"
+            [disabled]="btnState"
+          >
+            <ion-icon slot="start" name="save"></ion-icon> Aceptar
+          </ion-button>
+          <small> Lat:{{ lat }} Lng:{{ lng }} </small>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
 </ion-content>

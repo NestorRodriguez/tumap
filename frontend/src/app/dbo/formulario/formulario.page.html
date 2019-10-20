@@ -1,24 +1,31 @@
-<ion-content>
-
-
-    <ion-header>
-        <ion-toolbar>
-            <img class="registrof" src="assets/logo registro.svg" alt="">
-            <ion-title>Encuesta de Suelos</ion-title>
-
-            <!-- <ion-buttons slot="end">
-                <ion-button (click)="openRespuestas()">
-                    <ion-badge *ngIf="items.length > 0"> {{ items.length }} </ion-badge>
-                    <ion-icon name="cart" slot="icon-only"></ion-icon>
-                </ion-button>
-            </ion-buttons> -->
-        </ion-toolbar>
-    </ion-header>
 
     <ion-content>
-        <div *ngFor="let pregunta of preguntas" class="category-bloks">
-            <ion-row class="ion-no-padding category-banner">
-                <ion-col class="ion-align-self-center ion-text-center" button tappable (click)="pregunta.expanded = !pregunta.expanded">
+            
+   
+            <ion-toolbar color="none">
+                    <ion-buttons slot="start">
+                            <ion-back-button style="font-size: 90px" color="tertiary" [defaultHref]="['/']"></ion-back-button>
+                        </ion-buttons>
+            </ion-toolbar>
+
+
+            <ion-toolbar color="none"> 
+                   
+
+                    <img class="registrof" src="assets/logo registro.svg" alt="">
+                    <ion-title color="tertiary" >Encuesta de Suelos</ion-title>
+        
+                    <!-- <ion-buttons slot="end">
+                        <ion-button (click)="openRespuestas()">
+                            <ion-badge *ngIf="items.length > 0"> {{ items.length }} </ion-badge>
+                            <ion-icon name="cart" slot="icon-only"></ion-icon>
+                        </ion-button>
+                    </ion-buttons> -->
+                </ion-toolbar>
+
+        <div color="tertiary" *ngFor="let pregunta of preguntas" class="category-bloks">
+            <ion-row color="tertiary" class="ion-no-padding category-banner">
+                <ion-col color="tertiary" class="ion-align-self-center ion-text-center" button tappable (click)="pregunta.expanded = !pregunta.expanded">
                     {{ pregunta.id_Pregunta }}. {{ pregunta.category }}
                 </ion-col>
             </ion-row>
@@ -26,29 +33,31 @@
                 <ion-slide *ngFor="let respuesta of pregunta.respuestas">
                     <div *ngIf="pregunta.expanded">
                         <ion-card>
+                        
                             <ion-card-header>
-                                <ion-card-title>
+                                <ion-card-title color="tertiary">
                                     {{ respuesta.name }}
                                 </ion-card-title>
-                                <ion-card-content>
+                            
+                              
                                     <!-- <img src="https://via.placeholder.com/300x300"> -->
+                                    <button [disabled]="pregunta.isAdd" expand="full" (click)="addToRespuestas(pregunta, respuesta)">
                                     <img [src]="respuesta.path" [alt]="respuesta.name">
 
-                                    <ion-button [disabled]="pregunta.isAdd" expand="full" (click)="addToRespuestas(pregunta, respuesta)">Add</ion-button>
-                                </ion-card-content>
+                                    </button>
+                               
                             </ion-card-header>
                         </ion-card>
                     </div>
                 </ion-slide>
             </ion-slides>
         </div>
-    </ion-content>
+ 
 
-    <ion-toolbar class="atrasins" color="none">
-        <ion-buttons>
-            <ion-back-button color="tertiary" [defaultHref]="['/inscripcion/0']">Volver</ion-back-button>
-            <ion-button slot="end" (click)="saveRespuestas()">Grabar</ion-button>
-        </ion-buttons>
+    <ion-toolbar class="guardar-tool" color="none">
+       
+            <button class="botonguardar" slot="end" (click)="saveRespuestas()">Guardar</button>
+        
     </ion-toolbar>
 
 </ion-content>

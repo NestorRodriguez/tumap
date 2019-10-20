@@ -69,6 +69,15 @@ const routes: Routes = [
   { path: 'sincobopt', loadChildren: './hidroetno/sincobopt/sincobopt.module#SincoboptPageModule' },
   { path: 'exterioropt', loadChildren: './hidroetno/exterioropt/exterioropt.module#ExterioroptPageModule' },
   { path: 'mapa', loadChildren: './hidroetno/mapa/mapa.module#MapaPageModule' },
+  { path: 'ibpredial-inicio', loadChildren: './ibpredial/inicio/inicio.module#InicioPageModule' },
+  { path: 'ibpredial-inicio/:id', loadChildren: './ibpredial/inicio/inicio.module#InicioPageModule' },
+  { path: 'respuestas', loadChildren: './dbo/respuestas/respuestas.module#RespuestasPageModule' },
+  { path: 'estrato', loadChildren: './ibpredial/estrato/estrato.module#EstratoPageModule' },
+  { path: 'nivel', loadChildren: './ibpredial/nivel/nivel.module#NivelPageModule' },
+  { path: 'matricula', loadChildren: './ibpredial/matricula/matricula.module#MatriculaPageModule' },
+  { path: 'mapavias', loadChildren: './vistasjf/mapavias/mapavias.module#MapaviasPageModule' },
+  { path: 'slides', loadChildren: './vistasjf/slides/slides.module#SlidesPageModule' },
+  { path: 'resumenjf', loadChildren: './vistasjf/resumen/resumen.module#ResumenPageModule' },
 
 
 ];
