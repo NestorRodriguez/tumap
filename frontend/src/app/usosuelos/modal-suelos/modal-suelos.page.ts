@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { InvsuelosService } from 'src/app/Services/inventario de suelos/invsuelos.service';
-import { NavParams, ModalController } from '@ionic/angular';
-import { ViewController } from '@ionic/core';
+import { ModalController } from '@ionic/angular';
 
 
 @Component({
@@ -12,6 +11,7 @@ import { ViewController } from '@ionic/core';
 export class ModalSuelosPage implements OnInit {
   usosuelos: any[] = [];
   data: any = {};
+  seleccionado: boolean;
   constructor(private service: InvsuelosService,
               private view: ModalController) { }
 
@@ -24,10 +24,10 @@ export class ModalSuelosPage implements OnInit {
   }
   public seleccion(id: any) {
     this.data = (id.detail);
+    this.seleccionado = true;
   }
 
   dismiss() {
-
    const result = this.usosuelos.find( ({ ID }) => ID === this.data.value );
    this.view.dismiss(result);
   }

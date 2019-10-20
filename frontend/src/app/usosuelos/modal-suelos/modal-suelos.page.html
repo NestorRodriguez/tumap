@@ -2,7 +2,7 @@
     <ion-toolbar color="primary">
         <ion-buttons slot="secondary">
 
-            <ion-button (click)="dismiss()">
+            <ion-button *ngIf="seleccionado" (click)="dismiss()">
                 <ion-icon slot="icon-only" name="checkmark"> </ion-icon>
             </ion-button>
         </ion-buttons>

@@ -16,11 +16,11 @@ export class AppComponent {
       url: '/home',
       icon: 'ios-home'
     },
-    {
-      title: 'Servicios',
-      url: '/list',
-      icon: 'ios-list-box'
-    },
+    // {
+    //   title: 'Servicios',
+    //   url: '/list',
+    //   icon: 'ios-list-box'
+    // },
     {
       title: 'Registro',
       url: '/register',

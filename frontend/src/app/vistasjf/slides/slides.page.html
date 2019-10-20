@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar style="--ion-background-color: #2C689F; color: white;">
+    <ion-buttons slot="start">
+      <ion-button routerLink="/" routerDirection="forward">
+        <ion-icon slot="icon-only" name="arrow-round-back"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      Estado de las vías
+    </ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button disabled>
+        <ion-icon slot="icon-only" name=""> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div style="text-align: center; padding-top: 12%;">
+    <img src="assets/img_jyd/logo registro.svg" height="80px" alt=""><br><br><br>
+    <form onsubmit="">
+      <ion-list class="" style="--ion-background-color: #008abb; padding-left: 10%; padding-right: 10%; padding-top: 4%;">
+        <ion-item>
+          <ion-label style="color: white;"><b>Dirección:</b>
+          </ion-label>
+          <ion-input name="direccion" [(ngModel)]="model.direccion" style="color: white;" required type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label style="color: white;"><b>Detalle:</b></ion-label>
+          <ion-select style="color: white;" (ionChange)="seleccion($event)">
+            <ion-select-option value="{{detalle.detalle}}" *ngFor="let detalle of estadoVias">{{detalle.detalle}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item style="--ion-background-color: #008abb;">
+          <div style="border: 0px solid; padding-left: 0%;">
+            <ion-label style="border: 0px solid; color: white;"><b>Ubicación</b></ion-label>
+          </div>    
+          <ion-grid style="border: 0px solid; padding-right: 8%;">
+            <ion-row>
+              <ion-col size="4" *ngIf="model.ubicacion">
+                <ion-button color="light" size="small" shape="round">
+                  <ion-icon slot="icon-only" color="primary" name="checkmark"></ion-icon>
+                </ion-button>
+              </ion-col>
+              <ion-col size="{{(model.ubicacion) ? 8 : 12}}">
+                <ion-button color="light" size="small" shape="round" expand="block" (click)="loadModalMap()">
+                  <ion-icon slot="icon-only" color="primary" name="pin"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>      
+        </ion-item>
+        
+        <ion-item lines="" style="--ion-background-color: #008abb;">
+          <div style="border: 0px solid; padding-left: 0%;">
+            <ion-label style="color: white;  text-align: right;"><b>Fotografía</b></ion-label>
+          </div>
+          <ion-grid style="border: 0px solid; padding-right: 8%;">
+            <ion-row>
+              <!-- <ion-col size="4" class="ion-text-center" *ngIf="model.imagen">
+                <ion-img [src]="model.imagen"></ion-img>
+              </ion-col> -->
+              <ion-col size="4" *ngIf="model.imagen">
+                <ion-button color="light" size="small" shape="round">
+                  <ion-icon slot="icon-only" color="primary" name="checkmark"></ion-icon>
+                </ion-button>
+              </ion-col>
+              <ion-col size="{{(model.imagen) ? 8 : 12}}" class="ion-text-end">
+                <ion-button color="light" size="small" shape="round" expand="block" (click)="loadCamera()">
+                  <ion-icon slot="icon-only" color="primary" name="camera"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+      
+      <br>
+      <!-- <div class="ion-padding" style="padding-top:30vh">
+        <ion-button (click)="guardar()" [routerLink]="['/mapavias']" color="white" size="medium" style="background-color: white; color: #0A9D97; border-radius: 5px 5px 5px 5px;"><b>Continuar</b></ion-button>
+      </div> -->
+      <section style="padding-top: 5%">                
+        <ion-button (click)="save()" routerLink="/resumenjf" color="white" size="medium" style="background-color: white; color: #0A9D97; border-radius: 5px 5px 5px 5px;"><b>Continuar</b></ion-button>
+      </section>
+    </form>
+  </div>
+</ion-content>

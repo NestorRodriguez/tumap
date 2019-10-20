@@ -15,12 +15,18 @@
     <!-- </ion-toolbar> -->
     <ion-toolbar class="title">
         <ion-title color="primary">
-            Servicios Públicos
+            Servicios TuMap
         </ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
+    <ion-list>
+        <ion-item *ngFor="let item of items" [routerLink]="item.route" routerDirection="forward">
+            <ion-icon [name]="item.icon" slot="start"></ion-icon>
+            <span>{{item.title}}</span>
+        </ion-item>
+    </ion-list>
 
 </ion-content>
 

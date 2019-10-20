@@ -1106,8 +1106,7 @@ router
         const query = db.query(sql, (error, result) => {
             try {
                 if (error) {
-                    throw error;
-                } else {
+                    throw error;               } else {
                     console.log(result);
                     const [data] = result;
                     res.json(data)
@@ -1118,20 +1117,28 @@ router
         });
     })
     .post('/predios', (req, res) => {
+        const {
+            matricula,
+            uso_suelo,
+            nivel_vivienda,
+            limites,
+            serv_publicos
+        } = req.body;
+        
         const dato = {
-            matricula: req.body.matricula,
-            direccion: req.body.direccion,
-            ide_estrato: req.body.ide_estrato,
-            id_usosuelo: req.body.id_usosuelo,
-            ide_nivel: req.body.ide_nivel,
-            estado_Vivienda: req.body.estado_Vivienda,
-            servicio_agua: req.body.servicio_agua,
-            servicio_energia: req.body.servicio_energia,
-            servicio_internet: req.body.servicio_internet,
-            servicio_telefoniaFija: req.body.servicio_telefoniaFija,
-            servicio_telefoniaMovil: req.body.servicio_telefoniaMovil,
-            servicio_gasNatural: req.body.servicio_gasNatural,
-            servicio_gasPropano: req.body.servicio_gasPropano,
+            matricula: matricula,
+            direccion: 'Cl 7a Bis c 80 a 50',
+            ide_estrato: 3,
+            id_usosuelo: uso_suelo,
+            ide_nivel: nivel_vivienda,
+            estado_Vivienda: 1,
+            servicio_agua: serv_publicos[0].length === 0 ? 1 : 0,
+            servicio_energia: serv_publicos[1].length === 0 ? 1 : 0,
+            servicio_internet: serv_publicos[2].length === 0 ? 1 : 0,
+            servicio_telefoniaFija: serv_publicos[3].length === 0 ? 1 : 0,
+            servicio_telefoniaMovil: serv_publicos[4].length === 0 ? 1 : 0,
+            servicio_gasNatural: serv_publicos[5].length === 0 ? 1 : 0,
+            servicio_gasPropano: serv_publicos[6].length === 0 ? 1 : 0,
         };
 
         const sql = `INSERT INTO predios SET matricula='${dato.matricula}',direccion='${dato.direccion}',ide_estrato='${dato.ide_estrato}',
@@ -1142,10 +1149,14 @@ router
         db.query(sql, (error, result) => {
             if (error) {
                 res.json({ error: error })
-            } else {
+            } else {           
+                result.message = 'ok'     
                 res.json(result)
             }
+            console.log(result)
         });
+        
+        //res.json('ok')
     })
     .put('/predios/:id', (req, res) => {
 
@@ -1725,7 +1736,6 @@ app.route('/suelos')
 // POST Para agregar subpolígonos 
 app.post('/usosuelos', (req, res) => {
     let data = (req.body);
-    console.log("##", data.idRegistro)
     let sql = `INSERT INTO IM_REGISTROS (NOMBRE_PROPIETARIO, NOMBRE_PREDIO, AREA, DIRECCION)
     VALUES('${data.nombrePropietario}', '${data.nombrePredio}','${data.area}','${data.direccion}');`;
     sql += `INSERT INTO IM_USOS_PREDIO (POLIGONO, ID_REGISTRO) VALUES( '${data.poligono}', ${data.idRegistro});`;
@@ -2008,6 +2018,21 @@ router
     .get('/vias', (req, res) => {
         console.log('Consultar datos jf_descripcion_via');
         var query = db.query('select * from jf_descripcion_via', (error, result) => {
+            try {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(result);
+                    res.json(result)
+                }
+            } catch (error) {
+                res.json({ error: error.message })
+            }
+        });
+    })
+    .get('/detalle_vias', (req, res) => {
+        console.log('Consultar datos jf_detalle_via');
+        var query = db.query('SELECT * FROM tumap.jf_detalle_via', (error, result) => {
             try {
                 if (error) {
                     throw error;

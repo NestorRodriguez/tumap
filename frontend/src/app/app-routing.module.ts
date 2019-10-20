@@ -70,12 +70,14 @@ const routes: Routes = [
   { path: 'ibpredial-inicio/:id', loadChildren: './ibpredial/inicio/inicio.module#InicioPageModule' },
   { path: 'respuestas', loadChildren: './dbo/respuestas/respuestas.module#RespuestasPageModule' },
   { path: 'estrato', loadChildren: './ibpredial/estrato/estrato.module#EstratoPageModule' },
-  { path: 'nivel', loadChildren: './ibpredial/nivel/nivel.module#NivelPageModule' },  { path: 'matricula', loadChildren: './ibpredial/matricula/matricula.module#MatriculaPageModule' },
+  { path: 'nivel', loadChildren: './ibpredial/nivel/nivel.module#NivelPageModule' },
+  { path: 'matricula', loadChildren: './ibpredial/matricula/matricula.module#MatriculaPageModule' },
+  { path: 'mapavias', loadChildren: './vistasjf/mapavias/mapavias.module#MapaviasPageModule' },
+  { path: 'slides', loadChildren: './vistasjf/slides/slides.module#SlidesPageModule' },
+  { path: 'resumenjf', loadChildren: './vistasjf/resumen/resumen.module#ResumenPageModule' },
+
 
 ];
-
-
-
 
 @NgModule({
   imports: [
