@@ -9,12 +9,6 @@ const cors = require('cors');
 // Se agrega la librería para habilitar cors
 app.use(cors());
 
-app.all('/*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Content-Type");
-    next();
-});
-
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
@@ -25,8 +19,8 @@ app.use(bodyParser.json({ extended: true, limit: '10mb' }));
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "",
-    database: "hidrico",
+    password: "12345",
+    database: "tumap",
     port: 3306,
     multipleStatements: true
 });
