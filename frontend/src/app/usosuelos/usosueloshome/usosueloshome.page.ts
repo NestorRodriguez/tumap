@@ -9,6 +9,8 @@ import { InvsuelosService } from 'src/app/Services/inventario de suelos/invsuelo
 import { isUndefined } from 'util';
 import { isEmpty } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
+
 
 @Component({
   selector: 'app-usosueloshome',
@@ -39,16 +41,12 @@ export class UsosueloshomePage implements OnInit {
               public modal: ModalController,
               public modalOk: ModalController,
               public alertController: AlertController,
-              private router: Router) { }
+              private router: Router,
+              private geolocation: Geolocation,
+              ) { }
 
   ngOnInit() {
-    if (navigator) {
-      navigator.geolocation.getCurrentPosition( pos => {
-        this.lng = +pos.coords.longitude;
-        this.lat = +pos.coords.latitude;
-        this.ingresarMarcadorSubpoligonos(this.lat, this.lng);
-      });
-    }
+    this.getGeolocation();
     this.dataUser = this.obtenerData.enviarData();
     ( isUndefined(this.dataUser)) ? this.router.navigateByUrl('formulariosuelos') :
     this.service.getData('usosuelosid').subscribe( Id => { this.idRegistro = Id[0].lastID;
@@ -69,6 +67,16 @@ export class UsosueloshomePage implements OnInit {
   } catch (error) {
     console.log(error);
      }
+  }
+
+  getGeolocation() {
+    this.geolocation.getCurrentPosition()
+        .then((location: Geoposition) => {
+          this.lat = location.coords.latitude;
+          this.lng = location.coords.longitude;
+          this.ingresarMarcadorSubpoligonos(this.lat, this.lng);
+        })
+        .catch(error => console.log(error));
   }
   public async cerrarPoligono() {
       const modal: any = await this.presentModal();
