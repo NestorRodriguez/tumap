@@ -1,0 +1,27 @@
+ion-content {
+    --ion-background-color: #008abb!important;
+    float: center;
+    font-size: 32px;
+    align-content: center;
+    text-align: center;
+}
+
+.logo {
+    width: 250px;
+    height: 250px;
+}
+
+ion-label {
+    margin: 20px;
+    color: #ffffff!important;
+    float: center;
+    align-content: center;
+    text-align: center;
+}
+
+ion-button {
+    width: 250px;
+    height: 150px;
+    float: center;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}

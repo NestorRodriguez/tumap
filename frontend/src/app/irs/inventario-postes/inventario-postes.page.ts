@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IrsService} from '../../Services/irs/irs.service';
 import {NavController, AlertController, ModalController} from '@ionic/angular';
 import {ModalMapaPage} from '../modal-mapa/modal-mapa.page';
@@ -13,7 +13,7 @@ import {ToastController} from '@ionic/angular';
   templateUrl: './inventario-postes.page.html',
   styleUrls: ['./inventario-postes.page.scss'],
 })
-export class InventarioPostesPage implements OnInit, OnDestroy {
+export class InventarioPostesPage implements OnInit {
 
   materiales: any = [];
   operadores: any = [];
@@ -74,10 +74,6 @@ export class InventarioPostesPage implements OnInit, OnDestroy {
     this.service.getOperadoresCelulares().subscribe(data => {
       this.operadores = data;
     });
-  }
-
-  ngOnDestroy(): void {
-    console.log('ngOnDestroy');
   }
 
   isDisabled() {

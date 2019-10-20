@@ -13,11 +13,13 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule } from '@ionic/storage';
+import { UbicacionPageModule } from './dbo/ubicacion/ubicacion.module';
+import { ModalSuelosPage } from './usosuelos/modal-suelos/modal-suelos.page';
 
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [AppComponent, ModalSuelosPage],
+  entryComponents: [ModalSuelosPage],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -32,6 +34,8 @@ import { IonicStorageModule } from '@ionic/storage';
       name: 'coordenadas',
       driverOrder: ['indexeddb']
     }),
+    // Se agrega modal en dbo
+    UbicacionPageModule
   ],
   providers: [
     StatusBar,

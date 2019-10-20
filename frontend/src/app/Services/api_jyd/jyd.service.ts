@@ -8,35 +8,41 @@ import { catchError, tap, map} from 'rxjs/operators';
 })
 export class JydService {
 
-  serverUrlUsers = 'http://localhost:3000/users';
-  serverUrlCategorias = 'http://localhost:3000/categoria';
-  serverUrlSenalizacion = 'http://localhost:3000/item_senalizacion';
-  serverUrlMobiliario = 'http://localhost:3000/item_mobiliario';
+  serverUrl = 'http://localhost:3000';
+  // serverUrl = 'http://192.168.1.58:3000';
+
   constructor(public http: HttpClient) { }
 
   getPeople(): Observable<any[]> {
-    return this.http.get<any[]>(this.serverUrlUsers).pipe(
+    return this.http.get<any[]>(`${this.serverUrl}/users`).pipe(
       tap(data => console.log(JSON.stringify(data))),
       catchError(this.handleError)
       );
   }
 
   getCategorias(): Observable<any[]> {
-    return this.http.get<any[]>(this.serverUrlCategorias).pipe(
+    return this.http.get<any[]>(`${this.serverUrl}/categoria`).pipe(
       tap(data => console.log(JSON.stringify(data))),
       catchError(this.handleError)
       );
   }
 
   getItemSenalizacion(): Observable<any[]> {
-    return this.http.get<any[]>(this.serverUrlSenalizacion).pipe(
+    return this.http.get<any[]>(`${this.serverUrl}/item_senalizacion`).pipe(
       tap(data => console.log(JSON.stringify(data))),
       catchError(this.handleError)
       );
   }
 
   getItemMobiliario(): Observable<any[]> {
-    return this.http.get<any[]>(this.serverUrlMobiliario).pipe(
+    return this.http.get<any[]>(`${this.serverUrl}/item_mobiliario`).pipe(
+      tap(data => console.log(JSON.stringify(data))),
+      catchError(this.handleError)
+      );
+  }
+
+  getDatosItem(id: string) {
+    return this.http.get<any[]>(`${this.serverUrl}/item/${id}`).pipe(
       tap(data => console.log(JSON.stringify(data))),
       catchError(this.handleError)
       );

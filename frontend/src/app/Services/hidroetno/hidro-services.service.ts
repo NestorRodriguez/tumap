@@ -14,6 +14,7 @@ export class HidroServicesService {
   urlGrown = 'http://localhost:3000/grown/';
   urlConnections = 'http://localhost:3000/connections/';
   urlEthnobotany = 'http://localhost:3000/ethnobotany/';
+  urlLocation = 'http://localhost:3000/location/';
 
   constructor(public http: HttpClient) { }
 
@@ -157,6 +158,33 @@ export class HidroServicesService {
   deleteEtnobotanica(id: string) {
     console.log(`${this.urlEthnobotany}/${id}`);
     return this.http.delete(`${this.urlEthnobotany}/${id}`);
+  }
+
+  //Localizacion
+
+  getLocalizacion(): Observable<any[]> {
+    return this.http.get<any[]>(this.urlLocation).pipe(
+      tap(data => console.log(JSON.stringify(data))),
+      catchError(this.handleError)
+    );
+  }
+
+  setLocalizacion(data: any) {
+    return this.http.post(this.urlLocation, data);
+  }
+
+  getLocalizacionI(id: string) {
+    return this.http.get(`${this.urlLocation}/${id}`);
+  }
+
+  putLocalizacion(data: any) {
+    console.log(data);
+    return this.http.put(this.urlLocation, data);
+  }
+
+  deleteLocalizacion(id: string) {
+    console.log(`${this.urlLocation}/${id}`);
+    return this.http.delete(`${this.urlLocation}/${id}`);
   }
 
   private handleError(err: HttpErrorResponse) {

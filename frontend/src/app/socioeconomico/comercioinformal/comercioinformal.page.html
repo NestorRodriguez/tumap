@@ -8,50 +8,78 @@
 
 <ion-content>
     <br>
-    <ion-img src="assets/LOGO VERDE.svg"></ion-img>
-    <br>
+    <ion-img src="assets/logo_encuesta_comercio_informal.JPG"></ion-img>
+    <div id="general1">
+        <h1 id="h1">¿Venden productos o servicios?</h1>
+        <br>
+        <div id="div1A">
+            <ion-radio class="botones" slot="start" value="biff"></ion-radio>
+            <ion-label>Productos</ion-label>
+        </div>
 
-    <ion-list>
-        <ion-radio-group>
-            <ion-list-header>
-                <ion-label> Venden productos o servicios</ion-label>
-            </ion-list-header>
+        <div id="div1B">
+            <ion-radio class="botones" slot="start" value="griff"></ion-radio>
+            <ion-label>Servicios</ion-label>
+        </div>
 
-            <ion-item>
-                <ion-label>Productos</ion-label>
-                <ion-radio slot="start" value="biff" checked></ion-radio>
-            </ion-item>
-
-            <ion-item>
-                <ion-label>Servicios</ion-label>
-                <ion-radio slot="start" value="griff"></ion-radio>
-            </ion-item>
-
-            <ion-item>
-                <ion-label>Ambos</ion-label>
-                <ion-radio slot="start" value="buford"></ion-radio>
-            </ion-item>
-        </ion-radio-group>
-    </ion-list>
+        <div id="div1C">
+            <ion-radio class="botones" slot="start" value="buford"></ion-radio>
+            <ion-label>Ambos</ion-label>
+        </div>
+    </div>
     <br><br>
-    <ion-list>
-        <ion-radio-group>
-            <ion-list-header>
-                <ion-label> El negocio es:</ion-label>
-            </ion-list-header>
+    <div id="general2">
+        <h1 id="h2">El negocio es:</h1>
+        <br>
+        <div id="div2A">
+            <ion-radio class="botones" slot="start" value="biff"></ion-radio>
+            <ion-label>Estático</ion-label>
+        </div>
 
-            <ion-item>
-                <ion-label>Estatico</ion-label>
-                <ion-radio slot="start" value="biff" checked></ion-radio>
-            </ion-item>
+        <div id="div2B">
+            <ion-radio class="botones" slot="start" value="griff"></ion-radio>
+            <ion-label>Ambulante</ion-label>
+        </div>
+    </div>
+    <br><br>
+    <div id="general3">
+        <h1 id="h3">¿Con qué frecuencia ve al vendedor?</h1>
+        <br>
+        <div id="div3A">
+            <ion-radio class="botones" slot="start" value="biff"></ion-radio>
+            <ion-label>Entre semana</ion-label>
+        </div>
 
-            <ion-item>
-                <ion-label>Ambulante</ion-label>
-                <ion-radio slot="start" value="griff"></ion-radio>
-            </ion-item>
+        <div id="div3B">
+            <ion-radio class="botones" slot="start" value="griff"></ion-radio>
+            <ion-label>Fin de semana</ion-label>
+        </div>
 
-        </ion-radio-group>
-    </ion-list>
-    <br><br><br><br>
-    <ion-button class="register " type="submit "><b>Enviar</b></ion-button>
+        <div id="div3C">
+            <ion-radio class="botones" slot="start" value="buford"></ion-radio>
+            <ion-label>Ambos</ion-label>
+        </div>
+    </div>
+    <br><br>
+    <div id="general4">
+        <h1 id="h4">Horario de atención</h1>
+        <br>
+        <div id="div4A">
+            <ion-radio class="botones" slot="start" value="biff"></ion-radio>
+            <ion-label>Diurno</ion-label>
+        </div>
+
+        <div id="div4B">
+            <ion-radio class="botones" slot="start" value="griff"></ion-radio>
+            <ion-label>Nocturno</ion-label>
+        </div>
+
+        <div id="div4C">
+            <ion-radio class="botones" slot="start" value="buford"></ion-radio>
+            <ion-label>Ambos</ion-label>
+        </div>
+    </div>
+
+    <ion-img src="assets/camaratumap.png"></ion-img>
+    <ion-button type="submit "><b>Enviar</b></ion-button>
 </ion-content>

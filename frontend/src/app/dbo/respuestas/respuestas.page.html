@@ -1,0 +1,20 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/"></ion-back-button>
+        </ion-buttons>
+
+        <ion-title>Mis Respuestas</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-item *ngFor="let item of selectedItems" lines="inset">
+            {{ item.count }}x {{ item.name}}
+        </ion-item>
+        <ion-item>
+            Total: <span slot="end"> {{ total }}  </span>
+        </ion-item>
+    </ion-list>
+</ion-content>

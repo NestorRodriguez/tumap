@@ -1,51 +1,57 @@
 <ion-header>
-  <ion-toolbar style="--ion-background-color: #2C689F; color: white;">
-    <ion-buttons slot="start">
-      <ion-button routerLink="/list" routerDirection="forward">
-        <ion-icon slot="icon-only" name="arrow-round-back"> </ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title>
-      Predio
-    </ion-title>
-    <ion-buttons slot="secondary">
-      <ion-button disabled>
-        <ion-icon slot="icon-only" name=""> </ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar style="--ion-background-color: #2C689F; color: white;">
+        <ion-buttons slot="start">
+            <ion-button routerLink="/list" routerDirection="forward">
+                <ion-icon slot="icon-only" name="arrow-round-back"> </ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>
+            Predio
+        </ion-title>
+        <ion-buttons slot="secondary">
+            <ion-button disabled>
+                <ion-icon slot="icon-only" name=""> </ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div style="text-align: center; padding-top: 12%;">
-    <img src="assets/img_jyd/logo registro.svg" height="80px" alt=""><br><br><br>
-    <form onsubmit="">
-      <ion-list class="ion-no-margin ion-no-padding" style="--ion-background-color: #008abb; padding-left: 15%; padding-right: 15%; padding-top: 4%;">
-        <ion-item>
-          <ion-label style="color: white; --placeholder-font-weight: 100%;" position="stacked"><b>Nombre del propietario</b> <ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required type="text"></ion-input>
-        </ion-item>
+    <div style="text-align: center; padding-top: 12%;">
+        <img src="assets/img_jyd/logo registro.svg" height="80px" alt=""><br><br><br>
+        <form onsubmit="">
+            <ion-list class="ion-no-margin ion-no-padding" style="--ion-background-color: #008abb; padding-left: 15%; padding-right: 15%; padding-top: 4%;">
+                <ion-item>
+                    <ion-label style="color: white; --placeholder-font-weight: 100%;" position="stacked"><b>Nombre del propietario</b>
+                    </ion-label>
+                    <ion-input [(ngModel)]="model.nombrepropietario" style="color: white;" name="nombrepropietario" required type="text"></ion-input>
+                </ion-item>
 
-        <ion-item>
-          <ion-label style="color: white;" position="stacked"><b>Nombre del predio</b> <ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required type="text"></ion-input>
-        </ion-item>
+                <ion-item>
+                    <ion-label style="color: white;" position="stacked"><b>Nombre del predio</b>
+                    </ion-label>
+                    <ion-input [(ngModel)]="model.nombrepredio" name="nombrepredio" style="color: white;" required type="text"></ion-input>
+                </ion-item>
 
-        <ion-item>
-          <ion-label style="color: white;" position="stacked"><b>Área del predio</b> <ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required type="text"></ion-input>
-        </ion-item>
+                <ion-item>
+                    <ion-label style="color: white;" position="stacked"><b>Área del predio</b>
+                        <ion-text color="danger">*</ion-text>
+                    </ion-label>
+                    <ion-input [(ngModel)]="model.area" required name="area" style="color: white;" type="text"></ion-input>
+                </ion-item>
 
-        <ion-item>
-          <ion-label style="color: white;" position="stacked"><b>Dirección</b> <ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required type="text"></ion-input>
-        </ion-item>          
+                <ion-item>
+                    <ion-label style="color: white;" position="stacked"><b>Dirección</b>
+                        <ion-text color="danger">*</ion-text>
+                    </ion-label>
+                    <ion-input [(ngModel)]="model.direccion" name="direccion" style="color: white;" required type="text"></ion-input>
+                </ion-item>
 
-      </ion-list>
-      <br>
-      <div class="ion-padding">        
-        <ion-button type="submit" routerLink="/instruccion" color="white" size="medium" style="background-color: white; color: #0A9D97; border-radius: 5px 5px 5px 5px;"><b>Continuar</b></ion-button>
-      </div>
-    </form>
-  </div>
+            </ion-list>
+            <br>
+            <div class="ion-padding">
+                <ion-button type="submit" (click)="enviarData()" [routerLink]="['/usosueloshome']" color="white" size="medium" style="background-color: white; color: #0A9D97; border-radius: 5px 5px 5px 5px;"><b>Continuar</b></ion-button>
+            </div>
+        </form>
+    </div>
 </ion-content>

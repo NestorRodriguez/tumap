@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/list" routerDirection="forward">
+        <ion-icon slot="icon-only" name="arrow-round-back"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title> Información Predial Básica </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item
+      button
+      *ngFor="let i of buttonContainer"
+      (click)="showDetail(i.rLink)"
+    >
+      <ion-icon slot="start" [name]="i.iconStart" color="light"></ion-icon>
+      <ion-icon slot="end" [name]="i.icon" [color]="i.colori"></ion-icon>
+      <ion-label color="light">
+        {{ i.nombreMenu }}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

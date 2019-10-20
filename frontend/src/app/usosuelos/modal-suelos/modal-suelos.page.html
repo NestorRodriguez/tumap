@@ -1,0 +1,28 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="secondary">
+
+            <ion-button (click)="dismiss()">
+                <ion-icon slot="icon-only" name="checkmark"> </ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title class="ion-title"></ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div style="text-align: center; padding-top: 12%;">
+        <img src="assets/img_jyd/logo registro.svg" height="80px" alt=""><br><br><br>
+        <ion-title style="font-size: 130%; color: white;"><b>¿Qué tipo de área desea registrar?</b></ion-title><br>
+        <div class="lista">
+            <ion-list>
+                <ion-radio-group (ionChange)="seleccion($event)">
+                    <ion-item *ngFor="let uso of usosuelos">
+                        <ion-label style="color:white"><b>{{ uso.DESCRIPCION}}</b></ion-label>
+                        <ion-radio class="radio" slot="start" [value]="uso.ID"></ion-radio>
+                    </ion-item>
+                </ion-radio-group>
+            </ion-list>
+        </div>
+    </div>
+</ion-content>

@@ -1,33 +1,34 @@
+<ion-content>
 
-<ion-content >
-           
-                    <img src="assets/logo registro.svg" alt="">
-        <ion-item>
-            <ion-input type="number" name="txtDocumento" placeholder="Documento" [(ngModel)]="inscripcion.documento" (ionBlur)="getInscripcion();"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-input type="text" name="txtNombre" placeholder="Nombre" [(ngModel)]="inscripcion.nombre"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-input type="text" name="txtDireccion" placeholder="Direccion" [(ngModel)]="inscripcion.direccion"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-input type="text" name="txtDepartamento" placeholder="Departamento" [(ngModel)]="inscripcion.departamento"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-input type="text" name="txtMunicipio" placeholder="Municipio" [(ngModel)]="inscripcion.municipio"></ion-input>
-        </ion-item>
+    <img src="assets/logo registro.svg" alt="">
+    <ion-item>
+        <ion-input type="number" name="txtDocumento" placeholder="Documento" [(ngModel)]="inscripcion.documento" (ionBlur)="getInscripcion();" clearinput></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-input type="text" name="txtNombre" placeholder="Nombre" [(ngModel)]="inscripcion.nombre"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-input type="text" name="txtDireccion" placeholder="Direccion" [(ngModel)]="inscripcion.direccion"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-input type="text" name="txtDepartamento" placeholder="Departamento" [(ngModel)]="inscripcion.departamento"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-input type="text" name="txtMunicipio" placeholder="Municipio" [(ngModel)]="inscripcion.municipio"></ion-input>
+    </ion-item>
 
-        <ion-toolbar class="botonins" color="none">
-            <button padding class="btn btn-success" [routerLink]="['/ubicacion/',posicion]" routerDirection="forward">Ubicacion</button>
-            <button padding class="btn btn-success btn-block" [routerLink]="['/formulario/',inscripcion.id]" routerDirection="forward" (click)="saveInscripcion();">Siguiente</button>
-        </ion-toolbar>
+    <ion-toolbar class="botonins" color="none">
+        <!-- <button class="btn btn-success" [routerLink]="['/ubicacion/',posicion]" routerDirection="forward">Ubicacion</button> -->
+        <ion-button class="btn btn-success btn-block" (click)="openModal()">Mapa</ion-button>
+        <button class="btn btn-success btn-block" (click)="saveInscripcion();">Siguiente</button>
 
-            <ion-toolbar  class="atrasins" color="none">
-            <ion-buttons slot="start">
-                <ion-back-button color="tertiary"  [defaultHref]="['/']"></ion-back-button>
-            </ion-buttons>
-            <ion-title color="white" class="ion-title">Atras</ion-title>
-        </ion-toolbar>
-    
+    </ion-toolbar>
+
+    <ion-toolbar class="atrasins" color="none">
+        <ion-buttons slot="start">
+            <ion-back-button color="tertiary" [defaultHref]="['/']"></ion-back-button>
+        </ion-buttons>
+        <ion-title color="white" class="ion-title">Atras</ion-title>
+    </ion-toolbar>
+
 </ion-content>

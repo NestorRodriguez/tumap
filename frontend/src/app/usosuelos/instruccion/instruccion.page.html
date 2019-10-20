@@ -1,29 +1,30 @@
 <ion-header>
-  <ion-toolbar style="--ion-background-color: #2C689F; color: white;">
-    <ion-buttons slot="start">
-      <ion-button routerLink="/formulariosuelos" routerDirection="forward">
-        <ion-icon slot="icon-only" name="arrow-round-back"> </ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title>
-      Cómo Funciona
-    </ion-title>
-    <ion-buttons slot="secondary">
-      <ion-button disabled>
-        <ion-icon slot="icon-only" name=""> </ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar style="--ion-background-color: #2C689F; color: white;">
+        <ion-buttons slot="start">
+            <ion-button routerLink="/formulariosuelos" routerDirection="forward">
+                <ion-icon slot="icon-only" name="arrow-round-back"> </ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>
+            Cómo Funciona
+        </ion-title>
+        <ion-buttons slot="secondary">
+            <ion-button disabled>
+                <ion-icon slot="icon-only" name=""> </ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div style="padding-top: 18%;">
-    <ion-label style="color: white;"><b>INSTRUCCIONES</b></ion-label>
-  </div>  
-  <P style="text-align: justify; color: white; padding: 10% 15% 10% 15%;">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-  </P>
-  <section>        
-    <ion-button routerLink="/usosueloshome" color="white" size="medium" style="background-color: white; color: #0A9D97; border-radius: 5px 5px 5px 5px;"><b>Aceptar</b></ion-button>
-  </section>
+    <div style="padding-top: 18%;">
+        <ion-label style="color: white;"><b>INSTRUCCIONES</b></ion-label>
+    </div>
+    <P style="text-align: justify; color: white; padding: 10% 15% 10% 15%;">
+        Para comenzar deberá registrar los datos básicos de su predio como lo son (Nombre del propietario, nombre del predio) estos son opcionales, además el área y la dirección del predio los cuales son obligatorios. <br> Después deberá crear las subdivisiones
+        que tiene su terreno de acuerdo al uso que le da( mínimo 3 puntos), cuando termine con cada sub división oprima el botón ✔, por último repita el mismo proceso con todo el área de su predio y finalice el registro.
+    </P>
+    <section>
+        <ion-button [routerLink]="[ '/formulariosuelos']" color="white " size="medium " style="background-color: white; color: #0A9D97; border-radius: 5px 5px 5px 5px; "><b>Aceptar</b></ion-button>
+    </section>
 </ion-content>
