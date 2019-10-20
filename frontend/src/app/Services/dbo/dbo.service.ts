@@ -75,7 +75,7 @@ export class DboService {
     return this.http.put<any>(`${this.API_URL}/dbo_inscripcion/${id}`, inscripcion);
   }
 
-  public getPreguntas(documento: string): Observable<any[]> {
+  public getPreguntas(): Observable<any[]> {
     return this.http.get<any[]>(`${this.API_URL}/dbo_pregunta`);
   }
 
@@ -83,6 +83,11 @@ export class DboService {
   getPreguntasData() {
     return this.data;
   }
+
+  getImagenes() {
+    console.log('Select Imagenes');
+  }
+
   getRespuestas() {
     return this.respuestas;
   }

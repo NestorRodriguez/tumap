@@ -1,3 +1,9 @@
+<ion-header>
+    <ion-toolbar color="primary"> 
+    <ion-title>Elejir ubicación</ion-title>
+</ion-toolbar>
+</ion-header>
+
 <ion-content>
     <ion-item slot="start">
         <ion-title class="map" color="primary">Mapa</ion-title>
@@ -14,13 +20,14 @@
             </agm-map>
         </ion-card-content>
     </ion-card>
-    <ion-buttons>
-        <button slot="end" (click)="closeModal()">Cerrar</button>
-    </ion-buttons>
+   
 </ion-content>
 
 <ion-footer>
     <ion-toolbar color="secondary" class="title">
+            <ion-buttons>
+                    <button slot="end" (click)="closeModal()">Seleccionar</button>
+                </ion-buttons>
 
     </ion-toolbar>
 </ion-footer>

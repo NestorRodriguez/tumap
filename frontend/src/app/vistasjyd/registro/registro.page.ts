@@ -1,5 +1,4 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import {IrsService} from '../../Services/irs/irs.service';
 import {NavController, AlertController, ModalController} from '@ionic/angular';
 import {MapaPage} from '../mapa/mapa.page';
 import {Router, ActivatedRoute} from '@angular/router';
@@ -12,6 +11,7 @@ import {ToastController} from '@ionic/angular';
   templateUrl: './registro.page.html',
   styleUrls: ['./registro.page.scss'],
 })
+
 export class RegistroPage implements OnInit {
   idItem = null
   idCategoriaItem = null
@@ -22,8 +22,7 @@ export class RegistroPage implements OnInit {
   complete = false;
   loading = false;
 
-  constructor(private service: IrsService,
-              private activatedRoute: ActivatedRoute,
+  constructor(private activatedRoute: ActivatedRoute,
               private navCtrl: NavController,
               private modalCtrl: ModalController,
               private alertCtrl: AlertController,
@@ -32,34 +31,10 @@ export class RegistroPage implements OnInit {
               private networkInterface: NetworkInterface,
               private camera: Camera,
               private activedRoute: ActivatedRoute) {
-
-    this.networkInterface.getWiFiIPAddress()
-      .then(address => {
-        this.model.ip = address.ip;
-      })
-      .catch(error => console.error(`Unable to get IP: ${error}`));
-
-    this.networkInterface.getCarrierIPAddress()
-      .then(address => {
-        if (!this.model.ip) {
-          this.model.ip = address.ip;
-        }
-      })
-      .catch(error => console.error(`Unable to get IP: ${error}`));
   }
 
   ngOnDestroy(): void {
     console.log('ngOnDestroy');
-  }
-
-  isDisabled() {
-    if (this.model.tipo === 'Postes') {
-      return (!this.model.idIrsMaterial || !this.model.idIrsEstadoRed || !this.model.ubicacion || !this.model.imagen);
-    } else if (this.model.tipo === 'Torres' || this.model.tipo === 'Antenas' || this.model.tipo === 'Armarios') {
-      return (!this.model.idIrsEstadoRed || !this.model.ubicacion || !this.model.imagen);
-    } else {
-      return true;
-    }
   }
 
   ngOnInit() {

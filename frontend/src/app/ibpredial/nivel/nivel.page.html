@@ -10,13 +10,13 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-radio-group allow-empty-selection>
+  <ion-radio-group allow-empty-selection [(ngModel)]="id_nivel">
     <ion-list>
       <ion-item *ngFor="let i of buttonNiveles">
         <ion-label color="light">
-          {{ i }}
+          {{ i.descripcion }}
         </ion-label>
-        <ion-radio slot="end" color="primary"></ion-radio>
+        <ion-radio slot="end" color="primary" [value]="i.id_nivel"></ion-radio>
       </ion-item>
     </ion-list>
   </ion-radio-group>
@@ -26,9 +26,9 @@
     size="default"
     shape="round"
     expand="block"
-    (click)="save()"
+    (click)="Aceptar()"
   >
-    <ion-label>{{ complete ? "Finalizar" : "Guardar" }}</ion-label>
+    <ion-label>Aceptar</ion-label>
   </ion-button>
   <ion-button
     class="ion-text-capitalize"
