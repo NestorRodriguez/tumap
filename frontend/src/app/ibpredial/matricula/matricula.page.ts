@@ -1,6 +1,16 @@
+import { Router } from "@angular/router";
+import { LoadingController } from "@ionic/angular";
+import { AlertController } from "@ionic/angular";
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { Matricula } from "src/app/Interfaces/interfaces";
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl
+} from "@angular/forms";
+import { PredialService } from "../../api/predial.service";
 
 @Component({
   selector: "app-matricula",
@@ -8,43 +18,101 @@ import { Matricula } from "src/app/Interfaces/interfaces";
   styleUrls: ["./matricula.page.scss"]
 })
 export class MatriculaPage implements OnInit {
-  urlApi: string = "http://localhost:3000/predios";
-  getWebServiceId: Matricula;
+  loadPredial: Matricula;
   getWebService: any;
+  validarForm: FormGroup;
+  direccion: string = "";
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private formBuilder: FormBuilder,
+    private predialService: PredialService,
+    private router: Router,
+    private alertController: AlertController,
+    private loadingController: LoadingController
+  ) {
+    this.validarForm = this.formBuilder.group({
+      matricula: new FormControl(
+        "",
+        Validators.compose([Validators.required, Validators.minLength(3)])
+      )
+    });
+  }
 
   ngOnInit() {
-    this.getDataFromNodeJs().subscribe(
-      data => {
-        this.getWebService = data;
-        console.log(this.getWebService);
-        console.log(data);
-      },
-      error => console.log(error)
-    );
+    // this.getDataFromNodeJs().subscribe(
+    //   data => {
+    //     this.getWebService = data;
+    //     console.log(this.getWebService);
+    //     console.log(data);
+    //   },
+    //   error => console.log(error)
+    // );
+  }
 
-    this.getDataFromNodeJsId().subscribe(
+  async getDataFromNodeJsId() {
+    await this.presentLoading();
+    let matricula = this.validarForm.value.matricula;
+    console.log(`getDataFromNodeJs`);
+    this.predialService.obtenerPredialRoswell(matricula).subscribe(
       data => {
-        this.getWebServiceId = data;
-        localStorage.setItem(
-          "dataFromNodeJsId",
-          JSON.stringify(this.getWebServiceId)
-        );
-        console.log(this.getWebServiceId);
+        this.loadPredial = data;
+        if (this.loadPredial !== null) {
+          this.predialService.SaveLocalStorageItem(
+            "dataFromNodeJsId",
+            JSON.stringify(this.loadingController)
+          );
+          this.loadingController.dismiss();
+          this.router.navigateByUrl("/ibpredial-inicio");
+          console.log(this.loadPredial);
+        } else {
+          this.loadingController.dismiss();
+          this.alertControl();
+        }
       },
-      error => console.log(error)
+      error => {
+        this.loadingController.dismiss();
+        console.log(error);
+      }
     );
   }
 
-  getDataFromNodeJs() {
-    console.log(`getDataFromNodeJs`);
-    return this.httpClient.get<Matricula>(this.urlApi);
+  Cancelar() {
+    console.log(`Ha presioando boton cancelar...`);
   }
 
-  getDataFromNodeJsId() {
-    let id = 456;
-    console.log(`getDataFromNodeJs`);
-    return this.httpClient.get<Matricula>(`${this.urlApi}/${id}`);
+  async alertControl() {
+    const alert = await this.alertController.create({
+      header: "Deseas Ingresar este Predio?",
+      message: "Confirmar que deseas <strong>crear</strong>",
+      buttons: [
+        {
+          text: "Cancelar",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: blah => {
+            //
+          }
+        },
+        {
+          text: "Ok",
+          handler: () => {
+            this.router.navigateByUrl("/ibpredial-inicio");
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: "Consultando",
+      //duration: 2000,
+      spinner: "bubbles"
+    });
+    await loading.present();
+    //await loading.onDidDismiss();
   }
 }

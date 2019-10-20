@@ -15,11 +15,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule } from '@ionic/storage';
 import { UbicacionPageModule } from './dbo/ubicacion/ubicacion.module';
 import { ModalSuelosPage } from './usosuelos/modal-suelos/modal-suelos.page';
+import { ModalSuelosOkPage } from './usosuelos/modal-suelos-ok/modal-suelos-ok.page';
 
 
 @NgModule({
-  declarations: [AppComponent, ModalSuelosPage],
-  entryComponents: [ModalSuelosPage],
+  declarations: [AppComponent, ModalSuelosPage, ModalSuelosOkPage],
+  entryComponents: [ModalSuelosPage, ModalSuelosOkPage],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),

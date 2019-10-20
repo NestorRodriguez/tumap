@@ -1654,7 +1654,6 @@ app.route('/suelos')
 // POST Para agregar subpolígonos 
 app.post('/usosuelos', (req, res) => {
     let data = (req.body);
-    console.log("##", data.idRegistro)
     let sql = `INSERT INTO IM_REGISTROS (NOMBRE_PROPIETARIO, NOMBRE_PREDIO, AREA, DIRECCION)
     VALUES('${data.nombrePropietario}', '${data.nombrePredio}','${data.area}','${data.direccion}');`;
     sql += `INSERT INTO IM_USOS_PREDIO (POLIGONO, ID_REGISTRO) VALUES( '${data.poligono}', ${data.idRegistro});`;
