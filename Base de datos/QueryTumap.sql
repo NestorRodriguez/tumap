@@ -992,6 +992,17 @@ CREATE TABLE IF NOT EXISTS `without_coverage` (
   CONSTRAINT `fk_Sin_cobertura_Users1` FOREIGN KEY (`Users_id_User`) REFERENCES `users` (`id_User`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
+CREATE TABLE `location` (
+  `id_Location` int(11) NOT NULL AUTO_INCREMENT,
+  `color` varchar(45) DEFAULT NULL,
+  `presion` varchar(45) DEFAULT NULL,
+  `tipoFlujo` varchar(45) DEFAULT NULL,
+  `estado` varchar(45) DEFAULT NULL, 
+  `ubicacion` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `id_User` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_Location`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+
 
 --*********************************************************************************************************
 -- Fin Tablas Hydrico --
