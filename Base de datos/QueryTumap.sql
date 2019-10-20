@@ -485,7 +485,7 @@ CREATE  OR REPLACE VIEW `dbo_vListado` AS
 	dbo_pregunta.pregunta,
 	dbo_imagen.nombre as imagen
 	from dbo_inscripcion
-	inner join dbo_respuesta on dbo_respuesta.id = dbo_inscripcion.id
+	inner join dbo_respuesta on dbo_respuesta.id_inscripcion = dbo_inscripcion.id
 	inner join dbo_pregunta on dbo_pregunta.id = dbo_respuesta.id_pregunta
 	inner join dbo_imagen on dbo_imagen.id= dbo_respuesta.id_imagen
 	order by dbo_inscripcion.documento, dbo_pregunta.orden;

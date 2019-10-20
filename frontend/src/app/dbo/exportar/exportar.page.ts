@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DboService } from '../../Services/dbo/dbo.service';
 
 @Component({
   selector: 'app-exportar',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExportarPage implements OnInit {
 
-  constructor() { }
+  items = [];
+
+  constructor(private dboService: DboService) { }
 
   ngOnInit() {
+    this.items = this.dboService.getRespuestas();
+    console.log(this.items);
+  }
+
+  listar(){
+
   }
 
 }
