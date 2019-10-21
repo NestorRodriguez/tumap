@@ -18,6 +18,20 @@ export class HidroServicesService {
 
   constructor(public http: HttpClient) { }
 
+  infoPage = {
+    color: null,
+    pressure: null,
+    type: null,
+    state: null,
+    ubicacion: null,
+    level: null,
+    description: null,
+    image: null,
+    common_name: null,
+    use: null,
+    imageEthnobotany: null 
+  };
+
   getUser(): Observable<any[]> {
     return this.http.get<any[]>(this.urlUsers).pipe(
       tap(data => console.log(JSON.stringify(data))),
@@ -185,6 +199,15 @@ export class HidroServicesService {
   deleteLocalizacion(id: string) {
     console.log(`${this.urlLocation}/${id}`);
     return this.http.delete(`${this.urlLocation}/${id}`);
+  }
+
+   public capturaInfo(data: any){
+    console.log(data)
+    this.infoPage = data;
+  }
+
+   public mostrarInfo(){
+    return this.infoPage;
   }
 
   private handleError(err: HttpErrorResponse) {

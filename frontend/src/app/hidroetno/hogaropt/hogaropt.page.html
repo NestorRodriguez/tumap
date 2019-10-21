@@ -1,7 +1,7 @@
 <ion-header no-border>
     <ion-toolbar color="primary">
         <ion-buttons slot="start">
-            <ion-back-button defaultHref="/options">Atrás</ion-back-button>
+            <ion-back-button defaultHref="/options"></ion-back-button>
         </ion-buttons>
         <ion-title>Hogar - Cobertura</ion-title>
     </ion-toolbar>
@@ -11,7 +11,7 @@
     <div>
         <div class="box">
             <h4>Color</h4>
-            <ion-segment class="abajo" (ionChange)="segmentChanged($event)">
+            <ion-segment class="abajo" (ionChange)="colorChanged($event)">
                 <ion-segment-button href="#cafe" value="cafe">
                     <ion-label>Café</ion-label>
                 </ion-segment-button>
@@ -26,7 +26,7 @@
 
         <div class="box">
             <h4>Presión</h4>
-            <ion-segment class="abajo" (ionChange)="segmentChanged($event)">
+            <ion-segment class="abajo" (ionChange)="presionChanged($event)">
                 <ion-segment-button href="#alta" value="alta">
                     <ion-label>Alta</ion-label>
                 </ion-segment-button>
@@ -41,7 +41,7 @@
 
         <div class="box">
             <h4>Tipo</h4>
-            <ion-segment class="abajo" (ionChange)="segmentChanged($event)">
+            <ion-segment class="abajo" (ionChange)="valorChanged($event)">
                 <ion-segment-button href="#intermitente" value="intermitente">
                     <ion-label>Intermitente</ion-label>
                 </ion-segment-button>
@@ -55,7 +55,7 @@
 
     <div class="boton">
         <ion-button name="regresar" [routerLink]="['/hidrica']"> Regresar</ion-button>
-        <ion-button name="guardar"> Guardar</ion-button>
+        <ion-button name="guardar" (click)='guardar()'> Guardar</ion-button>
     </div>
 </ion-content>
 

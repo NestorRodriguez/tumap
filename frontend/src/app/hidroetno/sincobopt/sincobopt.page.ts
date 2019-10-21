@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HidroServicesService } from 'src/app/Services/hidroetno/hidro-services.service';
 
 @Component({
   selector: 'app-sincobopt',
@@ -6,8 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sincobopt.page.scss'],
 })
 export class SincoboptPage implements OnInit {
+  objetoInfo = {
+    state: null
+  };
 
-  constructor() { }
+  constructor(private servicio: HidroServicesService) { }
 
   ngOnInit() {
   }

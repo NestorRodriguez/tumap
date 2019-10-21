@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HidroServicesService } from 'src/app/Services/hidroetno/hidro-services.service';
 
 @Component({
   selector: 'app-hogaropt',
@@ -6,15 +7,33 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./hogaropt.page.scss'],
 })
 export class HogaroptPage implements OnInit {
+   objetoInfo = {
+     valorColor: null,
+     valorPresion: null,
+     valorTipo: null
+   };
 
-  constructor() { }
+  constructor(private servicio: HidroServicesService) { }
 
   ngOnInit() {
   }
 
-  segmentChanged( event ) {
-    const valorSegmento = event.detail.value;
-    console.log(event);
+  colorChanged(event){
+    this.objetoInfo.valorColor = event.detail.value;
   }
+
+  presionChanged( event ) {
+    this.objetoInfo.valorPresion = event.detail.value
+  }
+
+  valorChanged( event ) {
+    this.objetoInfo.valorTipo = event.detail.value
+  }
+
+  guardar(){
+    console.log(this.objetoInfo);
+    this.servicio.capturaInfo(this.objetoInfo);
+  }
+
 }
 
