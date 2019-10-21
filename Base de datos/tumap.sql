@@ -90,3 +90,162 @@ INSERT INTO irs_tipos_redes (nombre, icono) VALUES ('Postes', 'irs-postes.svg'),
 /*************************************************************
     FIN TABLAS INVENTARIO DE REDES SECAS
 **************************************************************/
+
+
+-- ***********************************************************************
+-- inicio DBO 
+-- Generated: 2019-09-29 10:59
+-- Project: suelos
+-- Author: Divier Castaneda -- Diego Duarte
+-- ***********************************************************************
+-- **********Se puede copiar completa y ejecutar en sql*******************
+-- ************************************************************************
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+CREATE SCHEMA IF NOT EXISTS `tumap` DEFAULT CHARACTER SET utf8 ;
+use tumap;
+
+DROP TABLE IF EXISTS `tumap`.`dbo_incripcionPregunta`;
+DROP TABLE IF EXISTS `tumap`.`dbo_respuesta`;
+DROP TABLE IF EXISTS `tumap`.`dbo_pregunta` ;
+DROP TABLE IF EXISTS `tumap`.`dbo_inscripcion`; 
+DROP TABLE IF EXISTS `tumap`.`dbo_imagen`;
+
+
+CREATE TABLE IF NOT EXISTS `tumap`.`dbo_pregunta` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `orden` TINYINT(2) NOT NULL,
+  `pregunta` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `orden_UNIQUE` (`orden` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+CREATE TABLE IF NOT EXISTS `tumap`.`dbo_imagen` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+    `id_pregunta` INT(11) NOT NULL,
+	`orden` TINYINT(2) NOT NULL,  
+	`nombre` VARCHAR(45) NULL DEFAULT NULL,    
+	`ruta` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `orden_UNIQUE` (`id_pregunta`,`orden` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `tumap`.`dbo_inscripcion` (
+  `id` INT(11) AUTO_INCREMENT,
+  `documento` INT NOT NULL,
+  `nombre` VARCHAR(45) NOT NULL,
+  `departamento` VARCHAR(45) NULL DEFAULT NULL,
+  `municipio` VARCHAR(45) NULL DEFAULT NULL,
+   `lat` VARCHAR(45) NULL DEFAULT NULL,
+   `lng` VARCHAR(45) NULL DEFAULT NULL,
+  `direccion` VARCHAR(80) NULL DEFAULT NULL,
+  `usuario` VARCHAR(45) NULL DEFAULT NULL,
+  `fecha` timestamp default current_timestamp ,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `tumap`.`dbo_respuesta` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_inscripcion` INT(11) NOT NULL,
+  `id_pregunta` INT(11) NOT NULL,
+  `id_imagen` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  
+  CONSTRAINT `fk_respuesta_inscripcion1`
+    FOREIGN KEY (`id_inscripcion`)
+    REFERENCES `tumap`.`dbo_inscripcion` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_respuesta_pregunta1`
+    FOREIGN KEY (`id_pregunta`)
+    REFERENCES `tumap`.`dbo_pregunta` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_respuesta_imagen1`
+    FOREIGN KEY (`id_imagen`)
+    REFERENCES `tumap`.`dbo_imagen` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+    
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+-- -----------------------------------------------------
+-- Placeholder table for view `tumap`.`dbo_vListado`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tumap`.`dbo_vListado` (`id` INT);
+USE `tumap`;
+
+-- -----------------------------------------------------
+-- View `tumap`.`dbo_vListado`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `tumap`.`dbo_vListado`;
+USE `tumap`;
+CREATE  OR REPLACE VIEW `dbo_vListado` AS
+	select distinct  
+	dbo_inscripcion.documento, 
+	dbo_pregunta.orden,
+	dbo_inscripcion.nombre, 
+	dbo_inscripcion.lat,
+  dbo_inscripcion.lng,
+	dbo_inscripcion.departamento,  
+	dbo_inscripcion.municipio, 
+	dbo_inscripcion.fecha,
+	dbo_pregunta.pregunta,
+	dbo_imagen.nombre as imagen
+	from dbo_inscripcion
+	inner join dbo_respuesta on dbo_respuesta.id_inscripcion = dbo_inscripcion.id
+	inner join dbo_pregunta on dbo_pregunta.id = dbo_respuesta.id_pregunta
+	inner join dbo_imagen on dbo_imagen.id= dbo_respuesta.id_imagen
+	order by dbo_inscripcion.documento, dbo_pregunta.orden;
+
+
+DROP TABLE IF EXISTS `tumap`.`dbo_vListadoTodo`;
+USE `tumap`;
+CREATE  OR REPLACE VIEW `dbo_vListadoTodo` AS
+	select distinct dbo_inscripcion.* 	
+	from dbo_inscripcion
+	inner join dbo_respuesta on dbo_respuesta.id = dbo_inscripcion.id
+	inner join dbo_pregunta on dbo_pregunta.id = dbo_respuesta.id_pregunta
+	inner join dbo_imagen on dbo_imagen.id= dbo_respuesta.id_imagen
+	order by dbo_inscripcion.documento, dbo_pregunta.orden;
+
+/* dbo_pregunta*/
+INSERT INTO `tumap`.`dbo_pregunta` (`orden`, `pregunta`) VALUES ('1', '¿Hay presencia de cobertura vegetal en la zona?');
+INSERT INTO `tumap`.`dbo_pregunta` (`orden`, `pregunta`) VALUES ('2', '¿Qué tipo de vegetación se encuentra en el terreno?');
+INSERT INTO `tumap`.`dbo_pregunta` (`orden`, `pregunta`) VALUES ('3', '¿Qué se puede observar en la superficie del suelo?');
+INSERT INTO `tumap`.`dbo_pregunta` (`orden`, `pregunta`) VALUES ('4', '¿Cuál es el color del suelo?');
+
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES (1, 1, '', 'assets/dbo_img/imagen11.jpg');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('1', '2', '', 'assets/dbo_img/imagen12.jpg');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('2', '1', 'Pasto y maleza', 'assets/dbo_img/imagen21.jpg');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('2', '2', 'Muchos arbustos', 'assets/dbo_img/imagen22.jpg');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('2', '3', 'Presencia de arboles', 'assets/dbo_img/imagen23.jpg');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('3', '1', 'Tierra oscura', 'assets/dbo_img/imagen31.jpg');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('3', '2', 'Suelo arcilloso o arenoso', 'assets/dbo_img/imagen32.jpg');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('3', '3', 'Roca', 'assets/dbo_img/imagen33.jpg');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('4', '1', 'Colores claros', 'assets/dbo_img/imagen41.jpg');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('4', '2', 'Negra o oscura', 'assets/dbo_img/imagen42.jpg');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('4', '3', 'Rojiza', 'assets/dbo_img/imagen43.jpg');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('4', '4', 'Amarillento', 'assets/dbo_img/imagen44.jpg');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('4', '5', 'Grisaceo', 'assets/dbo_img/imagen45.jpg');
+
+INSERT INTO `tumap`.`dbo_inscripcion` (`documento`, `nombre`, `lat`,`lng`, `direccion`, `departamento`, `municipio`, `fecha`) VALUES ('11', 'nombre1 apellido1', '4.60972222222', '-74.0816666667','CL 1 CXRA XXX', 'Cundinamarca', 'Soacha', CURDATE());
+
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('1', '1', '1');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('1', '2', '3');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('1', '3', '6');
+INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen`) VALUES ('1', '4', '13');
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+-- *********************************************************************************************************
+-- fin DBO --
+-- *********************************************************************************************************
