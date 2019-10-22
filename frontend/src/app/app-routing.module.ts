@@ -76,7 +76,8 @@ const routes: Routes = [
   { path: 'respuestas', loadChildren: './dbo/respuestas/respuestas.module#RespuestasPageModule' },
   { path: 'mapavias', loadChildren: './vistasjf/mapavias/mapavias.module#MapaviasPageModule' },
   { path: 'slides', loadChildren: './vistasjf/slides/slides.module#SlidesPageModule' },
-  { path: 'resumenjf', loadChildren: './vistasjf/resumen/resumen.module#ResumenPageModule' },
+  { path: 'resumenjf', loadChildren: './vistasjf/resumen/resumen.module#ResumenPageModule' },  { path: 'opcionesvias', loadChildren: './vistasjf/opcionesvias/opcionesvias.module#OpcionesviasPageModule' },
+
 ];
 
 @NgModule({

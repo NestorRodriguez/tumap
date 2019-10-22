@@ -72,7 +72,7 @@ export class HomePage {
       {
         title: 'Estado de vias',
         note: '',
-        route: '/slides',
+        route: '/opcionesvias',
          icon: this.icons[14]
       },
       {
