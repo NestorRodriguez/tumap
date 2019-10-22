@@ -8,11 +8,28 @@ ion-icon {
 }
 
 agm-map {
-    height: 300px;
-    width: 90%;
+    height: 550px;
+    width: 100%;
 }
 
 .map {
     text-justify: auto;
     padding: 3px 20px;
+}
+
+button { 
+    height: 30px;
+    width: 120px;
+    margin:5px;
+ text-align: center; 
+  margin-left: 120px;
+    color: #0A9D97;
+    background-color: white;
+    border-radius: 9px;
+ font-size: 20px;
+ border-color: #0A9D97;
+   float:none ;
+}
+ion-toolbar {
+    text-align: center;
 }

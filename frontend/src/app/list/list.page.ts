@@ -64,9 +64,21 @@ export class ListPage implements OnInit {
         icon: this.icons[8]
       },
       {
+        title: 'Encuesta Tipos de Suelo',
+        note: '',
+        route: '/inscripcion/0',
+         icon: this.icons[13]
+      },
+      {
         title: 'Estado de vias',
         note: '',
         route: '/slides',
+         icon: this.icons[14]
+      },
+      {
+        title: 'Centros de salud',
+        note: '',
+        route: '/tab5',
          icon: this.icons[14]
       },
       {

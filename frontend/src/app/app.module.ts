@@ -10,6 +10,8 @@ import { HttpModule } from '@angular/http';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { Component, OnInit } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -43,6 +45,7 @@ import { ModalSuelosOkPage } from './usosuelos/modal-suelos-ok/modal-suelos-ok.p
     StatusBar,
     SplashScreen,
     Camera,
+    WebView,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent]

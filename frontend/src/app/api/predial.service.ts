@@ -7,7 +7,9 @@ import {
 import { Observable, throwError, of } from "rxjs";
 import { catchError, tap, map, switchMap } from "rxjs/operators";
 import { ToastController } from "@ionic/angular";
+import { Router } from "@angular/router";
 import { Matricula } from "../Interfaces/interfaces";
+import { AlertController } from '@ionic/angular';
 
 @Injectable({
   providedIn: "root"
@@ -21,8 +23,9 @@ export class PredialService {
       "Content-Type": "application/json"
     })
   };
+  predialService: any;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, public alertController: AlertController, private router: Router) {}
 
   obtenerPredial(): Observable<any[]> {
     return this.http.get<any[]>(this.predialUrl).pipe(
@@ -55,6 +58,8 @@ export class PredialService {
     return this.http.post<any>(`${this.urlApi}`, body, this.httpOptions).pipe(
       switchMap(response => {
         console.log(response);
+        this.alertControl();
+        this.router.navigateByUrl('/matricula');
         return response.message !== "ok" ? throwError(response) : of(response);
       }),
       catchError(this.handleError)
@@ -83,4 +88,16 @@ export class PredialService {
   SaveLocalStorageItem(name: string, data: any) {
     localStorage.setItem(name, data);
   }
+
+  async alertControl() {
+    const alert = await this.alertController.create({
+      header: 'Ingresado',
+      subHeader: 'Regsitro Grabado',
+      message: 'Registroingresado corrctamente',
+      buttons: ['ok']
+    });
+
+    await alert.present();
+  }
+
 }

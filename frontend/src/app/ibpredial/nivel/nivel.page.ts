@@ -14,7 +14,7 @@ export class NivelPage implements OnInit {
     { id_nivel: 2, descripcion: "Dos Pisos" },
     { id_nivel: 3, descripcion: "Tres Pisos" },
     { id_nivel: 4, descripcion: "Cuatro Pisos" },
-    { id_nivel: 5, descripcion: "Cinco Pisos" }
+    { id_nivel: 6, descripcion: "Mas de Cuatro Pisos" }
   ];
 
   id_nivel: number;

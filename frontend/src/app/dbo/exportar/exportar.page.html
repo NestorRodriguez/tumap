@@ -1,38 +1,24 @@
-<ion-content  >
+<ion-content>
 
-    <img class="img1" padding src="assets/logo registro.svg" alt="">
-   
-   
-  
-  <ion-toolbar class="text" color="none">
-          <ion-title color="tertiary">¿Que desea hacer?</ion-title><br>
-        </ion-toolbar>
-        
-  
-          
-  
-              <ion-toolbar class="packimagen">
-                  <img src="assets/boton compartir Email.svg" alt="">
-                  <img src="assets/boton guardar en local.svg" alt="">
-                  
-                </ion-toolbar>
-                
-  
-                  
-                  
-                      
-          <ion-toolbar color="none" padding class="centrado">         
-            <button color="primary" text-color="secondary" name="hola">Guardar</button>       
-           </ion-toolbar > 
-  
-           <ion-toolbar  class="atrasins" color="none">
-              <ion-buttons slot="start">
-                  <ion-back-button color="tertiary"  [defaultHref]="['/']"></ion-back-button>
-              </ion-buttons>
-              <ion-title color="tertiary" class="ion-title">Atras</ion-title>
-          </ion-toolbar>
-      
-   
-  </ion-content>
-  
-  
+    <div color="tertiary" *ngFor="let pregunta of preguntas" class="category-bloks">
+
+    </div>
+    <table border="1" class="data-table">
+        <tr>
+            <td *ngFor="let header of headerRow" class="ion-text-center">
+                <b>
+        {{ header }}
+      </b>
+            </td>
+        </tr>
+
+        <tr *ngFor="let row of csvData; let i = index">
+            <td *ngFor="let data of row ; let j = index" class="data-col">
+                <ion-input type="text" [(ngModel)]="csvData[i][j]"></ion-input>
+            </td>
+        </tr>
+
+
+    </table>
+
+</ion-content>
