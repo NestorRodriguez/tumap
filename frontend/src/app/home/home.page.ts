@@ -70,6 +70,12 @@ export class HomePage {
          icon: this.icons[14]
       },
       {
+        title: 'Centros de salud',
+        note: '',
+        route: '/tab5',
+         icon: this.icons[4]
+      },
+      {
         title: "Aqui va otro servicio!",
         note: "",
         route: "/",
