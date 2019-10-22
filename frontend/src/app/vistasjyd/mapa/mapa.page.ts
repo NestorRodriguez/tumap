@@ -8,7 +8,7 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
   templateUrl: './mapa.page.html',
   styleUrls: ['./mapa.page.scss'],
 })
-export class MapaPage implements OnInit {  
+export class MapaPage implements OnInit {
   lat = 4.60972222222;
   lng = -74.0816666667;
   zoom = 16;
