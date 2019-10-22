@@ -1,7 +1,7 @@
 <ion-header no-border>
     <ion-toolbar color="primary">
         <ion-buttons slot="start">
-            <ion-back-button defaultHref="/options">Atrás</ion-back-button>
+            <ion-back-button defaultHref="/options"></ion-back-button>
         </ion-buttons>
         <ion-title>Etnobotánica</ion-title>
     </ion-toolbar>
@@ -55,6 +55,12 @@
 
     <h5 class="te">Foto</h5>
     <ion-input type="file"></ion-input>
+
+    <h6>Foto</h6>
+    <ion-input class="photo" type="file"></ion-input>
+
+    <ion-button (click)="takePicture()">Tomar foto</ion-button>
+    <img ngIf="image" src="image" alt="image">
 
 </ion-content>
 

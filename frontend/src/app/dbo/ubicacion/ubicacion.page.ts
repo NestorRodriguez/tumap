@@ -26,8 +26,9 @@ export class UbicacionPage implements OnInit {
 
   constructor(private navParams: NavParams, private modalCtrl: ModalController) { }
 
-  ngOnInit() {
-    this.posicion = this.navParams.get('custom_id');
+  ngOnInit()
+  {
+   this.posicion = this.navParams.get('custom_id');
     this.titulo = this.navParams.get('custom_titulo');
     this.descripcion = this.navParams.get('custom_descripcion');
 
@@ -37,7 +38,6 @@ export class UbicacionPage implements OnInit {
     console.log(this.lng);
     console.log(this.posicion );
     this.ingresarMarcador(this.lat, this.lng, this.titulo, this.descripcion);
-
   }
 
   // mapReady($event) {

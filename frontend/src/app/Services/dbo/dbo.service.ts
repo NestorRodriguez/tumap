@@ -75,7 +75,7 @@ export class DboService {
     return this.http.put<any>(`${this.API_URL}/dbo_inscripcion/${id}`, inscripcion);
   }
 
-  public getPreguntas(documento: string): Observable<any[]> {
+  public getPreguntas(): Observable<any[]> {
     return this.http.get<any[]>(`${this.API_URL}/dbo_pregunta`);
   }
 
@@ -83,19 +83,23 @@ export class DboService {
   getPreguntasData() {
     return this.data;
   }
+
+  getImagenes() {
+    console.log('Select Imagenes');
+  }
+
   getRespuestas() {
     return this.respuestas;
   }
+
   addRespuesta(respuesta) {
     this.respuestas.push(respuesta);
   }
 
-  public saveRespuesta(): Observable<any[]>  {
-    // for (const respuesta of this.respuestas) {
+  public saveRespuesta()  {
+      console.log(JSON.stringify(this.getRespuestas()));
       return this.http.post<any[]>(`${this.API_URL}/dbo_respuesta`, this.respuestas);
-    // }
   }
-
 
   public handleError(err: HttpErrorResponse) {
     let errorMessage = '';

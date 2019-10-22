@@ -9,6 +9,7 @@ import { catchError, tap, map } from 'rxjs/operators';
 })
 export class InvsuelosService {
   serverUrl = 'http://localhost:3000';
+  // serverUrl = 'http://192.168.43.170:3000';
   constructor( private http: HttpClient) { }
 
 getData(ruta: string): Observable<any[]> {

@@ -9,12 +9,6 @@ const cors = require('cors');
 // Se agrega la librería para habilitar cors
 app.use(cors());
 
-app.all('/*', function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Content-Type");
-    next();
-});
-
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
@@ -67,7 +61,7 @@ app.route('/users')
 app.route('/users/:id')
     .get((req, res) => {
         const id = req.params.id;
-        const sql = `SELECT * FROM users WHERE id_User='${id}';`;
+        const sql = `SELECT * FROM users WHERE id='${id}';`;
         const query = db.query(sql, (error, result) => {
             try {
                 if (error) {
@@ -708,6 +702,70 @@ app.route('/ethnobotany/:id')
         });
     })
 
+//Location
+
+//Select Location
+app.route('/location')
+    .get((req, res) => {
+        console.log('Consultar datos');
+        var query = db.query('select * from location', (error, result) => {
+            try {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(result);
+                    res.json(result)
+                }
+            } catch (error) {
+                res.json({ error: error.message })
+            }
+        });
+    })
+
+//Manejo de Rutas Select lacation por id
+app.route('/location/:id')
+    .get((req, res) => {
+        const id = req.params.id;
+        const sql = `SELECT * FROM Location WHERE id_Location='${id}';`;
+        const query = db.query(sql, (error, result) => {
+            try {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(result);
+                    const [data] = result;
+                    res.json(result)
+                }
+            } catch (error) {
+                res.json({ error: error.message })
+            }
+        });
+    })
+
+
+//Insercion datos location
+
+app.route('/location')
+    .post((req, res) => {
+        const dato = {
+            color: req.body.color,
+            presion: req.body.presion,
+            tipoFlujo: req.body.tipoFlujo,
+            estado: req.body.estado,
+            ubicacion: req.body.ubicacion,
+        };
+
+        const sql = `INSERT INTO connections SET color='${dato.color}', presion='${dato.presion}', tipoFlujo='${dato.tipoFlujo}', estado='${dato.estado}', ubicacion='${dato.ubicacion}'`;
+        console.log(sql);
+        db.query(sql, (error, result) => {
+            if (error) {
+                res.json({ error: error })
+            } else {
+                res.json(result)
+            }
+        });
+    })
+
 
 /********************************************************************** 
  * Servicios para levantamiento infromación predial
@@ -1106,7 +1164,8 @@ router
         const query = db.query(sql, (error, result) => {
             try {
                 if (error) {
-                    throw error;               } else {
+                    throw error;
+                } else {
                     console.log(result);
                     const [data] = result;
                     res.json(data)
@@ -1124,7 +1183,7 @@ router
             limites,
             serv_publicos
         } = req.body;
-        
+
         const dato = {
             matricula: matricula,
             direccion: 'Cl 7a Bis c 80 a 50',
@@ -1149,13 +1208,13 @@ router
         db.query(sql, (error, result) => {
             if (error) {
                 res.json({ error: error })
-            } else {           
-                result.message = 'ok'     
+            } else {
+                result.message = 'ok'
                 res.json(result)
             }
             console.log(result)
         });
-        
+
         //res.json('ok')
     })
     .put('/predios/:id', (req, res) => {
@@ -1284,11 +1343,7 @@ app.route('/dbo_pregunta')
     .get(function(req, res) {
         console.log('Página de pregunta ');
 
-        var sql = `select p.id as id_pregunta , p.orden as orden_pregunta, p.pregunta, i.id as id_imagen,i.orden as orden_imagen ,i.nombre,i.ruta `
-        sql = sql + `from dbo_pregunta as p `
-        sql = sql + `inner join dbo_imagen as i `
-        sql = sql + `on p.id= i.id_pregunta `
-        sql = sql + `order by p.orden, i.orden;`;
+        var sql = `select id, pregunta from tumap.dbo_pregunta order by orden; `;
 
         var query = db.query(sql, function(error, result) {
             if (error) {
@@ -1301,12 +1356,66 @@ app.route('/dbo_pregunta')
     });
 
 
+app.get('/dbo_preguntas-respuestas', (req, res) => {
+
+    const sqlp = 'select id, pregunta from tumap.dbo_pregunta order by orden;';
+    const sqlr = 'Select id, id_pregunta, nombre, ruta from tumap.dbo_imagen order by id_pregunta, orden;';
+
+    let preguntas = [];
+    let respuestas = [];
+
+    db.query(sqlp, (error, result) => {
+        if (error) {
+            res.json({
+                error: true,
+                message: "Ocurrió un error al consultar las preguntas"
+            });
+        } else {
+            //preguntas.concat(result);
+            preguntas = result;
+            console.log(preguntas);
+
+            db.query(sqlr, (error, result) => {
+                if (error) {
+                    res.json({
+                        error: true,
+                        message: "Ocurrió un error al consultar las respuestas"
+                    });
+                } else {
+                    respuestas = result;
+                    console.log(respuestas);
+
+
+                    if (preguntas) {
+
+                        preguntas.map(p => {
+                            p.respuestas = respuestas.filter(r => p.id = r.id_pregunta);
+                        });
+                        console.log("respuestas:", respuestas);
+                        return res.json(preguntas);
+                    } else {
+                        res.json({
+                            error: true,
+                            message: "Ocurrió un error al consultar preguntas y respuestas"
+                        });
+                    }
+
+                    res.json({ preguntas, respuestas });
+
+                }
+            });
+        }
+    });
+});
+
 // dbo Lista las imagen por imagensuelos 30/09/2019
-app.route('/dbo_imagen/:id_Pregunta')
+app.route('/dbo_imagen')
     .get(function(req, res) {
         console.log('Página de imagen ');
-        var id_Pregunta = req.params.id_Pregunta;
-        var query = db.query('select * from dbo_imagen where id_Pregunta= ?', id_Pregunta, function(error, result) {
+
+        var sql = `Select id as id_imagen,id_pregunta,nombre,ruta from tumap.dbo_imagen order by id_pregunta, orden;`;
+
+        var query = db.query(sql, function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -1388,26 +1497,85 @@ app.put("/dbo_inscripcion/:id", function(req, res) {
 
 // dbo Lista respuestas 30/09/2019
 // http://localhost:3000/dbo_respuesta/1/3
-app.get('/dbo_respuesta/:id_inscripcion', function(req, res) {
-    console.log('Página de respuesta');
-    const { id_inscripcion } = req.params;
-    const { id_pregunta } = req.params;
-
-    const sql = `SELECT * FROM dbo_respuesta WHERE id_inscripcion = '${id_inscripcion}'`;
-
-    var query = db.query(sql, function(error, result) {
+app.get('/dbo_respuesta/', function(req, res) {
+    const sql = 'SELECT * FROM irs_inventarios_totales';
+    db.query(sql, (error, result) => {
         if (error) {
-            throw error;
+            res.status(400).send('<h1>Ocurrió un error al consultar las encuestas.</h1>');
         } else {
-            console.log(result);
-            res.json(result);
+            const style = 'style="border: 1px solid black;"';
+            let html = '<table style="width:100%; border: 1px solid black;">';
+            html = html + `
+                    <tr ${style}>
+                        <td ${style}>id</td>
+                        <td ${style}>tipo</td>
+                        <td ${style}>clase poste</td>
+                        <td ${style}>material</td>
+                        <td ${style}>numero / empresa</td>
+                        <td ${style}>tiene lámpara</td>
+                        <td ${style}>tiene transformador</td>
+                        <td ${style}>operador</td>
+                        <td ${style}>estado</td>
+                        <td ${style}>ubicacion</td>
+                        <td ${style}>imagen</td>
+                        <td ${style}>usuario</td>
+                        <td ${style}>encuesta operador</td>
+                        <td ${style}>encuesta estado</td>
+                        <td ${style}>fecha</td>
+                        <td ${style}>ip</td>
+                    </tr>
+                `
+            for (let i in result) {
+                html = html + `
+                    <tr ${style}>
+                        <td ${style}>${result[i].id}</td>
+                        <td ${style}>${result[i].tipo}</td>
+                        <td ${style}>${result[i].clase_poste}</td>
+                        <td ${style}>${result[i].material}</td>
+                        <td ${style}>${result[i].identificador}</td>
+                        <td ${style}>${result[i].lampara}</td>
+                        <td ${style}>${result[i].transformador}</td>
+                        <td ${style}>${result[i].operador}</td>
+                        <td ${style}>${result[i].estado}</td>
+                        <td ${style}>${result[i].ubicacion}</td>
+                        <td ${style}><img src="${result[i].imagen}" width="50" height="auto"/></td>
+                        <td ${style}>${result[i].id_usuario}</td>
+                        <td ${style}>${result[i].encuesta_operador}</td>
+                        <td ${style}>${result[i].encuesta_estado}</td>
+                        <td ${style}>${result[i].fecha}</td>
+                        <td ${style}>${result[i].ip}</td>
+                    </tr>
+                    `;
+            }
+            html = html + '</table>';
+            res.send(html);
         }
-    })
-
+    });
 })
 
+
 app.post("/dbo_respuesta", function(req, res) {
-    res.json({ text: 'Add respuesta: ' });
+
+    const data = req.body;
+    const errors = 0;
+
+    data.map(item => {
+        const sql = `INSERT INTO dbo_respuesta (id_inscripcion,id_pregunta,id_imagen) VALUES (${item.id_Inscripcion}, ${item.id_Pregunta},${item.id_Imagen});`;
+        // console.log('Add inscripcion:', sql);
+        db.query(sql, function(error, result) {
+            if (error) {
+                errors++;
+                // console.log(error)
+            }
+        });
+
+    });
+
+    if (errors) {
+        res.json({ success: false, error: `Se presentaron (${errors}) errores al guardar la respuesta` });
+    } else {
+        res.json({ success: true });
+    }
 })
 
 

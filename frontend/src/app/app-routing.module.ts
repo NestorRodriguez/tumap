@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -68,13 +68,16 @@ const routes: Routes = [
   { path: 'exterioropt', loadChildren: './hidroetno/exterioropt/exterioropt.module#ExterioroptPageModule' },
   { path: 'ibpredial-inicio', loadChildren: './ibpredial/inicio/inicio.module#InicioPageModule' },
   { path: 'ibpredial-inicio/:id', loadChildren: './ibpredial/inicio/inicio.module#InicioPageModule' },
-  { path: 'respuestas', loadChildren: './dbo/respuestas/respuestas.module#RespuestasPageModule' },
+  { path: 'predial', loadChildren: './ibpredial/predial/predial.module#PredialPageModule' },
+  { path: 'colinda', loadChildren: './ibpredial/colinda/colinda.module#ColindaPageModule' },
   { path: 'estrato', loadChildren: './ibpredial/estrato/estrato.module#EstratoPageModule' },
   { path: 'nivel', loadChildren: './ibpredial/nivel/nivel.module#NivelPageModule' },
   { path: 'matricula', loadChildren: './ibpredial/matricula/matricula.module#MatriculaPageModule' },
+  { path: 'respuestas', loadChildren: './dbo/respuestas/respuestas.module#RespuestasPageModule' },
   { path: 'mapavias', loadChildren: './vistasjf/mapavias/mapavias.module#MapaviasPageModule' },
   { path: 'slides', loadChildren: './vistasjf/slides/slides.module#SlidesPageModule' },
   { path: 'resumenjf', loadChildren: './vistasjf/resumen/resumen.module#ResumenPageModule' },
+<<<<<<< HEAD
   { path: 'cv-salud', loadChildren: './cv-salud/cv-salud.module#CvSaludPageModule' },
   { path: 'tab1', loadChildren: './cv-salud/tab1/tab1.module#Tab1PageModule' },
   { path: 'tab2', loadChildren: './cv-salud/tab2/tab2.module#Tab2PageModule' },
@@ -88,6 +91,8 @@ const routes: Routes = [
 
 
 
+=======
+>>>>>>> fed30c3129f82ec2a42b3a3a041d3a51a176ef02
 ];
 
 @NgModule({

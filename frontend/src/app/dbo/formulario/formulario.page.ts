@@ -46,13 +46,7 @@ export class FormularioPage implements OnInit {
   }
 
   saveRespuestas() {
-    this.dboService.saveRespuesta().subscribe(
-      res => {
-        console.log(res);
-      },
-      err => console.error(err)
-    );
-    console.log('save respuestas');
+    this.dboService.saveRespuesta()
   }
 
 }
