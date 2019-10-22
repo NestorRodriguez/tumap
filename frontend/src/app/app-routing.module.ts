@@ -74,7 +74,9 @@ const routes: Routes = [
   { path: 'matricula', loadChildren: './ibpredial/matricula/matricula.module#MatriculaPageModule' },
   { path: 'mapavias', loadChildren: './vistasjf/mapavias/mapavias.module#MapaviasPageModule' },
   { path: 'slides', loadChildren: './vistasjf/slides/slides.module#SlidesPageModule' },
-  { path: 'resumenjf', loadChildren: './vistasjf/resumen/resumen.module#ResumenPageModule' },
+  { path: 'resumenjf', loadChildren: './vistasjf/resumen/resumen.module#ResumenPageModule' },  { path: 'mapacofor', loadChildren: './socioeconomico/mapacofor/mapacofor.module#MapacoforPageModule' },
+  { path: 'mapacoinfor', loadChildren: './socioeconomico/mapacoinfor/mapacoinfor.module#MapacoinforPageModule' },
+
 
 
 ];
