@@ -76,6 +76,12 @@ export class ListPage implements OnInit {
          icon: this.icons[14]
       },
       {
+        title: 'Centros de salud',
+        note: '',
+        route: '/tab5',
+         icon: this.icons[14]
+      },
+      {
         title: "Aqui va otro servicio!",
         note: "",
         route: "/",

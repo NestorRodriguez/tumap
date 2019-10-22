@@ -92,6 +92,16 @@ const routes: Routes = [
 
 
 
+  { path: 'cv-salud', loadChildren: './cv-salud/cv-salud.module#CvSaludPageModule' },
+  { path: 'tab1', loadChildren: './cv-salud/tab1/tab1.module#Tab1PageModule' },
+  { path: 'tab2', loadChildren: './cv-salud/tab2/tab2.module#Tab2PageModule' },
+  { path: 'tab3', loadChildren: './cv-salud/tab3/tab3.module#Tab3PageModule' },
+  { path: 'tab4', loadChildren: './cv-salud/tab4/tab4.module#Tab4PageModule' },
+  { path: 'tab5', loadChildren: './cv-salud/tab5/tab5.module#Tab5PageModule' },
+  { path: 'tab6', loadChildren: './cv-salud/tab6/tab6.module#Tab6PageModule' },
+  { path: 'mapacofor', loadChildren: './socioeconomico/mapacofor/mapacofor.module#MapacoforPageModule' },
+  { path: 'mapacoinfor', loadChildren: './socioeconomico/mapacoinfor/mapacoinfor.module#MapacoinforPageModule' },
+
 ];
 
 @NgModule({

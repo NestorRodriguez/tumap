@@ -1,5 +1,5 @@
 
-    <ion-content>
+    <ion-content color="primary">
             
    
             <ion-toolbar color="none">
@@ -42,7 +42,7 @@
                               
                                     <!-- <img src="https://via.placeholder.com/300x300"> -->
                                     <button [disabled]="pregunta.isAdd" expand="full" (click)="addToRespuestas(pregunta, respuesta)">
-                                    <img [src]="respuesta.path" [alt]="respuesta.name">
+                                    <img class="imgres" [src]="respuesta.path" [alt]="respuesta.name">
 
                                     </button>
                                
