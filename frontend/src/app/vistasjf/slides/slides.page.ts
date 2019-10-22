@@ -55,8 +55,8 @@ export class SlidesPage implements OnInit {
       direccion: null,
       detalle: null,
       ubicacion: null,
-      imagen: 'assets/img_jyd/foto_calle.png',
-      // imagen: null,
+      // imagen: 'assets/img_jyd/foto_calle.png',
+      imagen: null,
       idUsuario: 1
     };
   }

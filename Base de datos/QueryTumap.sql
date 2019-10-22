@@ -627,7 +627,11 @@ LEFT JOIN irs_estados_redes sr ON i.id_irs_estado_red_celular = sr.id;
 FIN TABLAS PARA INVENTARIO DE REDES SECAS
 =======================================================================
 */
-
+/*
+=======================================================================
+INICIO TABLAS PARA SOCIOECONOMICO
+=======================================================================
+*/
 /*Crear tabla encuesta social*/
 create table SEC_Encuesta_Social(
 	id_Encuesta int not null auto_increment primary key, 
@@ -681,9 +685,11 @@ create table SEC_Comercio_Informal(
 	INSERT INTO SEC_Comercio_Informal (Productos_Servicios, Descripcion , Estatico_Movil, Periodicidad, Jornada, Foto)
 		VALUES ('ambos','dulceria y minutos','estatico','fin de semana','diurno y nocturno','url');
 
---*********************************************************************************************************
--- Fin Tablas Inventarios Redes Secas --
---********************************************************************************************************* 
+/*
+=======================================================================
+FIN TABLAS PARA SOCIOECONOMICO
+=======================================================================
+*/ 
 
 CREATE TABLE IM_REGISTROS (
 ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,

@@ -279,3 +279,4 @@ insert into jf_detalle_via (detalle)
 /*CRUD tabla jf_estado*/
 insert into jf_estado(estado)
 	values ('En espera'),('Aprobado'),('No aprobado');
+/*FIN BASE DE DATOS DE VIAS JF*/

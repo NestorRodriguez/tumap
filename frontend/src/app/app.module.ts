@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { AgmCoreModule } from '@agm/core';
+import { Camera } from '@ionic-native/camera/ngx';
 // Imports para los http requests
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
