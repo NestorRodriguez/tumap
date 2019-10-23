@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-modal-suelos-ok',
@@ -10,7 +11,8 @@ import { Router } from '@angular/router';
 export class ModalSuelosOkPage implements OnInit {
 
   constructor(private view: ModalController,
-              private router: Router) { }
+              private router: Router,
+              private storage: Storage) { }
 
   ngOnInit() {
     setTimeout(() => {
@@ -18,6 +20,6 @@ export class ModalSuelosOkPage implements OnInit {
     }, 3000);
   }
   dismiss() {
-    this.router.navigateByUrl('usosueloshome');
+    this.router.navigateByUrl('/home');
    }
 }
