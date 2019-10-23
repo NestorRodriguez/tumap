@@ -10,6 +10,10 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 })
 export class ComercioinformalPage {
   foto: string;
+  servicios;
+  negocio;
+  frecuencia;
+  horarios;
   constructor(public alertController: AlertController, private router: Router,private camera: Camera) { }
 
   async presentAlert() {
@@ -54,5 +58,16 @@ export class ComercioinformalPage {
     }, (err) => {
       console.log(err);
     });
+  }
+
+  enviar(){
+    const model = {
+      imagen: this.foto,
+      inforServicios: this.servicios,
+      infoNegocio: this.negocio,
+      infoFrecuencia: this.frecuencia,
+      inforHorarios: this.horarios
+    }
+    // this.servicios.guardarComercio(model).subscribe()
   }
 }
