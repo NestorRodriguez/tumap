@@ -1358,8 +1358,8 @@ app.route('/dbo_pregunta')
 
 app.get('/dbo_preguntas-respuestas', (req, res) => {
 
-    const sqlp = 'select id, pregunta from tumap.dbo_pregunta order by orden;';
-    const sqlr = 'Select id, id_pregunta, nombre, ruta from tumap.dbo_imagen order by id_pregunta, orden;';
+    const sqlp = 'select id, orden, pregunta from tumap.dbo_pregunta order by orden;';
+    const sqlr = 'Select id, orden, id_pregunta, 0 as id_inscripcion, nombre, ruta from tumap.dbo_imagen order by id_pregunta, orden;';
 
     let preguntas = [];
     let respuestas = [];
@@ -1371,9 +1371,9 @@ app.get('/dbo_preguntas-respuestas', (req, res) => {
                 message: "Ocurrió un error al consultar las preguntas"
             });
         } else {
-            //preguntas.concat(result);
+            // preguntas.concat(result);
             preguntas = result;
-            console.log(preguntas);
+            // console.log(preguntas);
 
             db.query(sqlr, (error, result) => {
                 if (error) {
@@ -1383,15 +1383,14 @@ app.get('/dbo_preguntas-respuestas', (req, res) => {
                     });
                 } else {
                     respuestas = result;
-                    console.log(respuestas);
-
+                    // console.log(respuestas);
 
                     if (preguntas) {
 
                         preguntas.map(p => {
-                            p.respuestas = respuestas.filter(r => p.id = r.id_pregunta);
+                            p.respuestas = respuestas.filter(r => p.id === r.id_pregunta);
                         });
-                        console.log("respuestas:", respuestas);
+                        console.log(preguntas);
                         return res.json(preguntas);
                     } else {
                         res.json({
@@ -1498,74 +1497,75 @@ app.put("/dbo_inscripcion/:id", function(req, res) {
 // dbo Lista respuestas 30/09/2019
 // http://localhost:3000/dbo_respuesta/1/3
 app.get('/dbo_respuesta/', function(req, res) {
-    const sql = 'SELECT * FROM irs_inventarios_totales';
-    db.query(sql, (error, result) => {
+
+    const sql = 'SELECT documento,orden,nombre,lat,lng,departamento,municipio,fecha,pregunta,imagen FROM dbo_vlistado;';
+
+    var query = db.query(sql, function(error, result) {
         if (error) {
-            res.status(400).send('<h1>Ocurrió un error al consultar las encuestas.</h1>');
+            throw error;
         } else {
-            const style = 'style="border: 1px solid black;"';
-            let html = '<table style="width:100%; border: 1px solid black;">';
-            html = html + `
-                    <tr ${style}>
-                        <td ${style}>id</td>
-                        <td ${style}>tipo</td>
-                        <td ${style}>clase poste</td>
-                        <td ${style}>material</td>
-                        <td ${style}>numero / empresa</td>
-                        <td ${style}>tiene lámpara</td>
-                        <td ${style}>tiene transformador</td>
-                        <td ${style}>operador</td>
-                        <td ${style}>estado</td>
-                        <td ${style}>ubicacion</td>
-                        <td ${style}>imagen</td>
-                        <td ${style}>usuario</td>
-                        <td ${style}>encuesta operador</td>
-                        <td ${style}>encuesta estado</td>
-                        <td ${style}>fecha</td>
-                        <td ${style}>ip</td>
-                    </tr>
-                `
-            for (let i in result) {
-                html = html + `
-                    <tr ${style}>
-                        <td ${style}>${result[i].id}</td>
-                        <td ${style}>${result[i].tipo}</td>
-                        <td ${style}>${result[i].clase_poste}</td>
-                        <td ${style}>${result[i].material}</td>
-                        <td ${style}>${result[i].identificador}</td>
-                        <td ${style}>${result[i].lampara}</td>
-                        <td ${style}>${result[i].transformador}</td>
-                        <td ${style}>${result[i].operador}</td>
-                        <td ${style}>${result[i].estado}</td>
-                        <td ${style}>${result[i].ubicacion}</td>
-                        <td ${style}><img src="${result[i].imagen}" width="50" height="auto"/></td>
-                        <td ${style}>${result[i].id_usuario}</td>
-                        <td ${style}>${result[i].encuesta_operador}</td>
-                        <td ${style}>${result[i].encuesta_estado}</td>
-                        <td ${style}>${result[i].fecha}</td>
-                        <td ${style}>${result[i].ip}</td>
-                    </tr>
-                    `;
-            }
-            html = html + '</table>';
-            res.send(html);
+            console.log(result);
+            res.json(result);
         }
     });
+
+    // db.query(sql, (error, result) => {
+    //     if (error) {
+    //         res.status(400).send('<h1>Ocurrió un error al consultar las encuestas.</h1>');
+    //     } else {
+    //         const style = 'style="border: 1px solid black;"';
+    //         let html = '<table style="width:100%; border: 1px solid black;">';
+    //         html = html + `
+    //                 <tr ${style}>
+    //                     <td ${style}>documento</td>
+    //                     <td ${style}>orden</td>
+    //                     <td ${style}>nombre</td>
+    //                     <td ${style}>lat</td>
+    //                     <td ${style}>lng</td>
+    //                     <td ${style}>departamento</td>
+    //                     <td ${style}>municipio</td>
+    //                     <td ${style}>fecha</td>
+    //                     <td ${style}>pregunta</td>
+    //                     <td ${style}>imagen</td>
+    //                 </tr>
+    //             `
+    //         for (let i in result) {
+    //             html = html + `
+    //                 <tr ${style}>
+    //                     <td ${style}>${result[i].documento}</td>
+    //                     <td ${style}>${result[i].orden}</td>
+    //                     <td ${style}>${result[i].nombre}</td>
+    //                     <td ${style}>${result[i].lat}</td>
+    //                     <td ${style}>${result[i].lng}</td>
+    //                     <td ${style}>${result[i].departamento}</td>
+    //                     <td ${style}>${result[i].municipio}</td>
+    //                     <td ${style}>${result[i].fecha}</td>
+    //                     <td ${style}>${result[i].pregunta}</td>
+    //                     <td ${style}>${result[i].imagen}</td>
+    //                 </tr>
+    //                 `;
+    //         }
+    //         html = html + '</table>';
+    //         res.send(html);
+    //     }
+    // });
 })
 
 
 app.post("/dbo_respuesta", function(req, res) {
 
     const data = req.body;
-    const errors = 0;
+    // console.log(req.body);
 
+    const errors = 0;
+    console.log(JSON.stringify(data));
     data.map(item => {
-        const sql = `INSERT INTO dbo_respuesta (id_inscripcion,id_pregunta,id_imagen) VALUES (${item.id_Inscripcion}, ${item.id_Pregunta},${item.id_Imagen});`;
-        // console.log('Add inscripcion:', sql);
+        const sql = `INSERT INTO dbo_respuesta (id_inscripcion,id_pregunta,id_imagen) VALUES (${item.id_inscripcion},${item.id_pregunta},${item.id});`;
+        console.log('Add inscripcion:', sql);
         db.query(sql, function(error, result) {
             if (error) {
                 errors++;
-                // console.log(error)
+                console.log(error)
             }
         });
 
@@ -1575,6 +1575,7 @@ app.post("/dbo_respuesta", function(req, res) {
         res.json({ success: false, error: `Se presentaron (${errors}) errores al guardar la respuesta` });
     } else {
         res.json({ success: true });
+
     }
 })
 

@@ -1,21 +1,40 @@
 <ion-content color="none">
 
+<<<<<<< HEAD
+    <table border="1" class="data-table">
+=======
     <div color="tertiary" *ngFor="let pregunta of preguntas" class="category-bloks">
 
     </div>
     <table  class="data-table">
+>>>>>>> 5cdff6aa77dc84fe5bb0cda17c7ccd5bb623de2b
         <tr>
-            <td *ngFor="let header of headerRow" class="ion-text-center">
-                <b>
-        {{ header }}
-      </b>
-            </td>
+            <!-- <td *ngFor="let header of headerRow" class="ion-text-center">
+                <b>{{ header }}</b>
+            </td> -->
+            <td>Documento</td>
+            <td>orden</td>
+            <td>nombre</td>
+            <td>lat</td>
+            <td>lng</td>
+            <td>departamento</td>
+            <td>municipio</td>
+            <td>fecha</td>
+            <td>pregunta</td>
+            <td>imagen</td>
         </tr>
 
         <tr *ngFor="let row of csvData; let i = index">
-            <td *ngFor="let data of row ; let j = index" class="data-col">
-                <ion-input type="text" [(ngModel)]="csvData[i][j]"></ion-input>
-            </td>
+            <td>{{ documento }}</td>
+            <td>{{ orden }}</td>
+            <td>{{ nombre }}</td>
+            <td>{{ lat }}</td>
+            <td>{{ lng }}</td>
+            <td>{{ departamento }}</td>
+            <td>{{ municipio }}</td>
+            <td>{{ fecha }}</td>
+            <td>{{ pregunta }}</td>
+            <td>{{ imagen }}</td>
         </tr>
 
 
