@@ -1,0 +1,56 @@
+ion-header>ion-toolbar {
+    --background: var(--ion-color-primary);
+    color: var(--ion-color-tertiary);
+}
+
+ion-content {
+    --background: var(--ion-color-primary);
+    color: var(--ion-color-tertiary);
+}
+
+ion-slides {
+    background-color: var(--ion-color-primary);
+    height: 100%;
+    max-width: 90vw;
+    border-radius: 10vw;
+}
+
+ion-slide>ion-icon {
+    color: var(--ion-color-secondary);
+    font-size: 48px;
+    float: right;
+    margin-right: 10vw;
+    margin-top: 7vh;
+}
+
+ion-slide>ion-button {
+    color: var(--ion-color-tertiary);
+    font-size: large;
+    --background: var(--ion-color-secondary);
+    margin-top: 7vh;
+}
+
+.swiper-slide {
+    display: block;
+    margin-bottom: 64px;
+    background-color: var(--ion-color-tertiary);
+    border-radius: 10vw;
+}
+
+ion-slide>h1,
+h2 {
+    margin: 0 0 0 0;
+    color: var(--ion-color-secondary);
+}
+
+ion-slide>p {
+    font-size: 22px;
+    padding: 1em 1em 1em 1em;
+}
+
+ion-slide>img {
+    max-height: 50%;
+    max-width: 60%;
+    margin: 64px 0;
+    width: 30vw;
+}

@@ -1,6 +1,6 @@
-ion-content {
-    // --background: url(../../../assets/img_jyd/fondo resumen.svg) no-repeat center center / cover;
-    // --ion-background-color: #0A9D97;
+ion-header>ion-toolbar {
+    --background: var(--ion-color-primary);
+    color: var(--ion-color-tertiary);
 }
 
 .img_resumen {
