@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ComercioformalPage } from './comercioformal.page';
+import { ComercioformalPage } from '../comercioformal/comercioformal.page';
 
 const routes: Routes = [
   {

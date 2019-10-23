@@ -48,6 +48,21 @@ export class JydService {
       );
   }
 
+  getRegistros() {
+    return this.http.get<any[]>(`${this.serverUrl}/registro`).pipe(
+      tap(data => console.log(JSON.stringify(data))),
+      catchError(this.handleError)
+      );
+  }
+
+  setRegistro(data) {
+    return this.http.post(`${this.serverUrl}/registro`, data);
+  }
+
+  setHistorico(data) {
+    return this.http.post(`${this.serverUrl}/historico`, data);
+  }
+
   private handleError(err: HttpErrorResponse) {
     let errorMessage = '';
     if (err.error instanceof ErrorEvent) {

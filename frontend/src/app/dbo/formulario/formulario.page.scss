@@ -1,11 +1,5 @@
-ion-content {
-    --background: url(../../../assets/dbo_img/fondor.jpg) no-repeat center center / cover;
-   color: white;
-}
-div {
-    color: white;
 
-}
+
 ion-card-title {
     font-size: 15px;
 }
@@ -66,6 +60,15 @@ ion-title {
 button:hover {
     background-color: rgb(129, 230, 226);
 }
+.imgres:hover {
+   
+    border-radius: 80px;
+}
+
+.imgres{
+    border-radius: 7px;  
+}
+
 
 .volver1 {
     margin-left: 15px;
@@ -127,7 +130,15 @@ ion-badge {
     background-color: white;
     border-radius: 7px;
  font-size: 20px;
+}
 
- 
+ion-card-header{
+    border-radius: 7px;
+}
+ion-card{
+    border-radius: 7px;
+}
+div{
+    border-radius: 7px;
 }
 

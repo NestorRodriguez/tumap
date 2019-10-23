@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DboService } from '../../Services/dbo/dbo.service';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 @Component({
   selector: 'app-exportar',
@@ -8,17 +9,29 @@ import { DboService } from '../../Services/dbo/dbo.service';
 })
 export class ExportarPage implements OnInit {
 
-  items = [];
 
-  constructor(private dboService: DboService) { }
+  csvData: string ;
+  ruta: string;
+  // csvData: any[] = [];
+  // headerRow: any[] = [];
 
+  constructor(private dbo: DboService) { }
+// , private iab: InAppBrowser
   ngOnInit() {
-    this.items = this.dboService.getRespuestas();
-    console.log(this.items);
+    console.log('Entro a exportar')
+    // this.dbo.getRespuestasResultado().subscribe(
+    //   res => console.log(res.toString()) ,  // this.csvData = res ,
+    //   err => console.error(err)
+    //   );
+    // console.log(this.csvData);
+    this.ruta = this.dbo.getServerUrl() + '/dbo_respuesta';
+    this.openBrowser();
+
   }
 
-  listar(){
-
+  openBrowser() {
+    // const browser = this.iab.open(this.dbo.getServerUrl() + '/dbo_respuesta', '_blank', 'location=yes');
+    // browser.show();
   }
 
 }

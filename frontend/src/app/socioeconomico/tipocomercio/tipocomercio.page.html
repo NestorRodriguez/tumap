@@ -1,21 +1,13 @@
-<ion-header>
-    <ion-toolbar style="--ion-background-color: #2C689F; color: white;">
-        <ion-title>
-            TIPO DE COMERCIO
-        </ion-title>
-    </ion-toolbar>
-</ion-header>
-
 <ion-content padding>
     <ion-label>
         SELECCIONE EL TIPO DE COMERCIO
     </ion-label>
-    <br><br><br>
-    <ion-button [routerLink]="['/comercioformal']">
-        <img class="logo" src="assets/logo establecimiento formal.svg">
+    <br><br>
+    <ion-button color="light" [routerLink]="['/mapacofor']">
+        <img class="logo" src="assets/logo_comercio_formal.png">
     </ion-button>
     <br><br><br>
-    <ion-button [routerLink]="['/comercioinformal']">
-        <img class="logo" src="assets/logo establecimiento informal.svg">
+    <ion-button color="light" [routerLink]="['/mapacoinfor']">
+        <img class="logo" src="assets/logo_comercio_informal.png">
     </ion-button>
 </ion-content>

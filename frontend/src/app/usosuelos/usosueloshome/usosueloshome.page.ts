@@ -10,6 +10,7 @@ import { isUndefined } from 'util';
 import { isEmpty } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
+import { LoginService } from '../../Services/login/login.service';
 
 
 @Component({
@@ -35,6 +36,7 @@ export class UsosueloshomePage implements OnInit {
   poligonoInicial: boolean;
   checkmarkEnabled: boolean;
   idRegistro: any[];
+  idUser: any;
   constructor(private obtenerData: ObtenerdataService,
               private service: InvsuelosService,
               private storage: Storage,
@@ -43,11 +45,13 @@ export class UsosueloshomePage implements OnInit {
               public alertController: AlertController,
               private router: Router,
               private geolocation: Geolocation,
-              ) { }
+              private serviceLogin: LoginService, ) { }
 
   ngOnInit() {
     this.getGeolocation();
     this.dataUser = this.obtenerData.enviarData();
+    // this.dataUser = this.serviceLogin.userInfo();
+    console.log('ID Usuario##', this.dataUser);
     ( isUndefined(this.dataUser)) ? this.router.navigateByUrl('formulariosuelos') :
     this.service.getData('usosuelosid').subscribe( Id => { this.idRegistro = Id[0].lastID;
     });
@@ -100,7 +104,7 @@ export class UsosueloshomePage implements OnInit {
     this.subPoligonoCerrado = false;
     this.marcadoresSubpoligono.length = 0;
     this.polygonSub = false;
-    this.storage.clear();
+    this.storage.remove('subpoligono');
 
   }
   // Ingreso de puntos al array de subpoligonos
@@ -142,7 +146,8 @@ export class UsosueloshomePage implements OnInit {
         area: this.dataUser.area,
         direccion: this.dataUser.direccion,
         poligono: JSON.stringify(this.arraySubPoligono),
-        idRegistro: this.idRegistro
+        idRegistro: this.idRegistro,
+        idUser: this.idUser
       };
       this.service.saveFormData(regData).subscribe( res => {
         this.presentModalOk();

@@ -1,24 +1,8 @@
-<ion-content>
+<ion-header></ion-header>
 
-    <div color="tertiary" *ngFor="let pregunta of preguntas" class="category-bloks">
-
-    </div>
-    <table border="1" class="data-table">
-        <tr>
-            <td *ngFor="let header of headerRow" class="ion-text-center">
-                <b>
-        {{ header }}
-      </b>
-            </td>
-        </tr>
-
-        <tr *ngFor="let row of csvData; let i = index">
-            <td *ngFor="let data of row ; let j = index" class="data-col">
-                <ion-input type="text" [(ngModel)]="csvData[i][j]"></ion-input>
-            </td>
-        </tr>
-
-
-    </table>
-
+<ion-content color="none">
+    <div [routerLink]="[ruta]"> </div>
+    <ion-item [href]="this.ruta" routerLinkActive="router-link-active">
+        <ion-label>Exportar</ion-label>
+    </ion-item>
 </ion-content>
