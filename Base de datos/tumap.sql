@@ -352,6 +352,38 @@ CREATE TABLE IF NOT EXISTS `tumap`.`fys_validar_info` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+set @g = 'POINT(4.474022 -74.087073)';
+INSERT INTO fys_registro_info (nombre_institucion,ubicacion,foto,referencias_aledanas,tipos_formacion,especificacion,pagina_web,telefonos,id_usuario)
+values ('SENA',ST_PointFromText(@g),'imagenes/sena','cerca al rio','Educación Superior','Tecnicos,Tecnologos,Especializaciones y Cursos Cortos','www.sena.com','0314451114',1);
+
+set @e = 'POINT(4.477934 -74.104971)';
+INSERT INTO fys_registro_info (nombre_institucion,ubicacion,foto,referencias_aledanas,tipos_formacion,especificacion,pagina_web,telefonos,id_usuario)
+values ('Colegio Rural El Uval',ST_PointFromText(@e),'imagenes/coelgio','cerca a la planta de tratamiento','Educación Basica','Desde transición hasta grado noveno','www.colegioeluval.com','0317614733',2);
+
+INSERT INTO fys_administrador (nombres,apellidos,celular,usuario,clave)
+values ('Pepito','Perez','3105623415','AdminUno','12345');
+
+INSERT INTO fys_administrador (nombres,apellidos,celular,usuario,clave)
+values ('Juanita','Gomez','3105685963','AdminDos','78910');
+
+INSERT INTO fys_validar_info (validado,fecha_validacion,id_registro_info,id_administrador)
+values (1,'2019-09-29',1,1);
+
+INSERT INTO fys_validar_info (validado,fecha_validacion,id_registro_info,id_administrador)
+values (2,'2019-09-29',2,2);
+
+INSERT INTO fys_datos_usuarios (nombres,apellidos,edad,sexo,nivel_educativo,id_user)
+values ('Sara','Camacho Albarracin',20,'F','Tecnologo',3);
+
+INSERT INTO fys_datos_usuarios (nombres,apellidos,edad,sexo,nivel_educativo,id_user)
+values ('Fredy','Sanchez',24,'M','Tecnologo',4);
+
+INSERT INTO rol (namerol)
+values ('Administrador');
+
+INSERT INTO rol (namerol)
+values ('Habitante');
+
 /*************************************************************
     FIN TABLAS EDUCACION
 **************************************************************/
@@ -390,4 +422,35 @@ insert into jf_estado(estado)
 
 /*************************************************************
     FIN BASE DE DATOS DE VIAS JF
+**************************************************************/
+
+/*************************************************************
+    TABLAS INVENTARIO DE SUELOS
+**************************************************************/
+
+CREATE TABLE IM_REGISTROS (
+ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+NOMBRE_PROPIETARIO VARCHAR(45),
+NOMBRE_PREDIO VARCHAR(45),
+AREA VARCHAR(45) NOT NULL,
+DIRECCION VARCHAR(45) NOT NULL
+);
+
+CREATE TABLE IM_TIPO_USOS (
+ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+DESCRIPCION VARCHAR(45) NOT NULL,
+HEX VARCHAR(10) NOT NULL
+);
+CREATE TABLE IM_USOS_PREDIO (
+ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+POLIGONO JSON NOT NULL,
+ID_REGISTRO INT NOT NULL
+);
+ALTER TABLE IM_USOS_PREDIO ADD FOREIGN KEY (ID_REGISTRO) REFERENCES IM_REGISTROS(ID);
+
+insert into im_tipo_usos (DESCRIPCION, HEX) values('Construida', '#F56E04'),('Cultivo','#20B000'),('Ganadería','#B00000'),
+('Reserva','#E7EE05'),('Común','#BABABA');
+
+/*************************************************************
+    FIN TABLAS INVENTARIO DE SUELOS
 **************************************************************/
