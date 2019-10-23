@@ -3,16 +3,31 @@ agm-map {
 }
 
 .contenedorconvenciones {
-    width: 150px;
-    height: 300PX;
+    width: auto;
+    height: auto;
     padding: 20px;
     float: left;
     position: absolute;
+    z-index: 100;
+    margin-top: 500px;
+    margin-left: 5px;
+    background-color: white;
+    border-radius: 10px;
+    -webkit-box-shadow: 10px 10px 5px -8px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 10px 10px 5px -8px rgba(0, 0, 0, 0.75);
+    box-shadow: 10px 10px 5px -8px rgba(0, 0, 0, 0.75);
 }
 
 .tipoarea {
-    border: solid black 1px;
-    width: 60px;
-    height: 10px;
-    background-color: red;
+    width: 30px;
+    height: 15px;
+    float: left;
+    margin-right: 2px;
+    border: solid 0.5px #000000;
+}
+
+.categoria {
+    font-size: 14px;
+    text-align: left;
+    margin-left: 3px;
 }
