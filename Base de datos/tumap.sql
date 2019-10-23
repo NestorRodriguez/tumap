@@ -3,6 +3,36 @@
 CREATE SCHEMA `tumap` DEFAULT CHARACTER SET utf8;
 USE `tumap`;
 
+/*Código que deben correr en workbeanch 8*/
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '12345';
+
+
+/*************************************************************
+    TABLAS DE USUARIOS Y ROL
+**************************************************************/
+
+/*Crear tabla rol*/
+create table rol (id int not null primary key auto_increment , namerol varchar(20) not null );
+insert into rol (namerol) values ('usuario');
+insert into rol (namerol) values ('admin');
+
+/*Crear usuarios*/
+create table users (id int not null primary key auto_increment , nameuser varchar(20) not null,
+password varchar(20) not null , email varchar(60) not null, id_rol int not null, foreign key (id_rol) references rol (id)
+ );
+
+ /*Insertar datos*/
+insert into users (nameuser, password, email, id_rol) values ('nrodriguez', '1234', 'nrodriguez@sena.edu.co', 1);
+insert into users (nameuser, password, email, id_rol) values ('cvergara', '1234', 'nrodriguez@sena.edu.co', 2);
+insert into users (nameuser, password, email, id_rol) values ('juanherrera', '1234', 'jcherreraa@sena.edu.co', 1);
+insert into users (nameuser, password, email, id_rol) values ('davidr', '1234', 'davidreyes@sena.edu.co', 1);
+insert into users (nameuser, password, email, id_rol) values ('scamacho', '1234', 'secamacho5@misena.edu.co', 1);
+insert into users (nameuser, password, email, id_rol) values ('fsanchez', '1234', 'fsanchez@misena.edu.co', 1);
+
+/*************************************************************
+    FIN TABLAS INVENTARIO DE REDES SECAS
+**************************************************************/
+
 /*************************************************************
     TABLAS INVENTARIO DE REDES SECAS
 **************************************************************/
@@ -85,21 +115,13 @@ INSERT INTO irs_materiales_postes (nombre) VALUES ('Concreto'), ('Madera'), ('Me
 INSERT INTO irs_operadores_celulares (nombre) VALUES ('Claro'), ('Movistar'), ('Tigo'), ('Avantel'), ('ETB'), ('Virgin'), ('UFF');
 INSERT INTO irs_tipos_redes (nombre, icono) VALUES ('Postes', 'irs-postes.svg'), ('Torres', 'irs-torres.svg'), ('Antenas', 'irs-antenas.svg'), ('Armarios', 'irs-armarios.svg');
 
-
-
 /*************************************************************
     FIN TABLAS INVENTARIO DE REDES SECAS
 **************************************************************/
 
-
--- ***********************************************************************
--- inicio DBO 
--- Generated: 2019-09-29 10:59
--- Project: suelos
--- Author: Divier Castaneda -- Diego Duarte
--- ***********************************************************************
--- **********Se puede copiar completa y ejecutar en sql*******************
--- ************************************************************************
+/***********************************************************************
+    TABLAS DBO
+************************************************************************/
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
@@ -248,6 +270,10 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 /*************************************************************
+    FIN TABLAS DB0
+**************************************************************/
+
+/*************************************************************
     INICIO TABLAS EDUCACION
 **************************************************************/
 -- -----------------------------------------------------
@@ -291,8 +317,6 @@ CREATE TABLE IF NOT EXISTS `tumap`.`fys_registro_info` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
-
 -- -----------------------------------------------------
 -- Table `tumap`.`fys_administrador`
 -- -----------------------------------------------------
@@ -331,11 +355,10 @@ ENGINE = InnoDB;
 /*************************************************************
     FIN TABLAS EDUCACION
 **************************************************************/
--- *********************************************************************************************************
--- fin DBO --
--- *********************************************************************************************************
 
-/*BASE DE DATOS DE VIAS JF*/
+/*************************************************************
+    BASE DE DATOS DE VIAS JF
+**************************************************************/
 
 CREATE table jf_detalle_via ( 
 	id int not null auto_increment primary key,
