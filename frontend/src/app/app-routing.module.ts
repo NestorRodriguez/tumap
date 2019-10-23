@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -68,6 +68,16 @@ const routes: Routes = [
   { path: 'exterioropt', loadChildren: './hidroetno/exterioropt/exterioropt.module#ExterioroptPageModule' },
   { path: 'ibpredial-inicio', loadChildren: './ibpredial/inicio/inicio.module#InicioPageModule' },
   { path: 'ibpredial-inicio/:id', loadChildren: './ibpredial/inicio/inicio.module#InicioPageModule' },
+  { path: 'predial', loadChildren: './ibpredial/predial/predial.module#PredialPageModule' },
+  { path: 'colinda', loadChildren: './ibpredial/colinda/colinda.module#ColindaPageModule' },
+  { path: 'estrato', loadChildren: './ibpredial/estrato/estrato.module#EstratoPageModule' },
+  { path: 'nivel', loadChildren: './ibpredial/nivel/nivel.module#NivelPageModule' },
+  { path: 'matricula', loadChildren: './ibpredial/matricula/matricula.module#MatriculaPageModule' },
+  { path: 'respuestas', loadChildren: './dbo/respuestas/respuestas.module#RespuestasPageModule' },
+  { path: 'mapavias', loadChildren: './vistasjf/mapavias/mapavias.module#MapaviasPageModule' },
+  { path: 'slides', loadChildren: './vistasjf/slides/slides.module#SlidesPageModule' },
+  { path: 'resumenjf', loadChildren: './vistasjf/resumen/resumen.module#ResumenPageModule' },
+  { path: 'opcionesvias', loadChildren: './vistasjf/opcionesvias/opcionesvias.module#OpcionesviasPageModule' },
   { path: 'respuestas', loadChildren: './dbo/respuestas/respuestas.module#RespuestasPageModule' },
   { path: 'estrato', loadChildren: './ibpredial/estrato/estrato.module#EstratoPageModule' },
   { path: 'nivel', loadChildren: './ibpredial/nivel/nivel.module#NivelPageModule' },
@@ -77,6 +87,17 @@ const routes: Routes = [
   { path: 'resumenjf', loadChildren: './vistasjf/resumen/resumen.module#ResumenPageModule' },
   { path: 'mapaHidrico', loadChildren: './hidroetno/mapa/mapa.module#MapaPageModule' },
 
+  { path: 'mapacofor', loadChildren: './socioeconomico/mapacofor/mapacofor.module#MapacoforPageModule' },
+  { path: 'mapacoinfor', loadChildren: './socioeconomico/mapacoinfor/mapacoinfor.module#MapacoinforPageModule' },
+  { path: 'cv-salud', loadChildren: './cv-salud/cv-salud.module#CvSaludPageModule' },
+  { path: 'tab1', loadChildren: './cv-salud/tab1/tab1.module#Tab1PageModule' },
+  { path: 'tab2', loadChildren: './cv-salud/tab2/tab2.module#Tab2PageModule' },
+  { path: 'tab3', loadChildren: './cv-salud/tab3/tab3.module#Tab3PageModule' },
+  { path: 'tab4', loadChildren: './cv-salud/tab4/tab4.module#Tab4PageModule' },
+  { path: 'tab5', loadChildren: './cv-salud/tab5/tab5.module#Tab5PageModule' },
+  { path: 'tab6', loadChildren: './cv-salud/tab6/tab6.module#Tab6PageModule' },
+  { path: 'mapacofor', loadChildren: './socioeconomico/mapacofor/mapacofor.module#MapacoforPageModule' },
+  { path: 'mapacoinfor', loadChildren: './socioeconomico/mapacoinfor/mapacoinfor.module#MapacoinforPageModule' },
 
 ];
 

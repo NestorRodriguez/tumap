@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-title>
+          
+      </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list lines="none">
+  <section>
+      <h1><br><b>Registrar<br>Ubicación</b></h1>
+  </section>
+      <ion-item>
+          <ion-label position="stacked">
+              Nit Establecimiento
+              <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input required type="text" oninput="handleFirstNameValue(event)">
+          </ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label position="stacked">
+              Nombre Establecimiento
+              <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input required type="text" oninput="handleFirstNameValue(event)">
+          </ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label position="stacked">
+              Dirección
+              <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input required type="text" oninput="handleFirstNameValue(event)">
+          </ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label position="stacked">
+              Departamento
+              <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input required type="text" oninput="handleFirstNameValue(event)">
+          </ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label position="stacked">
+              Ciudad
+              <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input required type="text" oninput="handleFirstNameValue(event)">
+          </ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label position="stacked">
+              Entidad de Salud
+              <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input required type="text" oninput="handleFirstNameValue(event)">
+          </ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label position="stacked">
+              Horario de Atención
+              <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input required type="text" oninput="handleFirstNameValue(event)">
+          </ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label position="stacked">
+              Estado
+          </ion-label>
+          <ion-input required type="text" oninput="handleFirstNameValue(event)" value='Pendiente' readonly="readonly">
+          </ion-input>
+      </ion-item>
+      <section>
+        <ion-card routerLink="/tab5">
+            <ion-button>REGRESAR</ion-button><ion-button>ENVIAR</ion-button>
+        </ion-card>
+      </section>
+  </ion-list>
+</ion-content>

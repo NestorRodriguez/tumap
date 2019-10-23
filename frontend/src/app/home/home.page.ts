@@ -72,8 +72,15 @@ export class HomePage {
       {
         title: 'Estado de vias',
         note: '',
-        route: '/slides',
+        route: '/opcionesvias',
          icon: this.icons[14]
+      },
+      {
+        
+        title: 'Centros de salud',
+        note: '',
+        route: '/tab5',
+         icon: this.icons[4]
       },
       {
         title: "Fuentes Hidricas / Etnobotanica",

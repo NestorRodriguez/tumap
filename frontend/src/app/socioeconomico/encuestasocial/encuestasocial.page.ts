@@ -14,9 +14,9 @@ export class EncuestasocialPage  {
 
   async presentAlert() {
     const alert = await  this.alertController.create({
-    header: 'La informacion ha sido enviada.',
-    message: 'Puede continuar con el proceso de localizar otros comercios formales e informales.',
-    buttons:[
+      header: 'Tu encuesta social fue diligenciada y enviada exitosamente.',
+      message: 'Ahora puedes continuar con el proceso de localizar los comercios formales e informales en tu ubicación.',
+      buttons:[
         {
           text: 'Cancel',
           role: 'cancel',
@@ -24,13 +24,14 @@ export class EncuestasocialPage  {
           handler: () => {
             console.log('Confirm Cancel');
           }
-        }, {
-          text: 'Ok',
-          handler: () => {
+        }, 
+           {
+            text: 'Ok',
+            handler: () => {
             console.log('Confirm Ok');
-            this.router.navigate(['/', 'tipocomercio']);
+            this.router.navigate(['/tipocomercio']);
+            }
           }
-        }
       ]
     });
 
