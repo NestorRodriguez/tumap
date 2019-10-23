@@ -334,3 +334,137 @@ ENGINE = InnoDB;
 -- *********************************************************************************************************
 -- fin DBO --
 -- *********************************************************************************************************
+
+/*************************************************************
+    TABLAS INVENTARIO DE BASICA PREDIAL
+**************************************************************/
+
+/* Creamos tabla Predial (Residencial - Rural - Comercial) */
+	CREATE TABLE uso_Predio (
+		id_predio INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		descripcion VARCHAR(55) NOT NULL    
+	);
+
+insert into uso_predio (descripcion)
+value ('Comercial');
+
+insert into uso_predio (descripcion)
+value ('Residencial');
+
+insert into uso_predio (descripcion)
+value ('Rural');
+
+/* Creamos tabla Servicios (Agua - Luz - Teléono - Gas Natural
+Gas propano - Alcantarillado) */
+CREATE TABLE servicios_Publicos (
+    id_servpub INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    descripcion VARCHAR(55) NOT NULL    
+);
+
+insert into servicios_Publicos (descripcion)
+value ('Agua');
+
+insert into servicios_Publicos (descripcion)
+value ('Luz');
+
+insert into servicios_Publicos (descripcion)
+value ('Telefono');
+
+insert into servicios_Publicos (descripcion)
+value ('Alcantarillado');
+
+insert into servicios_Publicos (descripcion)
+value ('Gas natural');
+
+insert into servicios_Publicos (descripcion)
+value ('Gas Propano');
+
+/* Creamos tabla nivel de vivienda */
+CREATE TABLE nivel_Vivienda (
+    id_nivel INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    descripcion VARCHAR(55) NOT NULL    
+);
+
+insert into nivel_Vivienda (descripcion)
+value ('Un Piso');
+
+insert into nivel_Vivienda (descripcion)
+value ('Dos Pisos');
+
+insert into nivel_Vivienda (descripcion)
+value ('Tres Pisos');
+
+insert into nivel_Vivienda (descripcion)
+value ('Mayor a tres pisos');
+
+/* Creamos tabla Estratos */
+CREATE TABLE estrato (
+    id_estrato INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    descripcion VARCHAR(55) NOT NULL    
+);
+
+insert into estrato (descripcion)
+value ('Estrato 1');
+
+insert into estrato (descripcion)
+value ('Estrato 2');
+
+insert into estrato (descripcion)
+value ('Estrato 3');
+
+insert into estrato (descripcion)
+value ('Estrato 4');
+
+CREATE TABLE `predios`
+(
+  `id_predio` int
+(11) NOT NULL AUTO_INCREMENT,
+  `matricula` varchar
+(55) NOT NULL UNIQUE,
+  `direccion` varchar
+(55) NOT NULL,
+  `ide_estrato` int
+(11) NOT NULL,
+  `id_usosuelo` int
+(11) NOT NULL,
+  `ide_nivel` int
+(11) NOT NULL,
+  `estado_Vivienda` char
+(1) NOT NULL,
+  `servicio_agua` tinyint
+(1) NOT NULL,
+  `servicio_energia` tinyint
+(1) NOT NULL,
+  `servicio_internet` tinyint
+(1) NOT NULL,
+  `servicio_telefoniaFija` tinyint
+(1) NOT NULL,
+  `servicio_telefoniaMovil` tinyint
+(1) NOT NULL,
+  `servicio_gasNatural` tinyint
+(1) NOT NULL,
+  `servicio_gasPropano` tinyint
+(1) NOT NULL,
+  `punto_locaclizacion` point DEFAULT NULL,
+  PRIMARY KEY
+(`id_predio`),
+  KEY `ide_estrato`
+(`ide_estrato`),
+  KEY `ide_nivel`
+(`ide_nivel`),
+  KEY `id_usosuelo`
+(`id_usosuelo`),
+  CONSTRAINT `predios_ibfk_1` FOREIGN KEY
+(`ide_estrato`) REFERENCES `estrato`
+(`id_estrato`),
+  CONSTRAINT `predios_ibfk_2` FOREIGN KEY
+(`ide_nivel`) REFERENCES `nivel_vivienda`
+(`id_nivel`),
+  CONSTRAINT `predios_ibfk_3` FOREIGN KEY
+(`id_usosuelo`) REFERENCES `uso_predio`
+(`id_predio`)
+);
+
+/*************************************************************
+    FIN TABLAS BASICA PREDIAL
+**************************************************************/
