@@ -1487,55 +1487,46 @@ app.get('/dbo_respuesta/', function(req, res) {
 
     const sql = 'SELECT documento,orden,nombre,lat,lng,departamento,municipio,fecha,pregunta,imagen FROM dbo_vlistado;';
 
-    var query = db.query(sql, function(error, result) {
+    db.query(sql, (error, result) => {
         if (error) {
-            throw error;
+            res.status(400).send('<h1>Ocurrió un error al consultar las encuestas.</h1>');
         } else {
-            console.log(result);
-            res.json(result);
+            const style = 'style="border: 1px solid black;"';
+            let html = '<table style="width:100%; border: 1px solid black;">';
+            html = html + `
+                    <tr ${style}>
+                        <td ${style}>documento</td>
+                        <td ${style}>orden</td>
+                        <td ${style}>nombre</td>
+                        <td ${style}>lat</td>
+                        <td ${style}>lng</td>
+                        <td ${style}>departamento</td>
+                        <td ${style}>municipio</td>
+                        <td ${style}>fecha</td>
+                        <td ${style}>pregunta</td>
+                        <td ${style}>imagen</td>
+                    </tr>
+                `
+            for (let i in result) {
+                html = html + `
+                    <tr ${style}>
+                        <td ${style}>${result[i].documento}</td>
+                        <td ${style}>${result[i].orden}</td>
+                        <td ${style}>${result[i].nombre}</td>
+                        <td ${style}>${result[i].lat}</td>
+                        <td ${style}>${result[i].lng}</td>
+                        <td ${style}>${result[i].departamento}</td>
+                        <td ${style}>${result[i].municipio}</td>
+                        <td ${style}>${result[i].fecha}</td>
+                        <td ${style}>${result[i].pregunta}</td>
+                        <td ${style}>${result[i].imagen}</td>
+                    </tr>
+                    `;
+            }
+            html = html + '</table>';
+            res.send(html);
         }
     });
-
-    // db.query(sql, (error, result) => {
-    //     if (error) {
-    //         res.status(400).send('<h1>Ocurrió un error al consultar las encuestas.</h1>');
-    //     } else {
-    //         const style = 'style="border: 1px solid black;"';
-    //         let html = '<table style="width:100%; border: 1px solid black;">';
-    //         html = html + `
-    //                 <tr ${style}>
-    //                     <td ${style}>documento</td>
-    //                     <td ${style}>orden</td>
-    //                     <td ${style}>nombre</td>
-    //                     <td ${style}>lat</td>
-    //                     <td ${style}>lng</td>
-    //                     <td ${style}>departamento</td>
-    //                     <td ${style}>municipio</td>
-    //                     <td ${style}>fecha</td>
-    //                     <td ${style}>pregunta</td>
-    //                     <td ${style}>imagen</td>
-    //                 </tr>
-    //             `
-    //         for (let i in result) {
-    //             html = html + `
-    //                 <tr ${style}>
-    //                     <td ${style}>${result[i].documento}</td>
-    //                     <td ${style}>${result[i].orden}</td>
-    //                     <td ${style}>${result[i].nombre}</td>
-    //                     <td ${style}>${result[i].lat}</td>
-    //                     <td ${style}>${result[i].lng}</td>
-    //                     <td ${style}>${result[i].departamento}</td>
-    //                     <td ${style}>${result[i].municipio}</td>
-    //                     <td ${style}>${result[i].fecha}</td>
-    //                     <td ${style}>${result[i].pregunta}</td>
-    //                     <td ${style}>${result[i].imagen}</td>
-    //                 </tr>
-    //                 `;
-    //         }
-    //         html = html + '</table>';
-    //         res.send(html);
-    //     }
-    // });
 })
 
 
