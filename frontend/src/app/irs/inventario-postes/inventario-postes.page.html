@@ -74,12 +74,12 @@
       <ion-grid>
         <ion-row>
           <ion-col size="6" class="ion-text-end">
-            <ion-button class="ion-text-capitalize" color="primary" size="default" shape="round" expand="block" (click)="save()" [disabled]="isDisabled() || loading">
+            <ion-button class="ion-text-capitalize" color="light" size="default" shape="round" expand="block" (click)="save()" [disabled]="isDisabled() || loading">
               <ion-label>{{ (complete) ? 'Finalizar' : 'Guardar' }}</ion-label>
             </ion-button>
           </ion-col>
           <ion-col size="6" class="ion-text-end">
-            <ion-button class="ion-text-capitalize" color="danger" size="default" shape="round" expand="block" (click)="cancel()" [disabled]="loading">
+            <ion-button class="ion-text-capitalize" color="light" fill="outline" size="default" shape="round" expand="block" (click)="cancel()" [disabled]="loading">
               <ion-label>Cancelar</ion-label>
             </ion-button>
           </ion-col>

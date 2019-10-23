@@ -627,7 +627,11 @@ LEFT JOIN irs_estados_redes sr ON i.id_irs_estado_red_celular = sr.id;
 FIN TABLAS PARA INVENTARIO DE REDES SECAS
 =======================================================================
 */
-
+/*
+=======================================================================
+INICIO TABLAS PARA SOCIOECONOMICO
+=======================================================================
+*/
 /*Crear tabla encuesta social*/
 create table SEC_Encuesta_Social(
 	id_Encuesta int not null auto_increment primary key, 
@@ -681,9 +685,11 @@ create table SEC_Comercio_Informal(
 	INSERT INTO SEC_Comercio_Informal (Productos_Servicios, Descripcion , Estatico_Movil, Periodicidad, Jornada, Foto)
 		VALUES ('ambos','dulceria y minutos','estatico','fin de semana','diurno y nocturno','url');
 
---*********************************************************************************************************
--- Fin Tablas Inventarios Redes Secas --
---********************************************************************************************************* 
+/*
+=======================================================================
+FIN TABLAS PARA SOCIOECONOMICO
+=======================================================================
+*/ 
 
 CREATE TABLE IM_REGISTROS (
 ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -867,13 +873,10 @@ CREATE table jf_descripcion_via(
 	imagen varchar(200),
     id_estado int not null,
 		foreign key (id_estado) references jf_estado(id)
-);
-/*DML*/
-/*CRUD tabla jf_descripcion_via*/
-insert into jf_descripcion_via(ubicacion, nombre_via, id_detalle_via, imagen, id_estado)
-	values (ST_GeomFromText('point(1 1)'), 'av 68', 2, '/imagen/av68', 1), (ST_GeomFromText('point(0 1)'), 'boyaca', 1, '/imagen/boyaca', 2), (ST_GeomFromText('point(1 0)'), 'cali', 3, '/imagen/cali', 3);
 
-select * from jf_descripcion_via
+update jf_detalle_via set detalle= "Mal estado" where id=1;
+update jf_detalle_via set detalle= "Mantenimiento" where id=2;
+update jf_detalle_via set detalle= "Via cerrada" where id=3;
 
 --*********************************************************************************************************
 -- Creación tablas minas --
