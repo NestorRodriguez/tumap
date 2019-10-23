@@ -20,11 +20,10 @@
   <div style="background-color: white; height: 90%;">
       <!-- this creates a google map on the page with the given lat/lng from -->
       <!-- the component as the initial center of the map: -->
-      <agm-map [latitude]="lat" [longitude]="lng" [zoom]='16'>
+      <agm-map (mapClick)="setMarker($event)" [latitude]="lat" [longitude]="lng" [zoom]='16' [usePanning]="true">
           <agm-marker [latitude]="lat" [longitude]="lng" width="50%">
 
           </agm-marker>
-
       </agm-map>
   </div>
   <div style="background-color: #2C689F; position: fixed-bottom; height: 10%; text-align: center; padding-top: 2%;">

@@ -22,4 +22,9 @@ export class MapacoinforPage implements OnInit {
     }
   }
 
+  setMarker(evento) {
+    this.lat = +evento.coords.lat;
+    this.lng = +evento.coords.lng;
+  }
+
 }
