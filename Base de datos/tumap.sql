@@ -352,6 +352,38 @@ CREATE TABLE IF NOT EXISTS `tumap`.`fys_validar_info` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+set @g = 'POINT(4.474022 -74.087073)';
+INSERT INTO fys_registro_info (nombre_institucion,ubicacion,foto,referencias_aledanas,tipos_formacion,especificacion,pagina_web,telefonos,id_usuario)
+values ('SENA',ST_PointFromText(@g),'imagenes/sena','cerca al rio','Educación Superior','Tecnicos,Tecnologos,Especializaciones y Cursos Cortos','www.sena.com','0314451114',1);
+
+set @e = 'POINT(4.477934 -74.104971)';
+INSERT INTO fys_registro_info (nombre_institucion,ubicacion,foto,referencias_aledanas,tipos_formacion,especificacion,pagina_web,telefonos,id_usuario)
+values ('Colegio Rural El Uval',ST_PointFromText(@e),'imagenes/coelgio','cerca a la planta de tratamiento','Educación Basica','Desde transición hasta grado noveno','www.colegioeluval.com','0317614733',2);
+
+INSERT INTO fys_administrador (nombres,apellidos,celular,usuario,clave)
+values ('Pepito','Perez','3105623415','AdminUno','12345');
+
+INSERT INTO fys_administrador (nombres,apellidos,celular,usuario,clave)
+values ('Juanita','Gomez','3105685963','AdminDos','78910');
+
+INSERT INTO fys_validar_info (validado,fecha_validacion,id_registro_info,id_administrador)
+values (1,'2019-09-29',1,1);
+
+INSERT INTO fys_validar_info (validado,fecha_validacion,id_registro_info,id_administrador)
+values (2,'2019-09-29',2,2);
+
+INSERT INTO fys_datos_usuarios (nombres,apellidos,edad,sexo,nivel_educativo,id_user)
+values ('Sara','Camacho Albarracin',20,'F','Tecnologo',3);
+
+INSERT INTO fys_datos_usuarios (nombres,apellidos,edad,sexo,nivel_educativo,id_user)
+values ('Fredy','Sanchez',24,'M','Tecnologo',4);
+
+INSERT INTO rol (namerol)
+values ('Administrador');
+
+INSERT INTO rol (namerol)
+values ('Habitante');
+
 /*************************************************************
     FIN TABLAS EDUCACION
 **************************************************************/
