@@ -423,3 +423,34 @@ insert into jf_estado(estado)
 /*************************************************************
     FIN BASE DE DATOS DE VIAS JF
 **************************************************************/
+
+/*************************************************************
+    TABLAS INVENTARIO DE SUELOS
+**************************************************************/
+
+CREATE TABLE IM_REGISTROS (
+ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+NOMBRE_PROPIETARIO VARCHAR(45),
+NOMBRE_PREDIO VARCHAR(45),
+AREA VARCHAR(45) NOT NULL,
+DIRECCION VARCHAR(45) NOT NULL
+);
+
+CREATE TABLE IM_TIPO_USOS (
+ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+DESCRIPCION VARCHAR(45) NOT NULL,
+HEX VARCHAR(10) NOT NULL
+);
+CREATE TABLE IM_USOS_PREDIO (
+ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+POLIGONO JSON NOT NULL,
+ID_REGISTRO INT NOT NULL
+);
+ALTER TABLE IM_USOS_PREDIO ADD FOREIGN KEY (ID_REGISTRO) REFERENCES IM_REGISTROS(ID);
+
+insert into im_tipo_usos (DESCRIPCION, HEX) values('Construida', '#F56E04'),('Cultivo','#20B000'),('Ganadería','#B00000'),
+('Reserva','#E7EE05'),('Común','#BABABA');
+
+/*************************************************************
+    FIN BASE DE DATOS DE VIAS JF
+**************************************************************/
