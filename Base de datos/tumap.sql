@@ -352,6 +352,38 @@ CREATE TABLE IF NOT EXISTS `tumap`.`fys_validar_info` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+set @g = 'POINT(4.474022 -74.087073)';
+INSERT INTO fys_registro_info (nombre_institucion,ubicacion,foto,referencias_aledanas,tipos_formacion,especificacion,pagina_web,telefonos,id_usuario)
+values ('SENA',ST_PointFromText(@g),'imagenes/sena','cerca al rio','Educación Superior','Tecnicos,Tecnologos,Especializaciones y Cursos Cortos','www.sena.com','0314451114',1);
+
+set @e = 'POINT(4.477934 -74.104971)';
+INSERT INTO fys_registro_info (nombre_institucion,ubicacion,foto,referencias_aledanas,tipos_formacion,especificacion,pagina_web,telefonos,id_usuario)
+values ('Colegio Rural El Uval',ST_PointFromText(@e),'imagenes/coelgio','cerca a la planta de tratamiento','Educación Basica','Desde transición hasta grado noveno','www.colegioeluval.com','0317614733',2);
+
+INSERT INTO fys_administrador (nombres,apellidos,celular,usuario,clave)
+values ('Pepito','Perez','3105623415','AdminUno','12345');
+
+INSERT INTO fys_administrador (nombres,apellidos,celular,usuario,clave)
+values ('Juanita','Gomez','3105685963','AdminDos','78910');
+
+INSERT INTO fys_validar_info (validado,fecha_validacion,id_registro_info,id_administrador)
+values (1,'2019-09-29',1,1);
+
+INSERT INTO fys_validar_info (validado,fecha_validacion,id_registro_info,id_administrador)
+values (2,'2019-09-29',2,2);
+
+INSERT INTO fys_datos_usuarios (nombres,apellidos,edad,sexo,nivel_educativo,id_user)
+values ('Sara','Camacho Albarracin',20,'F','Tecnologo',3);
+
+INSERT INTO fys_datos_usuarios (nombres,apellidos,edad,sexo,nivel_educativo,id_user)
+values ('Fredy','Sanchez',24,'M','Tecnologo',4);
+
+INSERT INTO rol (namerol)
+values ('Administrador');
+
+INSERT INTO rol (namerol)
+values ('Habitante');
+
 /*************************************************************
     FIN TABLAS EDUCACION
 **************************************************************/
@@ -420,5 +452,320 @@ insert into im_tipo_usos (DESCRIPCION, HEX) values('Construida', '#F56E04'),('Cu
 ('Reserva','#E7EE05'),('Común','#BABABA');
 
 /*************************************************************
-    FIN BASE DE DATOS DE VIAS JF
+    FIN TABLAS INVENTARIO DE SUELOS
+**************************************************************/
+
+/*************************************************************
+    BASE DE DATOS DE HYDRICO/ETNOBOTANICO
+**************************************************************/
+CREATE TABLE IF NOT EXISTS `tumap`.`users_hidrico` (
+  `id_User` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(40) NOT NULL,
+  `lastname` VARCHAR(40) NOT NULL,
+  `identification_card` INT(11) NOT NULL,
+  `email` VARCHAR(40) NOT NULL,
+  `Rol_idRol` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_User`),
+  INDEX `fk_Users_Rol_idx` (`Rol_idRol` ASC) ,
+  CONSTRAINT `fk_Users_Rol`
+    FOREIGN KEY (`Rol_idRol`)
+    REFERENCES `tumap`.`rol` (`id_Rol`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `tumap`.`connections`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tumap`.`connections` (
+  `id_Connections` INT(11) NOT NULL AUTO_INCREMENT,
+  `description` VARCHAR(500) NULL DEFAULT NULL,
+  `image` VARCHAR(500) NULL DEFAULT NULL,
+  `Users_id_User` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_Connections`),
+  INDEX `fk_Conexiones_Users1_idx` (`Users_id_User` ASC) ,
+  CONSTRAINT `fk_Conexiones_Users1`
+    FOREIGN KEY (`Users_id_User`)
+    REFERENCES `tumap`.`users_hidrico` (`id_User`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `tumap`.`coverages`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tumap`.`coverages` (
+  `id_Coverage` INT(11) NOT NULL AUTO_INCREMENT,
+  `color` ENUM('Café', 'Amarillo', 'blanca', 'Incoloro') NULL DEFAULT NULL,
+  `pressure` ENUM('Alta', 'Media', 'Baja') NULL DEFAULT NULL,
+  `type` ENUM('Intermitente', 'Permanente') NULL DEFAULT NULL,
+  `Users_id_User` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_Coverage`),
+  INDEX `fk_Cobertura_Users1_idx` (`Users_id_User` ASC) ,
+  CONSTRAINT `fk_Cobertura_Users1`
+    FOREIGN KEY (`Users_id_User`)
+    REFERENCES `tumap`.`users_hidrico` (`id_User`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `tumap`.`ethnobotany`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tumap`.`ethnobotany` (
+  `id_Ethnobotany` INT(11) NOT NULL AUTO_INCREMENT,
+  `common_name` VARCHAR(50) NOT NULL,
+  `image` VARCHAR(500) NULL DEFAULT NULL,
+  `use` ENUM('Medicinal', 'Alimenticia', 'Decorativa') NULL DEFAULT NULL,
+  `users_id_User` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_Ethnobotany`),
+  INDEX `fk_Ethnobotany_users1_idx` (`users_id_User` ASC) ,
+  CONSTRAINT `fk_Ethnobotany_users1`
+    FOREIGN KEY (`users_id_User`)
+    REFERENCES `tumap`.`users_hidrico` (`id_User`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `tumap`.`grown`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tumap`.`grown` (
+  `id_Grown` INT(11) NOT NULL AUTO_INCREMENT,
+  `level` ENUM('Nivel Media', 'Nivel alto') NULL DEFAULT NULL,
+  `Users_id_User` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_Grown`),
+  INDEX `fk_Crecidas_Users1_idx` (`Users_id_User` ASC) ,
+  CONSTRAINT `fk_Crecidas_Users1`
+    FOREIGN KEY (`Users_id_User`)
+    REFERENCES `tumap`.`users_hidrico` (`id_User`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `tumap`.`location`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tumap`.`location` (
+  `id_Location` INT(11) NOT NULL AUTO_INCREMENT,
+  `ubicacion` LONGTEXT CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_bin' NULL DEFAULT NULL,
+  `users_id_User` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_Location`),
+  INDEX `fk_location_users1_idx` (`users_id_User` ASC) ,
+  CONSTRAINT `fk_location_users1`
+    FOREIGN KEY (`users_id_User`)
+    REFERENCES `tumap`.`users_hidrico` (`id_User`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `tumap`.`sheddings`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tumap`.`sheddings` (
+  `id_Sheddings` INT(11) NOT NULL AUTO_INCREMENT,
+  `liq_description` VARCHAR(500) NULL DEFAULT NULL,
+  `img_liq` VARCHAR(500) NULL DEFAULT NULL,
+  `solid_descripcion` VARCHAR(500) NULL DEFAULT NULL,
+  `img_solid` VARCHAR(500) NULL DEFAULT NULL,
+  `Users_id_User` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_Sheddings`),
+  INDEX `fk_Vertimientos_Users1_idx` (`Users_id_User` ASC) ,
+  CONSTRAINT `fk_Vertimientos_Users1`
+    FOREIGN KEY (`Users_id_User`)
+    REFERENCES `tumap`.`users_hidrico` (`id_User`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `tumap`.`without_coverage`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tumap`.`without_coverage` (
+  `id_Without_coverage` INT(11) NOT NULL AUTO_INCREMENT,
+  `state` ENUM('Suspensión', 'Corte', 'Nunca he tenido el servicio') NULL DEFAULT NULL,
+  `Users_id_User` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_Without_coverage`),
+  INDEX `fk_Sin_cobertura_Users1_idx` (`Users_id_User` ASC) ,
+  CONSTRAINT `fk_Sin_cobertura_Users1`
+    FOREIGN KEY (`Users_id_User`)
+    REFERENCES `tumap`.`users_hidrico` (`id_User`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+INSERT INTO `tumap`.`rol` (`name_description`) VALUES ('Administrador');
+INSERT INTO `tumap`.`rol` (`name_description`) VALUES ('Usuario');
+
+INSERT INTO `tumap`.`users_hidrico` (`name`, `lastname`, `identification_card`, `email`, `Rol_idRol`) VALUES ('Usuario 1', 'ApellidoUser4', '10120291', 'asdas@gmail.com', '2');
+INSERT INTO `tumap`.`users_hidrico` (`name`, `lastname`, `identification_card`, `email`, `Rol_idRol`) VALUES ('Usuario 2', 'ApellidoUser5', '1092019210', 'kgkgfl@gmail.com', '2');
+INSERT INTO `tumap`.`users_hidrico` (`name`, `lastname`, `identification_card`, `email`, `Rol_idRol`) VALUES ('Usuario 3', 'ApellidoUser6', '109201921', 'kgkgfl@gmail.com', '2');
+
+INSERT INTO `tumap`.`connections` (`description`, `image`, `Users_id_User`) VALUES ('cualquierDescriocion va en este lado', 'jansdjansdjImage', '1');
+INSERT INTO `tumap`.`connections` (`description`, `image`, `Users_id_User`) VALUES ('cualquierDescriocion2 va en este lado', 'jansdjansdjImage', '2');
+
+INSERT INTO `tumap`.`coverages` (`color`, `pressure`, `type`, `Users_id_User`) VALUES ('blanca', 'Media', 'Permanente', '1');
+INSERT INTO `tumap`.`coverages` (`color`, `pressure`, `type`, `Users_id_User`) VALUES ('Amarillo', 'Alta', 'Intermitente', '2');
+
+INSERT INTO `tumap`.`ethnobotany` (`common_name`, `image`, `use`, `users_id_User`) VALUES ('Yerbas Frescas', 'asdasdasd', 'Alimenticia', '1');
+INSERT INTO `tumap`.`ethnobotany` (`common_name`, `image`, `use`, `users_id_User`) VALUES ('Yerbas Frescas2', 'asdasdasdsd', 'Medicinal', '2');
+
+INSERT INTO `tumap`.`grown` (`level`, `Users_id_User`) VALUES ('Nivel alto', '1');
+INSERT INTO `tumap`.`grown` (`level`, `Users_id_User`) VALUES ('Nivel Media', '2');
+
+INSERT INTO `tumap`.`sheddings` (`liq_description`, `img_liq`, `solid_descripcion`, `img_solid`, `Users_id_User`) VALUES ('Descripcion Liquida2', 'asdasdasdasd', 'Solido Descripcion 2', 'asdasdasd', '1');
+INSERT INTO `tumap`.`sheddings` (`liq_description`, `img_liq`, `solid_descripcion`, `img_solid`, `Users_id_User`) VALUES ('Descriocion Liquida3', 'asdasds', 'Solido Descripcion 3', 'asdasdasd', '2');
+
+INSERT INTO `tumap`.`location` (`ubicacion`, `users_id_User`) VALUES ('Location Lat, Long', '1');
+INSERT INTO `tumap`.`location` (`ubicacion`, `users_id_User`) VALUES ('Location Lat, Long', '2');
+
+INSERT INTO `tumap`.`without_coverage` (`state`, `Users_id_User`) VALUES ('Nunca he tenido el servicio', '1');
+INSERT INTO `tumap`.`without_coverage` (`state`, `Users_id_User`) VALUES ('Suspensión', '2');
+
+
+/*************************************************************
+    FIN TABLAS HYDRICO/ETNOBOTANICO
+**************************************************************/
+
+/*************************************************************
+    TABLAS SENALIZACION | MOBILIARIO URBANO
+**************************************************************/
+
+-- -----------------------------------------------------
+-- table categoria
+-- -----------------------------------------------------
+create table jyd_categoria (
+  pk_id_categoria int not null auto_increment,
+  descripcion varchar(45) not null,
+  ruta varchar(45) not null,
+  primary key (pk_id_categoria)
+);
+
+-- -----------------------------------------------------
+-- table item
+-- -----------------------------------------------------
+create table jyd_item (
+  pk_id_item int not null auto_increment,
+  nombre varchar(45) not null,
+  descripcion varchar(45) null,
+  imagen varchar(300) null,
+  fk_categoria int not null,
+  primary key (pk_id_item, fk_categoria),
+  index fk_item_categoria1_idx (fk_categoria asc),
+  constraint fk_item_categoria1
+    foreign key (fk_categoria)
+    references jyd_categoria (pk_id_categoria)
+);
+
+-- -----------------------------------------------------
+-- table estado
+-- -----------------------------------------------------
+create table jyd_estado (
+  pk_id_estado int not null auto_increment,
+  descripcion varchar(45) null,
+  primary key (pk_id_estado)
+);
+
+-- -----------------------------------------------------
+-- table registro
+-- -----------------------------------------------------
+create table jyd_registro (
+  pk_id_registro int not null auto_increment,
+  fk_users int not null,
+  fecha_registro date null,
+  primary key (pk_id_registro, fk_users),
+  index fk_registro_users1_idx (fk_users asc),
+  constraint fk_registro_users1
+    foreign key (fk_users)
+    references users (id)
+);
+
+-- -----------------------------------------------------
+-- table registro_has_item
+-- -----------------------------------------------------
+create table jyd_registro_has_item (
+  fk_id_registro int not null,
+  fk_id_item int not null,
+  latitud double null,
+  longitud double null,
+  imagen longtext NOT NULL,
+  descripcion varchar(45) null,
+  fk_estado int not null
+);
+
+/* jyd_categoria */
+insert into jyd_categoria (descripcion, ruta) value ('Señalización', '/senalizacion');
+insert into jyd_categoria (descripcion, ruta) value ('Mobiliario Urbano', '/mobiliario');
+
+/* jyd_item SENALIZACION */
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('CONTENSIÓN', 'Señal de carretera', 'assets/img_jyd/senalizacion/logo_contension.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('ELEVADAS', 'Señal de transito', 'assets/img_jyd/senalizacion/logo_soporte.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('VERTICAL', 'Señal de transito', 'assets/img_jyd/senalizacion/logo_senal.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('HORIZONTAL', 'Señalización de piso', 'assets/img_jyd/senalizacion/logo_senal_pavimento.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('SEMAFORO', 'Señal luminosa', 'assets/img_jyd/senalizacion/logo_semaforo.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('PR-K12', 'Señal de carretera', 'assets/img_jyd/senalizacion/logo_k12.svg', 1);
+
+/* jyd_item MOBILIARIO */
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('SEPARADOR', 'Protección', 'assets/img_jyd/mobiliario/logo_separador_vias.svg', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('PROTECTOR ARBOL', 'Protección contra roedores', 'assets/img_jyd/mobiliario/logo_protector_arbol.svg', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('CANECA INDUSTRIAL', 'Industrial shut', 'assets/img_jyd/mobiliario/logo_caneca_industrial.svg', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('CANECA ACERO', 'Lugar desechos', 'assets/img_jyd/mobiliario/logo_caneca_acero.svg', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('BOLARDO', 'Estructura de cemento', 'assets/img_jyd/mobiliario/logo_bolardo.svg', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('BANCA SIN ESPALDAR', 'Estructura para parque', 'assets/img_jyd/mobiliario/logo_banca_sin_espaldar.svg', 2);
+
+/* jyd_estado */
+insert into jyd_estado (descripcion) value ('Nuevo');
+insert into jyd_estado (descripcion) value ('Mal estado');
+
+/*************************************************************
+    FIN TABLAS SENALIZACION | MOBILIARIO URBANO
+**************************************************************/
+
+/*************************************************************
+    TABLAS MINAS
+**************************************************************/
+
+create table mp_EstadoActual_mina
+(id_estadomina int not null primary key auto_increment,
+nombre_estadomina varchar(20) not null);
+
+create table mp_tipo_material
+(id_tipomaterial int not null primary key auto_increment,
+nombre_tipomaterial varchar(20) not null);
+
+create table mp_Sistema_Explotacion
+(id_sistemaexplotacion int not null primary key auto_increment,
+nombre_sistemaexplotacion varchar(20) not null);
+
+Create table mp_Registro_Mina
+(id_registromina int not null primary key auto_increment ,
+nombre varchar(40) not null,
+lat varchar (40) not null,
+lng varchar (40) not null,
+tipomineral varchar(40) not null,
+trabajadores varchar(40) not null,
+observacion varchar(40),
+sistemaexplotacion varchar(40) not null,
+estadomina varchar(40) not null,
+pregunta varchar(40) not null,
+status varchar (40) not null, fecha varchar (40) not null);
+
+/*************************************************************
+    FIN TABLAS SENALIZACION | MOBILIARIO URBANO
 **************************************************************/
