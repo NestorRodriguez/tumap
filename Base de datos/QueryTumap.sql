@@ -766,18 +766,9 @@ create table jyd_registro_has_item (
   fk_id_item int not null,
   latitud double null,
   longitud double null,
-  imagen varchar(45) null,
+  imagen longtext NOT NULL,
   descripcion varchar(45) null,
-  fk_estado int not null,
-  primary key (fk_id_registro, fk_id_item),
-  index fk_registro_has_item_item1_idx (fk_id_item asc),
-  index fk_registro_has_item_registro1_idx (fk_id_registro asc),
-  constraint fk_registro_has_item_registro1
-    foreign key (fk_id_registro)
-    references jyd_registro (pk_id_registro),
-  constraint fk_registro_has_item_item1
-    foreign key (fk_id_item)
-    references jyd_item (pk_id_item)
+  fk_estado int not null
 );
 
 /* jyd_categoria */
