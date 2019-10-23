@@ -642,3 +642,130 @@ INSERT INTO `tumap`.`without_coverage` (`state`, `Users_id_User`) VALUES ('Suspe
 /*************************************************************
     FIN TABLAS HYDRICO/ETNOBOTANICO
 **************************************************************/
+
+/*************************************************************
+    TABLAS SENALIZACION | MOBILIARIO URBANO
+**************************************************************/
+
+-- -----------------------------------------------------
+-- table categoria
+-- -----------------------------------------------------
+create table jyd_categoria (
+  pk_id_categoria int not null auto_increment,
+  descripcion varchar(45) not null,
+  ruta varchar(45) not null,
+  primary key (pk_id_categoria)
+);
+
+-- -----------------------------------------------------
+-- table item
+-- -----------------------------------------------------
+create table jyd_item (
+  pk_id_item int not null auto_increment,
+  nombre varchar(45) not null,
+  descripcion varchar(45) null,
+  imagen varchar(300) null,
+  fk_categoria int not null,
+  primary key (pk_id_item, fk_categoria),
+  index fk_item_categoria1_idx (fk_categoria asc),
+  constraint fk_item_categoria1
+    foreign key (fk_categoria)
+    references jyd_categoria (pk_id_categoria)
+);
+
+-- -----------------------------------------------------
+-- table estado
+-- -----------------------------------------------------
+create table jyd_estado (
+  pk_id_estado int not null auto_increment,
+  descripcion varchar(45) null,
+  primary key (pk_id_estado)
+);
+
+-- -----------------------------------------------------
+-- table registro
+-- -----------------------------------------------------
+create table jyd_registro (
+  pk_id_registro int not null auto_increment,
+  fk_users int not null,
+  fecha_registro date null,
+  primary key (pk_id_registro, fk_users),
+  index fk_registro_users1_idx (fk_users asc),
+  constraint fk_registro_users1
+    foreign key (fk_users)
+    references users (id)
+);
+
+-- -----------------------------------------------------
+-- table registro_has_item
+-- -----------------------------------------------------
+create table jyd_registro_has_item (
+  fk_id_registro int not null,
+  fk_id_item int not null,
+  latitud double null,
+  longitud double null,
+  imagen longtext NOT NULL,
+  descripcion varchar(45) null,
+  fk_estado int not null
+);
+
+/* jyd_categoria */
+insert into jyd_categoria (descripcion, ruta) value ('Señalización', '/senalizacion');
+insert into jyd_categoria (descripcion, ruta) value ('Mobiliario Urbano', '/mobiliario');
+
+/* jyd_item SENALIZACION */
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('CONTENSIÓN', 'Señal de carretera', 'assets/img_jyd/senalizacion/logo_contension.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('ELEVADAS', 'Señal de transito', 'assets/img_jyd/senalizacion/logo_soporte.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('VERTICAL', 'Señal de transito', 'assets/img_jyd/senalizacion/logo_senal.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('HORIZONTAL', 'Señalización de piso', 'assets/img_jyd/senalizacion/logo_senal_pavimento.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('SEMAFORO', 'Señal luminosa', 'assets/img_jyd/senalizacion/logo_semaforo.svg', 1);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('PR-K12', 'Señal de carretera', 'assets/img_jyd/senalizacion/logo_k12.svg', 1);
+
+/* jyd_item MOBILIARIO */
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('SEPARADOR', 'Protección', 'assets/img_jyd/mobiliario/logo_separador_vias.svg', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('PROTECTOR ARBOL', 'Protección contra roedores', 'assets/img_jyd/mobiliario/logo_protector_arbol.svg', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('CANECA INDUSTRIAL', 'Industrial shut', 'assets/img_jyd/mobiliario/logo_caneca_industrial.svg', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('CANECA ACERO', 'Lugar desechos', 'assets/img_jyd/mobiliario/logo_caneca_acero.svg', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('BOLARDO', 'Estructura de cemento', 'assets/img_jyd/mobiliario/logo_bolardo.svg', 2);
+insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('BANCA SIN ESPALDAR', 'Estructura para parque', 'assets/img_jyd/mobiliario/logo_banca_sin_espaldar.svg', 2);
+
+/* jyd_estado */
+insert into jyd_estado (descripcion) value ('Nuevo');
+insert into jyd_estado (descripcion) value ('Mal estado');
+
+/*************************************************************
+    FIN TABLAS SENALIZACION | MOBILIARIO URBANO
+**************************************************************/
+
+/*************************************************************
+    TABLAS MINAS
+**************************************************************/
+
+create table mp_EstadoActual_mina
+(id_estadomina int not null primary key auto_increment,
+nombre_estadomina varchar(20) not null);
+
+create table mp_tipo_material
+(id_tipomaterial int not null primary key auto_increment,
+nombre_tipomaterial varchar(20) not null);
+
+create table mp_Sistema_Explotacion
+(id_sistemaexplotacion int not null primary key auto_increment,
+nombre_sistemaexplotacion varchar(20) not null);
+
+Create table mp_Registro_Mina
+(id_registromina int not null primary key auto_increment ,
+nombre varchar(40) not null,
+lat varchar (40) not null,
+lng varchar (40) not null,
+tipomineral varchar(40) not null,
+trabajadores varchar(40) not null,
+observacion varchar(40),
+sistemaexplotacion varchar(40) not null,
+estadomina varchar(40) not null,
+pregunta varchar(40) not null,
+status varchar (40) not null, fecha varchar (40) not null);
+
+/*************************************************************
+    FIN TABLAS SENALIZACION | MOBILIARIO URBANO
+**************************************************************/

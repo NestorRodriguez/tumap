@@ -84,9 +84,7 @@ const routes: Routes = [
   { path: 'matricula', loadChildren: './ibpredial/matricula/matricula.module#MatriculaPageModule' },
   { path: 'mapavias', loadChildren: './vistasjf/mapavias/mapavias.module#MapaviasPageModule' },
   { path: 'slides', loadChildren: './vistasjf/slides/slides.module#SlidesPageModule' },
-  { path: 'resumenjf', loadChildren: './vistasjf/resumen/resumen.module#ResumenPageModule' },
   { path: 'mapaHidrico', loadChildren: './hidroetno/mapa/mapa.module#MapaPageModule' },
-
   { path: 'mapacofor', loadChildren: './socioeconomico/mapacofor/mapacofor.module#MapacoforPageModule' },
   { path: 'mapacoinfor', loadChildren: './socioeconomico/mapacoinfor/mapacoinfor.module#MapacoinforPageModule' },
   { path: 'cv-salud', loadChildren: './cv-salud/cv-salud.module#CvSaludPageModule' },
@@ -98,6 +96,7 @@ const routes: Routes = [
   { path: 'tab6', loadChildren: './cv-salud/tab6/tab6.module#Tab6PageModule' },
   { path: 'mapacofor', loadChildren: './socioeconomico/mapacofor/mapacofor.module#MapacoforPageModule' },
   { path: 'mapacoinfor', loadChildren: './socioeconomico/mapacoinfor/mapacoinfor.module#MapacoinforPageModule' },
+  { path: 'historico', loadChildren: './vistasjyd/historico/historico.module#HistoricoPageModule' },
 
 ];
 
