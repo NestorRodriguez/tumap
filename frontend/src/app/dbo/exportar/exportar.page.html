@@ -1,39 +1,8 @@
+<ion-header></ion-header>
+
 <ion-content color="none">
-
-    <div color="tertiary" *ngFor="let pregunta of preguntas" class="category-bloks">
-
-    </div>
-    <table  class="data-table">
-        <tr>
-            <!-- <td *ngFor="let header of headerRow" class="ion-text-center">
-                <b>{{ header }}</b>
-            </td> -->
-            <td>Documento</td>
-            <td>orden</td>
-            <td>nombre</td>
-            <td>lat</td>
-            <td>lng</td>
-            <td>departamento</td>
-            <td>municipio</td>
-            <td>fecha</td>
-            <td>pregunta</td>
-            <td>imagen</td>
-        </tr>
-
-        <tr *ngFor="let row of csvData; let i = index">
-            <td>{{ documento }}</td>
-            <td>{{ orden }}</td>
-            <td>{{ nombre }}</td>
-            <td>{{ lat }}</td>
-            <td>{{ lng }}</td>
-            <td>{{ departamento }}</td>
-            <td>{{ municipio }}</td>
-            <td>{{ fecha }}</td>
-            <td>{{ pregunta }}</td>
-            <td>{{ imagen }}</td>
-        </tr>
-
-
-    </table>
-
+    <div [routerLink]="[ruta]"> </div>
+    <ion-item [href]="this.ruta" routerLinkActive="router-link-active">
+        <ion-label>Exportar</ion-label>
+    </ion-item>
 </ion-content>

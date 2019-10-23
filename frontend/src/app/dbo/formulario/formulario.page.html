@@ -1,49 +1,40 @@
 <ion-content>
 
-    <ion-content color="primary">
-            
-   
-            <ion-toolbar color="none">
-                    <ion-buttons slot="start">
-                            <ion-back-button style="font-size: 90px" color="tertiary" [defaultHref]="['/']"></ion-back-button>
-                        </ion-buttons>
-            </ion-toolbar>
+
+    <ion-toolbar color="none">
+        <ion-buttons slot="start">
+            <ion-back-button style="font-size: 90px" color="tertiary" [defaultHref]="['/']"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
 
 
-            <ion-toolbar color="none"> 
-                   
+    <ion-toolbar color="none">
 
-                    <img class="registrof" src="assets/logo registro.svg" alt="">
-                    <ion-title color="tertiary" >Encuesta de Suelos</ion-title>
-        
-                    <!-- <ion-buttons slot="end">
-                        <ion-button (click)="openRespuestas()">
-                            <ion-badge *ngIf="items.length > 0"> {{ items.length }} </ion-badge>
-                            <ion-icon name="cart" slot="icon-only"></ion-icon>
-                        </ion-button>
-                    </ion-buttons> -->
-                </ion-toolbar>
 
-        <div color="tertiary" *ngFor="let pregunta of preguntas" class="category-bloks">
-            <ion-row color="tertiary" class="ion-no-padding category-banner">
-                <ion-col color="tertiary" class="ion-align-self-center ion-text-center" button tappable (click)="pregunta.expanded = !pregunta.expanded">
-                    {{ pregunta.id_Pregunta }}. {{ pregunta.category }}
-                </ion-col>
-            </ion-row>
-            <ion-slides [options]="sliderConfig">
-                <ion-slide *ngFor="let respuesta of pregunta.respuestas">
-                    <div *ngIf="pregunta.expanded">
-                        <ion-card>
-                        
-                            <ion-card-header>
-                                <ion-card-title color="tertiary">
-                                    {{ respuesta.name }}
-                                </ion-card-title>
-                            
-                              
-                                    <!-- <img src="https://via.placeholder.com/300x300"> -->
-                                    <button [disabled]="pregunta.isAdd" expand="full" (click)="addToRespuestas(pregunta, respuesta)">
-                                    <img class="imgres" [src]="respuesta.path" [alt]="respuesta.name">
+        <img class="registrof" src="assets/logo registro.svg" alt="">
+        <ion-title color="tertiary">Encuesta de Suelos</ion-title>
+    </ion-toolbar>
+
+    <div color="tertiary" *ngFor="let pregunta of preguntas" class="category-bloks">
+        <ion-row color="tertiary" class="ion-no-padding category-banner">
+            <ion-col color="tertiary" class="ion-align-self-center ion-text-center" button tappable (click)="pregunta.expanded = !pregunta.expanded">
+                {{ pregunta.id }}. {{ pregunta.pregunta }}
+            </ion-col>
+        </ion-row>
+        <ion-slides [options]="sliderConfig">
+            <ion-slide *ngFor="let respuesta of pregunta.respuestas">
+                <div *ngIf="pregunta.expanded">
+                    <ion-card>
+
+                        <ion-card-header>
+                            <ion-card-title color="tertiary">
+                                {{ respuesta.nombre }}
+                            </ion-card-title>
+
+
+                            <!-- <img src="https://via.placeholder.com/300x300"> -->
+                            <button [disabled]="pregunta.isAdd" expand="full" (click)="addToRespuestas(pregunta, respuesta)">
+                                    <img [src]="respuesta.ruta" [alt]="respuesta.nombre">
 
                                     </button>
 
