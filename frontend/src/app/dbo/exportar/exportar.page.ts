@@ -8,17 +8,24 @@ import { DboService } from '../../Services/dbo/dbo.service';
 })
 export class ExportarPage implements OnInit {
 
-  items = [];
 
-  constructor(private dboService: DboService) { }
+  csvData = [];
+  // csvData: any[] = [];
+  // headerRow: any[] = [];
+
+  constructor(private dbo: DboService) { }
 
   ngOnInit() {
-    this.items = this.dboService.getRespuestas();
-    console.log(this.items);
+    console.log('Entro a exportar')
+    this.dbo.getRespuestasResultado().subscribe(
+      res => this.listar(res) ,  // this.csvData = res ,
+      err => console.error(err)
+      );
+      console.log('Result: ' + JSON.stringify(this.csvData));
   }
 
-  listar(){
-
+  listar(res) { 
+    console.log(res);
   }
 
 }
