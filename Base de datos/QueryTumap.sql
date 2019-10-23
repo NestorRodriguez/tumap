@@ -772,18 +772,9 @@ create table jyd_registro_has_item (
   fk_id_item int not null,
   latitud double null,
   longitud double null,
-  imagen varchar(45) null,
+  imagen longtext NOT NULL,
   descripcion varchar(45) null,
-  fk_estado int not null,
-  primary key (fk_id_registro, fk_id_item),
-  index fk_registro_has_item_item1_idx (fk_id_item asc),
-  index fk_registro_has_item_registro1_idx (fk_id_registro asc),
-  constraint fk_registro_has_item_registro1
-    foreign key (fk_id_registro)
-    references jyd_registro (pk_id_registro),
-  constraint fk_registro_has_item_item1
-    foreign key (fk_id_item)
-    references jyd_item (pk_id_item)
+  fk_estado int not null
 );
 
 /* jyd_categoria */
@@ -807,23 +798,9 @@ insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('BOLARDO
 insert into jyd_item (nombre, descripcion, imagen, fk_categoria) value ('BANCA SIN ESPALDAR', 'Estructura para parque', 'assets/img_jyd/mobiliario/logo_banca_sin_espaldar.svg', 2);
 
 /* jyd_estado */
-insert into jyd_estado (descripcion) value ('nuevo');
-insert into jyd_estado (descripcion) value ('en mal estado');
+insert into jyd_estado (descripcion) value ('Nuevo');
+insert into jyd_estado (descripcion) value ('Mal estado');
 
-/* jyd_registro */
-insert into jyd_registro (fk_users, fecha_registro) value (3, '2019-9-29');
-insert into jyd_registro (fk_users, fecha_registro) value (3, '2019-9-29');
-insert into jyd_registro (fk_users, fecha_registro) value (2, '2019-9-28');
-
-/* jyd_registro_has_jyd_item */
-insert into jyd_registro_has_item (fk_id_registro, fk_id_item, latitud, longitud, imagen, descripcion, fk_estado) 
-            value (1, 1, 4.6579711999999995, -74.1122048, 'assets/img_jyd/captura_1234', 'señal en mal estado', 2);
-insert into jyd_registro_has_item (fk_id_registro, fk_id_item, latitud, longitud, imagen, descripcion, fk_estado) 
-            value (1, 5, 4.6579711999999995, -74.1122048, 'assets/img_jyd/captura_4321', 'semaforo nuevo', 1);
-insert into jyd_registro_has_item (fk_id_registro, fk_id_item, latitud, longitud, imagen, descripcion, fk_estado) 
-            value (1, 10, 4.6579711999999995, -74.1122048, 'assets/img_jyd/captura_2341', 'caneca nueva', 1);
-insert into jyd_registro_has_item (fk_id_registro, fk_id_item, latitud, longitud, imagen, descripcion, fk_estado) 
-            value (3, 10, 4.6579711999999995, -74.1122048, 'assets/img_jyd/captura_4231', 'caneca nueva', 1);
 
 --*********************************************************************************************************
 -- FIN TABLAS SENALIZACION | MOBILIARIO URBANO --

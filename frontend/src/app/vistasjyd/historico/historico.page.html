@@ -1,0 +1,46 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button [defaultHref]="['/']"></ion-back-button>
+      </ion-buttons>
+      <ion-title class="ion-title">Histórico</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <div *ngFor="let item of items">
+      <!-- <div style="text-align: center;">
+        <img src="assets/img_jyd/logo resumen.svg" width="160px" height="80px" alt="">
+      </div> -->
+      <!-- <div style="padding-left: 17%; padding-right: 17%; padding-top: 2%;">
+        <img [src]="item.imagen" class="img_resumen" width="350px" height="390px" alt="">
+      </div>
+      <div style="padding-left: 8%; padding-right: 8%; padding-top: 2%;">
+        <div class="div_datos">   
+          <ion-label><b>ITEM REG.</b> {{item.nombre_item}}</ion-label><br>
+          <ion-label><b>CATEGORIA.</b> {{item.descripcion}}</ion-label><br>
+          <ion-label><b>ESTADO.</b> {{ item.estado }}</ion-label><br>
+          <ion-label><b>LATITUD.</b> {{item.latitud}}</ion-label><br>
+          <ion-label><b>LONGITUD.</b> {{item.longitud}}</ion-label><br>
+          <ion-label style="text-align: justify;"><b>DESCRIPCIÓN.</b> {{item.descripcion}}</ion-label>                                      
+        </div>
+      </div> -->
+      <ion-card style="background-color: #008abb; border: 1px solid #d7d2d5;">
+        <img [src]="item.imagen" />
+        <ion-card-header>
+          <ion-card-subtitle style="color: white;">{{item.categoria}}</ion-card-subtitle>
+          <ion-card-title style="color: white;"><b>{{item.nombre_item}}</b></ion-card-title>
+        </ion-card-header>
+        <ion-card-content style="background-color: #f4f4f4; color: black; border-top: 1px solid #d7d2d5; padding-top: 4%;">
+          <ion-label><b>ESTADO.</b> {{ item.estado }}</ion-label><br>
+          <ion-label><b>LATITUD.</b> {{item.latitud}}</ion-label><br>
+          <ion-label><b>LONGITUD.</b> {{item.longitud}}</ion-label><br>
+          <ion-label style="text-align: justify;"><b>DESCRIPCIÓN.</b> {{item.descripcion}}</ion-label>
+          <section style="text-align: center; padding-top: 4%;">        
+            <ion-button (click)="save()" routerLink="/resumen" color="white" size="medium" color="primary" style="border-radius: 5px 5px 5px 5px;"><b>Ver Mapa</b></ion-button>
+          </section>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ion-content>
+  

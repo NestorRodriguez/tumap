@@ -104,7 +104,7 @@ export class UsosueloshomePage implements OnInit {
     this.subPoligonoCerrado = false;
     this.marcadoresSubpoligono.length = 0;
     this.polygonSub = false;
-    this.storage.clear();
+    this.storage.remove('subpoligono');
 
   }
   // Ingreso de puntos al array de subpoligonos

@@ -2065,7 +2065,7 @@ app.route('/estado')
 app.route('/registro')
     .get(function(req, res) {
         console.log('Página de Validar Información ');
-        var query = db.query('select i.nombre, a.latitud, a.longitud, e.descripcion estado, a.descripcion descripcion from jyd_registro r, jyd_registro_has_item a, jyd_item i, jyd_estado e where pk_id_registro=fk_id_registro and pk_id_estado=fk_estado and pk_id_item=fk_id_item', function(error, result) {
+        var query = db.query('select r.fk_users as id_user, i.nombre nombre_item, c.descripcion categoria, a.latitud, a.longitud, e.descripcion estado, a.descripcion descripcion, a.imagen from jyd_registro r, jyd_registro_has_item a, jyd_item i, jyd_estado e, jyd_categoria c where pk_id_registro=fk_id_registro and pk_id_estado=fk_estado and pk_id_item=fk_id_item and c.pk_id_categoria=i.fk_categoria;', function(error, result) {
             if (error) {
                 throw error;
             } else {
@@ -2075,11 +2075,42 @@ app.route('/registro')
         });
     })
     .post(function(req, res) {
-        res.send('Add a rol');
+        let data = req.body;
+        const sql = `INSERT INTO jyd_registro (fk_users, fecha_registro)
+        VALUES(${data.idUsuario}, '${data.fecha}')`;
+        db.query(sql, (error, result) => {
+            if (error) {
+                res.json({
+                    error: true,
+                    message: error.message
+                })
+            } else {
+                res.json(result);
+            }
+        })
     })
     .put(function(req, res) {
         res.send('Update the rol');
     });
+
+app.route('/historico')
+    .post(function(req, res) {
+        let data = req.body;
+        const sql = `INSERT INTO jyd_registro_has_item (fk_id_registro, fk_id_item, latitud, longitud, imagen, descripcion, fk_estado)
+        VALUES(1, ${data.codItem}, ${data.lat}, ${data.lng}, '${data.imagen}', '${data.descripcion}', ${data.estadoItem})`;
+        // console.log(sql);
+        db.query(sql, (error, result) => {
+            if (error) {
+                res.json({
+                    error: true,
+                    message: error.message
+                })
+            } else {
+                res.json(result);
+            }
+        })
+    });
+    
 /*************************************************************
  * FIN DE SERVICIOS PARA SENALIZACION | MOBILIARIO URBANO    *
  ************************************************************/

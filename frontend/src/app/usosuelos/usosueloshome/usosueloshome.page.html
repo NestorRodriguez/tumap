@@ -10,7 +10,7 @@
         </ion-title>
         <ion-buttons *ngIf="checkmarkEnabled" slot="secondary">
             <ion-button enabled (click)="presentAlert()">
-                <ion-icon slot="icon-only" name="checkmark"> </ion-icon>
+                <ion-icon slot="icon-only" name="save"> </ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
@@ -31,8 +31,13 @@
 
 <ion-content>
     <ion-fab *ngIf="polygonSub" vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button (click)="cerrarPoligono()">
-            <ion-icon name="add"></ion-icon>
+        <ion-fab-button (click)="cerrarPoligono()" color="success">
+            <ion-icon name="checkmark"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+    <ion-fab vertical="center" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="getGeolocation()" color="light">
+            <ion-icon name="locate"></ion-icon>
         </ion-fab-button>
     </ion-fab>
     <ion-fab *ngIf="polygonSub" vertical="bottom" horizontal="endStart" slot="fixed">
