@@ -30,7 +30,7 @@ insert into users (nameuser, password, email, id_rol) values ('scamacho', '1234'
 insert into users (nameuser, password, email, id_rol) values ('fsanchez', '1234', 'fsanchez@misena.edu.co', 1);
 
 /*************************************************************
-    FIN TABLAS INVENTARIO DE REDES SECAS
+    FIN TABLAS INVENTARIO DE USUARIOS Y ROL
 **************************************************************/
 
 /*************************************************************
@@ -387,4 +387,7 @@ insert into jf_detalle_via (detalle)
 /*CRUD tabla jf_estado*/
 insert into jf_estado(estado)
 	values ('En espera'),('Aprobado'),('No aprobado');
-/*FIN BASE DE DATOS DE VIAS JF*/
+
+/*************************************************************
+    FIN BASE DE DATOS DE VIAS JF
+**************************************************************/
