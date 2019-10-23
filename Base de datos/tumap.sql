@@ -452,5 +452,5 @@ insert into im_tipo_usos (DESCRIPCION, HEX) values('Construida', '#F56E04'),('Cu
 ('Reserva','#E7EE05'),('Común','#BABABA');
 
 /*************************************************************
-    FIN BASE DE DATOS DE VIAS JF
+    FIN INVENTARIO DE SUELOS
 **************************************************************/
