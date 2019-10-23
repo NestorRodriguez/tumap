@@ -1,11 +1,3 @@
-<ion-header>
-    <ion-toolbar style="--ion-background-color: #2C689F; color: white;">
-        <ion-title>
-            ENCUESTA COMERCIO INFORMAL
-        </ion-title>
-    </ion-toolbar>
-</ion-header>
-
 <ion-content>
     <br>
     <ion-img src="assets/logo_encuesta_comercio_informal.JPG"></ion-img>
@@ -79,7 +71,8 @@
             <ion-label>Ambos</ion-label>
         </div>
     </div>
-
-    <ion-img src="assets/camaratumap.png"></ion-img>
-    <ion-button type="submit "><b>Enviar</b></ion-button>
+    <ion-button class="foto"  (click)="hacerFoto()">Usar Camara </ion-button>
+<img [src]="foto" *ngIf="foto" />
+<br><br>
+    <ion-button type="submit " (click)="presentAlert()"><b>Enviar</b></ion-button>
 </ion-content>

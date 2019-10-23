@@ -5,6 +5,7 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'login',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
@@ -77,6 +78,30 @@ const routes: Routes = [
   { path: 'mapavias', loadChildren: './vistasjf/mapavias/mapavias.module#MapaviasPageModule' },
   { path: 'slides', loadChildren: './vistasjf/slides/slides.module#SlidesPageModule' },
   { path: 'resumenjf', loadChildren: './vistasjf/resumen/resumen.module#ResumenPageModule' },
+  { path: 'opcionesvias', loadChildren: './vistasjf/opcionesvias/opcionesvias.module#OpcionesviasPageModule' },
+
+  { path: 'respuestas', loadChildren: './dbo/respuestas/respuestas.module#RespuestasPageModule' },
+  { path: 'estrato', loadChildren: './ibpredial/estrato/estrato.module#EstratoPageModule' },
+  { path: 'nivel', loadChildren: './ibpredial/nivel/nivel.module#NivelPageModule' },
+  { path: 'matricula', loadChildren: './ibpredial/matricula/matricula.module#MatriculaPageModule' },
+  { path: 'mapavias', loadChildren: './vistasjf/mapavias/mapavias.module#MapaviasPageModule' },
+  { path: 'slides', loadChildren: './vistasjf/slides/slides.module#SlidesPageModule' },
+  { path: 'resumenjf', loadChildren: './vistasjf/resumen/resumen.module#ResumenPageModule' },
+  { path: 'mapacofor', loadChildren: './socioeconomico/mapacofor/mapacofor.module#MapacoforPageModule' },
+  { path: 'mapacoinfor', loadChildren: './socioeconomico/mapacoinfor/mapacoinfor.module#MapacoinforPageModule' },
+
+
+
+  { path: 'cv-salud', loadChildren: './cv-salud/cv-salud.module#CvSaludPageModule' },
+  { path: 'tab1', loadChildren: './cv-salud/tab1/tab1.module#Tab1PageModule' },
+  { path: 'tab2', loadChildren: './cv-salud/tab2/tab2.module#Tab2PageModule' },
+  { path: 'tab3', loadChildren: './cv-salud/tab3/tab3.module#Tab3PageModule' },
+  { path: 'tab4', loadChildren: './cv-salud/tab4/tab4.module#Tab4PageModule' },
+  { path: 'tab5', loadChildren: './cv-salud/tab5/tab5.module#Tab5PageModule' },
+  { path: 'tab6', loadChildren: './cv-salud/tab6/tab6.module#Tab6PageModule' },
+  { path: 'mapacofor', loadChildren: './socioeconomico/mapacofor/mapacofor.module#MapacoforPageModule' },
+  { path: 'mapacoinfor', loadChildren: './socioeconomico/mapacoinfor/mapacoinfor.module#MapacoinforPageModule' },
+
 ];
 
 @NgModule({

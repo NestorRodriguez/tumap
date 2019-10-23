@@ -246,6 +246,122 @@ INSERT INTO `tumap`.`dbo_respuesta` (`id_inscripcion`, `id_pregunta`, `id_imagen
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+/*************************************************************
+    INICIO TABLAS EDUCACION
+**************************************************************/
+-- -----------------------------------------------------
+-- Table `tumap`.`fys_datos_usuarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tumap`.`fys_datos_usuarios` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombres` VARCHAR(100) NOT NULL,
+  `apellidos` VARCHAR(100) NOT NULL,
+  `edad` INT NOT NULL,
+  `sexo` VARCHAR(1) NOT NULL,
+  `nivel_educativo` VARCHAR(100) NOT NULL,
+  `id_user` INT NOT NULL,
+  PRIMARY KEY (`id`, `id_user`),
+  CONSTRAINT `fk_users1`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `tumap`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+  
+-- -----------------------------------------------------
+-- Table `tumap`.`fys_registro_info`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tumap`.`fys_registro_info` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre_institucion` VARCHAR(45) NOT NULL,
+  `ubicacion` POINT NOT NULL,
+  `foto` TEXT NOT NULL,
+  `referencias_aledanas` TEXT NOT NULL,
+  `tipos_formacion` TEXT NOT NULL,
+  `especificacion` VARCHAR(100) NOT NULL,
+  `pagina_web` VARCHAR(100) NOT NULL,
+  `telefonos` VARCHAR(40) NOT NULL,
+  `id_usuario` INT NOT NULL,
+  PRIMARY KEY (`id`, `id_usuario`),
+  CONSTRAINT `fk_registro_info_usuarios1`
+    FOREIGN KEY (`id_usuario`)
+    REFERENCES `tumap`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+
+-- -----------------------------------------------------
+-- Table `tumap`.`fys_administrador`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tumap`.`fys_administrador` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombres` VARCHAR(70) NOT NULL,
+  `apellidos` VARCHAR(45) NOT NULL,
+  `celular` VARCHAR(25) NOT NULL,
+  `usuario` VARCHAR(45) NOT NULL,
+  `clave` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `tumap`.`fys_validar_info`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tumap`.`fys_validar_info` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `validado` BOOLEAN,
+  `fecha_validacion` DATE NOT NULL,
+  `id_registro_info` INT NOT NULL,
+  `id_administrador` INT NOT NULL,
+  PRIMARY KEY (`id`, `id_registro_info`, `id_administrador`),
+  CONSTRAINT `fk_validar_info_registro_info1`
+    FOREIGN KEY (`id_registro_info`)
+    REFERENCES `tumap`.`fys_registro_info` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_validar_info_administrador1`
+    FOREIGN KEY (`id_administrador`)
+    REFERENCES `tumap`.`fys_administrador` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+/*************************************************************
+    FIN TABLAS EDUCACION
+**************************************************************/
 -- *********************************************************************************************************
 -- fin DBO --
 -- *********************************************************************************************************
+
+/*BASE DE DATOS DE VIAS JF*/
+
+CREATE table jf_detalle_via ( 
+	id int not null auto_increment primary key,
+    detalle varchar(200) not null
+);
+/*Creacion de tabla del estado*/
+CREATE table jf_estado (
+	id int not null auto_increment primary key,
+    estado varchar(100) not null
+);
+/*Creacion de tabla de descripcion vial*/
+CREATE table jf_descripcion_via(
+	id int not null auto_increment primary key,
+    ubicacion geometry not null,
+    nombre_via varchar(200),
+    id_detalle_via int not null,
+		foreign key (id_detalle_via) references jf_detalle_via(id),
+	imagen varchar(200),
+    id_estado int not null,
+		foreign key (id_estado) references jf_estado(id)
+);
+/*DML*/
+/*CRUD tabla jf_detalle_via*/
+insert into jf_detalle_via (detalle)
+	values ('Mal estado'),('Mantenimiento'),('Via cerrada');
+/*CRUD tabla jf_estado*/
+insert into jf_estado(estado)
+	values ('En espera'),('Aprobado'),('No aprobado');
+/*FIN BASE DE DATOS DE VIAS JF*/

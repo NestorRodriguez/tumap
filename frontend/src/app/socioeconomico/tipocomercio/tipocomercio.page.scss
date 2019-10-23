@@ -1,27 +1,33 @@
 ion-content {
-    --ion-background-color: #008abb!important;
+    --ion-background-color: #2c689f!important;
     float: center;
-    font-size: 32px;
+    font-size: 25px;
     align-content: center;
     text-align: center;
 }
 
 .logo {
-    width: 250px;
-    height: 250px;
+    width: 190px;
+    height: 140px;
 }
 
 ion-label {
     margin: 20px;
-    color: #ffffff!important;
+    color: #fefefe!important;
     float: center;
     align-content: center;
     text-align: center;
 }
 
 ion-button {
-    width: 250px;
-    height: 150px;
+    width: 65%;
+    height: 28%;
+    background: #fefefe;
     float: center;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 80px;
+}
+
+.boton{
+    background: #fefefe;
 }
