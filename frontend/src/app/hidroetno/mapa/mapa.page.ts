@@ -10,14 +10,10 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
   styleUrls: ['./mapa.page.scss'],
 })
 export class MapaPage implements OnInit {  
-  // lat = 4.60972222222;
-  // lng = -74.0816666667;
-  // zoom = 16;
-  lat : number;
-  lng : number;
-  zoom = 16;
+  lat = 4.60972222222;
+  lng = -74.0816666667;
+  zoom = 16;;
   icon;
-  location: boolean;
 
   constructor(private modalCtrl: ModalController,
               private geolocation: Geolocation,
@@ -30,7 +26,6 @@ export class MapaPage implements OnInit {
         .then((location: Geoposition) => {
           this.lat = location.coords.latitude;
           this.lng = location.coords.longitude;
-          this.location = true;
         })
         .catch(error => console.log(error));
   }

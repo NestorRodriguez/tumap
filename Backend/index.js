@@ -26,7 +26,7 @@ const db = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
-    database: "hidrico",
+    database: "tumap",
     port: 3306,
     multipleStatements: true
 });
@@ -203,14 +203,11 @@ app.route('/coverages')
     .post((req, res) => {
         const dato = {
             color: req.body.color,
-            other_color: req.body.other_color,
             pressure: req.body.pressure,
             type: req.body.type,
-            Users_id_User: req.body.Users_id_User,
         };
 
-        const sql = `INSERT INTO coverages SET color='${dato.color}', other_color='${dato.other_color}', 
-        pressure='${dato.pressure}', type='${dato.type}', Users_id_User='${dato.Users_id_User}'`;
+        const sql = `INSERT INTO coverages SET color='${dato.color}', pressure='${dato.pressure}', type='${dato.type}'`;
 
         db.query(sql, (error, result) => {
             if (error) {
@@ -230,7 +227,6 @@ app.route('/coverages/:id')
             other_color: req.body.other_color,
             pressure: req.body.pressure,
             type: req.body.type,
-            Users_id_User: req.body.Users_id_User,
         };
 
         let sets = [];
@@ -317,10 +313,9 @@ app.route('/without_coverage')
     .post((req, res) => {
         const dato = {
             state: req.body.state,
-            Users_id_User: req.body.Users_id_User,
         };
 
-        const sql = `INSERT INTO without_coverage SET state='${dato.state}', Users_id_User='${dato.Users_id_User}   '`;
+        const sql = `INSERT INTO without_coverage SET state='${dato.state}'`;
 
         db.query(sql, (error, result) => {
             if (error) {
@@ -337,7 +332,6 @@ app.route('/without_coverage/:id')
         const id = req.params.id;
         const dato = {
             state: req.body.state,
-            Users_id_User: req.body.Users_id_User,
         };
 
         let sets = [];
@@ -425,10 +419,9 @@ app.route('/grown')
     .post((req, res) => {
         const dato = {
             level: req.body.level,
-            Users_id_User: req.body.Users_id_User,
         };
 
-        const sql = `INSERT INTO grown SET level='${dato.level}', Users_id_User='${dato.Users_id_User}'`;
+        const sql = `INSERT INTO grown SET level='${dato.level}',`;
 
         db.query(sql, (error, result) => {
             if (error) {
@@ -445,7 +438,6 @@ app.route('/grown/:id')
         const id = req.params.id;
         const dato = {
             level: req.body.level,
-            Users_id_User: req.body.Users_id_User,
         };
 
         let sets = [];
@@ -533,10 +525,9 @@ app.route('/connections')
         const dato = {
             description: req.body.description,
             image: req.body.image,
-            Users_id_User: req.body.Users_id_User,
         };
 
-        const sql = `INSERT INTO connections SET description='${dato.description}', image='${dato.image}', Users_id_User='${dato.Users_id_User}'`;
+        const sql = `INSERT INTO connections SET description='${dato.description}', image='${dato.image}'`;
 
         db.query(sql, (error, result) => {
             if (error) {
@@ -554,7 +545,6 @@ app.route('/connections/:id')
         const dato = {
             description: req.body.description,
             image: req.body.image,
-            Users_id_User: req.body.Users_id_User,
         };
 
         let sets = [];
@@ -643,11 +633,10 @@ app.route('/ethnobotany')
             common_name: req.body.common_name,
             image: req.body.image,
             use: req.body.use,
-            users_id_User: req.body.users_id_User,
         };
 
         const useField = '`use`';
-        const sql = `INSERT INTO ethnobotany SET common_name='${dato.common_name}', image='${dato.image}', ${useField}='${dato.use}', users_id_User='${dato.users_id_User}'`;
+        const sql = `INSERT INTO ethnobotany SET common_name='${dato.common_name}', image='${dato.image}', ${useField}='${dato.use}'`;
         console.log(sql);
         db.query(sql, (error, result) => {
             if (error) {
@@ -666,7 +655,6 @@ app.route('/ethnobotany/:id')
             common_name: req.body.common_name,
             image: req.body.image,
             use: req.body.use,
-            users_id_User: req.body.users_id_User,
         };
         const sets = [];
         for (i in dato) {
@@ -732,7 +720,7 @@ app.route('/location')
 app.route('/location/:id')
     .get((req, res) => {
         const id = req.params.id;
-        const sql = `SELECT * FROM Location WHERE id_Location='${id}';`;
+        const sql = `SELECT * FROM location WHERE id_Location='${id}';`;
         const query = db.query(sql, (error, result) => {
             try {
                 if (error) {
@@ -754,14 +742,12 @@ app.route('/location/:id')
 app.route('/location')
     .post((req, res) => {
         const dato = {
-            color: req.body.color,
-            presion: req.body.presion,
-            tipoFlujo: req.body.tipoFlujo,
-            estado: req.body.estado,
             ubicacion: req.body.ubicacion,
+            users_id_User: req.body.users_id_User
+
         };
 
-        const sql = `INSERT INTO connections SET color='${dato.color}', presion='${dato.presion}', tipoFlujo='${dato.tipoFlujo}', estado='${dato.estado}', ubicacion='${dato.ubicacion}'`;
+        const sql = `INSERT INTO location SET ubicacion='${dato.ubicacion}', users_id_User='${dato.users_id_User}'`;
         console.log(sql);
         db.query(sql, (error, result) => {
             if (error) {

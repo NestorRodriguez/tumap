@@ -76,10 +76,10 @@ export class HomePage {
          icon: this.icons[14]
       },
       {
-        title: "Aqui va otro servicio!",
+        title: "Fuentes Hidricas / Etnobotanica",
         note: "",
-        route: "/",
-        icon: this.icons[2]
+        route: "/options",
+        icon: this.icons[4]
       }
     );
   }

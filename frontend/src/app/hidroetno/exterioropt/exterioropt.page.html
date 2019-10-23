@@ -1,7 +1,7 @@
 <ion-header no-border>
     <ion-toolbar color="primary">
         <ion-buttons slot="start">
-            <ion-back-button defaultHref="/options">Atrás</ion-back-button>
+            <ion-back-button defaultHref="/options"></ion-back-button>
         </ion-buttons>
         <ion-title>Exterior</ion-title>
     </ion-toolbar>
@@ -12,63 +12,79 @@
     <div>
 
         <div class="box">
-            <h4>Crecidas</h4>
-            <ion-segment class="abajo" (ionChange)="segmentChanged($event)">
-                <ion-segment-button href="#nmedio" value="nmedio">
-                    <ion-label>Nivel Medio</ion-label>
-                </ion-segment-button>
-                <ion-segment-button href="#nbajo" value="nbajo">
-                    <ion-label>Nivel Bajo</ion-label>
-                </ion-segment-button>
-            </ion-segment>
+            <ion-card>
+                <ion-card-header>
+                    <ion-card-title>Crecidas</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <ion-segment class="abajo" (ionChange)="segmentChanged($event)">
+                        <ion-segment-button href="#nmedio" value="nmedio">
+                            <ion-label>Nivel Medio</ion-label>
+                        </ion-segment-button>
+                        <ion-segment-button href="#nbajo" value="nbajo">
+                            <ion-label>Nivel Bajo</ion-label>
+                        </ion-segment-button>
+                    </ion-segment>
+                </ion-card-content>
+            </ion-card>
         </div>
 
         <div class="box2">
-            <h4>Conexiones</h4>
-            <ion-item>
-                <ion-label>Notas</ion-label>
-                <ion-textarea rows="6" cols="20" placeholder="Ingresa tus comentarios..."></ion-textarea>
-            </ion-item>
+            <ion-card>
+                <ion-card-header>
+                    <ion-card-title>Conexiones</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <h6>Foto</h6>
+                    <ion-input class="photo" type="file"></ion-input>
+                    <ion-item>
+                        <ion-label>Notas</ion-label>
+                        <ion-textarea rows="4" cols="20" placeholder="Ingresa tus comentarios..."></ion-textarea>
+                    </ion-item>
 
-            <h6>Foto</h6>
-            <ion-input class="photo" type="file"></ion-input>
-
-            <div class="boton">
-                <ion-button size="small" name="modificar"> Modificar</ion-button>
-                <ion-button size="small" name="guardar"> Guardar</ion-button>
-            </div>
+                    <div class="boton">
+                        <ion-button size="small" name="modificar"> Modificar</ion-button>
+                        <ion-button size="small" name="guardar"> Guardar</ion-button>
+                    </div>
+                </ion-card-content>
+            </ion-card>
         </div>
 
         <div class="box3">
-            <h4>Vertimiento</h4>
-            <ion-radio-group>
-                <ion-item>
-                    <ion-item>
-                        <ion-label>Líquido</ion-label>
-                        <ion-radio slot="end" color="primary"></ion-radio>
-                    </ion-item>
+            <ion-card>
+                <ion-card-header>
+                    <ion-card-title>Vertimiento</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <ion-radio-group>
+                        <!-- <ion-item> -->
+                            <ion-item>
+                                <ion-label>Líquido</ion-label>
+                                <ion-radio slot="end" color="primary"></ion-radio>
+                            </ion-item>
+
+                            <ion-item>
+                                <ion-label>Sólido</ion-label>
+                                <ion-radio slot="end" color="primary"></ion-radio>
+                            </ion-item>
+                        <!-- </ion-item> -->
+
+                    </ion-radio-group>
+                    <h6>Foto</h6>
+                    <ion-input class="photo" type="file"></ion-input>
 
                     <ion-item>
-                        <ion-label>Sólido</ion-label>
-                        <ion-radio slot="end" color="primary"></ion-radio>
+                        <ion-label>Notas</ion-label>
+                        <ion-textarea rows="4" cols="20 " placeholder="Ingresa tus comentarios..."></ion-textarea>
                     </ion-item>
-                </ion-item>
-            </ion-radio-group>
 
-            <ion-item>
-                <ion-label>Notas</ion-label>
-                <ion-textarea rows="6" cols="20" placeholder="Ingresa tus comentarios..."></ion-textarea>
-            </ion-item>
-
-            <h6>Foto</h6>
-            <ion-input class="photo" type="file"></ion-input>
-
-            <div class="boton">
-                <ion-button size="small" name="modificar"> Modificar</ion-button>
-                <ion-button size="small" name="guardar"> Guardar</ion-button>
-            </div>
+                    <div class="boton">
+                        <ion-button size="small" name="modificar"> Modificar</ion-button>
+                        <ion-button size="small" name="guardar"> Guardar</ion-button>
+                    </div>
+                </ion-card-content>
+            </ion-card>
         </div>
-
     </div>
 
     <div class="boton2">

@@ -4,25 +4,25 @@
     <ion-buttons slot="start">
       <!-- <ion-back-button [defaultHref]="['/']"></ion-back-button> -->
     </ion-buttons>
-    <ion-title class="ion-title">Mi Ubicación<nav></nav></ion-title>
-    <ion-buttons slot="secondary">
+    <ion-title class="ion-title">Mi Ubicación<nav></nav>
+    </ion-title>
+    <!-- <ion-buttons slot="secondary">
       <ion-button *ngIf="location" routerDirection="backward" routerLink="/hidrica"><ion-icon slot="icon-only" name="checkmark"></ion-icon></ion-button>
-    </ion-buttons>
+    </ion-buttons> -->
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <!-- <div style="background-color: white; height: 90%;"> -->
-    <!-- this creates a google map on the page with the given lat/lng from -->
-    <!-- the component as the initial center of the map: -->
+  <div style="background-color: white; height: 90%;">
     <agm-map [latitude]="lat" [longitude]="lng" [zoom]='16'>
-      <agm-marker [latitude]="lat" [longitude]="lng" width="50%"> 
+      <agm-marker [latitude]="lat" [longitude]="lng" width="50%">
       </agm-marker>
     </agm-map>
-  <!-- </div> -->
+  </div>
   <div style="background-color: #0A9D97; position: fixed-bottom; height: 10%; text-align: center; padding-top: 2%;">
-    <section>        
-      <ion-button (click)="closeModal()" routerLink="/resumen" color="white" size="medium" style="background-color: white; color: #2C689F; border-radius: 5px 5px 5px 5px;"><b>Continuar</b></ion-button>
+    <section>
+      <ion-button (click)="closeModal()" routerLink="/hidrica" color="white" size="medium"
+        style="background-color: white; color: #2C689F; border-radius: 5px 5px 5px 5px;"><b>Continuar</b></ion-button>
     </section>
   </div>
 </ion-content>
