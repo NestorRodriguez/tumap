@@ -6,20 +6,33 @@
             </ion-button>
         </ion-buttons>
         <ion-title>
-            Registrar Predio
+            Registrar predio
         </ion-title>
         <ion-buttons *ngIf="checkmarkEnabled" slot="secondary">
             <ion-button enabled (click)="presentAlert()">
-                <ion-icon slot="icon-only" name="bookmark"> </ion-icon>
+                <ion-icon slot="icon-only" name="checkmark"> </ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
+<div class="contenedorconvenciones">
+    <div class="convencion">
+        <div class="tipoarea" style="background-color: #F56E04"></div><label class="categoria">Construida</label> <br>
+
+        <div class="tipoarea" style="background-color: #20B000"></div><label class="categoria">Cultivo</label> <br>
+
+        <div class="tipoarea" style="background-color: #B00000"></div><label class="categoria">Ganadería</label> <br>
+
+        <div class="tipoarea" style="background-color: #E7EE05"></div><label class="categoria">Reserva</label><br>
+
+        <div class="tipoarea" style="background-color: #BABABA"></div><label class="categoria">Común</label><br>
+    </div>
+</div>
 
 <ion-content>
     <ion-fab *ngIf="polygonSub" vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button (click)="cerrarPoligono()">
-            <ion-icon name="checkmark"></ion-icon>
+            <ion-icon name="add"></ion-icon>
         </ion-fab-button>
     </ion-fab>
     <ion-fab *ngIf="polygonSub" vertical="bottom" horizontal="endStart" slot="fixed">
@@ -28,18 +41,11 @@
         </ion-fab-button>
     </ion-fab>
     <agm-map (mapClick)="agregarSubpoligonos($event)" [latitude]="lat" [longitude]="lng" [streetViewControl]="false" [zoom]='16' [zoomControl]="false" [usePanning]="true">
-        <!-- <agm-marker *ngFor="let marcador of marcadores " [latitude]="marcador.lat" [longitude]="marcador.lng" width="50%">
-        </agm-marker>
-        <agm-polygon *ngIf="poligonoCerrado" [paths]="poligonoPrincipal">
-        </agm-polygon> -->
-
         <agm-marker *ngFor=" let marcador of marcadoresSubpoligono " [latitude]="marcador.lat " [longitude]="marcador.lng " width="50% ">
         </agm-marker>
-
         <span *ngFor="let poligono of arraySubPoligono">
         <agm-polygon *ngIf="polygonSub" [paths]="poligono.poligono" [fillColor]="poligono.color">
         </agm-polygon>
         </span>
     </agm-map>
-
 </ion-content>

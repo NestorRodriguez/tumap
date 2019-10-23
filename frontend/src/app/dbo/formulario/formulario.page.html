@@ -1,5 +1,6 @@
+<ion-content>
 
-    <ion-content>
+    <ion-content color="primary">
             
    
             <ion-toolbar color="none">
@@ -42,22 +43,28 @@
                               
                                     <!-- <img src="https://via.placeholder.com/300x300"> -->
                                     <button [disabled]="pregunta.isAdd" expand="full" (click)="addToRespuestas(pregunta, respuesta)">
-                                    <img [src]="respuesta.path" [alt]="respuesta.name">
+                                    <img class="imgres" [src]="respuesta.path" [alt]="respuesta.name">
 
                                     </button>
-                               
-                            </ion-card-header>
-                        </ion-card>
-                    </div>
-                </ion-slide>
-            </ion-slides>
-        </div>
- 
+
+                        </ion-card-header>
+                    </ion-card>
+                </div>
+            </ion-slide>
+        </ion-slides>
+    </div>
+
 
     <ion-toolbar class="guardar-tool" color="none">
-       
-            <button class="botonguardar" slot="end" (click)="saveRespuestas()">Guardar</button>
-        
+        <ion-buttons slot="end">
+            <button class="botonguardar" slot="end" *ngIf="preguntas.length === items.length" (click)="saveRespuestas()">Guardar
+                    <ion-badge slot="primary" *ngIf="items.length > 0"> {{ items.length }} </ion-badge>
+            </button>
+            <ion-button (click)="openRespuestas()">
+                <ion-badge *ngIf="items.length > 0"> {{ items.length }} </ion-badge>
+                <!-- <ion-icon name="cart" slot="icon-only"></ion-icon> -->
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 
 </ion-content>

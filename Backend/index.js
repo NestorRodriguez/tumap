@@ -9,12 +9,6 @@ const cors = require('cors');
 // Se agrega la librería para habilitar cors
 app.use(cors());
 
-app.all('/*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Content-Type");
-    next();
-});
-
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
@@ -25,6 +19,7 @@ app.use(bodyParser.json({ extended: true, limit: '10mb' }));
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
+    password: "",
     password: "12345",
     database: "tumap",
     port: 3306,
@@ -67,7 +62,7 @@ app.route('/users')
 app.route('/users/:id')
     .get((req, res) => {
         const id = req.params.id;
-        const sql = `SELECT * FROM users WHERE id_User='${id}';`;
+        const sql = `SELECT * FROM users WHERE id='${id}';`;
         const query = db.query(sql, (error, result) => {
             try {
                 if (error) {
@@ -203,14 +198,11 @@ app.route('/coverages')
     .post((req, res) => {
         const dato = {
             color: req.body.color,
-            other_color: req.body.other_color,
             pressure: req.body.pressure,
             type: req.body.type,
-            Users_id_User: req.body.Users_id_User,
         };
 
-        const sql = `INSERT INTO coverages SET color='${dato.color}', other_color='${dato.other_color}', 
-        pressure='${dato.pressure}', type='${dato.type}', Users_id_User='${dato.Users_id_User}'`;
+        const sql = `INSERT INTO coverages SET color='${dato.color}', pressure='${dato.pressure}', type='${dato.type}'`;
 
         db.query(sql, (error, result) => {
             if (error) {
@@ -230,7 +222,6 @@ app.route('/coverages/:id')
             other_color: req.body.other_color,
             pressure: req.body.pressure,
             type: req.body.type,
-            Users_id_User: req.body.Users_id_User,
         };
 
         let sets = [];
@@ -317,10 +308,9 @@ app.route('/without_coverage')
     .post((req, res) => {
         const dato = {
             state: req.body.state,
-            Users_id_User: req.body.Users_id_User,
         };
 
-        const sql = `INSERT INTO without_coverage SET state='${dato.state}', Users_id_User='${dato.Users_id_User}   '`;
+        const sql = `INSERT INTO without_coverage SET state='${dato.state}'`;
 
         db.query(sql, (error, result) => {
             if (error) {
@@ -337,7 +327,6 @@ app.route('/without_coverage/:id')
         const id = req.params.id;
         const dato = {
             state: req.body.state,
-            Users_id_User: req.body.Users_id_User,
         };
 
         let sets = [];
@@ -425,10 +414,9 @@ app.route('/grown')
     .post((req, res) => {
         const dato = {
             level: req.body.level,
-            Users_id_User: req.body.Users_id_User,
         };
 
-        const sql = `INSERT INTO grown SET level='${dato.level}', Users_id_User='${dato.Users_id_User}'`;
+        const sql = `INSERT INTO grown SET level='${dato.level}',`;
 
         db.query(sql, (error, result) => {
             if (error) {
@@ -445,7 +433,6 @@ app.route('/grown/:id')
         const id = req.params.id;
         const dato = {
             level: req.body.level,
-            Users_id_User: req.body.Users_id_User,
         };
 
         let sets = [];
@@ -533,10 +520,9 @@ app.route('/connections')
         const dato = {
             description: req.body.description,
             image: req.body.image,
-            Users_id_User: req.body.Users_id_User,
         };
 
-        const sql = `INSERT INTO connections SET description='${dato.description}', image='${dato.image}', Users_id_User='${dato.Users_id_User}'`;
+        const sql = `INSERT INTO connections SET description='${dato.description}', image='${dato.image}'`;
 
         db.query(sql, (error, result) => {
             if (error) {
@@ -554,7 +540,6 @@ app.route('/connections/:id')
         const dato = {
             description: req.body.description,
             image: req.body.image,
-            Users_id_User: req.body.Users_id_User,
         };
 
         let sets = [];
@@ -643,11 +628,10 @@ app.route('/ethnobotany')
             common_name: req.body.common_name,
             image: req.body.image,
             use: req.body.use,
-            users_id_User: req.body.users_id_User,
         };
 
         const useField = '`use`';
-        const sql = `INSERT INTO ethnobotany SET common_name='${dato.common_name}', image='${dato.image}', ${useField}='${dato.use}', users_id_User='${dato.users_id_User}'`;
+        const sql = `INSERT INTO ethnobotany SET common_name='${dato.common_name}', image='${dato.image}', ${useField}='${dato.use}'`;
         console.log(sql);
         db.query(sql, (error, result) => {
             if (error) {
@@ -666,7 +650,6 @@ app.route('/ethnobotany/:id')
             common_name: req.body.common_name,
             image: req.body.image,
             use: req.body.use,
-            users_id_User: req.body.users_id_User,
         };
         const sets = [];
         for (i in dato) {
@@ -704,6 +687,68 @@ app.route('/ethnobotany/:id')
                 }
             } catch (error) {
                 res.json({ error: error.message })
+            }
+        });
+    })
+
+//Location
+
+//Select Location
+app.route('/location')
+    .get((req, res) => {
+        console.log('Consultar datos');
+        var query = db.query('select * from location', (error, result) => {
+            try {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(result);
+                    res.json(result)
+                }
+            } catch (error) {
+                res.json({ error: error.message })
+            }
+        });
+    })
+
+//Manejo de Rutas Select lacation por id
+app.route('/location/:id')
+    .get((req, res) => {
+        const id = req.params.id;
+        const sql = `SELECT * FROM location WHERE id_Location='${id}';`;
+        const query = db.query(sql, (error, result) => {
+            try {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(result);
+                    const [data] = result;
+                    res.json(result)
+                }
+            } catch (error) {
+                res.json({ error: error.message })
+            }
+        });
+    })
+
+
+//Insercion datos location
+
+app.route('/location')
+    .post((req, res) => {
+        const dato = {
+            ubicacion: req.body.ubicacion,
+            users_id_User: req.body.users_id_User
+
+        };
+
+        const sql = `INSERT INTO location SET ubicacion='${dato.ubicacion}', users_id_User='${dato.users_id_User}'`;
+        console.log(sql);
+        db.query(sql, (error, result) => {
+            if (error) {
+                res.json({ error: error })
+            } else {
+                res.json(result)
             }
         });
     })
@@ -1106,7 +1151,8 @@ router
         const query = db.query(sql, (error, result) => {
             try {
                 if (error) {
-                    throw error;               } else {
+                    throw error;
+                } else {
                     console.log(result);
                     const [data] = result;
                     res.json(data)
@@ -1124,7 +1170,7 @@ router
             limites,
             serv_publicos
         } = req.body;
-        
+
         const dato = {
             matricula: matricula,
             direccion: 'Cl 7a Bis c 80 a 50',
@@ -1149,13 +1195,13 @@ router
         db.query(sql, (error, result) => {
             if (error) {
                 res.json({ error: error })
-            } else {           
-                result.message = 'ok'     
+            } else {
+                result.message = 'ok'
                 res.json(result)
             }
             console.log(result)
         });
-        
+
         //res.json('ok')
     })
     .put('/predios/:id', (req, res) => {
@@ -1299,8 +1345,8 @@ app.route('/dbo_pregunta')
 
 app.get('/dbo_preguntas-respuestas', (req, res) => {
 
-    const sqlp = 'select id, pregunta from tumap.dbo_pregunta order by orden;';
-    const sqlr = 'Select id, id_pregunta, nombre, ruta from tumap.dbo_imagen order by id_pregunta, orden;';
+    const sqlp = 'select id, orden, pregunta from tumap.dbo_pregunta order by orden;';
+    const sqlr = 'Select id, orden, id_pregunta, 0 as id_inscripcion, nombre, ruta from tumap.dbo_imagen order by id_pregunta, orden;';
 
     let preguntas = [];
     let respuestas = [];
@@ -1312,41 +1358,40 @@ app.get('/dbo_preguntas-respuestas', (req, res) => {
                 message: "Ocurrió un error al consultar las preguntas"
             });
         } else {
-            //preguntas.concat(result);
+            // preguntas.concat(result);
             preguntas = result;
-            console.log(preguntas);
-        }
-    });
+            // console.log(preguntas);
 
-    db.query(sqlr, (error, result) => {
-        if (error) {
-            res.json({
-                error: true,
-                message: "Ocurrió un error al consultar las respuestas"
+            db.query(sqlr, (error, result) => {
+                if (error) {
+                    res.json({
+                        error: true,
+                        message: "Ocurrió un error al consultar las respuestas"
+                    });
+                } else {
+                    respuestas = result;
+                    // console.log(respuestas);
+
+                    if (preguntas) {
+
+                        preguntas.map(p => {
+                            p.respuestas = respuestas.filter(r => p.id === r.id_pregunta);
+                        });
+                        console.log(preguntas);
+                        return res.json(preguntas);
+                    } else {
+                        res.json({
+                            error: true,
+                            message: "Ocurrió un error al consultar preguntas y respuestas"
+                        });
+                    }
+
+                    res.json({ preguntas, respuestas });
+
+                }
             });
-        } else {
-            respuestas = result;
-            console.log(respuestas);
-
         }
     });
-
-
-    if (preguntas) {
-
-        preguntas.map(p => {
-            p.respuestas = respuestas.filter(r => p.id = r.id_pregunta);
-        });
-        console.log("respuestas:", respuestas);
-        return res.json(preguntas);
-    } else {
-        res.json({
-            error: true,
-            message: "Ocurrió un error al consultar preguntas y respuestas"
-        });
-    }
-
-    res.json({ text: 'Datos Merge', respuestas });
 });
 
 // dbo Lista las imagen por imagensuelos 30/09/2019
@@ -1438,37 +1483,9 @@ app.put("/dbo_inscripcion/:id", function(req, res) {
 
 // dbo Lista respuestas 30/09/2019
 // http://localhost:3000/dbo_respuesta/1/3
-app.get('/dbo_respuesta/:id_inscripcion', function(req, res) {
-    console.log('Página de respuesta');
-    const { id_inscripcion } = req.params;
-    const { id_pregunta } = req.params;
+app.get('/dbo_respuesta/', function(req, res) {
 
-    const sql = `SELECT * FROM dbo_respuesta WHERE id_inscripcion = '${id_inscripcion}'`;
-
-    var query = db.query(sql, function(error, result) {
-        if (error) {
-            throw error;
-        } else {
-            console.log(result);
-            res.json(result);
-        }
-    })
-
-})
-
-app.post("/dbo_respuesta", function(req, res) {
-
-    console.log(req.body);
-    console.log(req.body.id_inscripcion);
-    console.log(req.body.id_pregunta);
-
-
-    var sql = "INSERT INTO tumap.dbo_respuesta(id_inscripcion,id_pregunta,id_imagen) VALUES ( "
-    sql = sql + ` ${req.body.id_inscripcion} ,`
-    sql = sql + ` ${req.body.id_pregunta} ,`
-    sql = sql + ` ${req.body.id_imagen});`;
-
-    console.log('Add inscripcion:', sql);
+    const sql = 'SELECT documento,orden,nombre,lat,lng,departamento,municipio,fecha,pregunta,imagen FROM dbo_vlistado;';
 
     var query = db.query(sql, function(error, result) {
         if (error) {
@@ -1478,7 +1495,75 @@ app.post("/dbo_respuesta", function(req, res) {
             res.json(result);
         }
     });
-    // res.json({ text: 'Add respuesta: ' });
+
+    // db.query(sql, (error, result) => {
+    //     if (error) {
+    //         res.status(400).send('<h1>Ocurrió un error al consultar las encuestas.</h1>');
+    //     } else {
+    //         const style = 'style="border: 1px solid black;"';
+    //         let html = '<table style="width:100%; border: 1px solid black;">';
+    //         html = html + `
+    //                 <tr ${style}>
+    //                     <td ${style}>documento</td>
+    //                     <td ${style}>orden</td>
+    //                     <td ${style}>nombre</td>
+    //                     <td ${style}>lat</td>
+    //                     <td ${style}>lng</td>
+    //                     <td ${style}>departamento</td>
+    //                     <td ${style}>municipio</td>
+    //                     <td ${style}>fecha</td>
+    //                     <td ${style}>pregunta</td>
+    //                     <td ${style}>imagen</td>
+    //                 </tr>
+    //             `
+    //         for (let i in result) {
+    //             html = html + `
+    //                 <tr ${style}>
+    //                     <td ${style}>${result[i].documento}</td>
+    //                     <td ${style}>${result[i].orden}</td>
+    //                     <td ${style}>${result[i].nombre}</td>
+    //                     <td ${style}>${result[i].lat}</td>
+    //                     <td ${style}>${result[i].lng}</td>
+    //                     <td ${style}>${result[i].departamento}</td>
+    //                     <td ${style}>${result[i].municipio}</td>
+    //                     <td ${style}>${result[i].fecha}</td>
+    //                     <td ${style}>${result[i].pregunta}</td>
+    //                     <td ${style}>${result[i].imagen}</td>
+    //                 </tr>
+    //                 `;
+    //         }
+    //         html = html + '</table>';
+    //         res.send(html);
+    //     }
+    // });
+})
+
+
+app.post("/dbo_respuesta", function(req, res) {
+
+    const data = req.body;
+    // console.log(req.body);
+
+    const errors = 0;
+    console.log(JSON.stringify(data));
+    data.map(item => {
+        const sql = `INSERT INTO dbo_respuesta (id_inscripcion,id_pregunta,id_imagen) VALUES (${item.id_inscripcion},${item.id_pregunta},${item.id});`;
+        console.log('Add inscripcion:', sql);
+        db.query(sql, function(error, result) {
+            if (error) {
+                errors++;
+                console.log(error)
+            }
+        });
+
+    });
+
+    if (errors) {
+        res.json({ success: false, error: `Se presentaron (${errors}) errores al guardar la respuesta` });
+    } else {
+        res.json({ success: true });
+
+    }
 })
 
 

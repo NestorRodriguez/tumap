@@ -1,7 +1,7 @@
 /*Crear base de datos*/
 create database tumap;
 use tumap;
-
+select * from users;
 /*Crear tabla rol*/
 create table rol (id int not null primary key auto_increment , namerol varchar(20) not null );
 insert into rol (namerol) values ('usuario');
@@ -11,8 +11,8 @@ insert into rol (namerol) values ('admin');
 create table users (id int not null primary key auto_increment , nameuser varchar(20) not null,
 password varchar(20) not null , email varchar(60) not null, id_rol int not null, foreign key (id_rol) references rol (id)
  );
-insert into users (nameuser, password, email, id_rol) values ('nrodriguez', '1234', 'nrodriguez@sena.edu.co', 2);
 insert into users (nameuser, password, email, id_rol) values ('nrodriguez', '1234', 'nrodriguez@sena.edu.co', 1);
+insert into users (nameuser, password, email, id_rol) values ('cvergara', '1234', 'nrodriguez@sena.edu.co', 2);
 insert into users (nameuser, password, email, id_rol) values ('juanherrera', '1234', 'jcherreraa@sena.edu.co', 1);
 insert into users (nameuser, password, email, id_rol) values ('davidr', '1234', 'davidreyes@sena.edu.co', 1);
 insert into users (nameuser, password, email, id_rol) values ('scamacho', '1234', 'secamacho5@misena.edu.co', 1);
@@ -485,7 +485,7 @@ CREATE  OR REPLACE VIEW `dbo_vListado` AS
 	dbo_pregunta.pregunta,
 	dbo_imagen.nombre as imagen
 	from dbo_inscripcion
-	inner join dbo_respuesta on dbo_respuesta.id = dbo_inscripcion.id
+	inner join dbo_respuesta on dbo_respuesta.id_inscripcion = dbo_inscripcion.id
 	inner join dbo_pregunta on dbo_pregunta.id = dbo_respuesta.id_pregunta
 	inner join dbo_imagen on dbo_imagen.id= dbo_respuesta.id_imagen
 	order by dbo_inscripcion.documento, dbo_pregunta.orden;
@@ -627,7 +627,11 @@ LEFT JOIN irs_estados_redes sr ON i.id_irs_estado_red_celular = sr.id;
 FIN TABLAS PARA INVENTARIO DE REDES SECAS
 =======================================================================
 */
-
+/*
+=======================================================================
+INICIO TABLAS PARA SOCIOECONOMICO
+=======================================================================
+*/
 /*Crear tabla encuesta social*/
 create table SEC_Encuesta_Social(
 	id_Encuesta int not null auto_increment primary key, 
@@ -681,9 +685,11 @@ create table SEC_Comercio_Informal(
 	INSERT INTO SEC_Comercio_Informal (Productos_Servicios, Descripcion , Estatico_Movil, Periodicidad, Jornada, Foto)
 		VALUES ('ambos','dulceria y minutos','estatico','fin de semana','diurno y nocturno','url');
 
---*********************************************************************************************************
--- Fin Tablas Inventarios Redes Secas --
---********************************************************************************************************* 
+/*
+=======================================================================
+FIN TABLAS PARA SOCIOECONOMICO
+=======================================================================
+*/ 
 
 CREATE TABLE IM_REGISTROS (
 ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -858,13 +864,10 @@ CREATE table jf_descripcion_via(
 	imagen varchar(200),
     id_estado int not null,
 		foreign key (id_estado) references jf_estado(id)
-);
-/*DML*/
-/*CRUD tabla jf_descripcion_via*/
-insert into jf_descripcion_via(ubicacion, nombre_via, id_detalle_via, imagen, id_estado)
-	values (ST_GeomFromText('point(1 1)'), 'av 68', 2, '/imagen/av68', 1), (ST_GeomFromText('point(0 1)'), 'boyaca', 1, '/imagen/boyaca', 2), (ST_GeomFromText('point(1 0)'), 'cali', 3, '/imagen/cali', 3);
 
-select * from jf_descripcion_via
+update jf_detalle_via set detalle= "Mal estado" where id=1;
+update jf_detalle_via set detalle= "Mantenimiento" where id=2;
+update jf_detalle_via set detalle= "Via cerrada" where id=3;
 
 --*********************************************************************************************************
 -- Creación tablas minas --
@@ -902,87 +905,199 @@ FOREIGN KEY (id_estadomina) REFERENCES MP_EstadoActual_mina(id_estadomina)
 --*********************************************************************************************************
 -- Creación tablas Hydrico --
 --*********************************************************************************************************
-CREATE TABLE IF NOT EXISTS `connections` (
-  `id_Connections` int(11) NOT NULL AUTO_INCREMENT,
-  `description` varchar(500) DEFAULT NULL,
-  `image` varchar(500) DEFAULT NULL,
-  `Users_id_User` int(11) NOT NULL,
-  PRIMARY KEY (`id_Connections`),
-  KEY `fk_Conexiones_Users1_idx` (`Users_id_User`),
-  CONSTRAINT `fk_Conexiones_Users1` FOREIGN KEY (`Users_id_User`) REFERENCES `users` (`id_User`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+-- -----------------------------------------------------
+-- Table `tumap`.`rol`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tumap`.`rol` (
+  `id_Rol` INT(11) NOT NULL AUTO_INCREMENT,
+  `name_description` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_Rol`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
 
-CREATE TABLE IF NOT EXISTS `coverages` (
-  `id_Coverage` int(11) NOT NULL AUTO_INCREMENT,
-  `color` enum('Café','Amarillo','blanca','Incoloro') DEFAULT NULL,
-  `other_color` varchar(30) DEFAULT NULL,
-  `pressure` enum('Alta','Media','Baja') DEFAULT NULL,
-  `type` enum('Intermitente','Permanente') DEFAULT NULL,
-  `Users_id_User` int(11) NOT NULL,
-  PRIMARY KEY (`id_Coverage`),
-  KEY `fk_Cobertura_Users1_idx` (`Users_id_User`),
-  CONSTRAINT `fk_Cobertura_Users1` FOREIGN KEY (`Users_id_User`) REFERENCES `users` (`id_User`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1ethnobotany;
 
-CREATE TABLE IF NOT EXISTS `ethnobotany` (
-  `id_Ethnobotany` int(11) NOT NULL AUTO_INCREMENT,
-  `common_name` varchar(50) NOT NULL,
-  `image` varchar(500) DEFAULT NULL,
-  `use` enum('Medicinal','Alimenticia','Decorativa') DEFAULT NULL,
-  `users_id_User` int(11) NOT NULL,
-  PRIMARY KEY (`id_Ethnobotany`),
-  KEY `fk_Ethnobotany_users1_idx` (`users_id_User`),
-  CONSTRAINT `fk_Ethnobotany_users1` FOREIGN KEY (`users_id_User`) REFERENCES `users` (`id_User`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
-
-CREATE TABLE IF NOT EXISTS `grown` (
-  `id_Grown` int(11) NOT NULL AUTO_INCREMENT,
-  `level` enum('Nivel Media','Nivel alto') DEFAULT NULL,
-  `Users_id_User` int(11) NOT NULL,
-  PRIMARY KEY (`id_Grown`),
-  KEY `fk_Crecidas_Users1_idx` (`Users_id_User`),
-  CONSTRAINT `fk_Crecidas_Users1` FOREIGN KEY (`Users_id_User`) REFERENCES `users` (`id_User`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
-
-CREATE TABLE IF NOT EXISTS `rol` (
-  `id_Rol` int(11) NOT NULL AUTO_INCREMENT,
-  `name_description` varchar(45) NOT NULL,
-  PRIMARY KEY (`id_Rol`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
-
-CREATE TABLE IF NOT EXISTS `sheddings` (
-  `id_Sheddings` int(11) NOT NULL AUTO_INCREMENT,
-  `liq_description` varchar(500) DEFAULT NULL,
-  `img_liq` varchar(500) DEFAULT NULL,
-  `solid_descripcion` varchar(500) DEFAULT NULL,
-  `img_solid` varchar(500) DEFAULT NULL,
-  `Users_id_User` int(11) NOT NULL,
-  PRIMARY KEY (`id_Sheddings`),
-  KEY `fk_Vertimientos_Users1_idx` (`Users_id_User`),
-  CONSTRAINT `fk_Vertimientos_Users1` FOREIGN KEY (`Users_id_User`) REFERENCES `users` (`id_User`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE IF NOT EXISTS `users` (
-  `id_User` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(40) NOT NULL,
-  `lastname` varchar(40) NOT NULL,
-  `identification_card` int(11) NOT NULL,
-  `email` varchar(40) NOT NULL,
-  `Rol_idRol` int(11) NOT NULL,
+-- -----------------------------------------------------
+-- Table `tumap`.`users_hidrico`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tumap`.`users_hidrico` (
+  `id_User` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(40) NOT NULL,
+  `lastname` VARCHAR(40) NOT NULL,
+  `identification_card` INT(11) NOT NULL,
+  `email` VARCHAR(40) NOT NULL,
+  `Rol_idRol` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id_User`),
-  KEY `fk_Users_Rol_idx` (`Rol_idRol`),
-  CONSTRAINT `fk_Users_Rol` FOREIGN KEY (`Rol_idRol`) REFERENCES `rol` (`id_Rol`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+  INDEX `fk_Users_Rol_idx` (`Rol_idRol` ASC) ,
+  CONSTRAINT `fk_Users_Rol`
+    FOREIGN KEY (`Rol_idRol`)
+    REFERENCES `tumap`.`rol` (`id_Rol`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
 
-CREATE TABLE IF NOT EXISTS `without_coverage` (
-  `id_Without_coverage` int(11) NOT NULL AUTO_INCREMENT,
-  `state` enum('Suspensión','Corte','Nunca he tenido el servicio') DEFAULT NULL,
-  `Users_id_User` int(11) NOT NULL,
+
+-- -----------------------------------------------------
+-- Table `tumap`.`connections`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tumap`.`connections` (
+  `id_Connections` INT(11) NOT NULL AUTO_INCREMENT,
+  `description` VARCHAR(500) NULL DEFAULT NULL,
+  `image` VARCHAR(500) NULL DEFAULT NULL,
+  `Users_id_User` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_Connections`),
+  INDEX `fk_Conexiones_Users1_idx` (`Users_id_User` ASC) ,
+  CONSTRAINT `fk_Conexiones_Users1`
+    FOREIGN KEY (`Users_id_User`)
+    REFERENCES `tumap`.`users_hidrico` (`id_User`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `tumap`.`coverages`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tumap`.`coverages` (
+  `id_Coverage` INT(11) NOT NULL AUTO_INCREMENT,
+  `color` ENUM('Café', 'Amarillo', 'blanca', 'Incoloro') NULL DEFAULT NULL,
+  `pressure` ENUM('Alta', 'Media', 'Baja') NULL DEFAULT NULL,
+  `type` ENUM('Intermitente', 'Permanente') NULL DEFAULT NULL,
+  `Users_id_User` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_Coverage`),
+  INDEX `fk_Cobertura_Users1_idx` (`Users_id_User` ASC) ,
+  CONSTRAINT `fk_Cobertura_Users1`
+    FOREIGN KEY (`Users_id_User`)
+    REFERENCES `tumap`.`users_hidrico` (`id_User`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `tumap`.`ethnobotany`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tumap`.`ethnobotany` (
+  `id_Ethnobotany` INT(11) NOT NULL AUTO_INCREMENT,
+  `common_name` VARCHAR(50) NOT NULL,
+  `image` VARCHAR(500) NULL DEFAULT NULL,
+  `use` ENUM('Medicinal', 'Alimenticia', 'Decorativa') NULL DEFAULT NULL,
+  `users_id_User` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_Ethnobotany`),
+  INDEX `fk_Ethnobotany_users1_idx` (`users_id_User` ASC) ,
+  CONSTRAINT `fk_Ethnobotany_users1`
+    FOREIGN KEY (`users_id_User`)
+    REFERENCES `tumap`.`users_hidrico` (`id_User`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `tumap`.`grown`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tumap`.`grown` (
+  `id_Grown` INT(11) NOT NULL AUTO_INCREMENT,
+  `level` ENUM('Nivel Media', 'Nivel alto') NULL DEFAULT NULL,
+  `Users_id_User` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_Grown`),
+  INDEX `fk_Crecidas_Users1_idx` (`Users_id_User` ASC) ,
+  CONSTRAINT `fk_Crecidas_Users1`
+    FOREIGN KEY (`Users_id_User`)
+    REFERENCES `tumap`.`users_hidrico` (`id_User`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `tumap`.`location`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tumap`.`location` (
+  `id_Location` INT(11) NOT NULL AUTO_INCREMENT,
+  `ubicacion` LONGTEXT CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_bin' NULL DEFAULT NULL,
+  `users_id_User` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_Location`),
+  INDEX `fk_location_users1_idx` (`users_id_User` ASC) ,
+  CONSTRAINT `fk_location_users1`
+    FOREIGN KEY (`users_id_User`)
+    REFERENCES `tumap`.`users_hidrico` (`id_User`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `tumap`.`sheddings`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tumap`.`sheddings` (
+  `id_Sheddings` INT(11) NOT NULL AUTO_INCREMENT,
+  `liq_description` VARCHAR(500) NULL DEFAULT NULL,
+  `img_liq` VARCHAR(500) NULL DEFAULT NULL,
+  `solid_descripcion` VARCHAR(500) NULL DEFAULT NULL,
+  `img_solid` VARCHAR(500) NULL DEFAULT NULL,
+  `Users_id_User` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_Sheddings`),
+  INDEX `fk_Vertimientos_Users1_idx` (`Users_id_User` ASC) ,
+  CONSTRAINT `fk_Vertimientos_Users1`
+    FOREIGN KEY (`Users_id_User`)
+    REFERENCES `tumap`.`users_hidrico` (`id_User`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `tumap`.`without_coverage`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tumap`.`without_coverage` (
+  `id_Without_coverage` INT(11) NOT NULL AUTO_INCREMENT,
+  `state` ENUM('Suspensión', 'Corte', 'Nunca he tenido el servicio') NULL DEFAULT NULL,
+  `Users_id_User` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id_Without_coverage`),
-  KEY `fk_Sin_cobertura_Users1_idx` (`Users_id_User`),
-  CONSTRAINT `fk_Sin_cobertura_Users1` FOREIGN KEY (`Users_id_User`) REFERENCES `users` (`id_User`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+  INDEX `fk_Sin_cobertura_Users1_idx` (`Users_id_User` ASC) ,
+  CONSTRAINT `fk_Sin_cobertura_Users1`
+    FOREIGN KEY (`Users_id_User`)
+    REFERENCES `tumap`.`users_hidrico` (`id_User`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
 
+
+INSERT INTO `tumap`.`rol` (`name_description`) VALUES ('Administrador');
+INSERT INTO `tumap`.`rol` (`name_description`) VALUES ('Usuario');
+
+INSERT INTO `tumap`.`users_hidrico` (`name`, `lastname`, `identification_card`, `email`, `Rol_idRol`) VALUES ('Usuario 1', 'ApellidoUser4', '10120291', 'asdas@gmail.com', '2');
+INSERT INTO `tumap`.`users_hidrico` (`name`, `lastname`, `identification_card`, `email`, `Rol_idRol`) VALUES ('Usuario 2', 'ApellidoUser5', '1092019210', 'kgkgfl@gmail.com', '2');
+INSERT INTO `tumap`.`users_hidrico` (`name`, `lastname`, `identification_card`, `email`, `Rol_idRol`) VALUES ('Usuario 3', 'ApellidoUser6', '109201921', 'kgkgfl@gmail.com', '2');
+
+INSERT INTO `tumap`.`connections` (`description`, `image`, `Users_id_User`) VALUES ('cualquierDescriocion va en este lado', 'jansdjansdjImage', '1');
+INSERT INTO `tumap`.`connections` (`description`, `image`, `Users_id_User`) VALUES ('cualquierDescriocion2 va en este lado', 'jansdjansdjImage', '2');
+
+INSERT INTO `tumap`.`coverages` (`color`, `pressure`, `type`, `Users_id_User`) VALUES ('blanca', 'Media', 'Permanente', '1');
+INSERT INTO `tumap`.`coverages` (`color`, `pressure`, `type`, `Users_id_User`) VALUES ('Amarillo', 'Alta', 'Intermitente', '2');
+
+INSERT INTO `tumap`.`ethnobotany` (`common_name`, `image`, `use`, `users_id_User`) VALUES ('Yerbas Frescas', 'asdasdasd', 'Alimenticia', '1');
+INSERT INTO `tumap`.`ethnobotany` (`common_name`, `image`, `use`, `users_id_User`) VALUES ('Yerbas Frescas2', 'asdasdasdsd', 'Medicinal', '2');
+
+INSERT INTO `tumap`.`grown` (`level`, `Users_id_User`) VALUES ('Nivel alto', '1');
+INSERT INTO `tumap`.`grown` (`level`, `Users_id_User`) VALUES ('Nivel Media', '2');
+
+INSERT INTO `tumap`.`sheddings` (`liq_description`, `img_liq`, `solid_descripcion`, `img_solid`, `Users_id_User`) VALUES ('Descripcion Liquida2', 'asdasdasdasd', 'Solido Descripcion 2', 'asdasdasd', '1');
+INSERT INTO `tumap`.`sheddings` (`liq_description`, `img_liq`, `solid_descripcion`, `img_solid`, `Users_id_User`) VALUES ('Descriocion Liquida3', 'asdasds', 'Solido Descripcion 3', 'asdasdasd', '2');
+
+INSERT INTO `tumap`.`location` (`ubicacion`, `users_id_User`) VALUES ('Location Lat, Long', '1');
+INSERT INTO `tumap`.`location` (`ubicacion`, `users_id_User`) VALUES ('Location Lat, Long', '2');
+
+INSERT INTO `tumap`.`without_coverage` (`state`, `Users_id_User`) VALUES ('Nunca he tenido el servicio', '1');
+INSERT INTO `tumap`.`without_coverage` (`state`, `Users_id_User`) VALUES ('Suspensión', '2');
 
 --*********************************************************************************************************
 -- Fin Tablas Hydrico --

@@ -1,37 +1,36 @@
 <ion-header no-border>
     <ion-toolbar color="primary">
         <ion-buttons slot="start">
-            <ion-back-button defaultHref="/options">Atrás</ion-back-button>
+            <ion-back-button defaultHref="/options"></ion-back-button>
         </ion-buttons>
         <ion-title>Sin Cobertura</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <!--  <h5>Sin Cobertura</h5> -->
     <ion-list class="te">
         <ion-radio-group>
 
             <ion-item>
                 <ion-label>Suspensión</ion-label>
-                <ion-radio slot="start" value="suspension" checked></ion-radio>
+                <ion-radio [(ngModel)]="suspension" slot="start" value="Suspensión" checked></ion-radio>
             </ion-item>
 
             <ion-item>
                 <ion-label>Corte</ion-label>
-                <ion-radio slot="start" value="corte"></ion-radio>
+                <ion-radio [(ngModel)]="corte" slot="start" value="Corte"></ion-radio>
             </ion-item>
 
             <ion-item>
                 <ion-label>Nunca Ha Tenido El Servicio</ion-label>
-                <ion-radio slot="start" value="nuncaserv"></ion-radio>
+                <ion-radio [(ngModel)]="sinServicio" slot="start" value="Nunca he tenido el servicio"></ion-radio>
             </ion-item>
         </ion-radio-group>
     </ion-list>
 
     <div class="boton">
         <ion-button name="regresar" [routerLink]="['/hidrica']"> Regresar</ion-button>
-        <ion-button name="guardar"> Guardar</ion-button>
+        <ion-button name="guardar" (click)='saveSinCovertura()'> Guardar</ion-button>
     </div>
 </ion-content>
 

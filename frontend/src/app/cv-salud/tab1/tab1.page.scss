@@ -1,0 +1,32 @@
+.welcome-card ion-img {
+    max-height: 35vh;
+    overflow: hidden;
+  }
+  
+  agm-map {
+    height: 500px;
+  }
+  
+section {
+  text-align: center;
+  color: #ffffff;
+}
+
+ion-header{
+  --ion-background-color: #2C689F;
+  ion-toolbar{
+    color: #ffffff;
+  }
+  ion-card{
+    color: #ffffff;
+  }
+}
+
+ion-content {
+  --ion-background-color: #008abb;
+  ion-list{
+    ion-item{
+      color: #ffffff;
+    }
+  }
+}
