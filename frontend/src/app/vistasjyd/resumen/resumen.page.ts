@@ -58,7 +58,7 @@ export class ResumenPage implements OnInit {
           duration: 1800
         });
         await toast.present();
-        await this.navCtrl.navigateBack('/');
+        await this.navCtrl.navigateBack('/home');
       });
     });
   }
