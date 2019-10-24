@@ -19,7 +19,6 @@ app.use(bodyParser.json({ extended: true, limit: '10mb' }));
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "",
     password: "12345",
     database: "tumap",
     port: 3306,
