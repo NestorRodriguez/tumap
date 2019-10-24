@@ -17,6 +17,10 @@ export class DboService {
 
   constructor(private http: HttpClient) {}
 
+  getServerUrl() {
+    return this.API_URL;
+  }
+
   public getInscripcion(documento: string): Observable<any[]> {
       return this.http.get<any[]>(`${this.API_URL}/dbo_inscripcion/${documento}`);
       }

@@ -1,7 +1,7 @@
 <ion-header no-border>
     <ion-toolbar color="primary">
         <ion-buttons slot="start">
-            <ion-back-button defaultHref="/options">Atrás</ion-back-button>
+            <ion-back-button defaultHref="/options"></ion-back-button>
         </ion-buttons>
         <ion-title>Hogar - Cobertura</ion-title>
     </ion-toolbar>
@@ -10,52 +10,90 @@
 <ion-content>
     <div>
         <div class="box">
-            <h4>Color</h4>
-            <ion-segment class="abajo" (ionChange)="segmentChanged($event)">
-                <ion-segment-button href="#cafe" value="cafe">
-                    <ion-label>Café</ion-label>
-                </ion-segment-button>
-                <ion-segment-button href="#amarillo" value="amarillo">
-                    <ion-label>Amarillo</ion-label>
-                </ion-segment-button>
-                <ion-segment-button href="#incoloro" value="incoloro">
-                    <ion-label>Incoloro</ion-label>
-                </ion-segment-button>
-            </ion-segment>
+            <ion-card>
+                <ion-card-header>
+                    <ion-card-title>Color</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <!-- <ion-segment class="abajo" [(ngModel)]="color">
+                        <ion-segment-button href="#cafe" value="cafe">
+                            <ion-label>Café</ion-label>
+                        </ion-segment-button>
+                        <ion-segment-button href="#amarillo" value="amarillo">
+                            <ion-label>Amarillo</ion-label>
+                        </ion-segment-button>
+                        <ion-segment-button href="#incoloro" value="incoloro">
+                            <ion-label>Incoloro</ion-label>
+                        </ion-segment-button>
+                    </ion-segment> -->
+                    <ion-item>
+                        <ion-select [(ngModel)]="color" placeholder="Seleccione una">
+                            <ion-select-option value="Café">Café</ion-select-option>
+                            <ion-select-option value="Amarillo">Amarillo</ion-select-option>
+                            <ion-select-option value="Incoloro">Incoloro</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-card-content>
+            </ion-card>
+
         </div>
 
         <div class="box">
-            <h4>Presión</h4>
-            <ion-segment class="abajo" (ionChange)="segmentChanged($event)">
-                <ion-segment-button href="#alta" value="alta">
-                    <ion-label>Alta</ion-label>
-                </ion-segment-button>
-                <ion-segment-button href="#media" value="media">
-                    <ion-label>Media</ion-label>
-                </ion-segment-button>
-                <ion-segment-button href="#baja" value="baja">
-                    <ion-label>Baja</ion-label>
-                </ion-segment-button>
-            </ion-segment>
+            <ion-card>
+                <ion-card-header>
+                    <ion-card-title>Presión</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <!-- <ion-segment class="abajo" [(ngModel)]="presion">
+                        <ion-segment-button href="#alta" value="alta">
+                            <ion-label>Alta</ion-label>
+                        </ion-segment-button>
+                        <ion-segment-button href="#media" value="media">
+                            <ion-label>Media</ion-label>
+                        </ion-segment-button>
+                        <ion-segment-button href="#baja" value="baja">
+                            <ion-label>Baja</ion-label>
+                        </ion-segment-button>
+                    </ion-segment> -->
+                    <ion-item>
+                        <ion-select [(ngModel)]="presion" placeholder="Seleccione una">
+                            <ion-select-option value="Alta">Alta</ion-select-option>
+                            <ion-select-option value="Media">Media</ion-select-option>
+                            <ion-select-option value="Baja">Baja</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-card-content>
+            </ion-card>
         </div>
 
         <div class="box">
-            <h4>Tipo</h4>
-            <ion-segment class="abajo" (ionChange)="segmentChanged($event)">
-                <ion-segment-button href="#intermitente" value="intermitente">
-                    <ion-label>Intermitente</ion-label>
-                </ion-segment-button>
-                <ion-segment-button href="#permanente" value="permanente">
-                    <ion-label>Permanente</ion-label>
-                </ion-segment-button>
-            </ion-segment>
+            <ion-card>
+                <ion-card-header>
+                    <ion-card-title>Tipo</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <!-- <ion-segment class="abajo" [(ngModel)]="valorTipo">
+                        <ion-segment-button href="#intermitente" value="intermitente">
+                            <ion-label>Intermitente</ion-label>
+                        </ion-segment-button>
+                        <ion-segment-button href="#permanente" value="permanente">
+                            <ion-label>Permanente</ion-label>
+                        </ion-segment-button>
+                    </ion-segment> -->
+                    <ion-item>
+                        <ion-select [(ngModel)]="valorTipo" placeholder="Seleccione una">
+                            <ion-select-option value="Intermitente">Intermitente</ion-select-option>
+                            <ion-select-option value="Permanente">Permanente</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-card-content>
+            </ion-card>
         </div>
-
     </div>
 
     <div class="boton">
         <ion-button name="regresar" [routerLink]="['/hidrica']"> Regresar</ion-button>
-        <ion-button name="guardar"> Guardar</ion-button>
+        <ion-button name="guardar" (click)='saveCoverages()'> Guardar</ion-button>
     </div>
 </ion-content>
 
