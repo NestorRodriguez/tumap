@@ -2111,5 +2111,5 @@ INSERT INTO cav_Dpto_Ciudad (`Id`, `nombre`, `id_ciudad`, `tipo`, `codigo_dane`)
 INSERT INTO cav_Dpto_Ciudad (`Id`, `nombre`, `id_ciudad`, `tipo`, `codigo_dane`) VALUES ('1153', 'CUMARIBO', '33', 'C', '773');
 
 /*************************************************************
-    FIN TABLAS SENALIZACION | MOBILIARIO URBANO
+    FIN TABLAS SALUD | CENTROS DE SALUD
 **************************************************************/
