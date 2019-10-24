@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar style="--ion-background-color: #2C689F; color: white;">
+    <ion-toolbar>
         <ion-buttons slot="start">
             <ion-button routerLink="/home" routerDirection="forward">
                 <ion-icon slot="icon-only" name="arrow-round-back"> </ion-icon>
@@ -17,22 +17,35 @@
 </ion-header>
 
 
-<ion-content color=primary>
-    <div style="border: 0px solid; margin-top: 12%; text-align: -webkit-center; margin-top: 25%;">
-        <ion-card routerLink="/slides" style="background-color: white; padding-top: 3%; height: 23vh; width: 75vw; border-radius: 50%;">
-            <div style="padding-left: 12%; margin-left: -15%;">
-                <img src="assets/img_jyd/boton para deligenciar nuevo formulario.svg" height="80px" alt="">
-            </div>
-            <div style="font-size: x-large;"><b>Registro estado vias</b></div>
+<ion-content padding>
+    <ion-slides pager="true" [options]="slidesOpts">
+        <ion-slide color="primary">
+            <img src="assets/vias/logoazul.svg" alt="TuMap Logo">
+            <h1>Registra el estado de las vias</h1>
+            <h2>EN CUALQUIER LUGAR</h2>
+            <p>
+                Ten un listado actualizado de como están las vías en cualquier lugar de Colombia.
+            </p>
+            <ion-icon name="fastforward"></ion-icon>
+        </ion-slide>
+        <ion-slide>
+            <img src="assets/vias/formulario.svg" alt="Registro Logo">
+            <h1>Registra el estado de las vias</h1>
+            <h2>EN CUALQUIER LUGAR</h2>
+            <p>
+                Acá puedes registrar el estado de las vías, tomando la ubicación, junto con una foto.
+            </p>
+            <ion-button routerLink="/slides"> <b>Registro</b> </ion-button>
+        </ion-slide>
+        <ion-slide>
+            <img src="assets/vias/historico.svg" alt="TuMap Logo">
+            <h1>Observa el histórico</h1>
+            <h2>DE CUALQUIER LUGAR</h2>
+            <p>
+                Obtén un listado del estado de las vías de cualquier lugar de Colombia.
+            </p>
+            <ion-button routerLink="/historicovias"> <b>Historico</b> </ion-button>
+        </ion-slide>
+    </ion-slides>
 
-        </ion-card>
-        <br>
-        <ion-card routerLink="/historico" style="background-color: white; padding-top: 3%; height: 23vh; width: 75vw; border-radius: 50%; margin-top: 15%;">
-            <div style="padding-left: 12%; margin-left: -15%;">
-                <img src="assets/LOGO VERDE.svg" height="80px" alt="">
-            </div>
-            <div style="font-size: x-large;"><b>Historico</b></div>
-
-        </ion-card>
-    </div>
 </ion-content>
