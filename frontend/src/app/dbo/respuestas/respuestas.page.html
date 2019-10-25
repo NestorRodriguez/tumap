@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header color="primary">
     <ion-toolbar>
         <ion-buttons slot="start">
             <ion-back-button defaultHref="/"></ion-back-button>
@@ -8,7 +8,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="primary">
     <ion-list>
         <ion-item *ngFor="let item of selectedItems" lines="inset">
             {{ item.count }}x {{ item.name}}
