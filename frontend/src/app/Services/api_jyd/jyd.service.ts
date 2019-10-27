@@ -30,9 +30,9 @@ export class JydService {
 
   getItemSenalizacion(): Observable<any[]> {
     return this.http.get<any[]>(`${this.serverUrl}/item_senalizacion`).pipe(
-      tap(data => alert(`${this.serverUrl}/item_senalizacion`)),
+      tap(data => console.log(JSON.stringify(data))),
       catchError(this.handleError)
-      );    
+      );
   }
 
   getItemMobiliario(): Observable<any[]> {
