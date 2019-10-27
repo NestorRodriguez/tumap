@@ -9,8 +9,8 @@ import { catchError, tap, map} from 'rxjs/operators';
 export class JydService {
 
   // serverUrl = 'http://localhost:3000';
-  // serverUrl = 'http://192.168.1.58:3000';
-  serverUrl = 'http://192.168.43.184:3000';
+  serverUrl = 'http://192.168.1.53:3000';
+  // serverUrl = 'http://192.168.43.184:3000';
 
   constructor(public http: HttpClient) { }
 
@@ -30,9 +30,9 @@ export class JydService {
 
   getItemSenalizacion(): Observable<any[]> {
     return this.http.get<any[]>(`${this.serverUrl}/item_senalizacion`).pipe(
-      tap(data => console.log(JSON.stringify(data))),
+      tap(data => alert(`${this.serverUrl}/item_senalizacion`)),
       catchError(this.handleError)
-      );
+      );    
   }
 
   getItemMobiliario(): Observable<any[]> {
