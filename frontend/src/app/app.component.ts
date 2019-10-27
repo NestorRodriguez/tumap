@@ -32,11 +32,6 @@ export class AppComponent {
       icon: 'ios-exit'
     },
     {
-      title: 'Encuesta Tipos de Suelo',
-      url: '/inscripcion/0',
-      icon: 'list-box'
-    },
-    {
       title: 'Menu Minas',
       url: '/menuminas',
       icon: 'md-map'
