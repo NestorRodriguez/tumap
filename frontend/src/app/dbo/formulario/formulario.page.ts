@@ -20,14 +20,14 @@ export class FormularioPage implements OnInit {
   };
 
 
-  constructor(private dboService: DboService, private router: Router, private actRoute: ActivatedRoute) {}
+  constructor(private dbo: DboService, private router: Router, private actRoute: ActivatedRoute) {}
 
   ngOnInit() {
     this.idInscripcion = this.actRoute.snapshot.paramMap.get('id');
-    this.dboService.getPreguntas().subscribe(data => {
+    this.dbo.getPreguntas().subscribe(data => {
       this.preguntas = data;
       console.log(this.preguntas);
-      this.items = this.dboService.getRespuestas();
+      this.items = this.dbo.getRespuestas();
       console.log(this.items);
     });
   }
@@ -37,7 +37,7 @@ export class FormularioPage implements OnInit {
     // delete respuesta.name;
     // delete respuesta.path;
     respuesta.id_inscripcion = Number(this.idInscripcion);
-    this.dboService.addRespuesta(respuesta);
+    this.dbo.addRespuesta(respuesta);
     console.log('addRespuesta: ', respuesta);
   }
 
@@ -47,13 +47,23 @@ export class FormularioPage implements OnInit {
   }
 
   saveRespuestas() {
-    console.log(JSON.stringify(this.dboService.getRespuestas()));
-    this.dboService.saveRespuesta().subscribe(
-      data => {
-        console.log(data);
+
+    this.dbo.getExiteRespuesta( parseInt(this.idInscripcion, 0) ).subscribe(
+      res => {
+        console.log(res);
+        if ( res.count === 0) {
+          console.log(JSON.stringify(this.dbo.getRespuestas()));
+          this.dbo.saveRespuesta().subscribe(
+            data => {
+              console.log(data);
+            },
+            error => console.log(error)
+          );
+        }
       },
-      error => console.log(error)
+      err => console.error(err)
     );
+
   }
 
 }

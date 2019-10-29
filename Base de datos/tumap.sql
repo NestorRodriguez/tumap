@@ -244,8 +244,8 @@ INSERT INTO `tumap`.`dbo_pregunta` (`orden`, `pregunta`) VALUES ('2', '¿Qué ti
 INSERT INTO `tumap`.`dbo_pregunta` (`orden`, `pregunta`) VALUES ('3', '¿Qué se puede observar en la superficie del suelo?');
 INSERT INTO `tumap`.`dbo_pregunta` (`orden`, `pregunta`) VALUES ('4', '¿Cuál es el color del suelo?');
 
-INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES (1, 1, '', 'assets/dbo_img/imagen11.jpg');
-INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('1', '2', '', 'assets/dbo_img/imagen12.jpg');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES (1, 1, 'Si', 'assets/dbo_img/imagen11.jpg');
+INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('1', '2', 'No', 'assets/dbo_img/imagen12.jpg');
 INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('2', '1', 'Pasto y maleza', 'assets/dbo_img/imagen21.jpg');
 INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('2', '2', 'Muchos arbustos', 'assets/dbo_img/imagen22.jpg');
 INSERT INTO `tumap`.`dbo_imagen` (`id_pregunta`, `orden`, `nombre`, `ruta`) VALUES ('2', '3', 'Presencia de arboles', 'assets/dbo_img/imagen23.jpg');

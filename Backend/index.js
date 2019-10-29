@@ -1441,14 +1441,15 @@ app.post("/dbo_inscripcion", function(req, res) {
             throw error;
         } else {
             console.log(result);
-            var query = db.query('SELECT  * FROM dbo_inscripcion WHERE documento = ?', req.body.documento, function(error, result) {
-                if (error) {
-                    throw error;
-                } else {
-                    console.log(result);
-                    res.json(result);
-                }
-            });
+            res.json(result);
+            // var query = db.query('SELECT  * FROM dbo_inscripcion WHERE documento = ?', req.body.documento, function(error, result) {
+            //     if (error) {
+            //         throw error;
+            //     } else {
+            //         console.log(result);
+            //         res.json(result);
+            //     }
+            // });
         }
     });
     // res.json({ text: 'Datos Ingresados: ' + sql });
@@ -1481,51 +1482,20 @@ app.put("/dbo_inscripcion/:id", function(req, res) {
 });
 
 // dbo Lista respuestas 30/09/2019
-// http://localhost:3000/dbo_respuesta/1/3
-app.get('/dbo_respuesta/', function(req, res) {
+// http://localhost:3000/dbo_respuesta/
+app.get('/dbo_respuesta/:documento', function(req, res) {
 
-    const sql = 'SELECT documento,orden,nombre,lat,lng,departamento,municipio,fecha,pregunta,imagen FROM dbo_vlistado;';
+    const { documento } = req.params;
 
-    db.query(sql, (error, result) => {
+    var query = db.query('SELECT count(*) count FROM tumap.dbo_respuesta WHERE id_inscripcion = ?;', documento, function(error, result) {
         if (error) {
-            res.status(400).send('<h1>Ocurrió un error al consultar las encuestas.</h1>');
+            throw error;
         } else {
-            const style = 'style="border: 1px solid black;"';
-            let html = '<table style="width:100%; border: 1px solid black;">';
-            html = html + `
-                    <tr ${style}>
-                        <td ${style}>documento</td>
-                        <td ${style}>orden</td>
-                        <td ${style}>nombre</td>
-                        <td ${style}>lat</td>
-                        <td ${style}>lng</td>
-                        <td ${style}>departamento</td>
-                        <td ${style}>municipio</td>
-                        <td ${style}>fecha</td>
-                        <td ${style}>pregunta</td>
-                        <td ${style}>imagen</td>
-                    </tr>
-                `
-            for (let i in result) {
-                html = html + `
-                    <tr ${style}>
-                        <td ${style}>${result[i].documento}</td>
-                        <td ${style}>${result[i].orden}</td>
-                        <td ${style}>${result[i].nombre}</td>
-                        <td ${style}>${result[i].lat}</td>
-                        <td ${style}>${result[i].lng}</td>
-                        <td ${style}>${result[i].departamento}</td>
-                        <td ${style}>${result[i].municipio}</td>
-                        <td ${style}>${result[i].fecha}</td>
-                        <td ${style}>${result[i].pregunta}</td>
-                        <td ${style}>${result[i].imagen}</td>
-                    </tr>
-                    `;
-            }
-            html = html + '</table>';
-            res.send(html);
+            console.log(result);
+            res.json(result);
         }
     });
+
 })
 
 
@@ -1565,14 +1535,52 @@ app.put('/dbo_respuesta', function(req, res) {
 app.route('/dbo_vlistado')
     .get(function(req, res) {
         console.log('Página de vlistado ');
-        var query = db.query('SELECT * FROM dbo_vlistado', function(error, result) {
+
+        const sql = 'SELECT documento,orden,nombre,lat,lng,departamento,municipio,fecha,pregunta,imagen FROM dbo_vlistado;';
+
+        db.query(sql, (error, result) => {
             if (error) {
-                throw error;
+                res.status(400).send('<h1>Ocurrió un error al consultar las encuestas.</h1>');
             } else {
-                console.log(result);
-                res.json(result);
+                const style = 'style="border: 1px solid black;"';
+                let html = '<table style="width:100%; border: 1px solid black;">';
+                html = html + `
+                        <tr ${style}>
+                            <td ${style}>documento</td>
+                            <td ${style}>orden</td>
+                            <td ${style}>nombre</td>
+                            <td ${style}>lat</td>
+                            <td ${style}>lng</td>
+                            <td ${style}>departamento</td>
+                            <td ${style}>municipio</td>
+                            <td ${style}>fecha</td>
+                            <td ${style}>pregunta</td>
+                            <td ${style}>imagen</td>
+                        </tr>
+                    `
+                for (let i in result) {
+                    html = html + `
+                        <tr ${style}>
+                            <td ${style}>${result[i].documento}</td>
+                            <td ${style}>${result[i].orden}</td>
+                            <td ${style}>${result[i].nombre}</td>
+                            <td ${style}>${result[i].lat}</td>
+                            <td ${style}>${result[i].lng}</td>
+                            <td ${style}>${result[i].departamento}</td>
+                            <td ${style}>${result[i].municipio}</td>
+                            <td ${style}>${result[i].fecha}</td>
+                            <td ${style}>${result[i].pregunta}</td>
+                            <td ${style}>${result[i].imagen}</td>
+                        </tr>
+                        `;
+                }
+                html = html + '</table>';
+                res.send(html);
             }
         });
+
+
+
     });
 
 // dbo Listar todos las respuestas con ids vlistadotodo 30/09/2019
@@ -2109,7 +2117,7 @@ app.route('/historico')
             }
         })
     });
-    
+
 /*************************************************************
  * FIN DE SERVICIOS PARA SENALIZACION | MOBILIARIO URBANO    *
  ************************************************************/
