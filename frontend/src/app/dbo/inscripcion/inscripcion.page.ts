@@ -95,7 +95,7 @@ export class InscripcionPage implements OnInit {
     await this.dbo.getExiteRespuesta(this.inscripcion.id).subscribe(
       res => {
         console.log(res);
-        if ( res.count) {
+        if ( res[0].count) {
           return alert('Encuesta ya ingresada.');
         }
       },

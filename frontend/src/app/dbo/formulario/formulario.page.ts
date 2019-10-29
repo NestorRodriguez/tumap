@@ -51,7 +51,7 @@ export class FormularioPage implements OnInit {
     this.dbo.getExiteRespuesta( parseInt(this.idInscripcion, 0) ).subscribe(
       res => {
         console.log(res);
-        if ( res.count === 0) {
+        if ( res[0].count === 0) {
           console.log(JSON.stringify(this.dbo.getRespuestas()));
           this.dbo.saveRespuesta().subscribe(
             data => {
