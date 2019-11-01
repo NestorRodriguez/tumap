@@ -41,7 +41,7 @@ export class SlidesPage implements OnInit {
   }
 
   ngOnInit() {
-    this.servicio.consulta('/detalle_vias').subscribe(detalleVias => {
+    this.servicio.consulta('detalle_vias').subscribe(detalleVias => {
       this.estadoVias = detalleVias;
       console.log(this.estadoVias);
     });
@@ -55,8 +55,10 @@ export class SlidesPage implements OnInit {
       direccion: null,
       detalle: null,
       ubicacion: null,
-      imagen: 'assets/img_jyd/foto_calle.png',
-      // imagen: null,
+      lat: null,
+      lng: null,
+      // imagen: 'assets/img_jyd/foto_calle.png',
+      imagen: null,
       idUsuario: 1
     };
   }
@@ -73,7 +75,10 @@ export class SlidesPage implements OnInit {
     });
     await modal.present();
     const {data: { ubicacion }} = await modal.onDidDismiss();
+    console.log(ubicacion);
     this.model.ubicacion = ubicacion;
+    this.model.lat = ubicacion.lat;
+    this.model.lng = ubicacion.lng;
   }
 
   // async loadModalPoll() {
@@ -89,21 +94,6 @@ export class SlidesPage implements OnInit {
   // }
 
   save() {
-    // if (!this.complete) {
-    //   this.loadModalPoll();
-    // } else {
-    //   this.loading = true;
-    //   this.service.setInventario(this.model).subscribe(async (response) => {
-    //     const toast = await this.toastCtrl.create({
-    //       message: 'Encuesta guardada con éxito',
-    //       color: 'light',
-    //       duration: 1800
-    //     });
-    //     await toast.present();
-    //     await this.navCtrl.navigateBack('/irs-inicio');
-    //     this.loading = false;
-    //   });
-    // }
     console.log("DIRECCION : " + this.model.direccion);
     console.log("DETALLE : " + this.model.detalle);
     console.log("UBICACIÓN : " + JSON.stringify(this.model.ubicacion));
