@@ -14,7 +14,7 @@ export class JfService {
   constructor( private http: HttpClient) { }
 
 consulta(ruta: string): Observable<any[]> {
-  return this.http.get<any[]>(this.serverUrl + ruta).pipe(
+  return this.http.get<any[]>(`${this.serverUrl}/${ruta}`).pipe(
     tap(vias => console.log(JSON.stringify(vias))),
     catchError(this.handleError)
   );
@@ -30,8 +30,26 @@ recibirDatos(datos: any) {
   console.log('recibir', this.almacenamiento);
 }
 
+setRegistro(data) {
+  return this.http.post(`${this.serverUrl}/vias`, data);
+}
+
+getRegistros() {
+  return this.http.get<any[]>(`${this.serverUrl}/vias`).pipe(
+    tap(data => console.log(JSON.stringify(data))),
+    catchError(this.handleError)
+    );
+}
+
 enviarDatos() {
   return this.almacenamiento;
+}
+
+getDetalleVias(id: string) {
+  return this.http.get<any[]>(`${this.serverUrl}/detalle_vias/${id}`).pipe(
+    tap(data => console.log(JSON.stringify(data))),
+    catchError(this.handleError)
+    );
 }
 
 private handleError(err: HttpErrorResponse) {

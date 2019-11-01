@@ -530,23 +530,24 @@ CREATE TABLE `predios`
 
 CREATE table jf_detalle_via ( 
 	id int not null auto_increment primary key,
-    detalle varchar(200) not null
+  detalle varchar(200) not null
 );
 /*Creacion de tabla del estado*/
 CREATE table jf_estado (
 	id int not null auto_increment primary key,
-    estado varchar(100) not null
+  estado varchar(100) not null
 );
 /*Creacion de tabla de descripcion vial*/
 CREATE table jf_descripcion_via(
 	id int not null auto_increment primary key,
-    ubicacion geometry not null,
-    nombre_via varchar(200),
-    id_detalle_via int not null,
-		foreign key (id_detalle_via) references jf_detalle_via(id),
+  latitud double null,
+  longitud double null,
+  nombre_via varchar(200),
+  id_detalle_via int not null,
+  foreign key (id_detalle_via) references jf_detalle_via(id),
 	imagen varchar(200),
-    id_estado int not null,
-		foreign key (id_estado) references jf_estado(id)
+  id_estado int not null,
+  foreign key (id_estado) references jf_estado(id)
 );
 /*DML*/
 /*CRUD tabla jf_detalle_via*/

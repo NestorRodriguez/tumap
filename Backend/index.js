@@ -2069,7 +2069,7 @@ app.route('/estado')
     });
 
 /* MANEJADOR DE RUTA REGISTRO DEL ITEM */
-app.route('/registro')
+app.route('/registro_item')
     .get(function(req, res) {
         console.log('Página de Validar Información ');
         var query = db.query('select r.fk_users as id_user, i.nombre nombre_item, c.descripcion categoria, a.latitud, a.longitud, e.descripcion estado, a.descripcion descripcion, a.imagen from jyd_registro r, jyd_registro_has_item a, jyd_item i, jyd_estado e, jyd_categoria c where pk_id_registro=fk_id_registro and pk_id_estado=fk_estado and pk_id_item=fk_id_item and c.pk_id_categoria=i.fk_categoria;', function(error, result) {
@@ -2100,7 +2100,7 @@ app.route('/registro')
         res.send('Update the rol');
     });
 
-app.route('/historico')
+app.route('/historico_item')
     .post(function(req, res) {
         let data = req.body;
         const sql = `INSERT INTO jyd_registro_has_item (fk_id_registro, fk_id_item, latitud, longitud, imagen, descripcion, fk_estado)
@@ -2131,7 +2131,7 @@ app.route('/historico')
 router
     .get('/vias', (req, res) => {
         console.log('Consultar datos jf_descripcion_via');
-        var query = db.query('select * from jf_descripcion_via', (error, result) => {
+        var query = db.query('select h.latitud, h.longitud, h.nombre_via, h.imagen, dv.detalle from jf_descripcion_via h, jf_detalle_via dv where h.id_detalle_via = dv.id;', (error, result) => {
             try {
                 if (error) {
                     throw error;
@@ -2159,9 +2159,9 @@ router
             }
         });
     })
-    .get('/vias/:id', (req, res) => {
+    .get('/detalle_vias/:id', (req, res) => {
         const id = req.params.id;
-        const sql = `SELECT * FROM jf_descripcion_via WHERE id='${id}';`;
+        const sql = `SELECT * FROM jf_detalle_via WHERE id='${id}';`;
         const query = db.query(sql, (error, result) => {
             try {
                 if (error) {
@@ -2179,8 +2179,9 @@ router
     .post('/vias', (req, res) => {
         const dato = req.body;
         const puntos = `ST_GeomFromText('POINT${dato.ubicacion}')`;
-        const sql = `INSERT INTO jf_descripcion_via (ubicacion, nombre_via, id_detalle_via, imagen, id_estado)
-            values (${puntos}, '${dato.nombre_via}', ${dato.id_detalle_via}, '${dato.imagen}', ${dato.id_estado})`;
+        const sql = `INSERT INTO jf_descripcion_via (latitud, longitud, nombre_via, id_detalle_via, imagen, id_estado)
+            values (${dato.lat}, ${dato.lng}, '${dato.direccion}', ${dato.detalle}, '${dato.imagen}', 1)`;
+        console.log(sql);
 
         db.query(sql, (error, result) => {
             if (error) {

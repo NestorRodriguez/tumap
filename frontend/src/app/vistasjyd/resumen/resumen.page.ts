@@ -25,7 +25,7 @@ export class ResumenPage implements OnInit {
       console.log(item)
       this.items.push(JSON.parse(JSON.stringify(item)))
     }, error => this.errorMessage = error);
-    console.log(this.registro);
+    console.log('items anama:'+this.registro);
     console.log('items devueltos:'+this.items.nombre);
   }
 

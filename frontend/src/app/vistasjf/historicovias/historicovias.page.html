@@ -1,21 +1,29 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-button routerLink="/opcionesvias" routerDirection="forward">
-                <ion-icon slot="icon-only" name="arrow-round-back"> </ion-icon>
-            </ion-button>
-        </ion-buttons>
-        <ion-title>
-            Estado de las vías
-        </ion-title>
-        <ion-buttons slot="secondary">
-            <ion-button disabled>
-                <ion-icon slot="icon-only" name=""> </ion-icon>
-            </ion-button>
-        </ion-buttons>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button [defaultHref]="['/']"></ion-back-button>
+      </ion-buttons>
+      <ion-title class="ion-title">Histórico</ion-title>
     </ion-toolbar>
-</ion-header>
-
-<ion-content>
-
-</ion-content>
+  </ion-header>
+  
+  <ion-content>
+    <div *ngFor="let item of items">
+      <ion-card style="background-color: #008abb; border: 1px solid #d7d2d5;">
+        <img [src]="item.imagen" />
+        <ion-card-header>
+          <!-- <ion-card-subtitle style="color: white;">{{item.nombre_via}}</ion-card-subtitle> -->
+          <ion-card-title style="color: white;"><b>{{item.nombre_via}}</b></ion-card-title>
+        </ion-card-header>
+        <ion-card-content style="background-color: #f4f4f4; color: black; border-top: 1px solid #d7d2d5; padding-top: 4%;">
+          <ion-label><b>ESTADO.</b> {{ item.detalle }}</ion-label><br>
+          <ion-label><b>LATITUD.</b> {{item.latitud}}</ion-label><br>
+          <ion-label><b>LONGITUD.</b> {{item.longitud}}</ion-label><br>
+          <section style="text-align: center; padding-top: 4%;">        
+            <ion-button (click)="save()" routerLink="/#" color="white" size="medium" color="primary" style="border-radius: 5px 5px 5px 5px;"><b>Ver Mapa</b></ion-button>
+          </section>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ion-content>
+  
