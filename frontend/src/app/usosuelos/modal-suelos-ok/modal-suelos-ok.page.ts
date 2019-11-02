@@ -15,11 +15,16 @@ export class ModalSuelosOkPage implements OnInit {
               private storage: Storage) { }
 
   ngOnInit() {
+    const result = this.returnHome();
     setTimeout(() => {
-      this.view.dismiss();
+      this.view.dismiss(result);
     }, 3000);
   }
   dismiss() {
+
+   }
+  public returnHome() {
+    this.storage.remove('subpoligono');
     this.router.navigateByUrl('/home');
    }
 }
