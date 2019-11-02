@@ -34,10 +34,10 @@
                 </ion-item>
 
                 <ion-item>
-                    <ion-label style="color: white; font-size: 22px;" position="stacked"><b>Área del predio</b>
+                    <ion-label style="color: white; font-size: 22px;" position="stacked"><b>Área del predio en m²</b>
                         <ion-text color="danger">*</ion-text>
                     </ion-label>
-                    <ion-input [(ngModel)]="model.area" minlength="2" required name="area" style="color: white;" type="text"></ion-input>
+                    <ion-input [(ngModel)]="model.area" minlength="2" pattern="[0-9]*" required name="area" style="color: white;" type="text"></ion-input>
                 </ion-item>
 
                 <ion-item>

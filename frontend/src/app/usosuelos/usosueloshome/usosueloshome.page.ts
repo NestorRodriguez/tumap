@@ -136,6 +136,7 @@ export class UsosueloshomePage implements OnInit {
       component: ModalSuelosOkPage
     });
     await modal.present();
+    const dataModal = await modal.onWillDismiss();
     }
 
     public saveData() {
