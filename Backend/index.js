@@ -19,7 +19,6 @@ app.use(bodyParser.json({ extended: true, limit: '10mb' }));
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "",
     password: "12345",
     database: "tumap",
     port: 3306,
@@ -1442,14 +1441,15 @@ app.post("/dbo_inscripcion", function(req, res) {
             throw error;
         } else {
             console.log(result);
-            var query = db.query('SELECT  * FROM dbo_inscripcion WHERE documento = ?', req.body.documento, function(error, result) {
-                if (error) {
-                    throw error;
-                } else {
-                    console.log(result);
-                    res.json(result);
-                }
-            });
+            res.json(result);
+            // var query = db.query('SELECT  * FROM dbo_inscripcion WHERE documento = ?', req.body.documento, function(error, result) {
+            //     if (error) {
+            //         throw error;
+            //     } else {
+            //         console.log(result);
+            //         res.json(result);
+            //     }
+            // });
         }
     });
     // res.json({ text: 'Datos Ingresados: ' + sql });
@@ -1482,51 +1482,20 @@ app.put("/dbo_inscripcion/:id", function(req, res) {
 });
 
 // dbo Lista respuestas 30/09/2019
-// http://localhost:3000/dbo_respuesta/1/3
-app.get('/dbo_respuesta/', function(req, res) {
+// http://localhost:3000/dbo_respuesta/
+app.get('/dbo_respuesta/:documento', function(req, res) {
 
-    const sql = 'SELECT documento,orden,nombre,lat,lng,departamento,municipio,fecha,pregunta,imagen FROM dbo_vlistado;';
+    const { documento } = req.params;
 
-    db.query(sql, (error, result) => {
+    var query = db.query('SELECT count(*) count FROM tumap.dbo_respuesta WHERE id_inscripcion = ?;', documento, function(error, result) {
         if (error) {
-            res.status(400).send('<h1>Ocurrió un error al consultar las encuestas.</h1>');
+            throw error;
         } else {
-            const style = 'style="border: 1px solid black;"';
-            let html = '<table style="width:100%; border: 1px solid black;">';
-            html = html + `
-                    <tr ${style}>
-                        <td ${style}>documento</td>
-                        <td ${style}>orden</td>
-                        <td ${style}>nombre</td>
-                        <td ${style}>lat</td>
-                        <td ${style}>lng</td>
-                        <td ${style}>departamento</td>
-                        <td ${style}>municipio</td>
-                        <td ${style}>fecha</td>
-                        <td ${style}>pregunta</td>
-                        <td ${style}>imagen</td>
-                    </tr>
-                `
-            for (let i in result) {
-                html = html + `
-                    <tr ${style}>
-                        <td ${style}>${result[i].documento}</td>
-                        <td ${style}>${result[i].orden}</td>
-                        <td ${style}>${result[i].nombre}</td>
-                        <td ${style}>${result[i].lat}</td>
-                        <td ${style}>${result[i].lng}</td>
-                        <td ${style}>${result[i].departamento}</td>
-                        <td ${style}>${result[i].municipio}</td>
-                        <td ${style}>${result[i].fecha}</td>
-                        <td ${style}>${result[i].pregunta}</td>
-                        <td ${style}>${result[i].imagen}</td>
-                    </tr>
-                    `;
-            }
-            html = html + '</table>';
-            res.send(html);
+            console.log(result);
+            res.json(result);
         }
     });
+
 })
 
 
@@ -1566,14 +1535,52 @@ app.put('/dbo_respuesta', function(req, res) {
 app.route('/dbo_vlistado')
     .get(function(req, res) {
         console.log('Página de vlistado ');
-        var query = db.query('SELECT * FROM dbo_vlistado', function(error, result) {
+
+        const sql = 'SELECT documento,orden,nombre,lat,lng,departamento,municipio,fecha,pregunta,imagen FROM dbo_vlistado;';
+
+        db.query(sql, (error, result) => {
             if (error) {
-                throw error;
+                res.status(400).send('<h1>Ocurrió un error al consultar las encuestas.</h1>');
             } else {
-                console.log(result);
-                res.json(result);
+                const style = 'style="border: 1px solid black;"';
+                let html = '<table style="width:100%; border: 1px solid black;">';
+                html = html + `
+                        <tr ${style}>
+                            <td ${style}>documento</td>
+                            <td ${style}>orden</td>
+                            <td ${style}>nombre</td>
+                            <td ${style}>lat</td>
+                            <td ${style}>lng</td>
+                            <td ${style}>departamento</td>
+                            <td ${style}>municipio</td>
+                            <td ${style}>fecha</td>
+                            <td ${style}>pregunta</td>
+                            <td ${style}>imagen</td>
+                        </tr>
+                    `
+                for (let i in result) {
+                    html = html + `
+                        <tr ${style}>
+                            <td ${style}>${result[i].documento}</td>
+                            <td ${style}>${result[i].orden}</td>
+                            <td ${style}>${result[i].nombre}</td>
+                            <td ${style}>${result[i].lat}</td>
+                            <td ${style}>${result[i].lng}</td>
+                            <td ${style}>${result[i].departamento}</td>
+                            <td ${style}>${result[i].municipio}</td>
+                            <td ${style}>${result[i].fecha}</td>
+                            <td ${style}>${result[i].pregunta}</td>
+                            <td ${style}>${result[i].imagen}</td>
+                        </tr>
+                        `;
+                }
+                html = html + '</table>';
+                res.send(html);
             }
         });
+
+
+
     });
 
 // dbo Listar todos las respuestas con ids vlistadotodo 30/09/2019
@@ -2062,7 +2069,7 @@ app.route('/estado')
     });
 
 /* MANEJADOR DE RUTA REGISTRO DEL ITEM */
-app.route('/registro')
+app.route('/registro_item')
     .get(function(req, res) {
         console.log('Página de Validar Información ');
         var query = db.query('select r.fk_users as id_user, i.nombre nombre_item, c.descripcion categoria, a.latitud, a.longitud, e.descripcion estado, a.descripcion descripcion, a.imagen from jyd_registro r, jyd_registro_has_item a, jyd_item i, jyd_estado e, jyd_categoria c where pk_id_registro=fk_id_registro and pk_id_estado=fk_estado and pk_id_item=fk_id_item and c.pk_id_categoria=i.fk_categoria;', function(error, result) {
@@ -2093,7 +2100,7 @@ app.route('/registro')
         res.send('Update the rol');
     });
 
-app.route('/historico')
+app.route('/historico_item')
     .post(function(req, res) {
         let data = req.body;
         const sql = `INSERT INTO jyd_registro_has_item (fk_id_registro, fk_id_item, latitud, longitud, imagen, descripcion, fk_estado)
@@ -2110,7 +2117,7 @@ app.route('/historico')
             }
         })
     });
-    
+
 /*************************************************************
  * FIN DE SERVICIOS PARA SENALIZACION | MOBILIARIO URBANO    *
  ************************************************************/
@@ -2124,7 +2131,7 @@ app.route('/historico')
 router
     .get('/vias', (req, res) => {
         console.log('Consultar datos jf_descripcion_via');
-        var query = db.query('select * from jf_descripcion_via', (error, result) => {
+        var query = db.query('select h.latitud, h.longitud, h.nombre_via, h.imagen, dv.detalle from jf_descripcion_via h, jf_detalle_via dv where h.id_detalle_via = dv.id;', (error, result) => {
             try {
                 if (error) {
                     throw error;
@@ -2152,9 +2159,9 @@ router
             }
         });
     })
-    .get('/vias/:id', (req, res) => {
+    .get('/detalle_vias/:id', (req, res) => {
         const id = req.params.id;
-        const sql = `SELECT * FROM jf_descripcion_via WHERE id='${id}';`;
+        const sql = `SELECT * FROM jf_detalle_via WHERE id='${id}';`;
         const query = db.query(sql, (error, result) => {
             try {
                 if (error) {
@@ -2172,8 +2179,9 @@ router
     .post('/vias', (req, res) => {
         const dato = req.body;
         const puntos = `ST_GeomFromText('POINT${dato.ubicacion}')`;
-        const sql = `INSERT INTO jf_descripcion_via (ubicacion, nombre_via, id_detalle_via, imagen, id_estado)
-            values (${puntos}, '${dato.nombre_via}', ${dato.id_detalle_via}, '${dato.imagen}', ${dato.id_estado})`;
+        const sql = `INSERT INTO jf_descripcion_via (latitud, longitud, nombre_via, id_detalle_via, imagen, id_estado)
+            values (${dato.lat}, ${dato.lng}, '${dato.direccion}', ${dato.detalle}, '${dato.imagen}', 1)`;
+        console.log(sql);
 
         db.query(sql, (error, result) => {
             if (error) {

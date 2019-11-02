@@ -24,13 +24,13 @@ export class ExportarPage implements OnInit {
     //   err => console.error(err)
     //   );
     // console.log(this.csvData);
-    this.ruta = this.dbo.getServerUrl() + '/dbo_respuesta';
+    this.ruta = this.dbo.getServerUrl() + '/dbo_vlistado';
     this.openBrowser();
 
   }
 
   openBrowser() {
-    // const browser = this.iab.open(this.dbo.getServerUrl() + '/dbo_respuesta', '_blank', 'location=yes');
+    // const browser = this.iab.open(this.dbo.getServerUrl() + '/dbo_respuesta', '_blank');
     // browser.show();
   }
 

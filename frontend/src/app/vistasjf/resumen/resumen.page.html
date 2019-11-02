@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar color="primary">
+    <ion-toolbar>
         <ion-buttons slot="start">
             <ion-back-button [defaultHref]="['/home']"></ion-back-button>
         </ion-buttons>
@@ -16,7 +16,7 @@
             <div class="div_datos">
                 <span *ngFor="let item of registro">
           <ion-label><b>DIRECCIÓN.</b> {{item.direccion}}</ion-label><br>
-          <ion-label><b>DETALLE.</b> {{item.detalle}}</ion-label><br>
+          <ion-label><b>DETALLE.</b> {{detalleVia}}</ion-label><br>
         </span>
                 <ion-label><b>LATITUD.</b> {{data.ubicacion.lat}}</ion-label><br>
                 <ion-label><b>LONGITUD.</b> {{data.ubicacion.lng}}</ion-label><br>
@@ -26,7 +26,7 @@
     </div>
 </ion-content>
 <ion-footer>
-
-    <ion-button routerLink="/home"><b>Finalizar</b></ion-button>
-
+    <section style="text-align: center; padding-top: 2%;">        
+        <ion-button (click)="save()" color="white" size="medium" style="background-color: white; color: #0A9D97; border-radius: 5px 5px 5px 5px;"><b>Finalizar</b></ion-button>
+    </section>
 </ion-footer>

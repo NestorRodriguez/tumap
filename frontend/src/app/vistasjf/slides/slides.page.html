@@ -30,7 +30,7 @@
                 <ion-item>
                     <ion-label><b>Detalle:</b></ion-label>
                     <ion-select (ionChange)="seleccion($event)">
-                        <ion-select-option value="{{detalle.detalle}}" *ngFor="let detalle of estadoVias">{{detalle.detalle}}</ion-select-option>
+                        <ion-select-option value="{{detalle.id}}" *ngFor="let detalle of estadoVias">{{detalle.detalle}}</ion-select-option>
                     </ion-select>
                 </ion-item>
 

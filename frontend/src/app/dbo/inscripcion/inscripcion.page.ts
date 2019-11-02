@@ -64,7 +64,7 @@ export class InscripcionPage implements OnInit {
         if ( this.inscripciones.length > 0) {
           this.inscripcion = this.inscripciones[0];
           this.inscripcion.isUpdate = this.isValid = true;
-          if ( this.inscripcion.lat.length === 0 && this.inscripcion.lng.length === 0 ){
+          if ( this.inscripcion.lat.length === 0 && this.inscripcion.lng.length === 0 ) {
             this.inscripcion.lat = this.latDef.toString();
             this.inscripcion.lng = this.lngDef.toString();
             console.log('lat y lng a vacio');
@@ -89,9 +89,19 @@ export class InscripcionPage implements OnInit {
     );
   }
 
-  saveInscripcion() {
-    this.ValidarPosicion();
+  async saveInscripcion() {
+    // this.ValidarPosicion();
     console.log(JSON.stringify(this.inscripcion));
+    await this.dbo.getExiteRespuesta(this.inscripcion.id).subscribe(
+      res => {
+        console.log(res);
+        if ( res[0].count) {
+          return alert('Encuesta ya ingresada.');
+        }
+      },
+      err => console.error(err)
+    );
+
     if (this.latDef.toString() === this.inscripcion.lat && this.lngDef.toString() === this.inscripcion.lng){
       this.inscripcion.lat = '';
       this.inscripcion.lng = '';
@@ -101,20 +111,24 @@ export class InscripcionPage implements OnInit {
       this.dbo.updateInscripcion(this.inscripcion.id, this.inscripcion).subscribe(
         res => console.log(res), err => console.error(err));
       console.log('Update Inscripcion' + JSON.stringify(this.inscripcion));
+      this.navCtrl.navigateForward(`/formulario/${this.inscripcion.id}`);
     } else {
         this.dbo.saveInscripcion(this.inscripcion).subscribe(
         res => {
-          this.inscripciones = res;
-          if ( this.inscripciones.length > 0) {
-            this.inscripcion = this.inscripciones[0];
-            this.inscripcion.isUpdate = this.isValid = true;
-          }
+
+          // this.inscripciones = res;
+          // if ( this.inscripciones.length > 0) {
+          //   this.inscripcion = this.inscripciones[0];
+          //   this.inscripcion.isUpdate = this.isValid = true;
+          // }
+          this.inscripcion.id = res.insertId;
+          console.log(res);
+          console.log('Save Inscripcion: ' + JSON.stringify(this.inscripcion));
+          this.navCtrl.navigateForward(`/formulario/${this.inscripcion.id}`);
         },
         err => console.error(err)
       );
     }
-    console.log('Save Inscripcion' + JSON.stringify(this.inscripcion));
-    this.navCtrl.navigateForward(`/formulario/${this.inscripcion.id}`);
   }
 
 

@@ -9,7 +9,8 @@ import { catchError, tap, map} from 'rxjs/operators';
 export class JydService {
 
   serverUrl = 'http://localhost:3000';
-  // serverUrl = 'http://192.168.1.58:3000';
+  // serverUrl = 'http://192.168.1.53:3000';
+  // serverUrl = 'http://192.168.43.184:3000';
 
   constructor(public http: HttpClient) { }
 
@@ -49,18 +50,18 @@ export class JydService {
   }
 
   getRegistros() {
-    return this.http.get<any[]>(`${this.serverUrl}/registro`).pipe(
+    return this.http.get<any[]>(`${this.serverUrl}/registro_item`).pipe(
       tap(data => console.log(JSON.stringify(data))),
       catchError(this.handleError)
       );
   }
 
   setRegistro(data) {
-    return this.http.post(`${this.serverUrl}/registro`, data);
+    return this.http.post(`${this.serverUrl}/registro_item`, data);
   }
 
   setHistorico(data) {
-    return this.http.post(`${this.serverUrl}/historico`, data);
+    return this.http.post(`${this.serverUrl}/historico_item`, data);
   }
 
   private handleError(err: HttpErrorResponse) {
