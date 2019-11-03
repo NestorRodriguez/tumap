@@ -113,6 +113,31 @@ export class PredialPage implements OnInit {
     console.log(this.buttonServicios);
   }
 
+  async Cancelar() {
+    const alert = await this.alertController.create({
+      header: "Deseas Salir?",
+      message: "Confirmar que deseas <strong>salir</strong>",
+      buttons: [
+        {
+          text: "Cancelar",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: blah => {
+            //
+          }
+        },
+        {
+          text: "Ok",
+          handler: () => {
+            this.router.navigateByUrl("/ibpredial-inicio");
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   Aceptar() {
     this.GetLocalStorage();
     this.StateCheck();

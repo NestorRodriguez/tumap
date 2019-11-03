@@ -97,8 +97,29 @@ export class MatriculaPage implements OnInit {
     );
   }
 
-  Cancelar() {
-    console.log(`Ha presioando boton cancelar...`);
+  async Cancelar() {
+    const alert = await this.alertController.create({
+      header: "Deseas Salir?",
+      message: "Confirmar que deseas <strong>salir</strong>",
+      buttons: [
+        {
+          text: "Cancelar",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: blah => {
+            //
+          }
+        },
+        {
+          text: "Ok",
+          handler: () => {
+            this.router.navigateByUrl("/list");
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   async alertControl() {

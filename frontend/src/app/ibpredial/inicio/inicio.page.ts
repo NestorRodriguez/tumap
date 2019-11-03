@@ -1,4 +1,5 @@
 import { Platform } from "@ionic/angular";
+import { AlertController } from "@ionic/angular";
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { PredialService } from "../../api/predial.service";
@@ -61,6 +62,7 @@ export class InicioPage implements OnInit {
 
   constructor(
     private route: Router,
+    public alertController: AlertController,
     private activatedRoute: ActivatedRoute,
     private platform: Platform,
     private predialService: PredialService
@@ -140,7 +142,28 @@ export class InicioPage implements OnInit {
       .subscribe(resp => console.log(resp), error => console.log(error));
   }
 
-  Cancelar() {
-    this.route.navigateByUrl("/matricula");
+  async Cancelar() {
+    const alert = await this.alertController.create({
+      header: "Deseas Salir?",
+      message: "Confirmar que deseas <strong>salir</strong>",
+      buttons: [
+        {
+          text: "Cancelar",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: blah => {
+            //
+          }
+        },
+        {
+          text: "Ok",
+          handler: () => {
+            this.route.navigateByUrl("/matricula");
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }

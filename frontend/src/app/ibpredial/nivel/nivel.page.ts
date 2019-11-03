@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { AlertController } from "@ionic/angular";
 import { Router } from "@angular/router";
 import { LoadingController } from "@ionic/angular";
 import { PredialService } from "../../api/predial.service";
@@ -22,6 +23,7 @@ export class NivelPage implements OnInit {
   state: any;
   constructor(
     private router: Router,
+    public alertController: AlertController,
     private loadingController: LoadingController,
     private predialService: PredialService
   ) {}
@@ -38,6 +40,31 @@ export class NivelPage implements OnInit {
       JSON.stringify(this.predialBasico)
     );
     this.router.navigateByUrl("/ibpredial-inicio/3-niv_viv");
+  }
+
+  async Cancelar() {
+    const alert = await this.alertController.create({
+      header: "Deseas Salir?",
+      message: "Confirmar que deseas <strong>salir</strong>",
+      buttons: [
+        {
+          text: "Cancelar",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: blah => {
+            //
+          }
+        },
+        {
+          text: "Ok",
+          handler: () => {
+            this.router.navigateByUrl("/ibpredial-inicio");
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   testRadio() {
