@@ -8,7 +8,7 @@ import { catchError, tap, map} from 'rxjs/operators';
 })
 export class JydService {
 
-  serverUrl = 'http://localhost:3000';
+  serverUrl = 'https://tumap.azurewebsites.net';
   // serverUrl = 'http://192.168.1.58:3000';
   // serverUrl = 'http://192.168.43.184:3000';
 

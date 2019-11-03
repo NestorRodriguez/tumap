@@ -8,7 +8,7 @@ import { catchError, tap, map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class JfService {
-  serverUrl = 'http://localhost:3000';
+  serverUrl = 'https://tumap.azurewebsites.net';
   // serverUrl = 'http://192.168.1.58:3000';
   almacenamiento: any;
   constructor( private http: HttpClient) { }

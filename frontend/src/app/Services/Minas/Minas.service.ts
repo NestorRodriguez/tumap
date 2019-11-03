@@ -8,11 +8,11 @@ import { catchError, tap, map } from 'rxjs/operators';
 })
 export class MinasService {
 
-  serverUrlUsers = 'http://localhost:3000/users';
-  serverUrlMinasEstadoActual = 'http://localhost:3000/Minas/EstadoActual';
-  serverUrlMinasTipoMaterial = 'http://localhost:3000/Minas/TipoMaterial';
-  serverUrlMinasSistemaExplotacion = 'http://localhost:3000/Minas/SistemaExplotacion';
-  serverUrlMinasRegistroMina = 'http://localhost:3000/Minas/RegistroMina';
+  serverUrlUsers = 'https://tumap.azurewebsites.net/users';
+  serverUrlMinasEstadoActual = 'https://tumap.azurewebsites.net/Minas/EstadoActual';
+  serverUrlMinasTipoMaterial = 'https://tumap.azurewebsites.net/Minas/TipoMaterial';
+  serverUrlMinasSistemaExplotacion = 'https://tumap.azurewebsites.net/Minas/SistemaExplotacion';
+  serverUrlMinasRegistroMina = 'https://tumap.azurewebsites.net/Minas/RegistroMina';
   constructor(public http: HttpClient) { }
 
   getPeople(): Observable<any[]> {

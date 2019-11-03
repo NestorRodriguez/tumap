@@ -9,7 +9,7 @@ import { Observable, throwError  } from 'rxjs';
 })
 export class DboService {
 
-  API_URL = 'http://localhost:3000';
+  API_URL = 'https://tumap.azurewebsites.net';
 
     // Data formulario
 

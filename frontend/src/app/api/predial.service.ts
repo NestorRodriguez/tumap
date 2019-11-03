@@ -15,9 +15,9 @@ import { AlertController } from '@ionic/angular';
   providedIn: "root"
 })
 export class PredialService {
-  private predialUrl = "http://localhost:3000/usopredio";
-  private nivelUrl = "http://localhost:3000/nivel";
-  urlApi: string = "http://localhost:3000/predios";
+  private predialUrl = "https://tumap.azurewebsites.net/usopredio";
+  private nivelUrl = "https://tumap.azurewebsites.net/nivel";
+  urlApi: string = "https://tumap.azurewebsites.net/predios";
   httpOptions = {
     headers: new HttpHeaders({
       "Content-Type": "application/json"

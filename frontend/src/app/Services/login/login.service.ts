@@ -9,7 +9,7 @@ export class LoginService {
   constructor(public http: HttpClient) { }
 
   login(user){
-      let urlService = 'http://localhost:3000/users/';
+      let urlService = 'https://tumap.azurewebsites.net/users/';
       return new Promise(resolve => {
         return this.http.get(urlService)
           .subscribe(

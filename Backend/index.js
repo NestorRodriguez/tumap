@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 
@@ -17,14 +17,13 @@ app.use(bodyParser.json({ extended: true, limit: '10mb' }));
 
 //Parámetros de la conexión a la base de datos
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "12345",
+    host: "tumap.mysql.database.azure.com",
+    user: "tumaproot@tumap",
+    password: "Analisis2*",
     database: "tumap",
     port: 3306,
-    multipleStatements: true
+    multipleStatements: true,
 });
-
 
 //Realizar la conexión a la base de datos
 db.connect(function(error) {

@@ -1,3 +1,8 @@
 {
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "appService.zipIgnorePattern": [
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/783efa1a-5247-4f47-bb88-8a6ba3c849a8/resourceGroups/tumap/providers/Microsoft.Web/sites/tumap",
+    "appService.deploySubpath": "Backend"
 }

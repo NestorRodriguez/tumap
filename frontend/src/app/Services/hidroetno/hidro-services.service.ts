@@ -8,13 +8,13 @@ import { tap, catchError } from 'rxjs/operators';
 })
 export class HidroServicesService {
 
-  urlUsers = 'http://localhost:3000/Users/';
-  urlCoverages = 'http://localhost:3000/coverages/';
-  urlWithout_coverage = 'http://localhost:3000/without_coverage/';
-  urlGrown = 'http://localhost:3000/grown/';
-  urlConnections = 'http://localhost:3000/connections/';
-  urlEthnobotany = 'http://localhost:3000/ethnobotany/';
-  urlLocation = 'http://localhost:3000/location/';
+  urlUsers = 'https://tumap.azurewebsites.net/Users/';
+  urlCoverages = 'https://tumap.azurewebsites.net/coverages/';
+  urlWithout_coverage = 'https://tumap.azurewebsites.net/without_coverage/';
+  urlGrown = 'https://tumap.azurewebsites.net/grown/';
+  urlConnections = 'https://tumap.azurewebsites.net/connections/';
+  urlEthnobotany = 'https://tumap.azurewebsites.net/ethnobotany/';
+  urlLocation = 'https://tumap.azurewebsites.net/location/';
 
   constructor(public http: HttpClient) { }
 
