@@ -545,7 +545,7 @@ CREATE table jf_descripcion_via(
   nombre_via varchar(200),
   id_detalle_via int not null,
   foreign key (id_detalle_via) references jf_detalle_via(id),
-	imagen varchar(200),
+	imagen longtext NOT NULL,
   id_estado int not null,
   foreign key (id_estado) references jf_estado(id)
 );
