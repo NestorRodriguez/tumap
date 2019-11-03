@@ -98,6 +98,8 @@ const routes: Routes = [
   { path: 'mapacoinfor', loadChildren: './socioeconomico/mapacoinfor/mapacoinfor.module#MapacoinforPageModule' },
   { path: 'historico', loadChildren: './vistasjyd/historico/historico.module#HistoricoPageModule' },
   { path: 'historicovias', loadChildren: './vistasjf/historicovias/historicovias.module#HistoricoviasPageModule' },
+  { path: 'show-marker/:lat/:lng', loadChildren: './vistasjyd/show-marker/show-marker.module#ShowMarkerPageModule' },
+
 
 ];
 

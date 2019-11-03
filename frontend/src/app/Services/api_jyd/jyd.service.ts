@@ -9,7 +9,7 @@ import { catchError, tap, map} from 'rxjs/operators';
 export class JydService {
 
   serverUrl = 'http://localhost:3000';
-  // serverUrl = 'http://192.168.1.53:3000';
+  // serverUrl = 'http://192.168.1.58:3000';
   // serverUrl = 'http://192.168.43.184:3000';
 
   constructor(public http: HttpClient) { }

@@ -19,9 +19,9 @@
           <ion-label><b>ESTADO.</b> {{ item.detalle }}</ion-label><br>
           <ion-label><b>LATITUD.</b> {{item.latitud}}</ion-label><br>
           <ion-label><b>LONGITUD.</b> {{item.longitud}}</ion-label><br>
-          <!-- <section style="text-align: center; padding-top: 4%;">        
-            <ion-button (click)="save()" routerLink="/#" color="white" size="medium" color="primary" style="border-radius: 5px 5px 5px 5px;"><b>Ver Mapa</b></ion-button>
-          </section> -->
+          <section style="text-align: center; padding-top: 4%;">        
+            <ion-button [routerLink]="['/show-marker/', item.latitud, item.longitud]" color="white" size="medium" color="primary" style="border-radius: 5px 5px 5px 5px;"><b>Ver Mapa</b></ion-button>
+          </section>
         </ion-card-content>
       </ion-card>
     </div>
