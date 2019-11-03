@@ -1,10 +1,5 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button routerLink="/matricula" routerDirection="forward">
-        <ion-icon slot="icon-only" name="arrow-round-back"> </ion-icon>
-      </ion-button>
-    </ion-buttons>
     <ion-title> Información Predial Básica </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -22,27 +17,37 @@
       </ion-label>
     </ion-item>
   </ion-list>
-  <ion-button
-    class="ion-text-capitalize"
-    type="submit"
-    color="primary"
-    size="default"
-    shape="round"
-    expand="block"
-    [disabled]="disabled"
-    (click)="Grabar()"
-  >
-    <ion-label>Aceptar</ion-label>
-  </ion-button>
-  <ion-button
-    class="ion-text-capitalize"
-    color="danger"
-    size="default"
-    shape="round"
-    expand="block"
-    (click)="Cancelar()"
-    routerLink="/list"
-  >
-    <ion-label>Cancelar </ion-label>
-  </ion-button>
+  <ion-item lines="none" class="ion-padding-top">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" class="ion-text-end">
+          <ion-button
+            class="ion-text-capitalize"
+            type="submit"
+            color="light"
+            size="default"
+            shape="round"
+            expand="block"
+            [disabled]="disabled"
+            (click)="Grabar()"
+          >
+            <ion-label>Aceptar</ion-label>
+          </ion-button>
+        </ion-col>
+        <ion-col size="6" class="ion-text-end">
+          <ion-button
+            class="ion-text-capitalize"
+            color="light"
+            fill="outline"
+            size="default"
+            shape="round"
+            expand="block"
+            (click)="Cancelar()"
+          >
+            <ion-label>Cancelar </ion-label>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
 </ion-content>
