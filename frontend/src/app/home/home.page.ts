@@ -22,7 +22,8 @@ export class HomePage {
     "bluetooth",
     "build",
     "list-box",
-    "film"
+    "film",
+    "construct"
   ];
   public items: Array<{
     title: string;
@@ -87,6 +88,12 @@ export class HomePage {
         note: "",
         route: "/options",
         icon: this.icons[4]
+      },
+      {
+        title: "Minas",
+        note: "",
+        route: "/menuminas",
+        icon: this.icons[15]
       }
     );
   }

@@ -99,6 +99,7 @@ const routes: Routes = [
   { path: 'historico', loadChildren: './vistasjyd/historico/historico.module#HistoricoPageModule' },
   { path: 'historicovias', loadChildren: './vistasjf/historicovias/historicovias.module#HistoricoviasPageModule' },
   { path: 'show-marker/:lat/:lng', loadChildren: './vistasjyd/show-marker/show-marker.module#ShowMarkerPageModule' },
+  { path: 'menuminas', loadChildren: './minas/menuminas/menuminas.module#MenuminasPageModule' },
 
 
 ];

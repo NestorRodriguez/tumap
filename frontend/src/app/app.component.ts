@@ -30,11 +30,6 @@ export class AppComponent {
       title: 'Cerrar Sesión',
       url: '/',
       icon: 'ios-exit'
-    },
-    {
-      title: 'Menu Minas',
-      url: '/menuminas',
-      icon: 'md-map'
     }
   ];
 
